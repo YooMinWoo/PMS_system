@@ -145,7 +145,7 @@
             -->
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-table"></i>
+                <i class="menu-icon tf-icons bx bx-user"></i>
                 <div data-i18n="Layouts">나의 업무</div>
               </a>
 
@@ -169,7 +169,7 @@
             </li>
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <i class="menu-icon tf-icons bx bx-envelope"></i>
                 <div data-i18n="Account Settings">메일</div>
               </a>
               <ul class="menu-sub">
@@ -245,7 +245,7 @@
              -->
             <li class="menu-item">
               <a href="*" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+                <i class="menu-icon tf-icons bx bx-archive"></i>
                 <div data-i18n="Extended UI">드라이브</div>
               </a>
             </li>
@@ -253,6 +253,12 @@
               <a href="*" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Extended UI">공지사항</div>
+              </a>
+            </li>
+             <li class="menu-item">
+              <a href="*" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-chat"></i>
+                <div data-i18n="Extended UI">채팅</div>
               </a>
             </li>			
         
