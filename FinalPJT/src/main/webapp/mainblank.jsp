@@ -203,6 +203,11 @@
                     <div data-i18n="Basic">프로젝트 생성</div>
                   </a>
                 </li>
+                 <li class="menu-item">
+                  <a href="jungwoo/project-risk.jsp" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">리스크 관리</div>
+                  </a>
+                </li>
               </ul>
             </li>
             <li class="menu-item">
