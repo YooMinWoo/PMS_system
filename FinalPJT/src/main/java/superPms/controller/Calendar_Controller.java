@@ -11,7 +11,7 @@ import superPms.service.Calendar_Service;
 public class Calendar_Controller {
 
 	@Autowired
-	private Calendar_Service service;
+	private Calendar_Service service;    
 	
 //	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
