@@ -87,8 +87,8 @@
       events:function(info,successCallback,failureCallback){
     	  $.ajax({
     		  type:"post",
-    		  url:"${path}/calListAjax.do"
-    		  dataType:"json"
+    		  url:"${path}/calListAjax.do",
+    		  dataType:"json",
     		  success:function(data){
     			  successCallback(data.calList)
     		  },
@@ -406,7 +406,7 @@
                 <!--/ User -->
               </ul>
             </div>
-         <div id='calendar'></div>
+      		   <div id='calendar'></div>
 
 
 
