@@ -32,7 +32,7 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd   
       " >
  
-      <context:component-scan base-package="FinalPJT">
+      <context:component-scan base-package="superPms">
          <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
          <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
          <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
