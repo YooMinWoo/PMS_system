@@ -40,7 +40,7 @@ CREATE TABLE calendar (
 	title	varchar2(200)		NULL,
 	startdte	varchar2(30)		NULL,
 	enddte	varchar2(30)		NULL,
-	Key	varchar2(50)		NOT NULL,
+	id	varchar2(50)		NOT NULL,
 	textColor	varchar2(20)		NULL,
 	backColor	varchar2(20)		NULL,
 	allday	number		NULL,

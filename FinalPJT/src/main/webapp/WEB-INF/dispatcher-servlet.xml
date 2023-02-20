@@ -52,7 +52,7 @@
         </bean>
       
         <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-           <property name="basePackage" value="springWeb.a05_mvc.a03_dao"></property>
+           <property name="basePackage" value="superPms.dao"></property>
         </bean>
         
          <bean id="btnViewResolver"
@@ -67,7 +67,9 @@
           <bean id="pageJsonReport" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
           	<property name="contentType" value="text/html;charset-utf-8"></property>
           </bean>
+          <!--  
           	 <bean id="multipartResolver"
 			class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 			<bean id="downloadViewer" class="springWeb.a06_util.Z01_DownloadView"/>
+		-->
 </beans>
