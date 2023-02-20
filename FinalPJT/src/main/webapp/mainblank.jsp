@@ -19,6 +19,7 @@
 <style>
 	td{text-align:center;}
 </style>
+<script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
