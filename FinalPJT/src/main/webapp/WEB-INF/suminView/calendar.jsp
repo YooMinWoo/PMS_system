@@ -61,26 +61,26 @@
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2023-02-16',
-      navLinks: true, // can click day/week names to navigate views
+      initialDate: '2023-02-01',
+     // navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
       select: function(arg) {
-        var title = prompt('일정 등록:');
-        if (title) {
-          calendar.addEvent({
-            title: title,
-            start: arg.start,
-            end: arg.end,
-            allDay: arg.allDay
-          })
-        }
-        calendar.unselect()
+
+    	  $("h2").click();
+    	  $("#regBtn").show()
+          $("#uptBtn").hide()
+          $("#delBtn").hide()
+          $("[name=start]").val(arg.start.toISOString())
+          $("#start").val(arg.start.toLocaleString())
+          $("[name=end]").val(arg.end.toISOString())
+          $("#end").val(arg.end.toLocaleString())
+          $("[name=allDay]").val(arg.allDay?1:0);
+          $("#allDay").val(""+arg.allDay)
       },
       eventClick: function(arg) {
-        if (confirm('Are you sure you want to delete this event?')) {
-          arg.event.remove()
-        }
+    	
+    	  $("h2").click();
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
@@ -102,6 +102,9 @@
     calendar.render();
   });
 
+	$("#allDay").change(function(){
+   		$("[name=allDay]").val($(this).val()=='true'?1:0)
+   	})
 </script>
 <style>
 
@@ -407,7 +410,92 @@
               </ul>
             </div>
       		   <div id='calendar'></div>
-
+      		   <h2 data-bs-toggle="modal"
+                          data-bs-target="#modalCenter"></h2>
+			   <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalCenterTitle">일정등록</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="nameWithTitle" class="form-label">일정명</label>
+                                    <input type="text" id="title" class="form-control" placeholder="일정명"/>
+                                  </div>
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="startWithTitle" class="form-label">시작일</label>
+                                    <input type="text" id="start" class="form-control"/>
+                                    <input type="hidden" name="start" class="form-control"/>
+                                  </div>
+                                  <div class="col mb-0">
+                                    <label for="endWithTitle" class="form-label">종료일</label>
+                                    <input type="text" id="end" class="form-control"/>
+                                    <input type="hidden" name="end" class="form-control"/>
+                                  </div>
+                                </div>
+                                  <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="wrtier" class="form-label">작성자</label>
+                                    <input type="text" id="writer" class="form-control"/>
+                                   
+                                  </div>
+                                  <div class="col mb-0">
+                                    <label for="allday" class="form-label">종일여부</label>
+                                     <select id="allDay" class="form-control" >
+						                  <option value="true">종일</option>
+						                  <option value="false">시간</option>
+						             </select>
+						              <input type="hidden" name="allDay"/>
+                                   
+                                  </div>
+                                </div>
+                                 <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="textColor" class="form-label">글자색상</label>
+                                    <input type="color" value="#ccffff" id="textColor" class="form-control"/>
+                              
+                                  </div>
+                                  <div class="col mb-0">
+                                    <label for="backgroundColor" class="form-label">배경색상</label>
+                                    <input type="color" value="#0099cc" id="backgroundColor" class="form-control"/>
+                                   
+                                  </div>
+                                  
+                                </div>
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="content" class="form-label">내용</label>
+                                    <textarea  rows="5" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="url" class="form-label">링크</label>
+                                   <input type="text" id="url" class="form-control"/>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  닫기
+                                </button>
+                                <button id="regBtn" type="button" class="btn btn-primary">등록</button>
+                                <button id="uptBtn" type="button" class="btn btn-primary">수정</button>
+                                <button id="delBtn" type="button" class="btn btn-primary">삭제</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
 
           <!-- Content wrapper -->

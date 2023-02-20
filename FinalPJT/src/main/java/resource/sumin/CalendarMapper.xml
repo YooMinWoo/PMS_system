@@ -4,7 +4,13 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Calendar_Dao">
-	<select id="calList" resultType="calendar">
+	<resultMap type="calendar" id="calRst">
+		<result column="startdte" property="start"></result>
+		<result column="enddte" property="end"></result>
+		<result column="allday" property="allDay"></result>
+		<result column="backColor" property="backgroundColor"></result>
+	</resultMap>
+	<select id="calList" resultMap="calRst">
 		select * from calendar777		
 	</select>
 </mapper>
