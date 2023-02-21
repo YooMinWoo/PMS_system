@@ -10,13 +10,31 @@
 		<result column="allday" property="allDay"></result>
 		<result column="backColor" property="backgroundColor"></result>
 		<result column="url" property="urllink"></result>
+		<result column="id" property="writer"></result>
+		
 	</resultMap>
 	<select id="calList" resultMap="calRst">
 		select * from calendar777		
 	</select>
 	
 	<insert id="insCalendar" parameterType="calendar">
-		INSERT INTO calendar777 values(cal777.nextval,#{title},#{start},#{end},#{id},
+		INSERT INTO calendar777 values(cal777.nextval,#{title},#{start},#{end},#{writer},
 		#{textColor},#{backgroundColor},#{allDay},#{content},#{urllink})
 	</insert>
+	<update id="uptCalendar" parameterType="calendar">
+			update calendar777 
+			set title = #{title},
+				startdte = #{start},
+				enddte = #{end},
+				id = #{writer},
+				content = #{content},
+				textColor = #{textColor},
+				backColor = #{backgroundColor},
+				allday = #{allDay},
+				url = #{urllink}
+			where calno = #{calno}
+	</update>
+	<delete id="delCalendar" parameterType="int">
+			delete from calendar777 where calno=#{calno}
+	</delete>
 </mapper>

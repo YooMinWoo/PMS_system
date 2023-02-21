@@ -21,4 +21,10 @@ public class Calendar_Service {
 	public void insCalendar(Calendar ins) {
 		dao.insCalendar(ins);
 	}
+	public void uptCalendar(Calendar upt) {
+		dao.uptCalendar(upt);
+	}
+	public void delCalendar(int calno) {
+		dao.delCalendar(calno);
+	}
 }

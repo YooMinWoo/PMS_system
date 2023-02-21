@@ -69,6 +69,7 @@
 
     	  $("h2").click();
     	  $("form")[0].reset()
+    	  $("#modalCenterTitle").text("일정등록")
     	  $("#regBtn").show()
           $("#uptBtn").hide()
           $("#delBtn").hide()
@@ -80,8 +81,13 @@
           $("#allDay").val(""+arg.allDay)
       },
       eventClick: function(arg) {
-    	
     	  $("h2").click();
+    	  $("#modalCenterTitle").text("일정상세")
+    	  $("#regBtn").hide()
+    	  $("#uptBtn").show()
+    	  $("#delBtn").show()
+    	  
+    	  detailForm(arg.event)
       },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
@@ -112,11 +118,22 @@
            $("[name=title]").focus()
            return;
         }
-        addCalAjax("insertCalendar.do")
+        calAjax("insertCalendar.do")
+     })
+     
+     $("#uptBtn").click(function(){
+    	 if(confirm("수정하시겠습니까?")){
+    		 calAjax("updateCalendar.do")
+    	 }
+     })
+      $("#delBtn").click(function(){
+    	 if(confirm("삭제하시겠습니까?")){
+    		 calAjax("deleteCalendar.do")
+    	 }
      })
      
   });
-   	function addCalAjax(url){
+   	function calAjax(url){
 		$.ajax({
 			type:"post",
 			url:"${path}/"+url,
@@ -131,6 +148,29 @@
 			}
 		})
 	}
+   	function detailForm(event){
+   		// 일정 상세 화면
+   		$("form")[0].reset()
+   		$("[name=calno]").val(event.id)
+   		$("[name=title]").val(event.title)
+   		$("[name=start]").val(event.start.toISOString())
+        $("#start").val(event.start.toLocaleString())
+        $("[name=writer]").val(event.extendedProps.writer)
+        $("[name=content]").val(event.extendedProps.content)
+        $("[name=textColor]").val(event.textColor)
+        $("[name=backgroundColor]").val(event.backgroundColor)
+        
+        if(event.end==null){
+           $("[name=end]").val(event.start.toISOString())
+           $("#end").val(event.start.toLocaleString())
+        }else{
+           $("[name=end]").val(event.end.toISOString())
+           $("#end").val(event.end.toLocaleString())
+        }
+   		$("[name=allDay]").val(event.allDay?1:0)
+   		$("#allDay").val(""+event.allDay)      
+   		$("[name=urllink]").val(event.extendedProps.urllink)
+   	}
 </script>
 <style>
 
@@ -454,6 +494,7 @@
                               </div>
                               <div class="modal-body">
                                <form class="form">
+                                <input type="text" name="calno" value="0" />
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">일정명</label>

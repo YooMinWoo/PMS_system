@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Calendar_Service;
 import superPms.vo.Calendar;
@@ -32,6 +33,18 @@ public class Calendar_Controller {
 	public String insCalendar(Calendar ins,Model d) {
 		service.insCalendar(ins);
 		d.addAttribute("msg", "일정 등록 완료");
+		return "pageJsonReport";
+	}
+	@RequestMapping("/updateCalendar.do")
+	public String uptCalendar(Calendar upt,Model d) {
+		service.uptCalendar(upt);
+		d.addAttribute("msg", "일정 수정 완료");
+		return "pageJsonReport";
+	}
+	@RequestMapping("/deleteCalendar.do")
+	public String delCalendar(@RequestParam("calno")int calno,Model d) {
+		service.delCalendar(calno);
+		d.addAttribute("msg", "일정 삭제 완료");
 		return "pageJsonReport";
 	}
 }
