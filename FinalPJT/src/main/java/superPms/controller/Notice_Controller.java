@@ -32,4 +32,11 @@ public class Notice_Controller {
 	public String goNoticeDetailPM() {
 		return "WEB-INF\\minwooView\\notice_detail_pm.jsp";
 	}
+	
+	
+//	http://localhost:2030/FinalPJT/goModal.do		==> modal창
+	@RequestMapping("/goModal.do")
+	public String goModal() {
+		return "WEB-INF\\minwooView\\modal.jsp";
+	}
 }
