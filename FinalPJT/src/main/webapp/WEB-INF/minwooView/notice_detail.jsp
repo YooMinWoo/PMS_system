@@ -34,6 +34,12 @@
 	display: flex;
 	justify-content: space-between;
 }
+input:read-only {
+    background-color: white !important;
+}
+textarea:read-only{
+	background-color: white !important;
+}
 </style>
 
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
