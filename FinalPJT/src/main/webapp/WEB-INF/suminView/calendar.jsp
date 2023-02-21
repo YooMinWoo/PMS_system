@@ -96,7 +96,8 @@
 		// 시간일정 스크롤해서 시간 변경했을 때
 	  eventResize:function(info){
 			addForm(info.event)
-			ajaxFun("uptCalendar.do")
+			ajaxFun("uptCalendar.do")     
+			
 	  },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
