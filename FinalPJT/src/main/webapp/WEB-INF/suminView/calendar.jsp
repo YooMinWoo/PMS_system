@@ -89,6 +89,15 @@
     	  
     	  detailForm(arg.event)
       },
+      eventDrop:function(info){
+			addForm(info.event)
+			ajaxFun("uptCalendar.do")
+	  },
+		// 시간일정 스크롤해서 시간 변경했을 때
+	  eventResize:function(info){
+			addForm(info.event)
+			ajaxFun("uptCalendar.do")
+	  },
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       events:function(info,successCallback,failureCallback){
@@ -131,6 +140,12 @@
     		 calAjax("deleteCalendar.do")
     	 }
      })
+     $("[name=urllink]").dblclick(function(){
+ 		if(confirm("페이지 이동하시겠습니까?")){
+ 			window.open($(this).val())
+ 			
+ 		}
+ 	})		
      
   });
    	function calAjax(url){
@@ -494,7 +509,7 @@
                               </div>
                               <div class="modal-body">
                                <form class="form">
-                                <input type="text" name="id" value="0" />
+                                <input type="hidden" name="id" value="0" />
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">일정명</label>

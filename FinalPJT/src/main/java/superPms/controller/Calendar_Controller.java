@@ -42,8 +42,8 @@ public class Calendar_Controller {
 		return "pageJsonReport";
 	}
 	@RequestMapping("/deleteCalendar.do")
-	public String delCalendar(@RequestParam("calno")int calno,Model d) {
-		service.delCalendar(calno);
+	public String delCalendar(@RequestParam("id")int id,Model d) {
+		service.delCalendar(id);
 		d.addAttribute("msg", "일정 삭제 완료");
 		return "pageJsonReport";
 	}
