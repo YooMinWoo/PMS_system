@@ -2,7 +2,7 @@ package superPms.vo;
 
 public class Calendar {
 	
-	private int calno; // calno
+	private int id; // calno
 	private String title;
 	private String start;
 	private String end;
@@ -12,11 +12,11 @@ public class Calendar {
 	private boolean allDay;
 	private String content;
 	private String urllink;
-	public int getCalno() {
-		return calno;
+	public int getId() {
+		return id;
 	}
-	public void setCalno(int calno) {
-		this.calno = calno;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getTitle() {
 		return title;

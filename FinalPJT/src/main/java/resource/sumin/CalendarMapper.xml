@@ -10,8 +10,6 @@
 		<result column="allday" property="allDay"></result>
 		<result column="backColor" property="backgroundColor"></result>
 		<result column="url" property="urllink"></result>
-		<result column="id" property="writer"></result>
-		
 	</resultMap>
 	<select id="calList" resultMap="calRst">
 		select * from calendar777		
@@ -26,15 +24,15 @@
 			set title = #{title},
 				startdte = #{start},
 				enddte = #{end},
-				id = #{writer},
+				writer = #{writer},
 				content = #{content},
 				textColor = #{textColor},
 				backColor = #{backgroundColor},
 				allday = #{allDay},
 				url = #{urllink}
-			where calno = #{calno}
+			where id = #{id}
 	</update>
 	<delete id="delCalendar" parameterType="int">
-			delete from calendar777 where calno=#{calno}
+			delete from calendar777 where id=#{id}
 	</delete>
 </mapper>

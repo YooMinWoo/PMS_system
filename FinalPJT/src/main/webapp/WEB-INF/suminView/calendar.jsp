@@ -151,7 +151,7 @@
    	function detailForm(event){
    		// 일정 상세 화면
    		$("form")[0].reset()
-   		$("[name=calno]").val(event.id)
+   		$("[name=id]").val(event.id)
    		$("[name=title]").val(event.title)
    		$("[name=start]").val(event.start.toISOString())
         $("#start").val(event.start.toLocaleString())
@@ -494,7 +494,7 @@
                               </div>
                               <div class="modal-body">
                                <form class="form">
-                                <input type="text" name="calno" value="0" />
+                                <input type="text" name="id" value="0" />
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">일정명</label>
