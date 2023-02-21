@@ -11,26 +11,8 @@ public class Calendar {
 	private String backgroundColor;
 	private boolean allDay;
 	private String content;
-	private String url;
+	private String urllink;
 	
-	public Calendar() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Calendar(int calno, String title, String start, String end, String id, String textColor,
-			String backgroundColor, boolean allDay, String content, String url) {
-		this.calno = calno;
-		this.title = title;
-		this.start = start;
-		this.end = end;
-		this.id = id;
-		this.textColor = textColor;
-		this.backgroundColor = backgroundColor;
-		this.allDay = allDay;
-		this.content = content;
-		this.url = url;
-	}
-
 	public int getCalno() {
 		return calno;
 	}
@@ -103,13 +85,32 @@ public class Calendar {
 		this.content = content;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getUrllink() {
+		return urllink;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrllink(String urllink) {
+		this.urllink = urllink;
 	}
+
+	public Calendar(int calno, String title, String start, String end, String id, String textColor,
+			String backgroundColor, boolean allDay, String content, String urllink) {
+		this.calno = calno;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+		this.id = id;
+		this.textColor = textColor;
+		this.backgroundColor = backgroundColor;
+		this.allDay = allDay;
+		this.content = content;
+		this.urllink = urllink;
+	}
+
+	public Calendar() {
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	
 	

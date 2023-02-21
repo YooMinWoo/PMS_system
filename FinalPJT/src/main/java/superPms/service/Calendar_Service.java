@@ -17,4 +17,8 @@ public class Calendar_Service {
 	public List<Calendar> calList(){
 		return dao.calList();
 	}
+	
+	public void insCalendar(Calendar ins) {
+		dao.insCalendar(ins);
+	}
 }

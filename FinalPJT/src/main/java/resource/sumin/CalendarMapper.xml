@@ -9,8 +9,14 @@
 		<result column="enddte" property="end"></result>
 		<result column="allday" property="allDay"></result>
 		<result column="backColor" property="backgroundColor"></result>
+		<result column="url" property="urllink"></result>
 	</resultMap>
 	<select id="calList" resultMap="calRst">
 		select * from calendar777		
 	</select>
+	
+	<insert id="insCalendar" parameterType="calendar">
+		INSERT INTO calendar777 values(cal777.nextval,#{title},#{start},#{end},#{id},
+		#{textColor},#{backgroundColor},#{allDay},#{content},#{urllink})
+	</insert>
 </mapper>

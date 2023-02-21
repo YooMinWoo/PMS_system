@@ -68,6 +68,7 @@
       select: function(arg) {
 
     	  $("h2").click();
+    	  $("form")[0].reset()
     	  $("#regBtn").show()
           $("#uptBtn").hide()
           $("#delBtn").hide()
@@ -75,7 +76,7 @@
           $("#start").val(arg.start.toLocaleString())
           $("[name=end]").val(arg.end.toISOString())
           $("#end").val(arg.end.toLocaleString())
-          $("[name=allDay]").val(arg.allDay?1:0);
+          $("[name=allDay]").val(arg.allDay?1:0)
           $("#allDay").val(""+arg.allDay)
       },
       eventClick: function(arg) {
@@ -100,11 +101,36 @@
     });
 
     calendar.render();
-  });
-
-	$("#allDay").change(function(){
+    
+    $("#allDay").change(function(){
    		$("[name=allDay]").val($(this).val()=='true'?1:0)
    	})
+   	
+    $("#regBtn").click(function(){
+        if($("[name=title]").val()==""){
+           alert("일정을 입력하세요")
+           $("[name=title]").focus()
+           return;
+        }
+        addCalAjax("insertCalendar.do")
+     })
+     
+  });
+   	function addCalAjax(url){
+		$.ajax({
+			type:"post",
+			url:"${path}/"+url,
+			data:$("form").serialize(),
+			dataType:"json",
+			success:function(data){
+				alert(data.msg)
+				location.reload()
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
 </script>
 <style>
 
@@ -414,7 +440,9 @@
                           data-bs-target="#modalCenter"></h2>
 			   <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
+                         
                             <div class="modal-content">
+                            
                               <div class="modal-header">
                                 <h5 class="modal-title" id="modalCenterTitle">일정등록</h5>
                                 <button
@@ -425,10 +453,11 @@
                                 ></button>
                               </div>
                               <div class="modal-body">
+                               <form class="form">
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="nameWithTitle" class="form-label">일정명</label>
-                                    <input type="text" id="title" class="form-control" placeholder="일정명"/>
+                                    <input type="text" id="title" name="title" class="form-control" placeholder="일정명"/>
                                   </div>
                                 </div>
                                 <div class="row g-2">
@@ -446,7 +475,7 @@
                                   <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="wrtier" class="form-label">작성자</label>
-                                    <input type="text" id="writer" class="form-control"/>
+                                    <input type="text" name="writer" class="form-control"/>
                                    
                                   </div>
                                   <div class="col mb-0">
@@ -462,12 +491,12 @@
                                  <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="textColor" class="form-label">글자색상</label>
-                                    <input type="color" value="#ccffff" id="textColor" class="form-control"/>
+                                    <input type="color" value="#ccffff" id="textColor" name="textColor" class="form-control"/>
                               
                                   </div>
                                   <div class="col mb-0">
                                     <label for="backgroundColor" class="form-label">배경색상</label>
-                                    <input type="color" value="#0099cc" id="backgroundColor" class="form-control"/>
+                                    <input type="color" value="#0099cc" id="backgroundColor" name="backgroundColor" class="form-control"/>
                                    
                                   </div>
                                   
@@ -475,16 +504,17 @@
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="content" class="form-label">내용</label>
-                                    <textarea  rows="5" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+                                    <textarea  rows="5" name="content" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
                                   </div>
                                 </div>
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="url" class="form-label">링크</label>
-                                   <input type="text" id="url" class="form-control"/>
+                                   <input type="url" name="urllink" id="url" class="form-control"/>
                                   </div>
                                 </div>
                               </div>
+                              </form>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                   닫기

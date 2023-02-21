@@ -6,4 +6,5 @@ import superPms.vo.Calendar;
 
 public interface Calendar_Dao {
 	public List<Calendar> calList();
+	public void insCalendar(Calendar ins);
 }
