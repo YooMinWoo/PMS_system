@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="superPms.dao.SuperDept_Dao">
+	<select id="superDeptList" resultType="superdept" parameterType="deptsch">
+		select *
+		from (
+			select rownum cnt, level, s.*
+			from superDept s
+			where 1=1
+			START WITH parentdept IS null
+			CONNECT BY PRIOR deptid =parentdept
+			ORDER siblings BY deptid)
+		WHERE dname NOT LIKE '최고경영진' and cnt between #{start} and #{end}	
+	</select>
+	<select id="totCnt" resultType="int" parameterType="deptsch">
+		select count(*)
+		from superdept	
+	</select>
+	<select id="getParentDeptComb" resultType="string">
+		SELECT DISTINCT dname
+		FROM superDept
+		WHERE NOT dname is NULL
+		AND dname NOT LIKE '최고경영진'
+	</select>
+</mapper>

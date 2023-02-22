@@ -6,11 +6,14 @@
 		<typeAlias alias="calendar" type="superPms.vo.Calendar"/>
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
 		<typeAlias alias="project" type="superPms.vo.Project"/>
+		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
+      	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="resource/sumin/CalendarMapper.xml"/>
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
+		<mapper resource="resource/eunbeen/SuperDeptMapper.xml"/>
 	</mappers>
 </configuration>
