@@ -13,7 +13,7 @@ public class Work_Service {
 	@Autowired(required=false)
 	private Work_Dao dao;
 	
-	public List<Work> getworkList(){
-		return dao.getworkList();
+	public List<Work> getWorkList(){
+		return dao.getWorkList();
 	}
 }
