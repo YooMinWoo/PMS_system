@@ -21,6 +21,10 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
+td, th{
+	text-align: center;
+}
+
 
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -130,7 +134,7 @@
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
 			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
-			      <td>${work.uptdte }</td><td>${work.id }</td><td>${work.state }</td></tr>
+			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
@@ -139,7 +143,31 @@
              <!--  /진행중 프로젝트 tab -->
               <!--  종료 프로젝트 tab -->
             <div class="tab-pane fade" id="horizontal-settings">
-           
+           <div class="table-responsive text-nowrap">
+			  <table class="table card-table" style="overflow: hidden;">
+			  <col width="13%">
+			  <col width="40%">
+			  <col width="17%">
+			  <col width="17%">
+			  <col width="13%">
+			    <thead>
+			      <tr>
+			        <th>번호</th>
+			        <th>업무</th>
+			        <th>등록일자</th>
+			        <th>마감일자</th>
+			        <th>작성자</th>
+			        <th>진행상태</th>
+			      </tr>
+			    </thead>
+			    <tbody class="table-border-bottom-0">
+			      <c:forEach var="work" items="${worklist}">
+			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
+			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
+			      </c:forEach>
+			    </tbody>
+			  </table>
+			</div>
            
             </div>
              <!--  /종료 프로젝트 tab -->

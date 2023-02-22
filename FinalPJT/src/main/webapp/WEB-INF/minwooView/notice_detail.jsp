@@ -21,10 +21,6 @@
 <!-- 
 
 -->
-.card{
-	width: 80%;
-    margin: 0px auto;
-}
 .btns{
 	display: flex;
 	justify-content: flex-end;
@@ -39,6 +35,10 @@ input:read-only {
 }
 textarea:read-only{
 	background-color: white !important;
+}
+.card.mb-4{
+	padding-left: 3rem !important;
+	padding-right: 3rem !important;
 }
 </style>
 
@@ -106,7 +106,7 @@ textarea:read-only{
            
 	           
 		           	<h4 class="fw-bold py-3 mb-4">공지사항 상세화면</h4>
-	           <div class="card">
+	           <div class="card mb-4 pb-3">
            			<div class="card-body">
                       <form>
                         <div class="mb-3">

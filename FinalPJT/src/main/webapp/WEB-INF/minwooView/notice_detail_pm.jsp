@@ -21,10 +21,6 @@
 <!-- 
 
 -->
-.card{
-	width: 80%;
-    margin: 0px auto;
-}
 .btns{
 	display: flex;
 	justify-content: flex-end;
@@ -33,6 +29,10 @@
 .divs{
 	display: flex;
 	justify-content: space-between;
+}
+.card.mb-4{
+	padding-left: 3rem !important;
+	padding-right: 3rem !important;
 }
 </style>
 
@@ -109,8 +109,8 @@
            
            
 	           
-		           	<h4 class="fw-bold py-3 mb-4">공지사항 상세화면</h4>
-	           <div class="card">
+		       <h4 class="fw-bold py-3 mb-4">공지사항(관리자) > <small class="text-muted">상세화면</small></h4>
+	           <div class="card mb-4 pb-3">
            			<div class="card-body">
                       <form>
                         <div class="mb-3">

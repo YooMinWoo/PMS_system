@@ -17,7 +17,7 @@ public class Work_Controller {
 	// http://localhost:7080/FinalPJT/worklist.do
 	@RequestMapping("/worklist.do")
 	public String worklist(Model d) {
-		d.addAttribute("worklist",service.getworkList());
+		d.addAttribute("worklist",service.getWorkList());
 		return "WEB-INF\\jongeunView\\workList.jsp";
 	}
 }

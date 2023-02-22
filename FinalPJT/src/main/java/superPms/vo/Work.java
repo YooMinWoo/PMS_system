@@ -4,7 +4,7 @@ package superPms.vo;
 public class Work {
 	private int workno;	
 	private String regdte;
-	private String uptdte;
+	private String enddte;
 	private String subject;
 	private String cont;
 	private String id;	
@@ -29,11 +29,11 @@ public class Work {
 	public void setRegdte(String regdte) {
 		this.regdte = regdte;
 	}
-	public String getUptdte() {
-		return uptdte;
+	public String getenddte() {
+		return enddte;
 	}
-	public void setUptdte(String uptdte) {
-		this.uptdte = uptdte;
+	public void setenddte(String enddte) {
+		this.enddte = enddte;
 	}
 	public String getSubject() {
 		return subject;

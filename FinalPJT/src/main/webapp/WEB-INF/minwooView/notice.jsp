@@ -35,6 +35,16 @@ tbody td{
 tbody tr{
 	cursor:pointer;
 }
+.card.mb-4{
+	padding-left: 3rem !important;
+	padding-right: 3rem !important;
+}
+.schDiv{
+	display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
 -->
 </style>
 
@@ -103,7 +113,8 @@ tbody tr{
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">공지사항</h4>
-           <div style="display: flex;justify-content: flex-end;">
+           <div class="card mb-4 pb-3">
+           <div class="schDiv">
 	           <div class="input-group input-group-merge">
 	              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
 	              <input
@@ -117,7 +128,6 @@ tbody tr{
 	              />
 	            </div>
             </div>
-           <div class="card">
            <table class="table">
            	<col width="7%">
 			  <col width="20%">
