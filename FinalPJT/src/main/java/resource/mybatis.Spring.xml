@@ -8,6 +8,7 @@
 		<typeAlias alias="project" type="superPms.vo.Project"/>
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
+      	<typeAlias alias="work" type="superPms.vo.Work"/>
 	</typeAliases>
 
 	<mappers>
@@ -15,5 +16,6 @@
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/eunbeen/SuperDeptMapper.xml"/>
+		<mapper resource="resource/jongeun/WorkMapper.xml"/>
 	</mappers>
 </configuration>
