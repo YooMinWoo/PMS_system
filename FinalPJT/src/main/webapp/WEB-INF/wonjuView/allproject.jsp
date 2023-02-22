@@ -64,6 +64,11 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-allproject").addClass('active');	
+		$("[name=keyword]").keyup(function(){
+			if(event.keyCode==13){
+				$("#allFrm").submit()
+			}
+		})
 	});
 </script>
 </head>
@@ -105,10 +110,10 @@ tbody td{
           <div class="col-4">
           
           <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex">
+          <form class="d-flex" id="allFrm" action="${path }/allProject.do" method="get">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" class="form-control" placeholder="Search...">
+	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
@@ -118,7 +123,7 @@ tbody td{
           <!--  진행중 프로젝트 tab -->
             <div class="tab-pane fade show active" id="horizontal-home">
              <div class="table-responsive text-nowrap">
-			  <table class="table card-table">
+			  <table class="table card-table" style="overflow: hidden;">
 			  <col width="13%">
 			  <col width="40%">
 			  <col width="17%">
@@ -134,9 +139,10 @@ tbody td{
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
-			      <tr>
-			       <td>IT</td><td>프로젝트A</td><td>2023-02-20</td><td>2023-02-21</td><td>홍길동</td>
-			      </tr>
+			      <c:forEach var="allp" items="${list}">
+			      <tr><td>${allp.deptid }</td><td>${allp.subject }</td><td>${allp.regdte }</td>
+			      <td>${allp.deadline }</td><td>${allp.ename }</td></tr>
+			      </c:forEach>
 			    </tbody>
 			  </table>
 			</div>

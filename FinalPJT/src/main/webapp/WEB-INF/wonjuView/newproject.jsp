@@ -59,7 +59,61 @@
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
 		$("#startDate").val(new Date().toISOString().substring(0, 10))
+		
+		$("#regBtn").click(function(){	
+			var regdte = new Date($("[name=regdte]").val())
+			var deadline = new Date($("[name=deadline]").val())
+			/* console.log($("[name=deptid]").val())
+			console.log($("[name=subject]").val())
+			console.log($("[name=deadline]").val())
+			console.log(regdte<deadline)
+			 */
+			 $("form").addClass('was-validated')
+			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!='' 
+				&& $("[name=deadline]").val()!='' && regdte<deadline){
+				insAjax()
+			}else if(regdte<deadline){
+				$("#deadCk").hide()
+				$("[name=deadline]").css('border-color','');
+			}else if(regdte>=deadline){
+				$("#deadCk").show()
+				$("[name=deadline]").css('border-color','#ff3e1d');
+				$("#deadCk").text('종료일자는 시작일자보다 빠를수 없습니다')
+			}
+			
+						
+		})
+		$("#canBtn").click(function(){
+			location.href="" // 내 프로젝트 페이지로 이동
+		})
+		
+		
+		
 	});
+
+   function insAjax(){
+	   $.ajax({
+			url:"${path}/newProject.do",
+			type:"post",
+			data:$("form").serialize(),
+			dataType:"json",
+			success:function(data){
+				console.log(data.msg)
+				console.log(data.prjno)
+				console.log(data)
+				if(data.msg=='등록성공'){
+					if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
+						location.href=""; // 만들어진 페이지로 이동 주소?prjno=prjno
+					}else{
+						location.reload()
+					}
+				}
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+   }
 </script>
 </head>
 
@@ -97,59 +151,69 @@
               </p>
 		      <div class="card-body">
 		       <!-- 등록 form  -->
-		      <form>
+		      <form class="needs-validation">
 		        <div class="mb-3 row">
 		          <label for="html5-text-input" class="col-md-2 col-form-label">카테고리</label>
 		          <div class="col-md-10">
-			           <select id="html5-text-input" class="form-select">
-			            <option>카테고리를 선택하세요</option>
-			            <option value="1">One</option>
-			            <option value="2">Two</option>
-			            <option value="3">Three</option>
+			           <select id="html5-text-input" class="form-select" name="deptid" required="required">
+			            <option selected disabled value>카테고리를 선택하세요</option>
+			            <option value="10">IT</option>
+			            <option value="20">마케팅</option>
+			            <option value="30">영업</option>
 			          </select>
+			          <div class="invalid-feedback">
+					      카테고리를 선택해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">프로젝트 명</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="" placeholder="프로젝트 이름을 입력하세요" id="html5-search-input">
+		            <input class="form-control" type="text" name="subject" placeholder="프로젝트 이름을 입력하세요" id="html5-search-input" required="required">
+		           	<div class="invalid-feedback">
+					      프로젝트 명을 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">관리자</label>
+		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="" placeholder="세션에 있는 pm의 이름" id="html5-search-input" readonly="readonly">
+		            <input class="form-control" type="text" value="김관리" placeholder="" id="html5-search-input" readonly="readonly">
+		          	<input type="hidden" name="tlid" value="admin1@gmail.com"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">시작 일자</label>
-		          <div class="col-md-10">
-		            <input class="form-control" id="startDate" type="date" value="" placeholder="프로젝트 생성을 한 오늘 날짜" id="html5-search-input" readonly="readonly">
+		          <label for="startDate" class="col-md-2 col-form-label">시작 일자</label>
+		          <div class="col-md-10"> 
+		            <input class="form-control" name="regdte" id="startDate" type="date" value="" readonly="readonly">
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">종료 일자</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="date" value="" placeholder="프로젝트 종료 일자를 입력하세요" id="html5-search-input">
+		            <input class="form-control validCk" name="deadline" type="date" value="" placeholder="프로젝트 종료 일자를 입력하세요" id="html5-search-input" required="required">
+		          	 <div class="invalid-feedback" id="deadCk">
+					    프로젝트 종료 일자를 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">공개 여부</label>
 		          <div class="col-md-10">
 			          <div class="form-check form-check-inline">
-			              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="checked">
+			              <input class="form-check-input" type="radio" name="openStatus" id="inlineRadio1" value="0" checked="checked">
 			              <label class="form-check-label" for="inlineRadio1">전체 공개</label>
 			            </div>
 		          	  <div class="form-check form-check-inline">
-		                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+		                  <input class="form-check-input" type="radio" name="openStatus" id="inlineRadio2" value="1">
 		                  <label class="form-check-label" for="inlineRadio2">멤버 공개</label>
 		               </div>
 		          </div>
 		        </div>
 		        <div class="card-footer">
 			        <div class="d-flex justify-content-center">
-			        <button type="button" class="btn btn-primary">등록</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			        <button type="button" class="btn btn-secondary">취소</button>
+			        <button id="regBtn" type="button" class="btn btn-primary">등록</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        <button id="canBtn" type="button" class="btn btn-secondary">취소</button>
 			        </div>
 		        </div>
 		        </form>

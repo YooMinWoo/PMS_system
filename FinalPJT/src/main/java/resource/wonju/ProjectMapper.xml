@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="superPms.dao.Project_Dao">
+	<insert id="insProject" parameterType="project">
+	INSERT INTO project values(pro_seq.nextval,#{regdte},#{deadline},#{subject},#{tlid},#{deptid},#{openStatus})
+	</insert>
+	
+	<select id="allProject" parameterType="string" resultType="project">
+	SELECT p.*,e.ename FROM project p,emp777 e 
+	WHERE openstatus='0' AND e.id=p.tlid AND to_date(p.deadline,'yyyy-mm-dd')>=sysdate
+	AND (subject LIKE '%'||#{subject}||'%'
+	or ename LIKE '%'||#{ename}||'%')
+	</select>
+</mapper>
