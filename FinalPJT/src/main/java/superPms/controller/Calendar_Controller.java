@@ -16,7 +16,7 @@ public class Calendar_Controller {
 	@Autowired
 	private Calendar_Service service; 
 	
-//	http://49.238.187.241:7080/FinalPJT/calList.do
+//	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
 	public String calList() {
 		return "WEB-INF\\suminView\\calendar.jsp";
@@ -26,7 +26,6 @@ public class Calendar_Controller {
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(Model d) {
 		d.addAttribute("calList", service.calList());
-		System.out.println("####################"+service.calList());
 		return "pageJsonReport";
 	}
 	
