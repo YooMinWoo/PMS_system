@@ -134,7 +134,7 @@ td, th{
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
 			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
-			      <td>${work.uptdte }</td><td>${work.id }</td><td>${work.state }</td></tr>
+			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
