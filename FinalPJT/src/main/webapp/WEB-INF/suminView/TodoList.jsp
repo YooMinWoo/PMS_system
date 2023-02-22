@@ -17,7 +17,11 @@
 <title>Insert title here</title>
 
 <style>
-	td{text-align:center;}
+.card.mb-4{
+	padding-left: 3rem !important;
+	padding-right: 3rem !important;
+}
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -51,9 +55,9 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		<%-- 
-		
-		--%>	
+		// $("#").addClass('active open');	
+		// $("#").addClass('active');	
+		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 	});
 </script>
 </head>
@@ -65,29 +69,31 @@
         <!-- Menu -->
 	<jsp:include page="/mainMenubar.jsp"></jsp:include>
         <!-- / Menu -->
-
         <!-- Layout container -->
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
-            <!-- Components -->
-         
-
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-
             <div class="container-xxl flex-grow-1 container-p-y">
-             
+ 
+           <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">To do list</small></h4>
+           
+           <div class="card mb-4 pb-3">
+           
+         	</div>
+         	  <!-- /card -->
             </div>
             <!-- / Content -->
 
-         
+	
 
-            <div class="content-backdrop fade"></div>
+           
           </div>
           <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
+      </div>
       </div>
 
       <!-- Overlay -->
