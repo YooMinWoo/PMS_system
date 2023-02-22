@@ -1,6 +1,5 @@
 package superPms.vo;
 
-import java.util.Date;
 
 public class Work {
 	private int workno;	
