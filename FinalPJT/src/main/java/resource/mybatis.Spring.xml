@@ -10,6 +10,8 @@
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
+      	<typeAlias alias="notice" type="superPms.vo.Notice"/>
+      	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
       	
 	</typeAliases>
 
@@ -20,5 +22,6 @@
 		<mapper resource="resource/eunbeen/SuperDeptMapper.xml"/>
 		<mapper resource="resource/jungwoo/RiskMapper.xml"/>
 		<mapper resource="resource/jongeun/WorkMapper.xml"/>		
+		<mapper resource="resource/minwoo/NoticeMapper.xml"/>		
 	</mappers>
 </configuration>

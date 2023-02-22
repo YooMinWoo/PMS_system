@@ -33,6 +33,7 @@ tbody td{
 	display: flex;
     justify-content: flex-end;
     gap:15px;
+    padding-bottom:10px;
 }
 .checkboxs{
 	visibility:hidden
@@ -45,6 +46,16 @@ tbody td{
 }
 tbody tr{
 	cursor:pointer;
+}
+.card.mb-4{
+	padding-left: 3rem !important;
+	padding-right: 3rem !important;
+}
+.schDiv{
+	display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 -->
 </style>
@@ -104,12 +115,10 @@ tbody tr{
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           
-           
-	           
-		           	<h4 class="fw-bold py-3 mb-4">공지사항</h4>
-		           	<div style="display: flex;justify-content: flex-end;">
+		           	<h4 class="fw-bold py-3 mb-4">공지사항(관리자)</h4>
+		           	
+	           <div class="card mb-4 pb-3">
+	           <div class="schDiv"">
 			           <div class="input-group input-group-merge">
 			              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
 			              <input
@@ -128,13 +137,12 @@ tbody tr{
 		           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
 		           <button type="button" class="btn btn-secondary" id="check">선택</button>
 	           </div>
-	           <div class="card">
            <table class="table">
            	  <col width="3%">
            	  <col width="4%">
-			  <col width="23%">
+			  <col width="20%">
 			  <col width="13%">
-			  <col width="7%">
+			  <col width="10%">
 			  <col width="20%">
 			  <col width="20%">
 			  <col width="10%">
@@ -228,7 +236,7 @@ tbody tr{
 							location.href="/FinalPJT/goCreateNotice.do"
 						}
 					})
-					$("tbody tr").click(function(){
+					$("tbody tr td:nth-child(n+2)").click(function(){
 						location.href="/FinalPJT/goNoticeDetailPM.do"
 					})
 					
