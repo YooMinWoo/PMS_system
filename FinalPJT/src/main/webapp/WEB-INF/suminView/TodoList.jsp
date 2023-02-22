@@ -61,7 +61,40 @@
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		
+		$("#addBtn").show()
+		$("#uptBtn").hide()
+		$("#delBtn").hide()
+		
+		$("#addBtn").click(function(){
+			$("h2").click()
+			$("#modalTitle").text("할 일 등록")
+		})
+		
+		$("#regBtn").click(function(){
+			if($("[name=title]").val()==""){
+				alert("할 일을 입력하세요")
+				$("[name=title]").focus()
+				return
+			}
+			todoAjax("insTodo.do")
+		})
 	});
+	function todoAjax(url){
+		$.ajax({
+			type:"post",
+			url:"${path}/"+url,
+			data:$("form").serialize(),
+			dataType:"json",
+			success:function(data){
+				alert(data.msg)
+				location.reload()
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
 </script>
 </head>
 
@@ -83,11 +116,12 @@
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">To do list</small></h4>
            
            <div class="card mb-4 pb-3">
-           <div class="demo-inline-spacing">
-         	<button type="button" class="btn rounded-pill btn-primary">추가</button>
-         	<button type="button" class="btn rounded-pill btn-warning">수정</button>
-         	<button type="button" class="btn rounded-pill btn-danger">삭제</button>
-         	</div>
+	           <div class="demo-inline-spacing">
+	         	<button id="addBtn" type="button" class="btn rounded-pill btn-primary">추가</button>
+	         	<button id="uptBtn" type="button" class="btn rounded-pill btn-warning">수정</button>
+	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
+	         	</div>
+         	<!--  
            		  <div class="input-group">
                         <div class="input-group-text">
                           <input
@@ -99,11 +133,51 @@
                         </div>
                         <input type="text" class="form-control" aria-label="Text input with checkbox" />
                       </div>
+                -->      
          	</div>
          	  <!-- /card -->
             </div>
             <!-- / Content -->
-
+			  <!-- Modal -->
+			   <h2 data-bs-toggle="modal"
+                          data-bs-target="#modalCenter"></h2>
+                        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                              <form class="form">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="todoWithTitle" class="form-label">할 일</label>
+                                    <input	type="text" id="todo" class="form-control" />
+                                  </div>
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+                                    <label for="idWithTitle" class="form-label">작성자</label>
+                                    <input type="text" id="id" class="form-control"/>
+                                  </div>
+                                </div>
+                              </div>
+                              </form>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  닫기
+                                </button>
+                                <button type="button" class="btn btn-primary">등록</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 	
 
            

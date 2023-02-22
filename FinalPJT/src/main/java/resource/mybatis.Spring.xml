@@ -10,6 +10,7 @@
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
+      	
 	</typeAliases>
 
 	<mappers>

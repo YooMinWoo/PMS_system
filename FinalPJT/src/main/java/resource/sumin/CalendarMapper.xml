@@ -7,32 +7,30 @@
 	<resultMap type="calendar" id="calRst">
 		<result column="startdte" property="start"></result>
 		<result column="enddte" property="end"></result>
-		<result column="allday" property="allDay"></result>
-		<result column="backColor" property="backgroundColor"></result>
 		<result column="url" property="urllink"></result>
 	</resultMap>
 	<select id="calList" resultMap="calRst">
-		select * from calendar777		
+		select * from calendar		
 	</select>
 	
 	<insert id="insCalendar" parameterType="calendar">
-		INSERT INTO calendar777 values(cal777.nextval,#{title},#{start},#{end},#{writer},
-		#{textColor},#{backgroundColor},#{allDay},#{content},#{urllink})
+		INSERT INTO calendar values(cal_seq.nextval,#{title},#{start},#{end},#{writer},
+	#{textColor},#{backgroundColor},#{allDay},#{content},#{urllink})
 	</insert>
 	<update id="uptCalendar" parameterType="calendar">
-			update calendar777 
+			update calendar 
 			set title = #{title},
 				startdte = #{start},
 				enddte = #{end},
 				writer = #{writer},
 				content = #{content},
 				textColor = #{textColor},
-				backColor = #{backgroundColor},
-				allday = #{allDay},
+				backgroundColor = #{backgroundColor},
+				allDay = #{allDay},
 				url = #{urllink}
 			where id = #{id}
 	</update>
 	<delete id="delCalendar" parameterType="int">
-			delete from calendar777 where id=#{id}
+			delete from calendar where id=#{id}
 	</delete>
 </mapper>

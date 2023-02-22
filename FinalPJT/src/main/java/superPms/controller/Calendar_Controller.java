@@ -16,7 +16,7 @@ public class Calendar_Controller {
 	@Autowired
 	private Calendar_Service service; 
 	
-//	http://localhost:7080/FinalPJT/calList.do
+//	http://49.238.187.241:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
 	public String calList() {
 		return "WEB-INF\\suminView\\calendar.jsp";
