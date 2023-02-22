@@ -1,5 +1,7 @@
 package superPms.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,8 @@ public class Todolist_Service {
 	private Todolist_Dao dao;
 	public void insTodo(Todolist ins) {
 		dao.insTodo(ins);
+	}
+	public List<Todolist> todoList(String id){
+		return dao.todoList(id);
 	}
 }

@@ -63,8 +63,6 @@
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 		
 		$("#addBtn").show()
-		$("#uptBtn").hide()
-		$("#delBtn").hide()
 		
 		$("#addBtn").click(function(){
 			$("h2").click()
@@ -79,6 +77,7 @@
 			}
 			todoAjax("insTodo.do")
 		})
+		
 	});
 	function todoAjax(url){
 		$.ajax({
@@ -95,10 +94,13 @@
 			}
 		})
 	}
+	
+	
 </script>
 </head>
 
 <body style="overflow-x: hidden">
+
    <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -118,9 +120,48 @@
            <div class="card mb-4 pb-3">
 	           <div class="demo-inline-spacing">
 	         	<button id="addBtn" type="button" class="btn rounded-pill btn-primary">추가</button>
-	         	<button id="uptBtn" type="button" class="btn rounded-pill btn-warning">수정</button>
-	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
 	         	</div>
+	         	<div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>to do</th>
+                        <th>status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <c:forEach var="todo" items="todoList">
+                      <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <input type="checkbox" value="${todo.tno }"></td>
+                        <td>${todo.todo }</td>
+                        <td>
+                         
+                        </td>
+                        <td><span class="badge bg-label-primary me-1">Active</span></td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                              >
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-trash me-1"></i> Delete</a
+                              >
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      </c:forEach>
+                      
+                    </tbody>
+                  </table>
+                </div>
+	         
          	<!--  
            		  <div class="input-group">
                         <div class="input-group-text">
@@ -153,18 +194,19 @@
                                   aria-label="Close"
                                 ></button>
                               </div>
+                               <form class="form">
                               <div class="modal-body">
-                              <form class="form">
+                             
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="todoWithTitle" class="form-label">할 일</label>
-                                    <input	type="text" id="todo" class="form-control" />
+                                    <input	type="text" name="todo" id="todo" class="form-control" />
                                   </div>
                                 </div>
                                 <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="idWithTitle" class="form-label">작성자</label>
-                                    <input type="text" id="id" class="form-control"/>
+                                    <input type="text"  name="id" id="id" class="form-control"/>
                                   </div>
                                 </div>
                               </div>
@@ -173,7 +215,7 @@
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                   닫기
                                 </button>
-                                <button type="button" class="btn btn-primary">등록</button>
+                                <button id="regBtn" type="button" class="btn btn-primary">등록</button>
                               </div>
                             </div>
                           </div>

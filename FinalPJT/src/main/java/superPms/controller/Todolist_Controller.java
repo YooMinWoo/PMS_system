@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Todolist_Service;
 import superPms.vo.Todolist;
@@ -20,7 +21,12 @@ public class Todolist_Controller {
 		
 		return "WEB-INF\\suminView\\TodoList.jsp";
 	}
-	
+	@RequestMapping("/todoAjax.do")
+	public String todoAjax(@RequestParam("id") String id,Model d) {
+		
+		d.addAttribute("todoList",service.todoList(id));
+		return "pageJsonReport";
+	}
 	@RequestMapping("/insTodo.do")
 	public String insTodo(Todolist ins,Model d) {
 		service.insTodo(ins);

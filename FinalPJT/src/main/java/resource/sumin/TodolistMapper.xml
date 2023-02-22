@@ -5,6 +5,10 @@
 
 <mapper namespace="superPms.dao.Todolist_Dao">
 	<insert id="insTodo" parameterType="todolist">
-	
+	INSERT INTO todolist values(todo_seq.nextval,#{todo},'0',#{id})
 	</insert>
+	
+	<select id="todoList" parameterType="string">
+		select * from todolist where id=#{id}
+	</select>
 </mapper>

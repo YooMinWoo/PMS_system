@@ -100,7 +100,7 @@
 			
 	  },
       editable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
+      dayMaxEvents: true, 
       events:function(info,successCallback,failureCallback){
     	  $.ajax({
     		  type:"post",
