@@ -18,5 +18,6 @@
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/eunbeen/SuperDeptMapper.xml"/>
 		<mapper resource="resource/jongeun/WorkMapper.xml"/>
+		<mapper resource="resource/jungwoo/RiskMapper.xml"/>
 	</mappers>
 </configuration>
