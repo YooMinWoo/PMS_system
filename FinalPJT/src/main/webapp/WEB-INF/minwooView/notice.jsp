@@ -120,9 +120,9 @@ tbody tr{
            <div class="card">
            <table class="table">
            	<col width="7%">
-			  <col width="23%">
+			  <col width="20%">
 			  <col width="13%">
-			  <col width="7%">
+			  <col width="10%">
 			  <col width="20%">
 			  <col width="20%">
 			  <col width="10%">
@@ -156,6 +156,52 @@ tbody tr{
                         <td>2023-02-21</td>
                         <td>개발</td>
                       </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>공지사항 제목입니다.2</td>
+                        <td>유민우</td>
+                        <td>123</td>
+                        <td>2023-02-21</td>
+                        <td>2023-02-21</td>
+                        <td>개발</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>공지사항 제목입니다.2</td>
+                        <td>유민우</td>
+                        <td>123</td>
+                        <td>2023-02-21</td>
+                        <td>2023-02-21</td>
+                        <td>개발</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>공지사항 제목입니다.2</td>
+                        <td>유민우</td>
+                        <td>123</td>
+                        <td>2023-02-21</td>
+                        <td>2023-02-21</td>
+                        <td>개발</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>공지사항 제목입니다.2</td>
+                        <td>유민우</td>
+                        <td>123</td>
+                        <td>2023-02-21</td>
+                        <td>2023-02-21</td>
+                        <td>개발</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>공지사항 제목입니다.2</td>
+                        <td>유민우</td>
+                        <td>123</td>
+                        <td>2023-02-21</td>
+                        <td>2023-02-21</td>
+                        <td>개발</td>
+                      </tr>
+                      
                     </tbody>
                   </table>
                  </div>
