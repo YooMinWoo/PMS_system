@@ -16,17 +16,18 @@ public class Todolist_Controller {
 	@Autowired
 	private Todolist_Service service;
 	// http://localhost:7080/FinalPJT/todoList.do
-	@GetMapping("/todoList.do")
-	public String todoList() {
-		
-		return "WEB-INF\\suminView\\TodoList.jsp";
-	}
-	@RequestMapping("/todoAjax.do")
-	public String todoAjax(@RequestParam("id") String id,Model d) {
-		
+//	@GetMapping("/todoList.do")
+//	public String todoList() {
+//		
+//		return "WEB-INF\\suminView\\TodoList.jsp";
+//	}
+	@RequestMapping("/todoList.do")
+	public String todoAjax(Model d) {
+		String id="monsta@gmail.com";
 		d.addAttribute("todoList",service.todoList(id));
-		return "pageJsonReport";
+		return "WEB-INF\\\\suminView\\\\TodoList.jsp";
 	}
+	
 	@RequestMapping("/insTodo.do")
 	public String insTodo(Todolist ins,Model d) {
 		service.insTodo(ins);

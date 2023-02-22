@@ -8,7 +8,7 @@
 	INSERT INTO todolist values(todo_seq.nextval,#{todo},'0',#{id})
 	</insert>
 	
-	<select id="todoList" parameterType="string">
+	<select id="todoList" parameterType="string" resultType="todolist">
 		select * from todolist where id=#{id}
 	</select>
 </mapper>

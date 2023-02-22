@@ -128,18 +128,17 @@
                         <th></th>
                         <th>to do</th>
                         <th>status</th>
-                        <th>Actions</th>
+                        
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <c:forEach var="todo" items="todoList">
+                    <c:forEach var="todo" items="${todoList}">
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <input type="checkbox" value="${todo.tno }"></td>
-                        <td>${todo.todo }</td> 
+                        <td>${todo.todo }</td>
                         <td>
-                         
+                          
                         </td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
                         <td>
                           <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

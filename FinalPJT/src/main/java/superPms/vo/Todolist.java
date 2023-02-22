@@ -1,14 +1,24 @@
 package superPms.vo;
 
 public class Todolist {
-	private int tno;
+	private String tno;
 	private String todo;
 	private String state;
 	private String id;
-	public int getTno() {
+	
+	public Todolist(String tno, String todo, String state, String id) {
+		this.tno = tno;
+		this.todo = todo;
+		this.state = state;
+		this.id = id;
+	}
+	public Todolist() {
+		// TODO Auto-generated constructor stub
+	}
+	public String getTno() {
 		return tno;
 	}
-	public void setTno(int tno) {
+	public void setTno(String tno) {
 		this.tno = tno;
 	}
 	public String getTodo() {
