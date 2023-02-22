@@ -1,0 +1,8 @@
+# 공통설정파일 처리
+# 1. DB설정 정보
+jdbc.driver=oracle.jdbc.driver.OracleDriver
+jdbc.url=jdbc:oracle:thin:@49.238.187.241:1521:xe
+jdbc.user=superpm
+jdbc.pass=1234
+# 2. 파일업로드 정보(서버 위치 정보)
+user.upload=C:/drive/
