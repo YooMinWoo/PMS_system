@@ -135,7 +135,7 @@
                     <c:forEach var="todo" items="todoList">
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <input type="checkbox" value="${todo.tno }"></td>
-                        <td>${todo.todo }</td>
+                        <td>${todo.todo }</td> 
                         <td>
                          
                         </td>
