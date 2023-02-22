@@ -26,6 +26,7 @@ public class Calendar_Controller {
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(Model d) {
 		d.addAttribute("calList", service.calList());
+		System.out.println("####################"+service.calList());
 		return "pageJsonReport";
 	}
 	
