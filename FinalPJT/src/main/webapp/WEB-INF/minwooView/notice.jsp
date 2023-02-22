@@ -80,10 +80,10 @@ tbody tr{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("[name=searchInf]").keydown(function(e){
+		$("[name=schInfo]").keydown(function(e){
 			if(e.keyCode==13){
-				if($("[name=searchInf]").val().length<=1) alert("2자 이상 입력하세요.")
-				else alert("검색한 내용 : "+$("[name=searchInf]").val())
+				if($("[name=schInfo]").val().length<=1) alert("2자 이상 입력하세요.")
+				else alert("검색한 내용 : "+$("[name=schInfo]").val())
 			}
 		})
 		$("tbody tr").click(function(){
@@ -114,20 +114,22 @@ tbody tr{
  
            <h4 class="fw-bold py-3 mb-4">공지사항</h4>
            <div class="card mb-4 pb-3">
-           <div class="schDiv">
-	           <div class="input-group input-group-merge">
-	              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-	              <input
-	                type="text"
-	                class="form-control"
-	                placeholder="Search..."
-	                aria-label="Search..."
-	                aria-describedby="basic-addon-search31"
-	                value=""
-	                name="searchInf"
-	              />
-	            </div>
-            </div>
+           <form>
+           		<div class="schDiv">
+		           <div class="input-group input-group-merge">
+		              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+		              <input
+		                type="text"
+		                class="form-control"
+		                placeholder="Search..."
+		                aria-label="Search..."
+		                aria-describedby="basic-addon-search31"
+		                value=""
+		                name="schInfo"
+		              />
+		            </div>
+            	</div>
+            </form>
            <table class="table">
            	<col width="7%">
 			  <col width="20%">
@@ -148,69 +150,19 @@ tbody tr{
 	                      </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td>1</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>유민우</td>
-                        <td>22</td>
-                        <td>2022-12-24</td>
-                        <td>2022-12-28</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
+                      
+                      	<c:forEach var="nt" items="${noticeList}">
+	                      	<tr>
+		                      	<td>${nt.rownum}</td>
+		                        <td>${nt.title}</td>
+		                        <td>${nt.writer}</td>
+		                        <td>${nt.viewcnt}</td>
+		                        <td>${nt.regdte}</td>
+		                        <td>${nt.uptdte}</td>
+		                        <td>${nt.deptid}</td>
+	                        </tr>
+                      	</c:forEach>
+                        
                       
                     </tbody>
                   </table>
