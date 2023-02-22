@@ -15,16 +15,17 @@ public class Risk_Controller {
 	@Autowired(required=false)
 	private Risk_Service service;
 	
-	/*
+
 	@RequestMapping("/project_riskList.do")
 	public String riskList(
 			@ModelAttribute("sch") Risk sch, Model d) {
 		d.addAttribute("list", service.riskList(sch));
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
 	}
-	*/
+
 	@RequestMapping("/risk.do")
 	public String risk() {
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
 	}
+	
 }

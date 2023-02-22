@@ -208,7 +208,6 @@ ul,li {
            
            <div class="card mb-4 pb-3">
 			<div class="card-body">
-			<input type="checkbox" class="btn btn-success">gdgd
                           <h5 class="card-title text-primary">리스크 관리</h5>
                             <div class="table-responsive">
                                 <table class="table">
@@ -224,14 +223,14 @@ ul,li {
                                     <tbody>
                                     	<c:forEach var="risk" items="${list}">
                                     		<tr>
-                                    			<td>${risk.riskno}</td>
+                                    			<td>${risk.riskno}1</td>
                                     			<td>${risk.riskname}</td>
-                                    			<td>${risk.risklevel}</td>
-                                    			<td>${risk.riskpriority}</td>
-                                    			<td>${risk.riskstate}</td>
+                                    			<td><button type="button" class="btn btn-danger">${risk.risklevel}</button></td>
+                                    			<td><button type="button" class="btn btn-danger">${risk.riskpriority}</button></td>
+                                    			<td><button type="button" class="btn btn-success">${risk.riskstate}</button></td>
                                     		</tr>
                                     	</c:forEach>
-                                        <tr>
+<!--                                         <tr>
                                             <td>너무 어렵네요</td>
                                             <td>0126</td>
                                             <td><button type="button" class="btn btn-danger">높음</button></td>
@@ -243,7 +242,7 @@ ul,li {
 											    	</li>
 												</ul>
 											</td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
