@@ -1,22 +1,22 @@
 package superPms.vo;
 
 public class NoticeSch {
-	private String sch;
+	private String schInfo;
 
 	public NoticeSch() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public NoticeSch(String sch) {
-		this.sch = sch;
+	public NoticeSch(String schInfo) {
+		this.schInfo = schInfo;
 	}
 
-	public String getSch() {
-		return sch;
+	public String getSchInfo() {
+		return schInfo;
 	}
 
-	public void setSch(String sch) {
-		this.sch = sch;
+	public void setSchInfo(String schInfo) {
+		this.schInfo = schInfo;
 	}
 	
 }

@@ -1,14 +1,24 @@
 package superPms.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import superPms.service.Notice_Service;
+import superPms.vo.NoticeSch;
 
 @Controller
 public class Notice_Controller {
 //	http://localhost:2030/FinalPJT/goNotice.do		==> user
 //	http://localhost:2030/FinalPJT/goNoticePM.do	==> admin
+	@Autowired
+	private Notice_Service service;
+	
 	@RequestMapping("/goNotice.do")
-	public String goNotice() {
+	public String goNotice(NoticeSch sch, Model d) {
+		d.addAttribute("noticeList",service.noticeList(sch));
+		System.out.println(service.noticeList(sch));
 		return "WEB-INF\\minwooView\\notice.jsp";
 	}
 	

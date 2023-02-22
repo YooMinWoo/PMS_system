@@ -5,7 +5,19 @@
 
 <mapper namespace="superPms.dao.Notice_Dao">
 	<select id="noticeList" parameterType="noticesch" resultType="notice">
-		select * from notice
-		where deptid=#{}
+		SELECT rownum, 
+			noticeno,
+			refno,
+			to_char(regdte,'yyyy-mm-dd') regdte,
+			to_char(uptdte,'yyyy-mm-dd') uptdte,
+			title,
+			content,
+			viewcnt,
+			writer,
+			fno,
+			deptid
+		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n
+		where deptid like '%'||#{schInfo}||'%'
+		or title like '%'||#{schInfo}||'%'
 	</select>
 </mapper>
