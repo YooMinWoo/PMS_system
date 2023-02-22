@@ -5,9 +5,12 @@
 	<typeAliases>
 		<typeAlias alias="calendar" type="superPms.vo.Calendar"/>
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
+		<typeAlias alias="project" type="superPms.vo.Project"/>
 	</typeAliases>
 
 	<mappers>
+		<mapper resource="resource/sumin/CalendarMapper.xml"/>
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
+		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 	</mappers>
 </configuration>
