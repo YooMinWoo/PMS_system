@@ -87,6 +87,16 @@
            <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무</small></h4>
            
            <div class="card mb-4 pb-3">
+           <div class="demo-inline-spacing mt-5">
+           <div class="row">
+           <div class="col-3">
+          <div class="list-group list-group-horizontal-md text-md-center">
+            <a class="list-group-item list-group-item-action active" id="home-list-item" data-bs-toggle="list" href="#horizontal-home">진행중</a>
+            <a class="list-group-item list-group-item-action" id="settings-list-item" data-bs-toggle="list" href="#horizontal-settings">종료</a>
+          </div>
+          </div>
+          <div class="col-5"> </div>
+          <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
           <form class="d-flex" id="allFrm" action="${path }/allProject.do" method="get">
 	          <div class="input-group">
@@ -109,17 +119,18 @@
 			  <col width="13%">
 			    <thead>
 			      <tr>
-			        <th>카테고리</th>
-			        <th>프로젝트</th>
-			        <th>시작일자</th>
-			        <th>종료일자</th>
-			        <th>PM</th>
+			        <th>번호</th>
+			        <th>업무</th>
+			        <th>등록일자</th>
+			        <th>마감일자</th>
+			        <th>작성자</th>
+			        <th>진행상태</th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
-			      <c:forEach var="allp" items="${list}">
-			      <tr><td>${allp.deptid }</td><td>${allp.subject }</td><td>${allp.regdte }</td>
-			      <td>${allp.deadline }</td><td>${allp.ename }</td></tr>
+			      <c:forEach var="work" items="${worklist}">
+			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
+			      <td>${work.uptdte }</td><td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
