@@ -18,6 +18,7 @@
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/eunbeen/SuperDeptMapper.xml"/>
-		<mapper resource="resource/jongeun/WorkMapper.xml"/>
+		<mapper resource="resource/jungwoo/RiskMapper.xml"/>
+		<mapper resource="resource/jongeun/WorkMapper.xml"/>		
 	</mappers>
 </configuration>
