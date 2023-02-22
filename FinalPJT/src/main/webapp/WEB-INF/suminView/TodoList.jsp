@@ -21,7 +21,10 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-
+.demo-inline-spacing{
+	display: flex;
+    justify-content: flex-end;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -80,7 +83,22 @@
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">To do list</small></h4>
            
            <div class="card mb-4 pb-3">
-           
+           <div class="demo-inline-spacing">
+         	<button type="button" class="btn rounded-pill btn-primary">추가</button>
+         	<button type="button" class="btn rounded-pill btn-warning">수정</button>
+         	<button type="button" class="btn rounded-pill btn-danger">삭제</button>
+         	</div>
+           		  <div class="input-group">
+                        <div class="input-group-text">
+                          <input
+                            class="form-check-input mt-0"
+                            type="checkbox"
+                            value=""
+                            aria-label="Checkbox for following text input"
+                          />
+                        </div>
+                        <input type="text" class="form-control" aria-label="Text input with checkbox" />
+                      </div>
          	</div>
          	  <!-- /card -->
             </div>
