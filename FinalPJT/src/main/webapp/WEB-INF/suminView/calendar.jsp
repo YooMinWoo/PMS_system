@@ -94,7 +94,7 @@
 			ajaxFun("uptCalendar.do")
 	  },
 		// 시간일정 스크롤해서 시간 변경했을 때
-	  eventResize:function(info){
+	  eventResize:function(info){ 
 			addForm(info.event)
 			ajaxFun("uptCalendar.do")     
 			

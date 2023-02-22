@@ -22,7 +22,7 @@ public class Calendar_Controller {
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	
-//	http://localhost:7080/FinalPJT/calListAjax.do
+//	http://49.238.187.241:7080/FinalPJT/calListAjax.do
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(Model d) {
 		d.addAttribute("calList", service.calList());
