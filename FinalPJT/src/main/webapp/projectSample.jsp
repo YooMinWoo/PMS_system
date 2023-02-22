@@ -21,9 +21,6 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-.nav-item.nav-link{
-	padding-right: 1rem !important;
-}
 
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -41,7 +38,6 @@
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
- 
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/css/demo.css" />
@@ -59,8 +55,9 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#menu-item-project").addClass('active open');	
-		$("#menu-item-project-myproject").addClass('active');	
+		// $("#").addClass('active open');	
+		// $("#").addClass('active');	
+		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 	});
 </script>
 </head>
@@ -87,43 +84,12 @@
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-         <!--   <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">프로젝트 이름</small></h4> -->
+           <h4 class="fw-bold py-3 mb-4">대제목넣으세요 > <small class="text-muted">소제목넣으세요</small></h4>
            
            <div class="card mb-4 pb-3">
-	           <div class="row">
-		           <div class="col-8">
-		           <h3 class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
-		           </div>
-		           <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
-		            <button type="button" class="btn btn-sm btn-primary">멤버초대</button>&nbsp;&nbsp;&nbsp;
-		            <button type="button" class="btn btn-sm btn-secondary">설정</button>
-		           </div>
-	           </div>
-
-		        <div class="nav navbar-nav me-auto d-flex flex-row">
-		          <a class="nav-item nav-link active" href="javascript:void(0)">진행상황</a>
-		          <a class="nav-item nav-link" >|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">업무</a>
-		          <a class="nav-item nav-link">|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">드라이브</a>
-		          <a class="nav-item nav-link">|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">리스크 관리</a>
-		        </div>
-				
-				<hr class="mx-0">
-	         
-	          <div class="row my-3 px-sm-3">
-	            <span><strong>마감 D-27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;진행률 0%</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	             진행 0, 완료 0</span>
-	          </div>
-
-		    
-		    
-
-	          
-          
-       	   </div>
-       	    <!-- /card -->
+           
+         	</div>
+         	  <!-- /card -->
             </div>
             <!-- / Content -->
 

@@ -34,7 +34,12 @@ public class Project_Controller {
 		service.insProject(ins);
 		d.addAttribute("msg","등록성공");
 		d.addAttribute("prjno",ins.getPrjno());
-		
 		return "pageJsonReport";
+	}
+	
+	
+	@GetMapping("/projectMain.do")
+	public String projectMain() {
+		return "WEB-INF\\wonjuView\\project_main.jsp";
 	}
 }
