@@ -20,4 +20,19 @@
 		where deptid like '%'||#{schInfo}||'%'
 		or title like '%'||#{schInfo}||'%'
 	</select>
+	<select id="noticeDetail" parameterType="notice" resultType="notice">
+		SELECT rownum, 
+			noticeno,
+			refno,
+			to_char(regdte,'yyyy-mm-dd') regdte,
+			to_char(uptdte,'yyyy-mm-dd') uptdte,
+			title,
+			content,
+			viewcnt,
+			writer,
+			fno,
+			deptid
+		FROM notice
+		where noticeno=#{noticeno}
+	</select>
 </mapper>

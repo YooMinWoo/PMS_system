@@ -30,15 +30,15 @@
 	display: flex;
 	justify-content: space-between;
 }
-input:read-only {
-    background-color: white !important;
-}
-textarea:read-only{
-	background-color: white !important;
-}
 .card.mb-4{
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
+}
+input:read-only{
+	background:white !important;
+}
+textarea:read-only{
+	background:white !important;
 }
 </style>
 
@@ -74,9 +74,44 @@ textarea:read-only{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var authTF = ${empty session}
+		if(authTF){ // 권한이 admin이 아니라면
+			$("input").attr("readonly","readonly")
+			$("textarea").attr("readonly","readonly")
+		}
 		$("#backBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
 				location.href="/FinalPJT/goNotice.do"
+			}
+		})
+		$("#uptBtn").click(function(){
+			if(confirm("수정하시겠습니까?")){
+				location.href="/FinalPJT/goNotice.do"
+			}
+		})
+		$("#delBtn").click(function(){
+			if(confirm("삭제하시겠습니까?")){
+				location.href="/FinalPJT/goNotice.do"
+			}
+		})
+		$("#fileUptBtn").click(function(){
+			if(confirm("파일을 수정하시겠습니까?")){
+				$("#formFile").click()
+			}
+		})
+		$("#downloadBtn").click(function(){
+			if(confirm("다운로드 하시겠습니까?")){
+				if("${noticeDetail.fno}"){
+					alert("다운로드할 파일이 없습니다.")
+					return
+				}
+			}
+		})
+		$("#formFile").change(function(){
+			if($("#formFile").val()==""){
+				$("#formFile2").val("선택된 파일이 없습니다.")
+			}else{
+				$("#formFile2").val($('#formFile').val())
 			}
 		})
 	});
@@ -105,36 +140,36 @@ textarea:read-only{
            
            
 	           
-		           	<h4 class="fw-bold py-3 mb-4">공지사항 상세화면</h4>
+		       <h4 class="fw-bold py-3 mb-4">공지사항 > <small class="text-muted">상세화면</small></h4>
 	           <div class="card mb-4 pb-3">
            			<div class="card-body">
                       <form>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
-                          <input type="text" class="form-control" id="basic-default-title" value="공지사항 제목입니다." readonly />
+                          <input type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>
                         </div>
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-writer" value="홍길동" readonly />
+	                          class="form-control" id="basic-default-writer" value="${noticeDetail.writer }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-cnt">조회수</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-cnt" value="22" readonly />
+	                          class="form-control" id="basic-default-cnt" value="${noticeDetail.viewcnt }" readonly />
 	                        </div>
                         </div>
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-regDte">작성일자</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-regDte" value="2022-12-24" readonly />
+	                          class="form-control" id="basic-default-regDte" value="${noticeDetail.regdte }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-uptDte">수정일자</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-uptDte" value="2022-12-28" readonly />
+	                          class="form-control" id="basic-default-uptDte" value="${noticeDetail.uptdte }" readonly />
 	                        </div>
                         </div>
                         <div class="mb-3">
@@ -143,14 +178,27 @@ textarea:read-only{
                             id="basic-default-message"
                             class="form-control"
                             style="height: 300px;"
-                            readonly
-                          >공지사항 내용입니다.</textarea>
+                          >${noticeDetail.content }</textarea>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3" style="display:none;">
 	                        <label for="formFile" class="form-label">파일첨부</label>
 	                        <input class="form-control" type="file" id="formFile" />
                         </div>
+                        <div class="mb-3">
+	                        <label for="formFile" class="form-label">파일명</label>
+	                        <input class="form-control" type="text" id="formFile2"
+	                        value="${not empty noticeDetail.fno?noticeDetail.content:'등록된 파일이 없습니다.' }" />
+                        </div>
+                        <script>
+                        </script>
+                        
                         <div class="btns">
+                        	<%-- <c:if test="${not empty session }"> --%>
+	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
+	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
+	                        	<button type="button" class="btn btn-danger" id="fileUptBtn">파일 수정하기</button>
+                        	<%-- </c:if> --%>
+                        	<button type="button" class="btn btn-primary" id="downloadBtn">파일 다운로드</button>
                         	<button type="button" class="btn btn-secondary" id="backBtn">조회화면 이동</button>
                         </div>
                       </form>

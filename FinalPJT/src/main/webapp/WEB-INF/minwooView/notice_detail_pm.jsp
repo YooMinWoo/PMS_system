@@ -70,17 +70,17 @@
 	$(document).ready(function(){
 		$("#backBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
-				location.href="/FinalPJT/goNoticePM.do"
+				location.href="/FinalPJT/goNotice.do"
 			}
 		})
 		$("#uptBtn").click(function(){
 			if(confirm("수정하시겠습니까?")){
-				location.href="/FinalPJT/goNoticePM.do"
+				location.href="/FinalPJT/goNotice.do"
 			}
 		})
 		$("#delBtn").click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				location.href="/FinalPJT/goNoticePM.do"
+				location.href="/FinalPJT/goNotice.do"
 			}
 		})
 	});
@@ -154,8 +154,10 @@
 	                        <input class="form-control" type="file" id="formFile" />
                         </div>
                         <div class="btns">
-                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
-                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
+                        	<%-- <c:if test="${not empty session }"> --%>
+	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
+	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
+                        	<%-- </c:if> --%>
                         	<button type="button" class="btn btn-secondary" id="backBtn">조회화면 이동</button>
                         </div>
                       </form>

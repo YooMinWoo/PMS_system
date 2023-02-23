@@ -64,9 +64,9 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#delBtn").click(function(){
+		$("#clBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
-				location.href="/FinalPJT/goNoticePM.do"
+				location.href="/FinalPJT/goNotice.do"
 			}
 		})
 	});
@@ -123,7 +123,7 @@
                         </div>
                         <div class="btns">
                         	<button type="button" class="btn btn-primary">등록</button>
-                        	<button type="button" class="btn btn-secondary" id="delBtn">취소</button>
+                        	<button type="button" class="btn btn-secondary" id="clBtn">취소</button>
                         </div>
                       </form>
                     </div>
