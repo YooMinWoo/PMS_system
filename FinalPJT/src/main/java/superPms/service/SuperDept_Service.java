@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import superPms.dao.SuperDept_Dao;
+import superPms.vo.Code;
 import superPms.vo.DeptSch;
 import superPms.vo.SuperDept;
 
@@ -59,7 +60,32 @@ public class SuperDept_Service {
 	}
 	
 	// 상위부서 콤보박스
-	public List<String> getParentDeptComb(){
+	public List<Code> getParentDeptComb(){
 		return dao.getParentDeptComb();
 	}
+	
+	// 부서 추가
+	public void insertDept(SuperDept ins) {
+		dao.insertDept(ins);
+	}
+	
+	// 부서명 중복체크
+	public SuperDept dnameChk(String dname) {
+		return dao.dnameChk(dname);
+	}
+	
+	// 부서코드 중복체크
+	public SuperDept deptidChk(String deptid) {
+		return dao.deptidChk(deptid);
+	}
+	
+	// 부서 삭제
+	public void deleteDept(String deptid) {
+		dao.deleteDept(deptid);
+	}
+	
+
+
+	
+	
 }

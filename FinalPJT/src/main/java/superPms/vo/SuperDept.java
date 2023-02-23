@@ -18,6 +18,13 @@ public class SuperDept {
 		this.level = level;
 		this.cnt = cnt;
 	}
+	
+
+	public SuperDept(String deptid, String dname, String parentDept) {
+		this.deptid = deptid;
+		this.dname = dname;
+		this.parentDept = parentDept;
+	}
 
 	public String getDeptid() {
 		return deptid;

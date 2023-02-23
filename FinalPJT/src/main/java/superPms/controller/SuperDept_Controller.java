@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.SuperDept_Service;
+import superPms.vo.Code;
 import superPms.vo.DeptSch;
 import superPms.vo.SuperDept;
 
@@ -23,9 +27,33 @@ public class SuperDept_Controller {
 		d.addAttribute("list", service.superDeptList(sch));
 		return "WEB-INF\\eunbeenView\\deptManage.jsp";
 	}
-	// 상품종류 콤보박스
-	@ModelAttribute("parentDeptCom")
-	public List<String> getParentDeptComb(){
+	@ModelAttribute("getParentDeptCom")
+	public List<Code> getParentDeptComb(){
 		return service.getParentDeptComb();
+	}
+	@RequestMapping("insertDept.do")
+	public String insertDept(SuperDept ins, Model d){
+		service.insertDept(ins);
+		d.addAttribute("msg","부서추가!");
+	 	return "WEB-INF\\eunbeenView\\deptManage.jsp";
+	}	
+	// 부서명 중복체크 
+	// http://localhost:5080/FinalPJT/dnameChk.do?dname=회
+	@RequestMapping("/dnameChk.do")
+	public String dnameChk(@RequestParam("dname") String dname, Model d) {
+		d.addAttribute("dnameCheck", service.dnameChk(dname));
+		return "pageJsonReport";
+	}
+	// http://localhost:5080/FinalPJT/deptidCheck.do?deptid=de100
+	@RequestMapping("/deptidChk.do")
+	public String deptidChk(@RequestParam("deptid") String deptid, Model d) {
+		d.addAttribute("deptidCheck", service.deptidChk(deptid));
+		return "pageJsonReport";
+	}
+	@GetMapping("/deleteDept.do")
+	public String deleteDept(@RequestParam("deptid") String deptid, Model d) {
+		service.deleteDept(deptid);
+		d.addAttribute("msg", "삭제완료!");
+		return "WEB-INF\\eunbeenView\\deptManage.jsp";
 	}
 }
