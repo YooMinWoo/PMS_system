@@ -19,10 +19,27 @@
 		select count(*)
 		from superdept	
 	</select>
-	<select id="getParentDeptComb" resultType="string">
-		SELECT DISTINCT dname
+	<select id="getParentDeptComb" resultType="code">
+      	SELECT DISTINCT d.deptid key, d.dname val
+		FROM superDept d
+		WHERE parentDept IS NULL
+		AND dname NOT LIKE '최고경영진'          
+   </select>
+	<insert id="insertDept" parameterType="superdept">	
+		INSERT INTO superDept 
+		values(#{deptid}, #{dname}, #{parentDept})
+	</insert>
+	<select id="dnameChk" resultType="superdept" parameterType="String">
+		SELECT * 
 		FROM superDept
-		WHERE NOT dname is NULL
-		AND dname NOT LIKE '최고경영진'
+		WHERE dname=#{dname}
 	</select>
+	<select id="deptidChk" resultType="superdept" parameterType="String">
+		SELECT * 
+		FROM superDept
+		WHERE deptid=#{deptid}
+	</select>
+	<delete id="deleteDept" parameterType="String">
+		DELETE FROM superDept WHERE deptid=#{deptid}
+	</delete>
 </mapper>

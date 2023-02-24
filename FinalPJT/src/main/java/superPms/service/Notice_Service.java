@@ -19,4 +19,7 @@ public class Notice_Service {
 		if(sch.getSchInfo()==null) sch.setSchInfo("");
 		return dao.noticeList(sch);
 	};
+	public Notice noticeDetail(Notice sch) {
+		return dao.noticeDetail(sch);
+	}
 }

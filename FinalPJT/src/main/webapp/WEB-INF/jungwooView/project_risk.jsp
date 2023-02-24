@@ -178,6 +178,67 @@ ul,li {
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+  		$(".risklevel").each(function(index, item){
+			console.log($(item).val());
+			if($(item).val()=="긴급"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-danger');
+			}
+			if($(item).val()=="보통"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-warning');
+			}
+			if($(item).val()=="낮음"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-success');
+			}
+		});
+  		$(".riskpriority").each(function(index, item){
+			console.log($(item).val());
+			if($(item).val()=="1"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-danger');
+			}
+			if($(item).val()=="2"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-warning');
+			}
+			if($(item).val()=="3"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-success');
+			}
+		});	
+  		$(".riskstate").each(function(index, item){
+			console.log($(item).val());
+			if($(item).val()=="대기"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-secondary');
+			}
+			if($(item).val()=="승인"){
+				$(item).addClass('btn');
+				$(item).addClass('btn-primary');
+			}
+		});	
+			
+			
+/*  			console.log($(".risklevel").val())
+	 		if($(".risklevel").val()=="긴급"){
+				console.log($(".risklevel").val())
+				$(".risklevel").addClass('btn');
+				$(".risklevel").addClass('btn-danger');
+			}
+			if($(".risklevel").val()=="보통"){
+				console.log($(".risklevel").val())
+				$(".risklevel").addClass('btn-warning');
+			}
+			if($(".risklevel").val()=="낮음"){
+				console.log($(".risklevel").val())
+				$(".risklevel").addClass('btn-success');
+			}  */
+
+		
+
+		
 	});
 </script>
 </head>
@@ -223,28 +284,20 @@ ul,li {
                                     <tbody>
                                     	<c:forEach var="risk" items="${list}">
                                     		<tr>
-                                    			<td>${risk.riskno}1</td>
+                                    			<td>${risk.riskno}</td>
                                     			<td>${risk.riskname}</td>
-                                    			<td><button type="button" class="btn btn-danger">${risk.risklevel}</button></td>
-                                    			<td><button type="button" class="btn btn-danger">${risk.riskpriority}</button></td>
-                                    			<td><button type="button" class="btn btn-success">${risk.riskstate}</button></td>
+                                    			<td><input type="button" class="risklevel" value="${risk.risklevel}"></td>
+                                    			<td>
+                                    			<input type="button" class="riskpriority" value="${risk.riskpriority}">
+                                    			</td>
+                                    			<td>
+                                    			<input type="button" class="riskstate" value="${risk.riskstate}">
+                                    			</td>
                                     		</tr>
                                     	</c:forEach>
-<!--                                         <tr>
-                                            <td>너무 어렵네요</td>
-                                            <td>0126</td>
-                                            <td><button type="button" class="btn btn-danger">높음</button></td>
-                                            <td><button type="button" class="btn btn-danger">1</button></td>
-                                            <td>
-                                            	<ul class="tg-list">
-											    	<li class="tg-list-item">
-											      		<input class="tgl tgl-flip" id="cb5" type="checkbox" /><label class="tgl-btn" data-tg-off="대기" data-tg-on="승인" for="cb5"></label>
-											    	</li>
-												</ul>
-											</td>
-                                        </tr> -->
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
            

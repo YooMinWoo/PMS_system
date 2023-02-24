@@ -29,6 +29,18 @@ tbody td{
 	text-align: center;
 	color:black !important;
 }
+.tableTop{
+	display: flex;
+    justify-content: flex-end;
+    gap:15px;
+    padding-bottom:10px;
+}
+.checkboxs{
+	visibility:hidden
+}
+#delBtn{
+	display:none;
+}
 .input-group{
 	width:30% !important;
 }
@@ -80,15 +92,7 @@ tbody tr{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("[name=schInfo]").keydown(function(e){
-			if(e.keyCode==13){
-				if($("[name=schInfo]").val().length<=1) alert("2자 이상 입력하세요.")
-				else alert("검색한 내용 : "+$("[name=schInfo]").val())
-			}
-		})
-		$("tbody tr").click(function(){
-			location.href="/FinalPJT/goNoticeDetail.do"
-		})
+		
 	});
 </script>
 </head>
@@ -111,27 +115,33 @@ tbody tr{
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           <h4 class="fw-bold py-3 mb-4">공지사항</h4>
-           <div class="card mb-4 pb-3">
-           <form>
-           		<div class="schDiv">
-		           <div class="input-group input-group-merge">
-		              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-		              <input
-		                type="text"
-		                class="form-control"
-		                placeholder="Search..."
-		                aria-label="Search..."
-		                aria-describedby="basic-addon-search31"
-		                value=""
-		                name="schInfo"
-		              />
+		           	<h4 class="fw-bold py-3 mb-4">공지사항</h4>
+		           	
+	           <div class="card mb-4 pb-3">
+	           <div class="schDiv">
+			           <div class="input-group input-group-merge">
+			              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+			              <input
+			                type="text"
+			                class="form-control"
+			                placeholder="Search..."
+			                aria-label="Search..."
+			                aria-describedby="basic-addon-search31"
+			                name="searchInf"
+			              />
+			            </div>
 		            </div>
-            	</div>
-            </form>
+		             
+		     <%--  <c:if test="${not empty session }"> --%>
+			       <div class="tableTop">
+			           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
+			           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
+			           <button type="button" class="btn btn-secondary" id="check">선택</button>
+		           </div>
+	          <%-- </c:if> --%>
            <table class="table">
-           	<col width="7%">
+           	  <col width="3%">
+           	  <col width="4%">
 			  <col width="20%">
 			  <col width="13%">
 			  <col width="10%">
@@ -140,6 +150,7 @@ tbody tr{
 			  <col width="10%">
                     <thead class="table-dark">
 	                      <tr>
+	                      	<th><input name="th" type="checkbox" class="checkboxs" id="cbx_chkAll"></th>
 	                        <th>No</th>
 	                        <th>제목</th>
 	                        <th>작성자</th>
@@ -149,10 +160,11 @@ tbody tr{
 	                        <th>카테고리</th>
 	                      </tr>
                     </thead>
+                    
                     <tbody class="table-border-bottom-0">
-                      
-                      	<c:forEach var="nt" items="${noticeList}">
+                      <c:forEach var="nt" items="${noticeList}">
 	                      	<tr>
+	                      		<td><input name="noticeno" type="checkbox" class="checkbox checkboxs" value="${nt.noticeno }"></td>		                      	
 		                      	<td>${nt.rownum}</td>
 		                        <td>${nt.title}</td>
 		                        <td>${nt.writer}</td>
@@ -162,11 +174,84 @@ tbody tr{
 		                        <td>${nt.deptid}</td>
 	                        </tr>
                       	</c:forEach>
-                        
-                      
                     </tbody>
                   </table>
                  </div>
+                 <script>
+                  // 선택 클릭시 체크박스 나타나고 사라지고 기능
+                	var cnt = 0;
+                	$("#check").click(function(){
+                		cnt++;
+                		if(cnt%2==0) {
+                			$(".checkboxs").css({"visibility":"hidden"})
+                			$("#delBtn").hide()
+                		}
+                		else {
+                			$(".checkboxs").css({"visibility":"visible"})
+                			$("#delBtn").show()
+                		}
+                	})
+                	
+                	// 전체 체크박스 클릭 기능
+                	$("#cbx_chkAll").click(function() {
+						if($("#cbx_chkAll").is(":checked")) $(".checkbox").prop("checked", true);
+						else $(".checkbox").prop("checked", false);
+					});
+					
+					$(".checkbox").click(function() {
+						var total = $(".checkbox").length;
+						var checked = $(".checkbox:checked").length;
+					
+						if(total != checked) $("#cbx_chkAll").prop("checked", false);
+						else $("#cbx_chkAll").prop("checked", true); 
+					});
+					
+					$("#delBtn").click(function(){
+						var checked = $(".checkbox:checked").length;
+						if(checked==0) alert("하나 이상 체크하여야 삭제가 가능합니다.")
+						else{
+							var nos = '';
+							$(".checkbox:checked").each(function(i,val){
+								if(checked-1 == i) nos += val.value
+								else nos += val.value+'/'
+							})
+							console.log(nos);
+						}
+					})
+					
+					$("[name=searchInf]").keydown(function(e){
+						if(e.keyCode==13){
+							if($("[name=searchInf]").val().length<=1) alert("2자 이상 입력하세요.")
+							else alert("검색한 내용 : "+$("[name=searchInf]").val())
+						}
+					})
+					
+					$("#regBtn").click(function(){
+						if(confirm("등록 화면으로 이동하시겠습니까?")){
+							location.href="/FinalPJT/goCreateNotice.do"
+						}
+					})
+					$("tbody tr td:nth-child(n+2)").click(function(){
+						var parm = $(this).parent().children().first().children("input").val()
+						// location.href="/FinalPJT/goNoticeDetail.do?noticeno="+parm
+						/*
+						<div style="display: none">
+		                  	<form method="post">
+		                  		<input name="noticeno">
+		                  	</form>
+		                  </div>
+						*/
+						$('body').append("<div style='display: none'>"
+			                  	+"<form method='post'>"
+			                  	+"	<input name='noticeno'>"
+			                  	+"</form></div>");
+						$("[name=noticeno]").val(parm)
+						$("form").attr("action","/FinalPJT/goNoticeDetail.do")
+						$("form").submit()
+					})
+					
+					
+				</script>
          	  <!-- /card -->
             </div>
             <!-- / Content -->

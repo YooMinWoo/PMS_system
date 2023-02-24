@@ -115,7 +115,7 @@ tbody tr{
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
-		           	<h4 class="fw-bold py-3 mb-4">공지사항(관리자)</h4>
+		           	<h4 class="fw-bold py-3 mb-4">공지사항</h4>
 		           	
 	           <div class="card mb-4 pb-3">
 	           <div class="schDiv"">
@@ -127,16 +127,17 @@ tbody tr{
 			                placeholder="Search..."
 			                aria-label="Search..."
 			                aria-describedby="basic-addon-search31"
-			                value=""
 			                name="searchInf"
 			              />
 			            </div>
 		            </div>
-		       <div class="tableTop">
-		           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
-		           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
-		           <button type="button" class="btn btn-secondary" id="check">선택</button>
-	           </div>
+		       <c:if test="${empty session }">
+			       <div class="tableTop">
+			           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
+			           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
+			           <button type="button" class="btn btn-secondary" id="check">선택</button>
+		           </div>
+	           </c:if>
            <table class="table">
            	  <col width="3%">
            	  <col width="4%">
@@ -159,26 +160,17 @@ tbody tr{
 	                      </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                      	<td><input type="checkbox" class="checkbox checkboxs" value="1"></td>
-                        <td>1</td>
-                        <td>공지사항 제목입니다.</td>
-                        <td>유민우</td>
-                        <td>22</td>
-                        <td>2022-12-24</td>
-                        <td>2022-12-28</td>
-                        <td>개발</td>
-                      </tr>
-                      <tr>
-                      	<td><input type="checkbox" class="checkbox checkboxs" value="2"></td>
-                        <td>2</td>
-                        <td>공지사항 제목입니다.2</td>
-                        <td>유민우</td>
-                        <td>123</td>
-                        <td>2023-02-21</td>
-                        <td>2023-02-21</td>
-                        <td>개발</td>
-                      </tr>
+                      <c:forEach var="nt" items="${noticeList}">
+	                      	<tr>
+		                      	<td>${nt.rownum}</td>
+		                        <td>${nt.title}</td>
+		                        <td>${nt.writer}</td>
+		                        <td>${nt.viewcnt}</td>
+		                        <td>${nt.regdte}</td>
+		                        <td>${nt.uptdte}</td>
+		                        <td>${nt.deptid}</td>
+	                        </tr>
+                      	</c:forEach>
                     </tbody>
                   </table>
                  </div>

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import superPms.service.Notice_Service;
+import superPms.vo.Notice;
 import superPms.vo.NoticeSch;
 
 @Controller
@@ -34,7 +35,8 @@ public class Notice_Controller {
 	}
 	
 	@RequestMapping("/goNoticeDetail.do")
-	public String goNoticeDetail() {
+	public String goNoticeDetail(Notice sch, Model d) {
+		d.addAttribute("noticeDetail",service.noticeDetail(sch));
 		return "WEB-INF\\minwooView\\notice_detail.jsp";
 	}
 	
