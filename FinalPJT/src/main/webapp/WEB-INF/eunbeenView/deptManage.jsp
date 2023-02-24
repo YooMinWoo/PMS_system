@@ -174,7 +174,7 @@
             <br><br><br>
             <div class="row">
               <div style="float:left;">
-               <h4 class="fw-bold py-3 mb-4">조직도 관리 > <small class="text-muted">부서를 추가하고, 수정, 삭제할 수 있습니다</small></h4>
+               <h4 class="fw-bold py-3 mb-4">조직도 관리 > <small class="text-muted">부서를 추가하고, 삭제할 수 있습니다</small></h4>
               </div>
             </div><br>
              <!-- Basic Bootstrap Table -->
@@ -209,7 +209,6 @@
                         </td>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${superdept.dname}팀</strong></td>               
                         <td>
-                           <button type="button" class="btn btn-primary">편집</button>
                            <button onclick="goDelete('${superdept.deptid}')" type="button" class="btn btn-primary">삭제</button>
                         </td>
                       </tr>
@@ -274,7 +273,7 @@
                  <div class="row">
                   <div class="col">
                   <label for="nameWithTitle" class="form-label">상위부서명</label>
-                     <select name="parentDept" id="parentDept">
+                     <select class="select2 form-select" name="parentDept" id="parentDept">
 				    	<option value="">상위부서선택</option>
 				    	<option value="">상위부서없음</option>
 				    	<c:forEach var="pd" items="${getParentDeptCom}">

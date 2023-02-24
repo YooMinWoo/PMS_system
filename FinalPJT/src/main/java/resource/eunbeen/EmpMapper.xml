@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="superPms.dao.SuperEmp_Dao">
+	<select id="getEmpList" resultType="SuperEmpDept" parameterType="SuperEmpDept">
+		select e.id, e.ename, e.cell, e.deptid, d.dname, to_char(e.hiredate,'YYYY-MM-DD') hiredate
+		from superEmp e, superDept d
+		where e.deptid = d.deptid
+		AND e.ename like '%'||#{ename}||'%'
+		and d.dname like '%'||#{dname}||'%'
+		AND to_char(hiredate) like '%'||#{hiredate}||'%'
+		and d.dname NOT LIKE '최고경영진'
+	</select>
+</mapper>
