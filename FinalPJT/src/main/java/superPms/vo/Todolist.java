@@ -5,7 +5,14 @@ public class Todolist {
 	private String todo;
 	private String state;
 	private String id;
-	
+	private String regdte;
+
+	public String getRegdte() {
+		return regdte;
+	}
+	public void setRegdte(String regdte) {
+		this.regdte = regdte;
+	}
 	public Todolist(String tno, String todo, String state, String id) {
 		this.tno = tno;
 		this.todo = todo;

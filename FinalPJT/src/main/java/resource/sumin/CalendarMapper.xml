@@ -4,6 +4,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Calendar_Dao">
+
 	<resultMap type="calendar" id="calRst">
 		<result column="startdte" property="start"></result>
 		<result column="enddte" property="end"></result>
@@ -14,9 +15,12 @@
 	</select>
 	
 	<insert id="insCalendar" parameterType="calendar">
-		INSERT INTO calendar values(cal_seq.nextval,#{title},#{start},#{end},#{writer},
-	#{textColor},#{backgroundColor},#{allDay},#{content},#{urllink})
+		INSERT INTO calendar values(cal_seq.nextval,#{title},
+			#{start},#{end},#{writer},
+			#{textColor},#{backgroundColor},
+			#{allDay},#{content},#{urllink})
 	</insert>
+	
 	<update id="uptCalendar" parameterType="calendar">
 			update calendar 
 			set title = #{title},
@@ -30,6 +34,7 @@
 				url = #{urllink}
 			where id = #{id}
 	</update>
+	
 	<delete id="delCalendar" parameterType="int">
 			delete from calendar where id=#{id}
 	</delete>

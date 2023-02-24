@@ -20,7 +20,9 @@
 	td{text-align:center;}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
+
 <script src='${path}/a00_com/dist/index.global.js'></script>
+
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
@@ -66,7 +68,6 @@
       selectable: true,
       selectMirror: true,
       select: function(arg) {
-
     	  $("h2").click();
     	  $("form")[0].reset()
     	  $("#modalCenterTitle").text("일정등록")
@@ -239,17 +240,11 @@
                           data-bs-target="#modalCenter"></h2>
 			   <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered" role="document">
-                         
                             <div class="modal-content">
-                            
                               <div class="modal-header">
-                                <h5 class="modal-title" id="modalCenterTitle">일정등록</h5>
+                                <h5 class="modal-title" id="modalCenterTitle">타이틀</h5>
                                 <button
-                                  type="button"
-                                  class="btn-close"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
+                                  type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
                                <form class="form">
@@ -276,7 +271,6 @@
                                   <div class="col mb-0">
                                     <label for="wrtier" class="form-label">작성자</label>
                                     <input type="text" name="writer" class="form-control"/>
-                                   
                                   </div>
                                   <div class="col mb-0">
                                     <label for="allday" class="form-label">종일여부</label>
@@ -285,26 +279,24 @@
 						                  <option value="false">시간</option>
 						             </select>
 						              <input type="hidden" name="allDay"/>
-                                   
                                   </div>
                                 </div>
                                  <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="textColor" class="form-label">글자색상</label>
                                     <input type="color" value="#ccffff" id="textColor" name="textColor" class="form-control"/>
-                              
                                   </div>
                                   <div class="col mb-0">
                                     <label for="backgroundColor" class="form-label">배경색상</label>
-                                    <input type="color" value="#0099cc" id="backgroundColor" name="backgroundColor" class="form-control"/>
-                                   
-                                  </div>
-                                  
+                                    <input type="color" value="#0099cc" id="backgroundColor" 
+                                    name="backgroundColor" class="form-control"/>
+                                  </div>      
                                 </div>
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="content" class="form-label">내용</label>
-                                    <textarea  rows="5" name="content" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+                                    <textarea  rows="5" name="content" id="content" 
+                                    class="form-control" placeholder="내용을 입력하세요"></textarea>
                                   </div>
                                 </div>
                                 <div class="row">

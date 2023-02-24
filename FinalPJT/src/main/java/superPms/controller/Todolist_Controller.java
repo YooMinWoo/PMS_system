@@ -21,6 +21,7 @@ public class Todolist_Controller {
 //		
 //		return "WEB-INF\\suminView\\TodoList.jsp";
 //	}
+	
 	@RequestMapping("/todoList.do")
 	public String todoAjax(Model d) {
 		String id="monsta@gmail.com";
@@ -31,7 +32,28 @@ public class Todolist_Controller {
 	@RequestMapping("/insTodo.do")
 	public String insTodo(Todolist ins,Model d) {
 		service.insTodo(ins);
-		d.addAttribute("msg", "할일 등록 완료");
+		d.addAttribute("msg", "등록이 완료되었습니다");
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping("/uptStateTodo.do")
+	public String uptStateTodo(@RequestParam("tno")String tno,Model d) {
+		service.uptStateTodo(tno);
+		d.addAttribute("msg", "완료처리 되었습니다.");
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping("/delTodo.do")
+	public String delTodo(@RequestParam("tno")String tno,Model d) {
+		service.delTodo(tno);
+		d.addAttribute("msg", "삭제되었습니다.");
+		return "pageJsonReport";
+	}
+	
+	@RequestMapping("/uptTodo.do")
+	public String uptTodo(Todolist upt,Model d) {
+		service.uptTodo(upt);
+		d.addAttribute("msg", "수정되었습니다.");
 		return "pageJsonReport";
 	}
 }

@@ -62,8 +62,6 @@
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 		
-		$("#addBtn").show()
-		
 		$("#addBtn").click(function(){
 			$("h2").click()
 			$("#modalTitle").text("할 일 등록")
@@ -78,12 +76,84 @@
 			todoAjax("insTodo.do")
 		})
 		
+		$("#comBtn").click(function(){
+			if(confirm("완료처리하시겠습니까?")){
+				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+					if($("input[name=chk]:checkbox")[idx].checked==true){
+						//alert($("input[name=chk]:checkbox")[idx].value)
+						var tno = $("input[name=chk]:checkbox")[idx].value
+						stateAjax(tno)
+					}
+				}
+			}
+		})
+		$("#delBtn").click(function(){
+			if(confirm("삭제하시겠습니까?")){
+				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+					if($("input[name=chk]:checkbox")[idx].checked==true){
+						//alert($("input[name=chk]:checkbox")[idx].value)
+						var tno = $("input[name=chk]:checkbox")[idx].value
+						delAjax(tno)
+					}
+				}
+			}
+		})
+		$("#uptBtn").click(function(){
+			for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+				if($("input[name=chk]:checkbox")[idx].checked==true){
+					//alert($("input[name=chk]:checkbox")[idx].value)
+					var tno = $("input[name=chk]:checkbox")[idx].value
+					$("h2").click()
+					$("#modalTitle").text("할 일 수정")
+					$("form")[0].reset()
+					var todo = $("#"+tno).text()
+					$("[name=todo]").val(todo)
+					$("[name=tno]").val(tno)
+					
+				}
+			}
+		})
+		
+		$("#mUptBtn").click(function(){
+			todoAjax("uptTodo.do")
+		})
+			
+		
+		
 	});
 	function todoAjax(url){
 		$.ajax({
 			type:"post",
 			url:"${path}/"+url,
 			data:$("form").serialize(),
+			dataType:"json",
+			success:function(data){
+				alert(data.msg)
+				location.reload()
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	function stateAjax(tno){
+		$.ajax({
+			type:"post",
+			url:"${path}/uptStateTodo.do?tno="+tno,
+			dataType:"json",
+			success:function(data){
+				alert(data.msg)
+				location.reload()
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	function delAjax(tno){
+		$.ajax({
+			type:"post",
+			url:"${path}/delTodo.do?tno="+tno,
 			dataType:"json",
 			success:function(data){
 				alert(data.msg)
@@ -120,6 +190,9 @@
            <div class="card mb-4 pb-3">
 	           <div class="demo-inline-spacing">
 	         	<button id="addBtn" type="button" class="btn rounded-pill btn-primary">추가</button>
+	         	<button id="comBtn" type="button" class="btn rounded-pill btn-success">완료</button>
+	         	<button id="uptBtn" type="button" class="btn rounded-pill btn-info">수정</button>
+	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
 	         	</div>
 	         	<div class="table-responsive text-nowrap">
                   <table class="table">
@@ -128,31 +201,26 @@
                         <th></th>
                         <th>to do</th>
                         <th>status</th>
-                        
+                        <th>date</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                     <c:forEach var="todo" items="${todoList}">
                       <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <input type="checkbox" value="${todo.tno }"></td>
-                        <td>${todo.todo }</td>
+                     
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
+                       	 <input type="checkbox" name="chk" value="${todo.tno}"></td>
+                        <td id="${todo.tno}">${todo.todo }</td>
+                       
+                  		<c:if test="${todo.state=='0'}">
+                  		 <td>미완료</td>
+                  		</c:if>
+                  		<c:if test="${todo.state=='1'}">
+                  		 <td>완료</td>
+                  		</c:if>
+                       
                         <td>
-                          
-                        </td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"
-                                ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                              >
-                              <a class="dropdown-item" href="javascript:void(0);"
-                                ><i class="bx bx-trash me-1"></i> Delete</a
-                              >
-                            </div>
-                          </div>
+                          ${todo.regdte}
                         </td>
                       </tr>
                       </c:forEach>
@@ -160,20 +228,6 @@
                     </tbody>
                   </table>
                 </div>
-	         
-         	<!--  
-           		  <div class="input-group">
-                        <div class="input-group-text">
-                          <input
-                            class="form-check-input mt-0"
-                            type="checkbox"
-                            value=""
-                            aria-label="Checkbox for following text input"
-                          />
-                        </div>
-                        <input type="text" class="form-control" aria-label="Text input with checkbox" />
-                      </div>
-                -->      
          	</div>
          	  <!-- /card -->
             </div>
@@ -195,7 +249,7 @@
                               </div>
                                <form class="form">
                               <div class="modal-body">
-                             
+                              <input type="text" value="" name="tno" id="tno">
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="todoWithTitle" class="form-label">할 일</label>
@@ -215,6 +269,7 @@
                                   닫기
                                 </button>
                                 <button id="regBtn" type="button" class="btn btn-primary">등록</button>
+                                <button id="mUptBtn" type="button" class="btn btn-primary">수정</button>
                               </div>
                             </div>
                           </div>

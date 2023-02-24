@@ -4,11 +4,28 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Todolist_Dao">
+
 	<insert id="insTodo" parameterType="todolist">
-	INSERT INTO todolist values(todo_seq.nextval,#{todo},'0',#{id})
+		INSERT INTO todolist values(todo_seq.nextval,#{todo},'0',#{id},sysdate)
 	</insert>
 	
 	<select id="todoList" parameterType="string" resultType="todolist">
 		select * from todolist where id=#{id}
 	</select>
+	
+	<update id="uptStateTodo" parameterType="string">
+		UPDATE todolist SET state='1' WHERE tno=#{tno}
+	</update>
+	
+	<delete id="delTodo" parameterType="string">
+		delete from todolist where tno=#{tno}
+	</delete>
+	
+	<update id="uptTodo" parameterType="todolist">
+		update todolist 
+			set todo=#{todo},
+				id=#{id}
+		where tno=#{tno}
+				 
+	</update>
 </mapper>
