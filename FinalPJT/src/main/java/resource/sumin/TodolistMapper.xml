@@ -24,7 +24,7 @@
 	<update id="uptTodo" parameterType="todolist">
 		update todolist 
 			set todo=#{todo},
-				id=#{id}
+				id=#{id} 
 		where tno=#{tno}
 				 
 	</update>
