@@ -5,34 +5,73 @@
 
 <mapper namespace="superPms.dao.Notice_Dao">
 	<select id="noticeList" parameterType="noticesch" resultType="notice">
-		SELECT rownum, 
-			noticeno,
-			refno,
-			to_char(regdte,'yyyy-mm-dd') regdte,
-			to_char(uptdte,'yyyy-mm-dd') uptdte,
-			title,
-			content,
-			viewcnt,
-			writer,
-			fno,
-			deptid
-		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n
-		where deptid like '%'||#{schInfo}||'%'
-		or title like '%'||#{schInfo}||'%'
+		select * from(
+			SELECT rownum cnt, 
+				noticeno,
+				refno,
+				to_char(n.regdte,'yyyy-mm-dd') regdte,
+				to_char(n.uptdte,'yyyy-mm-dd') uptdte,
+				title,
+				content,
+				viewcnt,
+				writer,
+				n.fno,
+				deptid,
+				fname
+			FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
+			where n.fno=f.fno(+)
+			AND (deptid like '%'||#{schInfo}||'%'
+			or title like '%'||#{schInfo}||'%')
+		)
+		where cnt between #{start} and #{end}
 	</select>
 	<select id="noticeDetail" parameterType="notice" resultType="notice">
 		SELECT rownum, 
 			noticeno,
 			refno,
-			to_char(regdte,'yyyy-mm-dd') regdte,
-			to_char(uptdte,'yyyy-mm-dd') uptdte,
+			to_char(n.regdte,'yyyy-mm-dd') regdte,
+			to_char(n.uptdte,'yyyy-mm-dd') uptdte,
 			title,
 			content,
 			viewcnt,
 			writer,
-			fno,
-			deptid
-		FROM notice
+			n.fno,
+			deptid,
+			fname
+		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
+		where n.fno=f.fno(+)
+		and noticeno=#{noticeno}
+	</select>
+	<update id="plusCnt" parameterType="notice">
+		update notice
+		set
+		viewcnt = viewcnt+1
 		where noticeno=#{noticeno}
+	</update>
+	<insert id="insertFile" parameterType="notice">
+		insert into files values(
+			files_seq.nextval,#{fname},sysdate,sysdate,#{path}
+		)
+	</insert>
+	<insert id="insertNotice" parameterType="notice">
+		<if test= "fname != null and !fname.equals('')">
+			insert into notice values(
+				notice_seq.nextval,0,sysdate,sysdate,#{title},#{content},0,#{writer},
+				files_seq.currval,#{deptid}
+			)
+		</if>
+		<if test= "fname == null or fname.equals('')">
+			insert into notice values(
+				notice_seq.nextval,0,sysdate,sysdate,#{title},#{content},0,#{writer},
+				'',#{deptid}
+			)
+		</if>
+	</insert>
+	<select id="totCnt" parameterType="noticesch" resultType="int">
+			select count(*)
+		      from notice
+		      where 1=1
+		      and deptid like '%'||#{schInfo}||'%'
+		      and title like '%'||#{schInfo}||'%'
 	</select>
 </mapper>

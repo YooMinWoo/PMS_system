@@ -118,6 +118,7 @@ tbody tr{
 		           	<h4 class="fw-bold py-3 mb-4">공지사항</h4>
 		           	
 	           <div class="card mb-4 pb-3">
+	           <form id="frm01" action="/FinalPJT/goNotice.do">
 	           <div class="schDiv">
 			           <div class="input-group input-group-merge">
 			              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
@@ -127,11 +128,13 @@ tbody tr{
 			                placeholder="Search..."
 			                aria-label="Search..."
 			                aria-describedby="basic-addon-search31"
-			                name="searchInf"
+			                name="schInfo"
+			                value="${param.schInfo }"
 			              />
 			            </div>
 		            </div>
-		             
+		            <input type="hidden" name="curPage" value="${noticeSch.curPage}"/>
+		        </form>
 		     <%--  <c:if test="${not empty session }"> --%>
 			       <div class="tableTop">
 			           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
@@ -165,7 +168,7 @@ tbody tr{
                       <c:forEach var="nt" items="${noticeList}">
 	                      	<tr>
 	                      		<td><input name="noticeno" type="checkbox" class="checkbox checkboxs" value="${nt.noticeno }"></td>		                      	
-		                      	<td>${nt.rownum}</td>
+		                      	<td>${nt.cnt}</td>
 		                        <td>${nt.title}</td>
 		                        <td>${nt.writer}</td>
 		                        <td>${nt.viewcnt}</td>
@@ -176,9 +179,32 @@ tbody tr{
                       	</c:forEach>
                     </tbody>
                   </table>
+                  <nav aria-label="Page navigation" style="padding-top: 30px">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item prev">
+                              <a class="page-link" href="javascript:goPage(${noticeSch.startBlock-1});"
+                                ><i class="tf-icon bx bx-chevrons-left"></i
+                              ></a>
+                            </li>
+                            <c:forEach var="cnt" begin="${noticeSch.startBlock}" end="${noticeSch.endBlock}">
+	                            <li class="page-item ${noticeSch.curPage==cnt?'active':''}">
+	                              <a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
+	                            </li>
+	                        </c:forEach>
+                            <li class="page-item next">
+                              <a class="page-link" href="javascript:goPage(${noticeSch.startBlock+1});"
+                                ><i class="tf-icon bx bx-chevrons-right"></i
+                              ></a>
+                            </li>
+                          </ul>
+                        </nav>
                  </div>
                  <script>
                   // 선택 클릭시 체크박스 나타나고 사라지고 기능
+                  	function goPage(cnt){
+						$("[name=curPage]").val(cnt);
+						$("#frm01").submit()
+					}
                 	var cnt = 0;
                 	$("#check").click(function(){
                 		cnt++;
@@ -219,10 +245,11 @@ tbody tr{
 						}
 					})
 					
-					$("[name=searchInf]").keydown(function(e){
+					$("[name=searchInfo]").keydown(function(e){
 						if(e.keyCode==13){
-							if($("[name=searchInf]").val().length<=1) alert("2자 이상 입력하세요.")
-							else alert("검색한 내용 : "+$("[name=searchInf]").val())
+							if($("[name=searchInfo]").val().length<=1) alert("2자 이상 입력하세요.")
+							else $("#frm01").submit()
+								// alert("검색한 내용 : "+$("[name=searchInf]").val())
 						}
 					})
 					
@@ -242,12 +269,12 @@ tbody tr{
 		                  </div>
 						*/
 						$('body').append("<div style='display: none'>"
-			                  	+"<form method='post'>"
+			                  	+"<form method='post' id='frm02'>"
 			                  	+"	<input name='noticeno'>"
 			                  	+"</form></div>");
 						$("[name=noticeno]").val(parm)
-						$("form").attr("action","/FinalPJT/goNoticeDetail.do")
-						$("form").submit()
+						$("#frm02").attr("action","/FinalPJT/goNoticeDetail.do")
+						$("#frm02").submit()
 					})
 					
 					

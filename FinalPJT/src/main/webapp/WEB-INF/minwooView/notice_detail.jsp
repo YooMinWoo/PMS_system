@@ -102,6 +102,9 @@ textarea:read-only{
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
 				if("${noticeDetail.fno}"){
+					
+				}
+				else {
 					alert("다운로드할 파일이 없습니다.")
 					return
 				}
@@ -111,7 +114,7 @@ textarea:read-only{
 			if($("#formFile").val()==""){
 				$("#formFile2").val("선택된 파일이 없습니다.")
 			}else{
-				$("#formFile2").val($('#formFile').val())
+				$("#formFile2").val($('#formFile').val().split("\\")[2])
 			}
 		})
 	});
@@ -185,9 +188,15 @@ textarea:read-only{
 	                        <input class="form-control" type="file" id="formFile" />
                         </div>
                         <div class="mb-3">
-	                        <label for="formFile" class="form-label">파일명</label>
+	                        <label class="form-label">파일명</label>
 	                        <input class="form-control" type="text" id="formFile2"
-	                        value="${not empty noticeDetail.fno?noticeDetail.content:'등록된 파일이 없습니다.' }" />
+	                        value="${not empty noticeDetail.fname?
+	                        	noticeDetail.fname
+	                        	:'등록된 파일이 없습니다.' }"/>
+	                        <%-- 
+	                        ${not empty noticeDetail.fno?
+	                        	noticeDetail.content
+	                        	:'등록된 파일이 없습니다.' }"--%> 
                         </div>
                         <script>
                         </script>

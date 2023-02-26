@@ -30,6 +30,10 @@
 	justify-content: flex-end;
 	gap:20px;
 }
+.divs{
+	display: flex;
+	justify-content: space-between;
+}
 </style>
 
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -69,6 +73,35 @@
 				location.href="/FinalPJT/goNotice.do"
 			}
 		})
+		$("#regBtn").click(function(){
+			if(confirm("등록 하시겠습니까?")){
+				console.log("제목 : "+$("[name=title]").val())
+				console.log("작성자 : "+$("[name=writer]").val())
+				console.log("내용 : "+$("[name=content]").val())
+				console.log("카테고리 : "+$("[name=deptid]").val())
+				if($("[name=title]").val()==""){
+					alert("제목을 입력하세요.")
+					$("[name=title]").focus()
+					return
+				}
+				if($("[name=content]").val()==""){
+					alert("내용을 입력하세요.")
+					$("[name=content]").focus()
+					return
+				}
+				if($("[name=content]").val().length>500){
+					alert("500자 이하로 입력하세요!")
+					$("[name=content]").focus()
+					return
+				}
+				$("form").submit();
+			}
+		})
+		/*
+		$("[name=report]").on("change",function(){
+      		$(this).next("[name=report]").text($(this).val())
+      	})
+      	*/
 	});
 </script>
 </head>
@@ -95,22 +128,30 @@
            
            
 	           
-		           	<h4 class="fw-bold py-3 mb-4">공지사항 등록</h4>
+		       <h4 class="fw-bold py-3 mb-4">공지사항 > <small class="text-muted">등록</small></h4>
 	           <div class="card">
            			<div class="card-body">
-                      <form>
+                      <form enctype="multipart/form-data" action="/FinalPJT/insertFN.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
-                          <input type="text" class="form-control" id="basic-default-title" placeholder="제목을 입력하세요." />
+                          <input name="title" type="text" class="form-control" id="basic-default-title" placeholder="제목을 입력하세요." />
                         </div>
-                        <div class="mb-3" style="width:45%;">
-                          <label class="form-label" for="basic-default-writer">작성자</label>
-                          <input type="text"
-                          class="form-control" id="basic-default-writer" value="홍길동" readonly />
+                        <div class="divs">
+	                        <div class="mb-3" style="width:45%;">
+	                          <label class="form-label" for="basic-default-writer">작성자</label>
+	                          <input type="text" name="writer"
+	                          class="form-control" id="basic-default-writer" value="홍길동" readonly />
+	                        </div>
+	                        <div class="mb-3" style="width:45%;">
+	                          <label class="form-label" for="basic-default-writer">카테고리</label>
+	                          <input type="text" name="deptid"
+	                          class="form-control" id="basic-default-writer" value="개발" />
+	                        </div>
                         </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-message">내용</label>
                           <textarea
+                          	name="content"
                             id="basic-default-message"
                             class="form-control"
                             placeholder="내용을 입력하세요"
@@ -119,10 +160,10 @@
                         </div>
                         <div class="mb-3">
 	                        <label for="formFile" class="form-label">파일첨부</label>
-	                        <input class="form-control" type="file" id="formFile" />
+	                        <input type="file" name="report" class="form-control" id="formFile" />
                         </div>
                         <div class="btns">
-                        	<button type="button" class="btn btn-primary">등록</button>
+                        	<button type="button" class="btn btn-primary" id="regBtn">등록</button>
                         	<button type="button" class="btn btn-secondary" id="clBtn">취소</button>
                         </div>
                       </form>
