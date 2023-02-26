@@ -75,10 +75,12 @@ textarea:read-only{
 <script type="text/javascript">
 	$(document).ready(function(){
 		var authTF = ${empty session}
+		/*
 		if(authTF){ // 권한이 admin이 아니라면
 			$("input").attr("readonly","readonly")
 			$("textarea").attr("readonly","readonly")
 		}
+		*/
 		$("#backBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
 				location.href="/FinalPJT/goNotice.do"
@@ -86,7 +88,11 @@ textarea:read-only{
 		})
 		$("#uptBtn").click(function(){
 			if(confirm("수정하시겠습니까?")){
-				location.href="/FinalPJT/goNotice.do"
+				$("form").attr({
+					action:"/FinalPJT/uptNotice.do",
+					enctype:"multipart/form-data"
+				})
+				$("form").submit()
 			}
 		})
 		$("#delBtn").click(function(){
@@ -146,20 +152,21 @@ textarea:read-only{
 		       <h4 class="fw-bold py-3 mb-4">공지사항 > <small class="text-muted">상세화면</small></h4>
 	           <div class="card mb-4 pb-3">
            			<div class="card-body">
-                      <form>
+                      <form method="post">
+                      	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
-                          <input type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>
+                          <input name="title" type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>
                         </div>
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-writer" value="${noticeDetail.writer }" readonly />
+	                          class="form-control" id="basic-default-writer" name="writer" value="${noticeDetail.writer }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-cnt">조회수</label>
-	                          <input type="text"
+	                          <input type="text" name="cnt"
 	                          class="form-control" id="basic-default-cnt" value="${noticeDetail.viewcnt }" readonly />
 	                        </div>
                         </div>
@@ -167,7 +174,7 @@ textarea:read-only{
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-regDte">작성일자</label>
 	                          <input type="text"
-	                          class="form-control" id="basic-default-regDte" value="${noticeDetail.regdte }" readonly />
+	                          class="form-control" name="regdte" id="basic-default-regDte" value="${noticeDetail.regdte }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-uptDte">수정일자</label>
@@ -180,12 +187,13 @@ textarea:read-only{
                           <textarea
                             id="basic-default-message"
                             class="form-control"
+                            name="content"
                             style="height: 300px;"
                           >${noticeDetail.content }</textarea>
                         </div>
                         <div class="mb-3" style="display:none;">
 	                        <label for="formFile" class="form-label">파일첨부</label>
-	                        <input class="form-control" type="file" id="formFile" />
+	                        <input name="report" class="form-control" type="file" id="formFile" />
                         </div>
                         <div class="mb-3">
 	                        <label class="form-label">파일명</label>

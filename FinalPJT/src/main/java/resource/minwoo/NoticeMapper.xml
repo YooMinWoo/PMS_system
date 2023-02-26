@@ -4,6 +4,8 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Notice_Dao">
+
+	<!-- 검색 데이터 가져오기, 페이징 처리 O -->
 	<select id="noticeList" parameterType="noticesch" resultType="notice">
 		select * from(
 			SELECT rownum cnt, 
@@ -25,6 +27,8 @@
 		)
 		where cnt between #{start} and #{end}
 	</select>
+	
+	<!-- 페이지 상세조회 -->
 	<select id="noticeDetail" parameterType="notice" resultType="notice">
 		SELECT rownum, 
 			noticeno,
@@ -42,17 +46,44 @@
 		where n.fno=f.fno(+)
 		and noticeno=#{noticeno}
 	</select>
+	
+	<!-- 공지사항 업데이트 처리 -->
+	<update id="uptNotice" parameterType="notice">
+		<if test= "fname != null and !fname.equals('')">
+			update notice
+			set
+				title=#{title},
+				content=#{content},
+				uptdte = sysdate,
+				fno=files_seq.currval
+			where noticeno=#{noticeno}
+		</if>
+		<if test= "fname == null or fname.equals('')">
+			update notice
+			set
+				title=#{title},
+				content=#{content},
+				uptdte = sysdate
+			where noticeno=#{noticeno}
+		</if>
+	</update>
+	
+	<!-- 조회수 +1 처리 -->
 	<update id="plusCnt" parameterType="notice">
 		update notice
 		set
-		viewcnt = viewcnt+1
+			viewcnt = viewcnt+1
 		where noticeno=#{noticeno}
 	</update>
+	
+	<!-- 파일DB에 insert -> 공지사항 등록시, 파일이 있을 경우 파일 insert -->
 	<insert id="insertFile" parameterType="notice">
 		insert into files values(
 			files_seq.nextval,#{fname},sysdate,sysdate,#{path}
 		)
 	</insert>
+	
+	<!-- 공지사항 등록, 파일 유무 확인 -->
 	<insert id="insertNotice" parameterType="notice">
 		<if test= "fname != null and !fname.equals('')">
 			insert into notice values(
@@ -67,6 +98,8 @@
 			)
 		</if>
 	</insert>
+	
+	<!-- 페이징 처리를 위한 전체 데이터 가져오기 -->
 	<select id="totCnt" parameterType="noticesch" resultType="int">
 			select count(*)
 		      from notice

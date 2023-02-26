@@ -60,4 +60,10 @@ public class Notice_Controller {
 		service.insertFN(sch);
 		return "redirect:/goNotice.do";
 	}
+	
+	@PostMapping("uptNotice.do")
+	public String uptNotice(Notice sch) {
+		service.uptNotice(sch);
+		return "redirect:/goNotice.do";
+	}
 }

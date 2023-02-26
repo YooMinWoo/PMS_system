@@ -109,4 +109,14 @@ public class Notice_Service {
 		}
 		dao.insertNotice(f);
 	}
+	
+	public void uptNotice(Notice n) {
+		String fname = uploadFile(n.getReport());
+		n.setFname(fname);
+		n.setPath(upload);
+		if(fname!=null && !fname.equals("")) {
+			dao.insertFile(n);
+		}
+		dao.uptNotice(n);
+	}
 }
