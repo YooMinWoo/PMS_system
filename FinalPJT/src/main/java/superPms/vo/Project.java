@@ -10,7 +10,15 @@ public class Project {
 	private String openStatus;
 	
 	private String ename;
+	private String dname;
 	
+	
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
 	public String getEname() {
 		return ename;
 	}

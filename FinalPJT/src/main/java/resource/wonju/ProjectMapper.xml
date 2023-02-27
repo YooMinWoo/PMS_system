@@ -4,14 +4,28 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Project_Dao">
+	<!-- Error getting generated key or setting result to parameter object -->
 	<insert id="insProject" parameterType="project">
 	INSERT INTO project values(pro_seq.nextval,#{regdte},#{deadline},#{subject},#{tlid},#{deptid},#{openStatus})
 	</insert>
+	<insert id="insProMem" parameterType="projectMember">
+	insert into projectMember values(pro_seq.currval,#{owner},#{part})
+	</insert>
+	<select id="allProject" parameterType="hashmap" resultType="project">
+	SELECT p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
+	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
+	<if test='isCon!=null and isCon.equals("Y")'>
+			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
+	</if>
+	<if test='isCon!=null and isCon.equals("N")'>
+			and TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')>to_date(p.deadline,'yyyy-mm-dd')
+	</if>
+	AND (subject LIKE '%'||#{keyword}||'%'
+	or ename LIKE '%'||#{keyword}||'%')
+	</select>
 	
-	<select id="allProject" parameterType="string" resultType="project">
-	SELECT p.*,e.ename FROM project p,emp777 e 
-	WHERE openstatus='0' AND e.id=p.tlid AND to_date(p.deadline,'yyyy-mm-dd')>=sysdate
-	AND (subject LIKE '%'||#{subject}||'%'
-	or ename LIKE '%'||#{ename}||'%')
+	<!-- 부서 콤보박스 만들기 -->
+	<select id="deptCom" resultType="superdept">
+		SELECT deptid, dname FROM dept777
 	</select>
 </mapper>

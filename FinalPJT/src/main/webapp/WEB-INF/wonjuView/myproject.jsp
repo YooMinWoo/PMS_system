@@ -63,7 +63,21 @@ tbody td{
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
-		$("#menu-item-project-myproject").addClass('active');	
+		$("#menu-item-project-myproject").addClass('active');
+		$("[name=keyword]").keyup(function(){
+			if(event.keyCode==13){
+				$("#myFrm").submit()
+			}
+		})
+		$("#now-pro").click(function(){
+			$("[name=isCon]").val("Y")
+			$("#allFrm").submit()
+		})
+		$("#fin-pro").click(function(){
+			$("[name=isCon]").val("N")
+			$("#allFrm").submit()
+		})
+
 	});
 </script>
 </head>
@@ -96,20 +110,21 @@ tbody td{
            <div class="demo-inline-spacing mt-5">
            <div class="row">
            <div class="col-3">
-          <div class="list-group list-group-horizontal-md text-md-center">
-            <a class="list-group-item list-group-item-action active" id="home-list-item" data-bs-toggle="list" href="#horizontal-home">진행중</a>
-            <a class="list-group-item list-group-item-action" id="settings-list-item" data-bs-toggle="list" href="#horizontal-settings">종료</a>
-          </div>
+           	 <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" id="now-pro" class="btn btn-outline-secondary">진행중</button>
+              <button type="button" id="fin-pro" class="btn btn-outline-secondary">종료</button>
+             </div>
           </div>
           <div class="col-5"> </div>
           <div class="col-4">
           
           
           <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex">
+          <form class="d-flex" id="myFrm" action="${path }/" method="get">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" class="form-control" placeholder="Search...">
+	            <input type="hidden" name="isCon" value="${param.isCon }">
+	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
@@ -119,9 +134,7 @@ tbody td{
           <button type="button" class="btn btn-info"><small>새 프로젝트</small></button>
           </div>
           <div class="tab-content px-0 mt-0">
-          <!--  진행중 프로젝트 tab -->
-            <div class="tab-pane fade show active" id="horizontal-home">
-             <div class="table-responsive text-nowrap">
+          <!--  프로젝트table -->
 			  <table class="table card-table">
 			  <col width="13%">
 			  <col width="40%">
@@ -147,15 +160,8 @@ tbody td{
 			      </tr>
 			    </tbody>
 			  </table>
-			</div>
-            </div>
-             <!--  /진행중 프로젝트 tab -->
-              <!--  종료 프로젝트 tab -->
-            <div class="tab-pane fade" id="horizontal-settings">
+             <!--  / 프로젝트 table -->
            
-           
-            </div>
-             <!--  /종료 프로젝트 tab -->
           </div>
         </div>
           <div class="d-flex justify-content-center">

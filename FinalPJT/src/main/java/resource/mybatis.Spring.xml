@@ -15,6 +15,9 @@
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
       	<typeAlias alias="alert" type="superPms.vo.Alert"/>
+      	<typeAlias alias="projectMember" type="superPms.vo.ProjectMember"/>
+      	<typeAlias alias="gantt" type="superPms.vo.Gantt"/>
+      	<typeAlias alias="link" type="superPms.vo.Link"/>
       	
 	</typeAliases>
 
@@ -23,6 +26,7 @@
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
 		<mapper resource="resource/sumin/AlertMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
+		<mapper resource="resource/wonju/GanttMapper.xml"/>
 		<mapper resource="resource/eunbeen/DeptMapper.xml"/>
 		<mapper resource="resource/eunbeen/EmpMapper.xml"/>
 		<mapper resource="resource/jungwoo/RiskMapper.xml"/>

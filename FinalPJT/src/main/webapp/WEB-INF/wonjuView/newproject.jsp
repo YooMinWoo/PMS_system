@@ -21,7 +21,13 @@
 	padding-left: 15rem !important;
 	padding-right: 15rem !important;
 }
-
+th{
+	text-align: center !important;
+}
+tbody td{
+	text-align: center;
+	font-size: 0.8rem;
+}
 
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -57,21 +63,49 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
-		$("#menu-item-project-myproject").addClass('active');	
-		$("#startDate").val(new Date().toISOString().substring(0, 10))
+		$("#menu-item-project-newproject").addClass('active');	
 		
+		// 등록 버튼
 		$("#regBtn").click(function(){	
+			// 멤버 초대 input의 갯수
+			var inputlen=$("#plusMem").find("input.form-control").length
+			var validCnt = 0;
+			// 만들어진 input에 값이 없으면 테두리 빨간색으로 표시 validCnt증가 ==> 유효성에서 validCnt가 초기값인 0이 아니면 ajax 호출 불가
+			for(let i=0;i<inputlen;i++){ 
+				if($("#plusMem").find("input.form-control").eq(i).val()==''){
+					$("#plusMem").find("input.form-control").eq(i).css('border-color','#ff3e1d');
+					validCnt++;
+				}else{
+					$("#plusMem").find("input.form-control").eq(i).css('border-color','');
+				}
+			}
+
+			// 날짜 비교를 위해 날짜형 데이터로 변환
 			var regdte = new Date($("[name=regdte]").val())
 			var deadline = new Date($("[name=deadline]").val())
-			/* console.log($("[name=deptid]").val())
-			console.log($("[name=subject]").val())
-			console.log($("[name=deadline]").val())
-			console.log(regdte<deadline)
-			 */
-			 $("form").addClass('was-validated')
-			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!='' 
-				&& $("[name=deadline]").val()!='' && regdte<deadline){
-				insAjax()
+			// form에 부트스트랩 유효성 클래스검사 추가
+			 $("#insProFrm").addClass('was-validated')
+			 $("#insPmFrm").addClass('was-validated')
+			// 멤버 초대는 append로 만들어져서 선택자로 접근이 안되서 반복문 돌려서 따로 qstr을 만들어줌
+			var ownersPartsQstr=""
+			for(let i=0;i<inputlen/2;i++){
+				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()+"&parts="+$("#plusMem").find("input#part").eq(i).val()
+			}
+			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!=''&& validCnt==0
+				&& $("[name=deadline]").val()!='' && regdte<deadline && $("[name=regdte]").val()!=''){
+				// 유효성을 다 통과하면 qstr만들어서 ajax
+				var regdteVal=$("[name=regdte]").val()
+				var deptidVal=$("[name=deptid]").val()
+				var subjectVal=$("[name=subject]").val()
+				var deadlineVal=$("[name=deadline]").val()
+				var openStatusVal=$("[name=openStatus]").val()
+				var tlidVal=$("[name=tlid]").val()
+				
+				var qstr = "tlid="+tlidVal+"&deptid="+deptidVal+"&regdte="+regdteVal+"&subject="+subjectVal+"&deadline="
+				+deadlineVal+"&openStatus="+openStatusVal+ownersPartsQstr
+				
+				console.log(qstr)
+				insAjax(qstr)
 			}else if(regdte<deadline){
 				$("#deadCk").hide()
 				$("[name=deadline]").css('border-color','');
@@ -83,19 +117,23 @@
 			
 						
 		})
-		$("#canBtn").click(function(){
-			location.href="" // 내 프로젝트 페이지로 이동
+		// input 추가
+		$("#plusBtn").click(function(){
+			$("#plusMem").append("<div class='col-6'><label for='part' class='col-form-label'>파트</label><input class='form-control' type='text' name='part' placeholder='담당파트 입력' id='part'></div><div class='col-6'><label for='owner' class='col-form-label'>담당자이메일</label><input class='form-control' type='text' name='owner' placeholder='담당자 이메일입력' id='owner'></div>")
+			i++;
 		})
-		
-		
-		
+
+		// 이전 페이지로 이동
+		$("#canBtn").click(function(){	
+			//location.href="" // 내 프로젝트 페이지로 이동
+		})
 	});
 
-   function insAjax(){
+   function insAjax(qstr){
 	   $.ajax({
 			url:"${path}/newProject.do",
 			type:"post",
-			data:$("form").serialize(),
+			data:qstr,
 			dataType:"json",
 			success:function(data){
 				console.log(data.msg)
@@ -114,6 +152,7 @@
 			}
 		})
    }
+
 </script>
 </head>
 
@@ -139,7 +178,7 @@
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">새로운 프로젝트</small></h4>
+           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">프로젝트 등록</small></h4>
            
            <div class="card mb-4 pb-3">
     
@@ -151,15 +190,15 @@
               </p>
 		      <div class="card-body">
 		       <!-- 등록 form  -->
-		      <form class="needs-validation">
+		      <form class="needs-validation" id="insProFrm">
 		        <div class="mb-3 row">
 		          <label for="html5-text-input" class="col-md-2 col-form-label">카테고리</label>
 		          <div class="col-md-10">
 			           <select id="html5-text-input" class="form-select" name="deptid" required="required">
 			            <option selected disabled value>카테고리를 선택하세요</option>
-			            <option value="10">IT</option>
-			            <option value="20">마케팅</option>
-			            <option value="30">영업</option>
+			            <c:forEach var="dept" items="${deptCom}">
+				    	<option value="${dept.deptid }">${dept.dname}</option>
+				    	</c:forEach>
 			          </select>
 			          <div class="invalid-feedback">
 					      카테고리를 선택해주세요
@@ -185,13 +224,16 @@
 		         <div class="mb-3 row">
 		          <label for="startDate" class="col-md-2 col-form-label">시작 일자</label>
 		          <div class="col-md-10"> 
-		            <input class="form-control" name="regdte" id="startDate" type="date" value="" readonly="readonly">
+		            <input class="form-control" name="regdte" id="startDate" type="date" value="" required="required">
+		         	 <div class="invalid-feedback" id="regCk">
+					    프로젝트 시작 일자를 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">종료 일자</label>
+		          <label for="endDate" class="col-md-2 col-form-label">종료 일자</label>
 		          <div class="col-md-10">
-		            <input class="form-control validCk" name="deadline" type="date" value="" placeholder="프로젝트 종료 일자를 입력하세요" id="html5-search-input" required="required">
+		            <input class="form-control validCk" name="deadline" type="date" value="" id="endDate" required="required">
 		          	 <div class="invalid-feedback" id="deadCk">
 					    프로젝트 종료 일자를 입력해주세요
 					  </div>
@@ -210,6 +252,89 @@
 		               </div>
 		          </div>
 		        </div>
+		          <hr class="my-sm-5">
+		        <h5 class="card-header pt-5 fw-bold">멤버 초대</h5> 
+		        <p class="text-muted mb-3 px-4" style="font-size: 0.5rem;">
+                ※ 부서명, 사원명으로 검색하여 프로젝트에 추가할 수 있습니다.<br>
+              </p>
+              	<div class="my-4 row">
+              	<div class="col-6"> </div>
+              	<div class="col-6"> 
+              	 		<!-- 검색어 ajax로 넘기기 -->
+			          <div class="input-group">
+			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+			            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+			          </div>
+			  	
+              	</div>
+              	</div>
+		        <div class="my-3 row">
+		        <div class="table-responsive text-nowrap">
+				    <table class="table table-striped">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="40%">
+				      <thead>
+				        <tr>
+				          <th>부서명</th>
+				          <th>이름</th>
+				          <th>직책</th>
+				          <th>이메일</th>
+				        </tr>
+				      </thead>
+				      <tbody class="table-border-bottom-0">
+				        <tr>
+				        <td>마케팅</td><td>홍길동</td><td></td><td>wjekr@gmail.com</td>
+				        </tr>
+				        <tr>
+				        <td>재무</td><td>홍설</td><td>eeesr@gmail.com</td>
+				        </tr>
+				       
+				      </tbody>
+				    </table>
+				  </div>
+		          <!-- Basic Pagination -->
+		          <nav id="pagination" aria-label="Page navigation">
+		            <ul class="pagination pagination-sm justify-content-end">
+		              <li class="page-item prev">
+		                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+		              </li>
+		              <li class="page-item">
+		                <a class="page-link" href="javascript:void(0);">1</a>
+		              </li>
+		              <li class="page-item">
+		                <a class="page-link" href="javascript:void(0);">2</a>
+		              </li>
+		              <li class="page-item active">
+		                <a class="page-link" href="javascript:void(0);">3</a>
+		              </li>
+		              <li class="page-item next">
+		                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+		              </li>
+		            </ul>
+		          </nav>
+		          <!--/ Basic Pagination -->
+		   		
+		        </div>
+		        <form id="insPmFrm">
+		          <div class="my-3 row" id="plusMem">
+			          <div class="col-6">
+			          <label for="part" class="col-form-label">파트1</label>
+			            <input class="form-control" type="text" name="part" placeholder="담당파트 입력" id="part">
+			         </div>
+			          <div class="col-6">
+			          <label for="owner" class=" col-form-label">담당자이메일1</label>
+			            <input class="form-control" type="text" name="owner" placeholder="담당자 이메일입력" id="owner">
+			         </div>
+		          </div>
+		    	</form>
+		         <div class="my-3 row">
+		         	<div class="col-10"> </div>
+			         <div class="col-2 d-flex justify-content-end">
+			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>
+			         </div>
+		         </div>
 		        <div class="card-footer">
 			        <div class="d-flex justify-content-center">
 			        <button id="regBtn" type="button" class="btn btn-primary">등록</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

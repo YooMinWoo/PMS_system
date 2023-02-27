@@ -14,12 +14,33 @@ CREATE TABLE project (
     foreign key(tlid) references emp777(id)
     on delete CASCADE
 );
-ALTER TABLE project modify regdte varchar2(50); 
-ALTER TABLE project modify regdte date; 
-ALTER TABLE project modify deadline varchar2(50); 
-ALTER TABLE project modify deadline date; 
+	SELECT p.*,e.ename FROM project p,emp777 e 
+	WHERE 1=1 AND p.tlid=e.ID  
+	AND TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')>=to_date(p.deadline,'yyyy-mm-dd');
+	
+	SELECT TO_date(sysdate,'yyyy-mm-dd') FROM dual;
+
+	SELECT p.*,e.ename FROM project p,emp777 e 
+	WHERE 1=1 and openstatus='0' AND e.id=p.tlid
+	and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
+	AND (subject LIKE '%'||''||'%'
+	or ename LIKE '%'||''||'%');
+
+	SELECT p.*,e.ename FROM project p,emp777 e 
+	WHERE 1=1 and openstatus='0' AND e.id=p.tlid
+	and TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')>to_date(p.deadline,'yyyy-mm-dd')
+	AND (subject LIKE '%'||''||'%'
+	or ename LIKE '%'||''||'%');
+
+	SELECT p.prjno,p.subject,p.tlid,p.deptid
+	FROM project p,PROJECTMEMBER m
+	WHERE m.PRJNO =p.PRJNO ;
+	
+	
+SELECT * FROM PROJECT;
 -- openStatus 0이면 전체 공개 1이면 멤버공개
 INSERT INTO project values(pro_seq.nextval,sysdate,to_date('2023-03-30','yyyy-mm-dd'),'첫번째 프로젝트','admin1@gmail.com','10','0');
+INSERT INTO project values(pro_seq.nextval,'2023-02-01','2023-02-25','지난 프로젝트3','admin1@gmail.com','10','0');
 SELECT * FROM project;
 -- 전체 프로젝트(전체공개) & 진행중인 프로젝트 검색
 SELECT p.*,e.ename FROM project p,emp777 e 
@@ -30,6 +51,7 @@ or ename LIKE '%'||'리'||'%')
 CREATE SEQUENCE pro_seq
 START WITH 1
 MINVALUE 1;
+SELECT PRO_SEQ.CURRVAL FROM DUAL;
 COMMENT ON COLUMN project.openStatus IS 0/1;
 DELETE FROM project;
 -- # 프로젝트 멤버 테이블
@@ -37,17 +59,21 @@ DROP TABLE projectMember;
 
 CREATE TABLE projectMember (
 	prjno	number		NOT NULL,
-	id	varchar2(50)		NOT NULL,
-	status	varchar2(20)		NOT NULL,
+	owner	varchar2(50)		NOT NULL,
+	part	varchar2(100)		NOT NULL,
 	foreign key(prjno) references project(prjno)
     on delete CASCADE,
-    foreign key(id) references emp777(id)
+    foreign key(owner) references emp777(id)
     on delete CASCADE
 );
-INSERT INTO projectMember values(4,'emp1@gmail.com','초대중');
-COMMENT ON COLUMN projectMember.status IS 초대중, 참여, 거절;
+SELECT * FROM emp777;
+SELECT deptid, dname FROM dept777;
+SELECT e.id, e.ename, e.job, d.dname FROM emp777 e, dept777 d;
+SELECT * FROM project;
+INSERT INTO projectMember values(20,'emp2@gmail.com','마케팅');
+SELECT * FROM projectMember;
 ALTER TABLE projectMember ADD CONSTRAINT PK_ProjectMember PRIMARY KEY (
-	prjno,id
+	prjno,owner
 );
 SELECT * FROM project p, projectmember m WHERE p.prjno=m.prjno;
 -- # 사원 테이블
@@ -83,229 +109,57 @@ CREATE TABLE dept777 (
 SELECT * FROM dept777;
 
 
-
-DROP TABLE calendar;
-
-CREATE TABLE calendar (
-	calno	number		NOT NULL,
-	title	varchar2(200)		NULL,
-	startdte	varchar2(30)		NULL,
-	enddte	varchar2(30)		NULL,
-	id	varchar2(50)		NOT NULL,
-	textColor	varchar2(20)		NULL,
-	backColor	varchar2(20)		NULL,
-	allday	number		NULL,
-	content	varchar2(100)		NULL
+-- ##간트차트
+DROP TABLE gantt;
+CREATE TABLE gantt(
+	id varchar2(100) PRIMARY KEY,
+	text varchar2(500),
+	type varchar2(100),
+	start_date varchar2(100),
+	progress NUMBER,
+	owner varchar2(100),
+	parent varchar2(100),
+	duration NUMBER,
+	OPEN char(1),	--1이면 TRUE, 0 이면 false
+	prjno NUMBER,
+	foreign key(prjno) references project(prjno)
+    on delete CASCADE
 );
+ALTER TABLE gantt MODIFY parent varchar2(100);
+ALTER TABLE gantt RENAME COLUMN startDate TO start_date;
+INSERT INTO gantt values(gantt_seq.nextval,'테스트프로젝트1','gantt.config.types.project','2023-03-01',0,NULL,NULL,NULL,1,55);
+INSERT INTO gantt values(gantt_seq.nextval,'테스트업무1','gantt.config.types.task','2023-03-01',0,'홍사원',23,8,null,55);
+INSERT INTO gantt values(gantt_seq.nextval,'테스트업무2','gantt.config.types.task','2023-03-05',0,'금사원',23,7,null,55);
+INSERT INTO gantt values(gantt_seq.nextval,'테스트업무3','gantt.config.types.task','2023-03-07',0,'금사원',23,5,null,55);
 
-DROP TABLE todolist;
+SELECT * FROM gantt;
 
-CREATE TABLE todolist (
-	tdno	number		NOT NULL,
-	todo	varchar2(200)		NULL,
-	state	char(1)		NULL,
-	id	varchar2(50)		NOT NULL
+DELETE FROM gantt;
+update gantt set text='수정테스트',
+start_date='Sun Mar 05 2023 00:00:00 GMT 0900 (한국 표준시)', 
+progress=0.6, owner='금사원', 
+parent=26 , duration=6 where id=29;
+SELECT g.*,p.TLID  FROM gantt g, project p WHERE g.PRJNO =p.PRJNO AND p.prjno=55 ORDER BY START_date;
+SELECT g.*,l.*,p.TLID  FROM gantt g, project p,link l WHERE g.PRJNO =p.PRJNO AND l.gid=g.id AND p.prjno=55;
+DROP TABLE link;
+CREATE TABLE link(
+	id varchar2(100) PRIMARY KEY,
+	source varchar2(100),
+	target varchar2(100),
+	type varchar2(1),
+	prjno NUMBER,
+	foreign key(prjno) references project(prjno)
+    on delete CASCADE
 );
-
-DROP TABLE notification;
-
-CREATE TABLE notification (
-	notno	number		NULL,
-	title	varchar2(200)		NOT NULL,
-	cont	varchar2(1000)		NULL,
-	url	varchar2(200)		NULL,
-	id	varchar2(50)		NOT NULL,
-	state	varchar(20)		NULL
-);
-
-DROP TABLE mail;
-
-CREATE TABLE mail (
-	mailno	number		NOT NULL,
-	Field	varchar2(100)		NULL,
-	Field2	varchar2(1000)		NULL,
-	sender	varchar2(50)		NOT NULL,
-	fno	varchar2(30)		NOT NULL,
-	sendDte	varchar2(30)		NULL,
-	state	number		NULL
-);
-
-DROP TABLE comm;
-
-CREATE TABLE comm (
-	no	varchar2(30)		NOT NULL,
-	refno	number		NULL,
-	regdte	date		NULL,
-	uptdte	date		NULL,
-	title	varchar2(500)		NULL,
-	content	varchar2(2000)		NULL,
-	viewcnt	number		NULL,
-	writer	varchar2(50)		NOT NULL,
-	fno2	varchar2(30)		NOT NULL,
-	deptid	varchar2(30)		NOT NULL
-);
-
-DROP TABLE commRep;
-
-CREATE TABLE commRep (
-	no	varchar2(30)		NOT NULL,
-	refno	number		NULL,
-	content	varchar2(500)		NULL,
-	regdte	date		NULL,
-	uptdte	date		NULL,
-	no2	varchar2(30)		NOT NULL,
-	writer	varchar2(50)		NOT NULL
-);
-
-DROP TABLE work;
-
-CREATE TABLE work (
-	workno	number		NOT NULL,
-	regdte	varchar2(30)		NULL,
-	uptdte	varchar2(30)		NULL,
-	subject	varchar2(200)		NULL,
-	cont	varchar2(1000)		NOT NULL,
-	id	varchar2(50)		NOT NULL,
-	prjno	number		NOT NULL,
-	fno	varchar2(30)		NOT NULL,
-	hisno	number		NOT NULL,
-	Field	number		NULL,
-	state	varchar2(10)		NULL
-);
-
-DROP TABLE workrep;
-
-CREATE TABLE workrep (
-	no	number		NULL,
-	repno	number		NULL,
-	cont	varchar2(1000)		NULL,
-	regdte	date		NULL,
-	uptdte	date		NULL,
-	id	varchar2(50)		NOT NULL,
-	fno	varchar2(30)		NOT NULL,
-	workno	number		NOT NULL
-);
-
-DROP TABLE history;
-
-CREATE TABLE history (
-	hisno	number		NOT NULL,
-	repno	number		NULL,
-	regdte	date		NULL,
-	cont	varchar2(2000)		NULL
-);
-
-DROP TABLE file;
-
-CREATE TABLE file (
-	fno	varchar2(30)		NOT NULL,
-	fname	varchar2(50)		NULL,
-	regdte	date		NULL,
-	uptdte	date		NULL,
-	path	varchar2(200)		NULL
-);
-
-
-
-DROP TABLE Untitled;
-
-CREATE TABLE Untitled (
-	mailno	number		NOT NULL,
-	receiver	varchar2(50)		NOT NULL
-);
-
-DROP TABLE approval_doc;
-
-CREATE TABLE approval_doc (
-	Key	VARCHAR(255)		NOT NULL
-);
-
-DROP TABLE workMember;
-
-CREATE TABLE workMember (
-	id	varchar2(50)		NOT NULL,
-	workno	number		NOT NULL,
-	div	char(1)		NULL
-);
-
-DROP TABLE risk;
-
-CREATE TABLE risk (
-	riskno	number		NOT NULL,
-	risklevel	varchar2(50)		NULL,
-	riskpriority	varchar2(50)		NULL,
-	riskmoniter	varchar2(50)		NULL,
-	riskstate	varchar2(50		NULL,
-	riskname	varchar2(100)		NULL,
-	id	varchar2(50)		NOT NULL,
-	prjno	number		NOT NULL
-);
-
-ALTER TABLE project ADD CONSTRAINT PK_PROJECT PRIMARY KEY (
-	prjno
-);
-
-ALTER TABLE emp ADD CONSTRAINT PK_EMP PRIMARY KEY (
-	id
-);
-
-ALTER TABLE dept ADD CONSTRAINT PK_DEPT PRIMARY KEY (
-	deptid
-);
-
-ALTER TABLE calendar ADD CONSTRAINT PK_CALENDAR PRIMARY KEY (
-	calno
-);
-
-ALTER TABLE todolist ADD CONSTRAINT PK_TODOLIST PRIMARY KEY (
-	tdno
-);
-
-ALTER TABLE notification ADD CONSTRAINT PK_NOTIFICATION PRIMARY KEY (
-	notno
-);
-
-ALTER TABLE mail ADD CONSTRAINT PK_MAIL PRIMARY KEY (
-	mailno
-);
-
-ALTER TABLE comm ADD CONSTRAINT PK_COMM PRIMARY KEY (
-	no
-);
-
-ALTER TABLE commRep ADD CONSTRAINT PK_COMMREP PRIMARY KEY (
-	no
-);
-
-ALTER TABLE work ADD CONSTRAINT PK_WORK PRIMARY KEY (
-	workno
-);
-
-ALTER TABLE workrep ADD CONSTRAINT PK_WORKREP PRIMARY KEY (
-	no
-);
-
-ALTER TABLE history ADD CONSTRAINT PK_HISTORY PRIMARY KEY (
-	hisno,
-	repno
-);
-
-ALTER TABLE file ADD CONSTRAINT PK_FILE PRIMARY KEY (
-	fno
-);
-
-ALTER TABLE approval_doc ADD CONSTRAINT PK_APPROVAL_DOC PRIMARY KEY (
-	Key
-);
-
-ALTER TABLE risk ADD CONSTRAINT PK_RISK PRIMARY KEY (
-	riskno
-);
-
-ALTER TABLE history ADD CONSTRAINT FK_workrep_TO_history_1 FOREIGN KEY (
-	repno
-)
-REFERENCES workrep (
-	no
-);
-
+DELETE FROM link;
+SELECT * FROM link;
+SELECT * FROM project p, gantt g, link l WHERE p.PRJNO =g.prjno AND p.prjno=l.prjno;
+SELECT * FROM gantt g, link l WHERE g.id=l.gid;
+SELECT * FROM PROJECT p, gantt g WHERE p.prjno=g.prjno;
+DROP SEQUENCE gantt_seq;
+CREATE SEQUENCE gantt_seq
+START WITH 1
+MINVALUE 1;
+CREATE SEQUENCE link_seq
+START WITH 1
+MINVALUE 1;

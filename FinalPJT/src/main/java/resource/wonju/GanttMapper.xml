@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="superPms.dao.Gantt_Dao">
+	<select id="showGantt" resultType="gantt" parameterType="int">
+	SELECT g.* FROM gantt g, project p WHERE g.PRJNO =p.PRJNO AND p.prjno=#{prjno} ORDER BY START_date
+	</select>
+	<select id="showLink" resultType="link" parameterType="int">
+		select l.* from link l, project p where p.prjno=l.prjno and p.prjno=#{prjno}
+	</select>
+
+	<insert id="insGantt" parameterType="gantt">
+	INSERT INTO gantt values(#{id},#{text},'gantt.config.types.task',#{start_date},#{progress},#{owner},#{parent},#{duration},1,#{prjno})
+	</insert>
+	<update id="uptGantt" parameterType="gantt">
+	update gantt set text=#{text}, start_date=#{start_date}, progress=#{progress}, owner=#{owner}, parent=#{parent}, duration=#{duration} where id=#{id}
+	</update>
+	<delete id="delGantt" parameterType="string">
+	delete from gantt where id=#{id} OR parent=#{id}
+	</delete>
+	<insert id="insLink" parameterType="link">
+	INSERT INTO link values(link_seq.nextval,#{source},#{target},#{type},#{prjno})
+	</insert>
+	<delete id="delLink" parameterType="string">
+	delete from link where id=#{id}
+	</delete>
+	<delete id="delLink2" parameterType="string">
+	delete from link where target=#{target} or source=#{source}
+	</delete>
+</mapper>

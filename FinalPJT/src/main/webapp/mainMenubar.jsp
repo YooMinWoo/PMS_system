@@ -26,7 +26,7 @@
 <body>
  <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-            <a href="index.html" class="app-brand-link">
+            <a href="*" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                   width="25"
@@ -95,7 +95,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item" id="menu-item-home">
-              <a href="index.html" class="menu-link">
+              <a href="*" class="menu-link"> <!-- 메인페이지로 이동하게 설정 -->
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Home</div>
               </a>
@@ -104,42 +104,47 @@
             <!-- Layouts -->  <!-- 현재 열려있는 페이지는 <li class="menu-item active open"> 
             					하위 메뉴는    <li class="menu-item active">
             -->
-            <li class="menu-item">
+            <li class="menu-item" id="menu-item-mypage">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div data-i18n="Layouts">나의 업무</div>
               </a>
 
               <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item" id="menu-item-mypage-calendar">
                   <a href="layouts-without-menu.html" class="menu-link">
                     <div data-i18n="Without menu">캘린더</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" id="menu-item-mypage-todolist">
                   <a href="layouts-without-navbar.html" class="menu-link">
                     <div data-i18n="Without navbar">to do list</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" id="menu-item-mypage-myfold">
                   <a href="layouts-container.html" class="menu-link">
                     <div data-i18n="Container">내 폴더</div>
                   </a>
                 </li>
               </ul>
             </li>
-            <li class="menu-item">
+            <li class="menu-item" id="menu-item-mail">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-envelope"></i>
                 <div data-i18n="Account Settings">메일</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item" id="menu-item-sendMail">
                   <a href="pages-account-settings-account.html" class="menu-link">
                     <div data-i18n="Account">메일 쓰기</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                 <li class="menu-item" id="menu-item-sentMailbox">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">보낸 메일함</div>
+                  </a>
+                </li>
+                <li class="menu-item" id="menu-item-mailbox">
                   <a href="pages-account-settings-notifications.html" class="menu-link">
                     <div data-i18n="Notifications">받은 메일함</div>
                   </a>
@@ -163,88 +168,65 @@
                     <div data-i18n="Basic">나의 프로젝트</div>
                   </a>
                 </li>
-                
-              </ul>
-            </li>
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
-                <div data-i18n="Misc">업무</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="pages-misc-error.html" class="menu-link">
-                    <div data-i18n="Error">업무생성</div>
+                <li class="menu-item" id="menu-item-project-newproject">
+                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">프로젝트 등록</div>
+                  </a>
+                </li>
+                <li class="menu-item" id="menu-item-project-lisk">
+                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                    <div data-i18n="Basic">리스크 관리</div>
                   </a>
                 </li>
               </ul>
             </li>
-             <li class="menu-item">
-              <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="User interface">결재</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="ui-accordion.html" class="menu-link">
-                    <div data-i18n="Accordion">결재함</div>
-                  </a>
-                </li>   
-              </ul>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="ui-accordion.html" class="menu-link">
-                    <div data-i18n="Accordion">결재 작성</div>
-                  </a>
-                </li>   
-              </ul>
-            </li>
+             
             <!-- Components -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">utility</span></li>
 
             <!-- Extended components
       
              -->
-            <li class="menu-item">
+            <li class="menu-item" id="menu-item-drive">
               <a href="*" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-archive"></i>
                 <div data-i18n="Extended UI">드라이브</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item" id="menu-item-notice">
               <a href="*" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Extended UI">공지사항</div>
               </a>
             </li>
-             <li class="menu-item">
+             <li class="menu-item" id="menu-item-chatting">
               <a href="*" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div data-i18n="Extended UI">채팅</div>
               </a>
             </li>			
-        
+        	 <li class="menu-item" id="menu-item-organization">
+              <a href="*" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-group"></i>
+                <div data-i18n="Extended UI">조직도</div>
+              </a>
+            </li>
 
             <!-- Forms & Tables -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">manager</span></li>
             <!-- Forms -->
-            <li class="menu-item">
+            <li class="menu-item" id="menu-item-admin">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
                 <div data-i18n="Form Elements">관리자</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="forms-basic-inputs.html" class="menu-link">
-                    <div data-i18n="Basic Inputs">조직도</div>
-                  </a>
-                </li>
-                <li class="menu-item">
+              <li class="menu-item" id="menu-item-admin-organization">
                   <a href="forms-input-groups.html" class="menu-link">
-                    <div data-i18n="Input groups">권한 설정</div>
+                    <div data-i18n="Input groups">조직도</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item" id="menu-item-admin-hr">
                   <a href="forms-input-groups.html" class="menu-link">
                     <div data-i18n="Input groups">입/퇴사관리</div>
                   </a>

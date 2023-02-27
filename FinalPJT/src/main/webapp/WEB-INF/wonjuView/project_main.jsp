@@ -24,7 +24,9 @@
 .nav-item.nav-link{
 	padding-right: 1rem !important;
 }
-
+#gantt{
+	height: 400px;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -61,6 +63,8 @@
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
+		var prjno=55
+
 	});
 </script>
 </head>
@@ -116,8 +120,10 @@
 	            <span><strong>마감 D-27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;진행률 0%</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	             진행 0, 완료 0</span>
 	          </div>
-
-		    
+	          
+			<div id="gantt" class="row my-3 px-sm-3">
+		    <jsp:include page="/gantt.jsp"></jsp:include>
+		   </div>
 		    
 
 	          
