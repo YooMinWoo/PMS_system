@@ -7,4 +7,8 @@
 	<select id="riskList" resultType="risk" parameterType="risk">
 		select * from Risk
 	</select>
+  	<select id="getRisk" resultType="risk" parameterType="risk">
+       		SELECT * FROM risk
+			WHERE riskno= #{riskno}
+  	</select>
 </mapper>

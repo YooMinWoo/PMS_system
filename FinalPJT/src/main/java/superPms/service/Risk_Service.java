@@ -15,4 +15,7 @@ public class Risk_Service {
 	public List<Risk> riskList(Risk sch){
 		return dao.riskList(sch);
 	}
+	public Risk getRisk(int riskno) {
+		return dao.getRisk(riskno);
+	}
 }
