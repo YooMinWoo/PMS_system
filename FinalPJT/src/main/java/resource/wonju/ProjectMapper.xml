@@ -12,7 +12,7 @@
 	insert into projectMember values(pro_seq.currval,#{owner},#{part})
 	</insert>
 	<select id="allProject" parameterType="hashmap" resultType="project">
-	SELECT p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
+	SELECT p.*,e.ename, d.dname FROM project p,emp e, dept d 
 	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
 	<if test='isCon!=null and isCon.equals("Y")'>
 			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
@@ -26,6 +26,6 @@
 	
 	<!-- 부서 콤보박스 만들기 -->
 	<select id="deptCom" resultType="superdept">
-		SELECT deptid, dname FROM dept777
+		SELECT deptid, dname FROM dept
 	</select>
 </mapper>
