@@ -14,12 +14,14 @@
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
+      	<typeAlias alias="alert" type="superPms.vo.Alert"/>
       	
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="resource/sumin/CalendarMapper.xml"/>
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
+		<mapper resource="resource/sumin/AlertMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/eunbeen/DeptMapper.xml"/>
 		<mapper resource="resource/eunbeen/EmpMapper.xml"/>
