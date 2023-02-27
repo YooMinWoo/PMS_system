@@ -174,10 +174,12 @@ ul,li {
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+
   		$(".risklevel").each(function(index, item){
 			console.log($(item).val());
 			if($(item).val()=="긴급"){
@@ -219,22 +221,7 @@ ul,li {
 				$(item).addClass('btn-primary');
 			}
 		});	
-			
-			
-/*  			console.log($(".risklevel").val())
-	 		if($(".risklevel").val()=="긴급"){
-				console.log($(".risklevel").val())
-				$(".risklevel").addClass('btn');
-				$(".risklevel").addClass('btn-danger');
-			}
-			if($(".risklevel").val()=="보통"){
-				console.log($(".risklevel").val())
-				$(".risklevel").addClass('btn-warning');
-			}
-			if($(".risklevel").val()=="낮음"){
-				console.log($(".risklevel").val())
-				$(".risklevel").addClass('btn-success');
-			}  */
+
 
 		
 
@@ -283,7 +270,7 @@ ul,li {
                                     </thead>
                                     <tbody>
                                     	<c:forEach var="risk" items="${list}">
-                                    		<tr>
+                                    		<tr ondblclick="goDetail(${risk.riskno})">
                                     			<td>${risk.riskno}</td>
                                     			<td>${risk.riskname}</td>
                                     			<td><input type="button" class="risklevel" value="${risk.risklevel}"></td>
@@ -297,7 +284,11 @@ ul,li {
                                     	</c:forEach>
                                     </tbody>
                                 </table>
-
+                                    <script>
+                              		function goDetail(riskno){
+                              			location.href="${path}/project_riskDetail.do?riskno="+riskno
+                              		}
+                                    </script>
                             </div>
                         </div>
            
