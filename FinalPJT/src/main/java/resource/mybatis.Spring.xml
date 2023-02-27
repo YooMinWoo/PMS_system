@@ -9,7 +9,8 @@
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
       	<typeAlias alias="superempdept" type="superPms.vo.SuperEmpDept"/>
-      	<typeAlias alias="code" type="superPms.vo.Code"/>
+      	<typeAlias alias="deptcode" type="superPms.vo.DeptCode"/>
+      	<typeAlias alias="authcode" type="superPms.vo.AuthCode"/>
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>

@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사원 권한 설정</title>
 
 <style>
 .card.mb-4{
@@ -59,7 +59,13 @@
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		$("#uptEmp").click(function(){
+			if(confirm("수정하시겠습니까?")){
+				$("#frm01").submit();
+			}
+		})
 	});
+	
 </script>
 </head>
 
@@ -89,11 +95,11 @@
            
            <div class="card mb-4 pb-3">
            		<div class="card-body">
-                      <form>
+                      <form id="frm01" class="form" action="${path}/updateEmp.do" method="post">
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-name">이름</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="" value="" readonly/>
+                            <input type="text" class="form-control" value="${authSet.ename}" readonly/>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -102,8 +108,9 @@
                             <input
                               type="text"
                               class="form-control"
-                              id=""
-                              value=""
+                              id="id"
+                              name="id"
+                              value="${authSet.id}"
                               readonly
                             />
                           </div>
@@ -111,25 +118,23 @@
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-auth">권한</label>
                           <div class="col-sm-10">
-                            <div class="input-group input-group-merge">
-                              <input
-                                type="text"
-                                id=""
-                                class="form-control"
-                                placeholder="권한을 선택하세요"
-                              />
-                            </div>
+                            <select class="select2 form-select" name="auth" id="auth">
+						    	<option>${authSet.auth}</option>
+						    	<c:forEach var="auth" items="${authCom}">
+						    	<option>${auth}</option>
+						    	</c:forEach>
+						    </select>
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-job">직책</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-job">변경 직책</label>
                           <div class="col-sm-10">
-                            <input
-                              type="text"
-                              id=""
-                              class="form-control"
-                              placeholder="직책을 입력하세요"
-                            />
+                          	<select class="select2 form-select" name="job" id="job">
+						    	<option>${authSet.job}</option>
+						    	<c:forEach var="job" items="${jobCom}">
+						    	<option>${job}</option>
+						    	</c:forEach>
+						    </select>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -139,14 +144,14 @@
                               type="text"
                               id=""
                               class="form-control phone-mask"
-                              value=""
+                              value="${authSet.dname}"
                               readonly
                             />
                           </div>
                         </div>
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary">설정</button>
+                            <button id="uptEmp" type="button" class="btn btn-primary">설정</button>
                           </div>
                         </div>
                       </form>

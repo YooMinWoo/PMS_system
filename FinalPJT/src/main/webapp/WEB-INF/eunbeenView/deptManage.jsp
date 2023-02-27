@@ -107,7 +107,9 @@
    });
    function goDelete(deptid){
 	   console.log("버튼누름")
-	    location.href="${path}/deleteDept.do?deptid="+deptid
+	   if(confirm("부서를 삭제하시겠습니까?")){
+	   		location.href="${path}/deleteDept.do?deptid="+deptid
+	   }
 	}
    function fn_dnameChk(){
       console.log("버튼누름")
