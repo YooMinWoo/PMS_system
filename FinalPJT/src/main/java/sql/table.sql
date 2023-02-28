@@ -177,16 +177,16 @@ START WITH 1
 MINVALUE 1;
 
 CREATE TABLE projectMember (
-	prjno	number,
-	id	varchar2(50),
-	status	varchar2(20),
+	prjno	number		NOT NULL,
+	owner	varchar2(50)		NOT NULL,
+	part	varchar2(100)		NOT NULL,
 	foreign key(prjno) references project(prjno)
     on delete CASCADE,
-    foreign key(id) references emp(id)
+    foreign key(owner) references emp(id)
     on delete CASCADE
 );
 ALTER TABLE projectMember ADD CONSTRAINT PK_ProjectMember PRIMARY KEY (
-	prjno,id
+	prjno,owner
 );
 
 CREATE TABLE work (
@@ -278,3 +278,19 @@ ALTER TABLE risk ADD CONSTRAINT FK_risk_1 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 ALTER TABLE risk ADD CONSTRAINT FK_risk_2 FOREIGN KEY(prjno)
 references project(prjno) on delete CASCADE;
+
+DROP TABLE gantt;
+CREATE TABLE gantt(
+	id varchar2(100) PRIMARY KEY,
+	text varchar2(500),
+	type varchar2(100),
+	start_date varchar2(100),
+	progress NUMBER,
+	owner varchar2(100),
+	parent varchar2(100),
+	duration NUMBER,
+	OPEN char(1),	--1이면 TRUE, 0 이면 false
+	prjno NUMBER,
+	foreign key(prjno) references project(prjno)
+    on delete CASCADE
+);

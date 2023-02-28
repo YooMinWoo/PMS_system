@@ -27,6 +27,19 @@
 #gantt{
 	height: 400px;
 }
+thead{
+	background-color: #3db9d3;
+	text-align: center;
+	font-weight: bolder;
+}
+th{color:white !important;}
+tbody td:first-child {
+	text-align: left !important;
+}
+tbody td{
+	text-align: center;
+}
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -63,8 +76,8 @@
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
-		var prjno=55
-
+		var projectName="${projectInfo.subject}" // 모델데이터
+		$("#subject").text(projectName)
 	});
 </script>
 </head>
@@ -96,7 +109,7 @@
            <div class="card mb-4 pb-3">
 	           <div class="row">
 		           <div class="col-8">
-		           <h3 class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
+		           <h3 id="subject"class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
 		           </div>
 		           <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
 		            <button type="button" class="btn btn-sm btn-primary">멤버초대</button>&nbsp;&nbsp;&nbsp;
@@ -122,8 +135,46 @@
 	          </div>
 	          
 			<div id="gantt" class="row my-3 px-sm-3">
+			<div class="col my-3"><span><strong>담당 업무 등록</strong></span></div>
 		    <jsp:include page="/gantt.jsp"></jsp:include>
 		   </div>
+		   
+		    <div class="row my-3 px-sm-3 mt-5">
+		    <div class="col my-3"><span><strong>담당 업무 확인</strong></span></div>
+		    <table class="table table-hover">
+		      <thead>
+		        <tr>
+		          <th>업무명</th>
+		          <th>담당자</th>
+		          <th>시작일자</th>
+		          <th>종료일자</th>
+		          <th>진행률</th>
+		        </tr>
+		      </thead>
+		      <tbody class="table-border-bottom-0">
+		        <c:forEach var="g" items="${ganttInfo }">
+		        <tr>
+		        <td>${g.text }</td><td>${g.owner }</td>
+		        <td>${g.start_date }</td>
+		        <td>
+		       <!-- String 형태로 저장되어 있는 start_date를 날짜형태로 파싱 -->
+		        <fmt:parseDate var="sdate" value="${g.start_date }" pattern="yyyy-MM-dd"/>
+		        <!-- 날짜형태를 시간 숫자로 변형해서 duration(기간)을 더해줌 // -->
+		        <c:set var="ddate" value="${sdate.time + ((g.duration) * 24 * 60 * 60 * 1000)}"/>
+		        <%
+		        // 숫자형태를 날짜형으로 로 변경함
+				    Date date = new Date((Long) pageContext.getAttribute("ddate"));
+				%>	
+				<!-- 변경한 날짜형 데이터를 원하는 패턴으로 format 하여 출력 -->
+				<fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd" />
+		        </td>
+		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
+		        </tr>
+		        </c:forEach>
+		      </tbody>
+		    </table>
+		    
+		    </div>
 		    
 
 	          

@@ -12,10 +12,12 @@
 	</select>
 
 	<insert id="insGantt" parameterType="gantt">
-	INSERT INTO gantt values(#{id},#{text},'gantt.config.types.task',#{start_date},#{progress},#{owner},#{parent},#{duration},1,#{prjno})
+	INSERT INTO gantt values(#{id},#{text},'gantt.config.types.task',#{start_date},
+	#{progress},#{owner},#{parent},#{duration},1,#{prjno},#{description})
 	</insert>
 	<update id="uptGantt" parameterType="gantt">
-	update gantt set text=#{text}, start_date=#{start_date}, progress=#{progress}, owner=#{owner}, parent=#{parent}, duration=#{duration} where id=#{id}
+	update gantt set text=#{text}, start_date=#{start_date}, progress=#{progress}, owner=#{owner}, 
+	parent=#{parent}, duration=#{duration},description=#{description} where id=#{id}
 	</update>
 	<delete id="delGantt" parameterType="string">
 	delete from gantt where id=#{id} OR parent=#{id}

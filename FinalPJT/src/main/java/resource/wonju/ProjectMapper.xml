@@ -6,13 +6,17 @@
 <mapper namespace="superPms.dao.Project_Dao">
 	<!-- Error getting generated key or setting result to parameter object -->
 	<insert id="insProject" parameterType="project">
-	INSERT INTO project values(pro_seq.nextval,#{regdte},#{deadline},#{subject},#{tlid},#{deptid},#{openStatus})
+	<selectKey keyProperty="prjno" resultType="int" order="BEFORE">
+		select pro_seq.nextval from dual
+	</selectKey>
+	INSERT INTO project values(#{prjno},#{regdte},#{deadline},#{subject},#{tlid},#{deptid},#{openStatus})
 	</insert>
 	<insert id="insProMem" parameterType="projectMember">
 	insert into projectMember values(pro_seq.currval,#{owner},#{part})
 	</insert>
+	
 	<select id="allProject" parameterType="hashmap" resultType="project">
-	SELECT p.*,e.ename, d.dname FROM project p,emp e, dept d 
+	SELECT p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
 	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
 	<if test='isCon!=null and isCon.equals("Y")'>
 			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
@@ -24,8 +28,27 @@
 	or ename LIKE '%'||#{keyword}||'%')
 	</select>
 	
+
+	<select id="myProject" parameterType="hashmap" resultType="project">
+	SELECT d.DNAME,p.SUBJECT ,p.PRJNO,m.PART, c.cnt
+	FROM  PROJECT p, PROJECTMEMBER m, dept777 d,(SELECT prjno,COUNT(*)+1 cnt FROM projectmember GROUP BY prjno) c
+	WHERE 1=1 AND p.PRJNO =m.PRJNO AND m.OWNER =#{owner}
+	AND d.DEPTID =p.DEPTID AND c.prjno=p.PRJNO
+	<if test='isCon!=null and isCon.equals("Y")'>
+			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
+	</if>
+	<if test='isCon!=null and isCon.equals("N")'>
+			and TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')>to_date(p.deadline,'yyyy-mm-dd')
+	</if>
+	AND p.subject LIKE '%'||#{keyword}||'%'
+	</select>
+	
 	<!-- 부서 콤보박스 만들기 -->
 	<select id="deptCom" resultType="superdept">
-		SELECT deptid, dname FROM dept
+		SELECT deptid, dname FROM dept777
+	</select>
+	
+	<select id="projectInfo" resultType="project" parameterType="int">
+		select * from project where prjno=#{prjno}
 	</select>
 </mapper>

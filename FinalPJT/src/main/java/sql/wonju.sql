@@ -26,12 +26,15 @@ CREATE TABLE project (
 	AND (subject LIKE '%'||''||'%'
 	or ename LIKE '%'||''||'%');
 
-	SELECT p.*,e.ename FROM project p,emp777 e 
-	WHERE 1=1 and openstatus='0' AND e.id=p.tlid
-	and TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')>to_date(p.deadline,'yyyy-mm-dd')
-	AND (subject LIKE '%'||''||'%'
-	or ename LIKE '%'||''||'%');
-
+	-- 나의 업무 조회
+	SELECT d.DNAME,p.SUBJECT ,p.PRJNO,m.PART,m.OWNER , c.cnt
+	FROM  PROJECT p, PROJECTMEMBER m, dept777 d,(SELECT prjno,COUNT(*)+1 cnt FROM projectmember GROUP BY prjno) c
+	WHERE 1=1 AND p.PRJNO =m.PRJNO AND m.OWNER ='emp1@gmail.com'
+	AND d.DEPTID =p.DEPTID
+	AND c.prjno=p.PRJNO ;
+	
+	SELECT prjno,COUNT(*)+1 FROM projectmember GROUP BY prjno; 
+	
 	SELECT p.prjno,p.subject,p.tlid,p.deptid
 	FROM project p,PROJECTMEMBER m
 	WHERE m.PRJNO =p.PRJNO ;
@@ -85,6 +88,7 @@ INSERT INTO emp777 values('emp3@gmail.com','emp3','금사원','010-3435-1111','1
 INSERT INTO emp777 values('admin1@gmail.com','admin1','김관리','010-1111-2222','1','10',sysdate,'PM');
 UPDATE emp777 SET auth='1' WHERE ename='김관리';
 DELETE FROM emp777 WHERE ename='김관리';
+SELECT * FROM emp;
 select * FROM emp777;
 CREATE TABLE emp777 (
 	id	varchar2(50)	PRIMARY key,
@@ -125,6 +129,8 @@ CREATE TABLE gantt(
 	foreign key(prjno) references project(prjno)
     on delete CASCADE
 );
+ALTER TABLE gantt ADD (description varchar2(4000));
+-- 업무내용 추가함
 ALTER TABLE gantt MODIFY parent varchar2(100);
 ALTER TABLE gantt RENAME COLUMN startDate TO start_date;
 INSERT INTO gantt values(gantt_seq.nextval,'테스트프로젝트1','gantt.config.types.project','2023-03-01',0,NULL,NULL,NULL,1,55);
@@ -149,6 +155,10 @@ CREATE TABLE link(
 	type varchar2(1),
 	prjno NUMBER,
 	foreign key(prjno) references project(prjno)
+    on delete CASCADE,
+    foreign key(source) references gantt(id)
+    on delete CASCADE,
+    foreign key(target) references gantt(id)
     on delete CASCADE
 );
 DELETE FROM link;
@@ -163,3 +173,5 @@ MINVALUE 1;
 CREATE SEQUENCE link_seq
 START WITH 1
 MINVALUE 1;
+
+SELECT * FROM project;

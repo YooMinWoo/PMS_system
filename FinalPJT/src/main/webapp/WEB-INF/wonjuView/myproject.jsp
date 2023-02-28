@@ -64,6 +64,8 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
+		
+		
 		$("[name=keyword]").keyup(function(){
 			if(event.keyCode==13){
 				$("#myFrm").submit()
@@ -71,11 +73,11 @@ tbody td{
 		})
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
-			$("#allFrm").submit()
+			$("#myFrm").submit()
 		})
 		$("#fin-pro").click(function(){
 			$("[name=isCon]").val("N")
-			$("#allFrm").submit()
+			$("#myFrm").submit()
 		})
 
 	});
@@ -120,7 +122,7 @@ tbody td{
           
           
           <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="myFrm" action="${path }/" method="get">
+          <form class="d-flex" id="myFrm" action="${path }/myProject.do" method="post">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="hidden" name="isCon" value="${param.isCon }">
@@ -135,29 +137,30 @@ tbody td{
           </div>
           <div class="tab-content px-0 mt-0">
           <!--  프로젝트table -->
-			  <table class="table card-table">
+			  <table class="table card-table" style="overflow: hidden;">
 			  <col width="13%">
-			  <col width="40%">
-			  <col width="5%">
-			  <col width="29%">
-			  <col width="13%">
+			  <col width="35%">
+			  <col width="10%">
+			  <col width="15%">
+			  <col width="27%">
 			    <thead>
 			      <tr>
 			        <th>카테고리</th>
 			        <th>프로젝트</th>
-			        <th>멤버</th>
-			        <th>내 담당업무</th>
+			        <th>멤버수</th>
+			        <th>담당 파트</th>
 			        <th>관리</th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
-			      <tr>
-			       <td>IT</td><td>프로젝트A</td><td>4</td><td><small>전체 10개<br>(진행 3, 완료 7)</small></td>
+			      <c:forEach var="myp" items="${list}">
+			      <tr><td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
 			       <button type="button" class="btn btn-sm btn-secondary">나가기</button>
 			       <button type="button" class="btn btn-sm btn-primary">설정</button>
 			       </td>
-			      </tr>
+			       </tr>
+			      </c:forEach>
 			    </tbody>
 			  </table>
              <!--  / 프로젝트 table -->

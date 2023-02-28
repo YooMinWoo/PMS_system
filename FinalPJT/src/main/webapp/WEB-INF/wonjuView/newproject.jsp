@@ -138,10 +138,9 @@ tbody td{
 			success:function(data){
 				console.log(data.msg)
 				console.log(data.prjno)
-				console.log(data)
 				if(data.msg=='등록성공'){
 					if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
-						location.href=""; // 만들어진 페이지로 이동 주소?prjno=prjno
+						location.href="/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
 					}else{
 						location.reload()
 					}
