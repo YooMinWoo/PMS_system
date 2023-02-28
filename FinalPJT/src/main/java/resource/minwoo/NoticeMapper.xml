@@ -22,8 +22,8 @@
 				fname
 			FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
 			where n.fno=f.fno(+)
-			AND (deptid like '%'||#{schInfo}||'%'
-			or title like '%'||#{schInfo}||'%')
+			AND (deptid like '%'||#{deptid}||'%'
+			and title like '%'||#{schInfo}||'%')
 		)
 		where cnt between #{start} and #{end}
 	</select>
@@ -41,7 +41,8 @@
 			writer,
 			n.fno,
 			deptid,
-			fname
+			fname,
+			path
 		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
 		where n.fno=f.fno(+)
 		and noticeno=#{noticeno}
@@ -99,12 +100,17 @@
 		</if>
 	</insert>
 	
-	<!-- 페이징 처리를 위한 전체 데이터 가져오기 -->
+	<!-- 페이징 처리를 위한 전체 데이터 개수 가져오기 -->
 	<select id="totCnt" parameterType="noticesch" resultType="int">
 			select count(*)
 		      from notice
 		      where 1=1
-		      and deptid like '%'||#{schInfo}||'%'
+		      and deptid like '%'||#{deptid}||'%'
 		      and title like '%'||#{schInfo}||'%'
 	</select>
+	
+	<delete id="delNotice" parameterType="int">
+		delete from notice
+		where noticeno=#{no}
+	</delete>
 </mapper>

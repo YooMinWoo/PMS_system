@@ -3,12 +3,13 @@ package superPms.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import superPms.service.Notice_Service;
+import superPms.service.SuperDept_Service;
 import superPms.vo.Notice;
 import superPms.vo.NoticeSch;
 
@@ -19,15 +20,14 @@ public class Notice_Controller {
 	@Autowired(required = false)
 	private Notice_Service service;
 	
+	@Autowired(required = false)
+	private SuperDept_Service service2;
+	
 	@RequestMapping("/goNotice.do")
 	public String goNotice(NoticeSch sch, Model d) {
+		// d.addAttribute("depts",service2.getParentDeptComb());
 		d.addAttribute("noticeList",service.noticeList(sch));
 		return "WEB-INF\\minwooView\\notice.jsp";
-	}
-	
-	@RequestMapping("/goNoticePM.do")
-	public String goNoticePM() {
-		return "WEB-INF\\minwooView\\notice_pm.jsp";
 	}
 	
 //	http://localhost:2030/FinalPJT/goCreateNotice.do
@@ -41,11 +41,6 @@ public class Notice_Controller {
 		service.plusCnt(sch);
 		d.addAttribute("noticeDetail",service.noticeDetail(sch));
 		return "WEB-INF\\minwooView\\notice_detail.jsp";
-	}
-	
-	@RequestMapping("/goNoticeDetailPM.do")
-	public String goNoticeDetailPM() {
-		return "WEB-INF\\minwooView\\notice_detail_pm.jsp";
 	}
 	
 	
@@ -66,4 +61,21 @@ public class Notice_Controller {
 		service.uptNotice(sch);
 		return "redirect:/goNotice.do";
 	}
+	
+	@RequestMapping("/delNotice.do")
+	public String delNotice(@RequestParam("noticeno") int[] nos) {
+		service.delNotice(nos);
+		return "redirect:/goNotice.do";
+	}
+	
+	// 다운로드 컨트롤러
+	@GetMapping("/download.do")
+	public String download (@RequestParam("fname") String fname,
+							@RequestParam("path") String path, Model d) {
+		d.addAttribute("downloadFile", fname);
+		d.addAttribute("path", path);
+		return "downloadViewer";
+	}
+	
+	
 }

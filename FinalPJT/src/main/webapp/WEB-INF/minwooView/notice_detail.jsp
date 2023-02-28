@@ -97,7 +97,10 @@ textarea:read-only{
 		})
 		$("#delBtn").click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				location.href="/FinalPJT/goNotice.do"
+				$("form").attr({
+					action:"/FinalPJT/delNotice.do"
+				})
+				$("form").submit()
 			}
 		})
 		$("#fileUptBtn").click(function(){
@@ -108,7 +111,7 @@ textarea:read-only{
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
 				if("${noticeDetail.fno}"){
-					
+					location.href="/FinalPJT/download.do?fname=${noticeDetail.fname}&path=${noticeDetail.path}"
 				}
 				else {
 					alert("다운로드할 파일이 없습니다.")
@@ -154,6 +157,7 @@ textarea:read-only{
            			<div class="card-body">
                       <form method="post">
                       	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
+                      	<input type="hidden" name="path" value="${noticeDetail.path }">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
                           <input name="title" type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>

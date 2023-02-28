@@ -13,4 +13,5 @@ public interface Notice_Dao {
 	public void insertNotice(Notice sch);
 	public int totCnt(NoticeSch sch);
 	public void uptNotice(Notice sch);
+	public void delNotice(int no);
 }
