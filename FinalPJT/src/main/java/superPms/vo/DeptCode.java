@@ -20,5 +20,5 @@ public class DeptCode {
 	public void setVal(String val) {
 		this.val = val;
 	}
-	
+
 }
