@@ -8,4 +8,12 @@
 		select *
 		from work
 	</select>
+	<select id="getWork" resultType="work" parameterType="int">
+		SELECT * FROM WORK
+		WHERE WORKNO = #{WORKNO}
+	</select>
+	<insert id="insWork" parameterType="work">
+		INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
+			#{enddte},#{subject},#{cont},#{id},#{prjno},null,null)
+	</insert>
 </mapper>

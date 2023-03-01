@@ -14,18 +14,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>업무</title>
 
 <style>
 .card.mb-4{
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-td, th{
-	text-align: center;
+th{text-align:center;}
+td{text-align:center;}
+.btn{
+	display: flex;
+	justify-content: flex-end;
+	gap:20px;
 }
-
-
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -62,7 +64,13 @@ td, th{
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		$("#workIns").click(function(){
+			location.href="${path}/workInsFrm.do"
+		})
 	});
+	function goWork(no){
+		location.href="${path}/workDetail.do?no="+no
+	}
 </script>
 </head>
 
@@ -103,6 +111,10 @@ td, th{
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
           <form class="d-flex" id="allFrm" action="${path }/allProject.do" method="get">
+           		<select>
+	            	<option value="0">제목</option>
+	            	<option value="1">작성자</option>
+	            </select>
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
@@ -133,7 +145,8 @@ td, th{
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
-			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
+			      <tr onclick="goWork(${work.workno})">
+			      <td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
 			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
@@ -162,8 +175,9 @@ td, th{
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
-			      <tr><td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
-			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
+			      <tr><td>${work.workno }</td><td>${work.subject }</td>
+			      <td>${work.regdte }</td><td>${work.enddte }</td>
+			      <td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
@@ -195,8 +209,11 @@ td, th{
             </ul>
           </nav>
           <!--/ Basic Pagination -->
+         
    		 </div>
-           
+   		  <nav class="btn">
+          <button class="btn btn-primary" id="workIns">업무 등록</button>
+          </nav>   
          	</div>
          	  <!-- /card -->
             </div>
