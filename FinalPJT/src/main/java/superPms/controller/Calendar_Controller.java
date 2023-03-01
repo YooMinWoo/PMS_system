@@ -18,7 +18,10 @@ public class Calendar_Controller {
 	
 //	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
-	public String calList() {
+	public String calList(Model d) {
+		String id="monsta@gmail.com";
+		d.addAttribute("alertList", service.alertList(id));
+		d.addAttribute("alertCount", service.alertCount(id));
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	
@@ -47,4 +50,11 @@ public class Calendar_Controller {
 		d.addAttribute("msg", "일정 삭제 완료");
 		return "pageJsonReport";
 	}
+
+	@RequestMapping("/alertState01.do")
+	public String alertState(@RequestParam("no")int no) {
+		service.alertState(no);
+		return "WEB-INF\\suminView\\calendar.jsp";
+	}
+	
 }

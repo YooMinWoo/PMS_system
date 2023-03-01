@@ -16,5 +16,10 @@ public class Alert_Service {
 	public List<Alert> alertList(String id){
 		return dao.alertList(id);
 	}
-	
+	public int alertCount(String id) {
+		return dao.alertCount(id);
+	}
+	public void alertState(int no) {
+		dao.alertState(no);
+	}
 }

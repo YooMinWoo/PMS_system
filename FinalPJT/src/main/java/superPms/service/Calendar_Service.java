@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import superPms.dao.Calendar_Dao;
+import superPms.vo.Alert;
 import superPms.vo.Calendar;
 
 @Service
@@ -26,5 +27,15 @@ public class Calendar_Service {
 	}
 	public void delCalendar(int id) {
 		dao.delCalendar(id);
+	}
+	
+	public List<Alert> alertList(String id){
+		return dao.alertList(id);
+	}
+	public int alertCount(String id) {
+		return dao.alertCount(id);
+	}
+	public void alertState(int no) {
+		dao.alertState(no);
 	}
 }
