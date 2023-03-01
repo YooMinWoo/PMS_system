@@ -2,6 +2,8 @@ package superPms.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,4 +75,31 @@ public class SuperEmp_Controller {
 		d.addAttribute("authSet", service.getAuthSetting(upt.getId()));
 		return "WEB-INF\\eunbeenView\\authSetting.jsp";
 	} 
+	// 로그인
+	// http://localhost:5080/FinalPJT/PMSLogin.do
+	@RequestMapping("/PMSLogin.do")
+	public String login(SuperEmpDept e, HttpSession session, Model d) {
+		if(e.getId()==null) {
+			return "WEB-INF\\eunbeenView\\login.jsp";
+		}else if(service.login(e)==null) {
+			d.addAttribute("msg", "아이디와 비밀번호를 확인하세요");
+			return "WEB-INF\\eunbeenView\\login.jsp";
+		}else {
+			d.addAttribute("msg", "로그인 성공");
+			// DB에 데이터가 있을 때, 세션 설정
+			session.setAttribute("emp", service.login(e));
+			return "WEB-INF\\eunbeenView\\deptManage.jsp";
+		}
+	}
+	
+	// 로그아웃시 session 종료
+	@GetMapping("/logout.do")
+	public String logout(HttpSession session, Model d) {
+		if(session.getAttribute("emp")!=null) {
+			session.removeAttribute("emp");
+		}
+		d.addAttribute("msg", "로그아웃 완료");
+		return "WEB-INF\\eunbeenView\\login.jsp";
+	}
+
 }

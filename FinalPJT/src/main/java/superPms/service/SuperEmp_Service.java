@@ -48,5 +48,8 @@ public class SuperEmp_Service {
 	public void uptEmp(SuperEmpDept upt) {
 		dao.uptEmp(upt);
 	}
+	public SuperEmpDept login(SuperEmpDept se) {
+		return dao.login(se);
+	}
 
 }

@@ -47,7 +47,7 @@
                <!-- /alert -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1"> 
-                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">홍길동</span>
+                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;"> ${emp.ename}</span>
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                    <div class="avatar avatar-online">
                       <svg>
@@ -68,7 +68,7 @@
                     </li>
                      -->
                     <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
+                      <a class="dropdown-item" href="logout.do">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>

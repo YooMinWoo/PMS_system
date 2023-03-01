@@ -64,4 +64,9 @@
 				job=#{job}
 			where id = #{id}
 	</update>
+	<select id="login" resultType="superempdept">
+		SELECT *
+		FROM superEmp 
+		where id = #{id} AND pass = #{pass}
+	</select>
 </mapper>
