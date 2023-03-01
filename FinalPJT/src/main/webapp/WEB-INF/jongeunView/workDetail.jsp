@@ -25,7 +25,6 @@
 	display: flex;
 	justify-content: space-between;
 }
-
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -65,9 +64,20 @@
 		$("#back").click(function(){
 			location.href="${path}/worklist.do"
 		})
-		
+		$("#upt").click(function(){
+			location.href="${path}/workUptFrm.do?no="+$("[name=workno]").val();	
+		})
+		$("#del").click(function(){
+			if(confirm("삭제하시겠습니까?")){
+				location.href="${path}/delWork.do?no="+$("[name=workno]").val();		
+			}
 		})
 	});
+	var msg = "${msg}"
+	if(msg=="삭제완료"){
+		alert(msg+" 이전화면으로 이동합니다.");
+		location.href = "${path}/worklist.do";
+	}
 </script>
 </head>
 
@@ -96,13 +106,18 @@
            <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무 상세</small></h4>
            
            <div class="card mb-4 pb-3">
-            <div class="row">
+            <div class="row mt-3">
             	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" id="back"><img src="/resources/sneat-1.0.0/assets/img/etc/arrow-left.svg"></button>
+             		<button type="button" id="back">뒤로<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/arrow-left.svg"> --></button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-            		<button type="button" id="more"><img src="/resources/sneat-1.0.0/assets/img/etc/more-horizontal.svg"></button>
-            	</div>
+            		<button type="button" id="more" class="btn dropdown-toggle" 
+            			data-bs-toggle="dropdown" aria-expanded="false">more<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/more-horizontal.svg"> --></button>
+            		<ul class="dropdown-menu">
+				    <li><a class="dropdown-item" id="upt">수정</a></li>
+				    <li><a class="dropdown-item" id="del">삭제</a></li>
+				  </ul>
+            	</div> 
            </div>
            <div class="demo-inline-spacing mt-1">
  			<form enctype="multipart/form-data" action="${path}/workIns.do" method="post">
@@ -111,11 +126,13 @@
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
                    <!-- 프로젝트명으로 수정필요 -->
                    <input type="text" name="prjno"
-                   class="form-control" id="basic-default-prj" value="1" readonly />
+                   class="form-control-plaintext" id="basic-default-prj" value="1" disabled readonly />
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
-                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${work.subject}" />
+                  <input name="subject" type="text" class="form-control-plaintext" id="basic-default-subject" value="${work.subject}"
+                  disabled readonly/>
+                  <input name="workno" type="hidden" value="${work.workno}"/>
                 </div>
                 </div>
                 <div class="divs">
@@ -123,15 +140,17 @@
                    <label class="form-label" for="basic-default-id">작성자</label>
                    <!-- 작성자로 수정필요 -->
                    <input type="text" name="id"
-                   class="form-control" id="basic-default-id" value="monsta@gmail.com" readonly />
+                   class="form-control-plaintext" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
                  </div>
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label">등록일</label>
-                  <input type="text" class="form-control" name="regdte" value="${work.regdte}">
+                  <input type="text" class="form-control-plaintext" name="regdte" value="${work.regdte}"
+                  disabled readonly>
                   </div>
                   <div class="mb-3" style="width:32%;">
                   <label class="form-label">만기일</label>
-                  <input type="text" class="form-control" name="enddte" value="${work.enddte}">        
+                  <input type="text" class="form-control-plaintext" name="enddte" value="${work.enddte}"
+                  disabled readonly>        
                 </div>
                 </div>
                 <!-- 
@@ -152,8 +171,9 @@
                   <textarea
                   	name="cont"
                     id="basic-default-cont"
-                    class="form-control"
-                    style="height: 300px; white-space: pre-wrap;"
+                    class="form-control-plaintext"
+                    style="height: 300px;"
+                    disabled readonly
                   >${work.cont}</textarea>
                 </div>
                 <div class="mb-3">
@@ -167,9 +187,10 @@
 
           </div>
         </div>
-           
+        
          	</div>
          	  <!-- /card -->
+         	  
             </div>
             <!-- / Content -->
 

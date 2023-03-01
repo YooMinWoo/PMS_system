@@ -102,22 +102,18 @@ td{text-align:center;}
            <div class="demo-inline-spacing mt-5">
            <div class="row">
            <div class="col-3">
-          <div class="list-group list-group-horizontal-md text-md-center">
-            <a class="list-group-item list-group-item-action active" id="home-list-item" data-bs-toggle="list" href="#horizontal-home">진행중</a>
-            <a class="list-group-item list-group-item-action" id="settings-list-item" data-bs-toggle="list" href="#horizontal-settings">종료</a>
-          </div>
           </div>
           <div class="col-5"> </div>
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="allFrm" action="${path }/allProject.do" method="get">
+          <form class="d-flex" id="allFrm" action="${path }/worklist.do" method="post">
            		<select>
 	            	<option value="0">제목</option>
 	            	<option value="1">작성자</option>
 	            </select>
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="text" name="subject" value="${sch.subject}" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
@@ -154,37 +150,6 @@ td{text-align:center;}
 			</div>
             </div>
              <!--  /진행중 프로젝트 tab -->
-              <!--  종료 프로젝트 tab -->
-            <div class="tab-pane fade" id="horizontal-settings">
-           <div class="table-responsive text-nowrap">
-			  <table class="table card-table" style="overflow: hidden;">
-			  <col width="13%">
-			  <col width="40%">
-			  <col width="17%">
-			  <col width="17%">
-			  <col width="13%">
-			    <thead>
-			      <tr>
-			        <th>번호</th>
-			        <th>업무</th>
-			        <th>등록일자</th>
-			        <th>마감일자</th>
-			        <th>작성자</th>
-			        <th>진행상태</th>
-			      </tr>
-			    </thead>
-			    <tbody class="table-border-bottom-0">
-			      <c:forEach var="work" items="${worklist}">
-			      <tr><td>${work.workno }</td><td>${work.subject }</td>
-			      <td>${work.regdte }</td><td>${work.enddte }</td>
-			      <td>${work.id }</td><td>${work.state }</td></tr>
-			      </c:forEach>
-			    </tbody>
-			  </table>
-			</div>
-           
-            </div>
-             <!--  /종료 프로젝트 tab -->
           </div>
         </div>
           <div class="d-flex justify-content-center">

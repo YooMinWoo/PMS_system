@@ -67,27 +67,23 @@
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		console.log($("[name=workno]").val())
 		var msg ="${msg}"
 		$("#clBtn").click(function(){
-			if(confirm("업무페이지로 이동하시겠습니까?")){
-				location.href="${path}/worklist.do"
+			if(confirm("이전페이지로 이동하시겠습니까?")){
+				location.href="${path}/workDetail.do?no="+$("[name=workno]").val();	
 			}
 		})
-		$("#regBtn").click(function(){
-			if(confirm("등록 하시겠습니까?")){
-				if($("[name=subject]").val()==""){
-					alert("제목을 입력하세요.")
-					$("[name=subject]").focus()
-					return
-				}
-				if($("[name=reg]").val()==""){
+		$("#uptBtn").click(function(){
+			if(confirm("수정 하시겠습니까?")){
+				if($("[name=regdte]").val()==""){
 					alert("등록일을 입력하세요.")
-					$("[name=reg]").focus()
+					$("[name=regdte]").focus()
 					return
 				}
-				if($("[name=end]").val()==""){
+				if($("[name=enddte]").val()==""){
 					alert("만기일을 입력하세요.")
-					$("[name=end]").focus()
+					$("[name=enddte]").focus()
 					return
 				}
 				if($("[name=cont]").val()==""){
@@ -95,10 +91,11 @@
 					$("[name=cont]").focus()
 					return
 				}
+				$("form").attr("action","${path}/workUpt.do");
 				$("form").submit();
 				if(msg!=""){
 					alert(msg)
-					location.href="${path}/worklist.do"
+					location.href="${path}/workDetail.do?no="+$("[name=workno]").val();	
 				}
 			}
 		})
@@ -128,21 +125,23 @@
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무 등록</small></h4>
+           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무 수정</small></h4>
            
            <div class="card mb-4 pb-3">
            <div class="demo-inline-spacing mt-5">
- 			<form enctype="multipart/form-data" action="${path}/workIns.do" method="post">
+ 			<form enctype="multipart/form-data" method="post">
                 <div class="divs">
                 <div class="mb-3" style="width:49%;">
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
                    <!-- 프로젝트명으로 수정필요 -->
                    <input type="text" name="prjno"
-                   class="form-control" id="basic-default-prj" value="1" readonly />
+                   class="form-control-plaintext" id="basic-default-prj" value="1" disabled readonly />
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
-                  <input name="subject" type="text" class="form-control" id="basic-default-subject" placeholder="업무명을 입력하세요." />
+                  <input name="subject" type="text" class="form-control-plaintext" id="basic-default-subject"
+                  value="${work.subject }" disabled readonly/>
+                  <input name="workno" type="hidden" value="${param.no}"/>
                 </div>
                 </div>
                 <div class="divs">
@@ -150,15 +149,15 @@
                    <label class="form-label" for="basic-default-id">작성자</label>
                    <!-- 작성자로 수정필요 -->
                    <input type="text" name="id"
-                   class="form-control" id="basic-default-id" value="monsta@gmail.com" readonly />
+                   class="form-control-plaintext" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
                  </div>
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label">등록일</label>
-                  <input type="date" class="form-control" name="regdte">
+                  <input type="date" class="form-control" name="regdte" value="${work.regdte}">
                   </div>
                   <div class="mb-3" style="width:32%;">
                   <label class="form-label">만기일</label>
-                  <input type="date" class="form-control" name="enddte">        
+                  <input type="date" class="form-control" name="enddte" value="${work.enddte}">        
                 </div>
                 </div>
                 <!-- 
@@ -180,16 +179,15 @@
                   	name="cont"
                     id="basic-default-cont"
                     class="form-control"
-                    placeholder="내용을 입력하세요"
                     style="height: 300px;"
-                  ></textarea>
+                  >${work.cont }</textarea>
                 </div>
                 <div class="mb-3">
                  <label for="formFile" class="form-label">파일첨부</label>
                  <input type="file" name="report" class="form-control" id="formFile" />
                 </div>
                 <div class="btns">
-                	<button type="button" class="btn btn-primary" id="regBtn">등록</button>
+                	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
                 	<button type="button" class="btn btn-secondary" id="clBtn">취소</button>
                 </div>
               </form>
