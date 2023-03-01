@@ -17,5 +17,6 @@ public interface SuperEmp_Dao {
 	public List<String> getJobCom(); // 직책 콤보박스
 	public List<String> getAuthCom(); // 권한 콤보박스
 	public void uptEmp(SuperEmpDept upt);
+	public SuperEmpDept login(SuperEmpDept se); //로그인 
 
 }
