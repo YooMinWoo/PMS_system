@@ -13,7 +13,7 @@ import superPms.service.Alert_Service;
 public class Alert_Controller {
 
 	@Autowired
-	private Alert_Service service;
+	private Alert_Service service; 
 	// http://localhost:7080/FinalPJT/alert.do
 	@GetMapping("/alert.do")
 	public String alertList(Model d) {
