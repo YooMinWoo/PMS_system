@@ -1,6 +1,5 @@
 package superPms.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +8,14 @@ import org.springframework.stereotype.Service;
 import superPms.dao.Project_Dao;
 import superPms.vo.Project;
 import superPms.vo.ProjectMember;
+import superPms.vo.ProjectSch;
 import superPms.vo.SuperDept;
 
 @Service
 public class Project_Service {
 	@Autowired(required = false)
 	private Project_Dao dao;
-	
+	// 프로젝트 등록하면서 멤버까지 같이 등록
 	public Integer insProject(Project ins,ProjectMember ins2) {
 		dao.insProject(ins);	
 		for(int i=0;i<ins2.getOwners().length;i++) {
@@ -26,20 +26,28 @@ public class Project_Service {
 		}
 		return ins.getPrjno();
 	}
-	
-	public List<Project> allProject(String keyword,String isCon) {
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("keyword", keyword);
-		map.put("isCon", isCon);	
-		return dao.allProject(map);
+	// 나중에 멤버만 따로 추가
+	public void inviteProMem(ProjectMember ins) {
+		for(int i=0;i<ins.getOwners().length;i++) {
+			ProjectMember pm = new ProjectMember();
+			pm.setPrjno(ins.getPrjno());
+			pm.setOwner(ins.getOwners()[i]);
+			pm.setPart(ins.getParts()[i]);
+			dao.inviteProMem(pm);
+		}
 	}
+	public List<Project> allProject(ProjectSch sch){
+		if(sch.getIsCon()==null) sch.setIsCon("Y");
+		if(sch.getKeyword()==null) sch.setKeyword("");
+		pagination(sch,7,5,dao.allProjectTot(sch));
+		return dao.allProject(sch);
+	};
 	
-	public List<Project> myProject(String keyword,String isCon,String owner){
-		HashMap<String, String> map = new HashMap<String,String>();
-		map.put("keyword", keyword);
-		map.put("isCon", isCon);
-		map.put("owner", owner);
-		return dao.myProject(map);
+	public List<Project> myProject(ProjectSch sch){
+		if(sch.getIsCon()==null) sch.setIsCon("Y");
+		if(sch.getKeyword()==null) sch.setKeyword("");
+		pagination(sch,7,5,dao.myProjectTot(sch));
+		return dao.myProject(sch);
 	};
 	public List<SuperDept> deptCom(){
 		return dao.deptCom();
@@ -48,4 +56,30 @@ public class Project_Service {
 	public Project projectInfo(int prjno) {
 		return dao.projectInfo(prjno);
 	};
+	
+	// 페이징 처리(sch, 한번에 보여줄 페이지수, 한번에 보여줄 블럭 수, 전체 게시글갯수)
+	public void pagination(ProjectSch sch,int pageSize, int blockSize, int tot ) {
+		sch.setCount(tot); // 전체 데이터 건수
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		sch.setPageSize(pageSize); // 한 번에 보일 데이터 갯수
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));// 전체 페이지 수		
+		// 블럭 이후 버튼에 대한 예외 처리
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}	
+		// 게시글의 마지막 번호 , 시작 번호
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);		
+		// 블럭 크기
+		sch.setBlockSize(blockSize);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		}
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+	}
 }

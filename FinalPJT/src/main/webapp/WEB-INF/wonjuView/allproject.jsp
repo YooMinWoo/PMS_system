@@ -71,15 +71,24 @@ tbody td{
 		})
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
+			$("[name=keyword]").val("")
 			$("#allFrm").submit()
 		})
 		$("#fin-pro").click(function(){
 			$("[name=isCon]").val("N")
+			$("[name=keyword]").val("")
 			$("#allFrm").submit()
 		})
 
 
 	});
+	function goProjectMain(prjno){
+		location.href="${path}/projectMain.do?prjno="+prjno
+	}
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		$("#allFrm").submit()
+	}
 </script>
 </head>
 
@@ -123,8 +132,9 @@ tbody td{
           <form class="d-flex" id="allFrm" action="${path }/allProject.do" method="get">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="hidden" name="isCon" value="${param.isCon }">
-	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="hidden" name="isCon" value="${sch.isCon }">
+	            <input type="hidden" name="curPage" value="${sch.curPage }">
+	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
@@ -132,7 +142,7 @@ tbody td{
           </div>
           <div class="tab-content px-0 mt-0">
            <!--  프로젝트table -->
-			  <table class="table card-table" style="overflow: hidden;">
+			  <table class="table card-table table-hover" style="overflow: hidden;">
 			  <col width="13%">
 			  <col width="40%">
 			  <col width="17%">
@@ -149,7 +159,8 @@ tbody td{
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="allp" items="${list}">
-			      <tr><td>${allp.dname }</td><td>${allp.subject }</td><td>${allp.regdte }</td>
+			      <tr ondblclick="goProjectMain(${allp.prjno})">
+			      <td>${allp.dname }</td><td>${allp.subject }</td><td>${allp.regdte }</td>
 			      <td>${allp.deadline }</td><td>${allp.ename }</td></tr>
 			      </c:forEach>
 			    </tbody>
@@ -163,19 +174,14 @@ tbody td{
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.startBlock-1 });"><i class="tf-icon bx bx-chevron-left"></i></a>
               </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
+               <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+			  <li class="page-item ${sch.curPage==cnt?'active':'' }">
+			  <a class="page-link" href="javascript:goPage(${cnt });">${cnt }</a></li>
+			  </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.endBlock+1 });"><i class="tf-icon bx bx-chevron-right"></i></a>
               </li>
             </ul>
           </nav>

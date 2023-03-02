@@ -174,4 +174,8 @@ CREATE SEQUENCE link_seq
 START WITH 1
 MINVALUE 1;
 
-SELECT * FROM project;
+
+
+SELECT rownum cnt, p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
+	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
+	and cnt BETWEEN 5 AND 8;

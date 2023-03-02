@@ -159,22 +159,22 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item" id="menu-item-project-allproject">
-                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
+                  <a href="${path}/allProject.do" class="menu-link" >
                     <div data-i18n="Basic">전체 프로젝트</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-project-myproject">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                  <a href="${path }/myProject.do" class="menu-link">
                     <div data-i18n="Basic">나의 프로젝트</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-project-newproject">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                  <a href="${path }/newProjectShow.do" class="menu-link" target="">
                     <div data-i18n="Basic">프로젝트 등록</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-project-lisk">
-                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                  <a href="auth-register-basic.html" class="menu-link">
                     <div data-i18n="Basic">리스크 관리</div>
                   </a>
                 </li>
