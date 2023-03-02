@@ -6,6 +6,7 @@
 		<typeAlias alias="calendar" type="superPms.vo.Calendar"/>
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
 		<typeAlias alias="project" type="superPms.vo.Project"/>
+		<typeAlias alias="projectsch" type="superPms.vo.ProjectSch"/>
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
       	<typeAlias alias="superempdept" type="superPms.vo.SuperEmpDept"/>
