@@ -88,17 +88,12 @@
             $("#dname").focus();
             return false;
          }
-         if($("#deptid").val()==""){
-            alert("부서코드번호를 입력하세요.");
-            $("#deptid").focus();
-            return false;
-         }
+         
          var dnameChkVal = $("#dnameChk").val();
-         var deptidChkVal = $("#deptidChk").val();
-         if(dnameChkVal == "N" || deptidChkVal == "N"){
+         if(dnameChkVal == "N" ){
             alert("중복확인 버튼을 눌러주세요.");
             return false;
-         }else if(dnameChkVal == "Y" && deptidChkVal == "Y"){
+         }else if(dnameChkVal == "Y"){
             $("#frm02").submit();
          }
          
@@ -128,23 +123,7 @@
          }
       })
    }
-   function fn_deptidChk(){
-      console.log("버튼누름")
-      $.ajax({
-         url : "${path}/deptidChk.do",
-         type : "post",
-         data : "deptid="+$("#deptid").val(),
-         dataType:"json",
-         success : function(data){
-            if(data.deptidCheck != null){
-               alert("중복된 부서코드입니다.");
-            }else if(data.deptidCheck == null){
-               $("#deptidChk").attr('value', "Y");
-               alert("등록가능한 부서코드입니다.");
-            }
-         }
-      })
-   }
+   
    
    function goPage(cnt){
       $("[name=curPage]").val(cnt);

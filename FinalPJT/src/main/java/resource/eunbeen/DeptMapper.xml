@@ -27,7 +27,7 @@
    </select>
 	<insert id="insertDept" parameterType="superdept">	
 		INSERT INTO dept 
-		values(#{deptid}, #{dname}, #{parentDept})
+		values(deptid_seq.nextval, #{dname}, #{parentDept})
 	</insert>
 	<select id="dnameChk" resultType="superdept" parameterType="String">
 		SELECT * 
