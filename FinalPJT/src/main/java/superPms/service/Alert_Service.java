@@ -13,6 +13,7 @@ public class Alert_Service {
 
 	@Autowired
 	private Alert_Dao dao;
+	
 	public List<Alert> alertList(String id){
 		return dao.alertList(id);
 	}

@@ -65,6 +65,8 @@
 		$("#addBtn").click(function(){
 			$("h2").click()
 			$("#modalTitle").text("할 일 등록")
+			$("#regBtn").show()
+			$("#mUptBtn").hide()
 		})
 		
 		$("#regBtn").click(function(){
@@ -104,6 +106,8 @@
 					//alert($("input[name=chk]:checkbox")[idx].value)
 					var tno = $("input[name=chk]:checkbox")[idx].value
 					$("h2").click()
+					$("#regBtn").hide()
+					$("#mUptBtn").show()
 					$("#modalTitle").text("할 일 수정")
 					$("form")[0].reset()
 					var todo = $("#"+tno).text()
@@ -207,24 +211,20 @@
                     <tbody class="table-border-bottom-0">
                     <c:forEach var="todo" items="${todoList}">
                       <tr>
-                     
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
                        	 <input type="checkbox" name="chk" value="${todo.tno}"></td>
                         <td id="${todo.tno}">${todo.todo }</td>
-                       
                   		<c:if test="${todo.state=='0'}">
                   		 <td>미완료</td>
                   		</c:if>
                   		<c:if test="${todo.state=='1'}">
                   		 <td>완료</td>
                   		</c:if>
-                       
                         <td>
                           ${todo.regdte}
                         </td>
                       </tr>
                       </c:forEach>
-                      
                     </tbody>
                   </table>
                 </div>
@@ -249,7 +249,7 @@
                               </div>
                                <form class="form">
                               <div class="modal-body">
-                              <input type="text" value="" name="tno" id="tno">
+                              <input type="hidden" value="" name="tno" id="tno">
                                 <div class="row">
                                   <div class="col mb-3">
                                     <label for="todoWithTitle" class="form-label">할 일</label>

@@ -25,7 +25,6 @@
 		update todolist 
 			set todo=#{todo},
 				id=#{id} 
-		where tno=#{tno}
-				 
+		where tno=#{tno} 
 	</update>
 </mapper>

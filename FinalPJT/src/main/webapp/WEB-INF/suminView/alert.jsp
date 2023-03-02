@@ -57,10 +57,12 @@
 	$(document).ready(function(){
 		
 	});
+	
 	function alertState(no){
 		location.href="${path}/alertState.do?no="+no
 		location.reload()
 	}
+	
 </script>
 </head>
 
@@ -89,49 +91,43 @@
 		          	</c:if>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                    <i class="bx bx-star"></i>
+                  	<li>
+                        <span id="readAll" style="display: flex;
+    						justify-content: flex-end;"	>모두 읽음</span>
+                     </li>
+                     <li>
+                      <div class="dropdown-divider"></div>
+                    </li>  
+                 	 <li>
+                     <span class="dropdown-item" >
                        <span class="align-middle">알림</span>
-                     <div class="divider text-end">
-                        <div class="divider-text">모두읽음</div>
-                      </div>
-                        <c:forEach var="alert" items="${alertList }">
-                        <!--  
+                     </span>
+                     </li>
+                     
+                    <li>
+                     <div class="card-body" >
+                        <c:forEach var="alert" items="${alertList }"> 
 		           		<div class="bs-toast toast fade show bg-${alert.style }" 
 		           		role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
 	                        <div class="toast-header">
 	                          <i class="bx bx-bell me-2"></i>
-	                          
 	                          <div class="me-auto fw-semibold">${alert.title }</div>
 	                          <small>${alert.state }</small>
-	                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	                          <button type="button" onclick="alertState('${alert.no }')" 
+	                          	class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 	                        </div>
+	                        
 	                        <div class="toast-body">
-	                         ${alert.content }
+	                          <a class="dropdown-item" href=" ${path }/${alert.url}">
+	                         	 <span style="color:white;" onclick="alertState('${alert.no }')">${alert.content }</span>
+	                          </a>
 	                        </div>
-	                      </div>
-	                      
-	                      ${path }/${alert.url}
-	                      -->
-	                       <div class="card-body">
-	                       
-	                       <a class="dropdown-item" href=" ${path }/${alert.url}">
-		                        <div class="alert alert-${alert.style }" role="alert">
-		                        <span onclick="alertState('${alert.no }')">${alert.title }/${alert.content }</span>
-		                        </div>
-	                       </a>
-	                      </div>
+	                    </div>
                       </c:forEach>
+                       </div>
                     </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>  
-                    <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">내용</span>
-                      </a>
-                    </li>
+                   
+                    
                   </ul>
                 </li>
                <!-- /alert -->

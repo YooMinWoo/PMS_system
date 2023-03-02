@@ -4,6 +4,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Alert_Dao">
+
 	<select id="alertList" parameterType="string" resultType="alert">
 		select * from alert where id=#{id} AND state='읽지않음'
 	</select>
