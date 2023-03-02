@@ -11,7 +11,7 @@ import superPms.service.Alert_Service;
 
 @Controller
 public class Alert_Controller {
-
+ 
 	@Autowired
 	private Alert_Service service; 
 	// http://localhost:7080/FinalPJT/alert.do
