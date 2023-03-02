@@ -18,11 +18,13 @@
 				viewcnt,
 				writer,
 				n.fno,
-				deptid,
-				fname
-			FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
+				n.deptid,
+				fname,
+				e.ename
+			FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f, emp e
 			where n.fno=f.fno(+)
-			AND (deptid like '%'||#{deptid}||'%'
+			and n.writer = e.id
+			AND (n.deptid like '%'||#{deptid}||'%'
 			and title like '%'||#{schInfo}||'%')
 		)
 		where cnt between #{start} and #{end}
@@ -40,11 +42,13 @@
 			viewcnt,
 			writer,
 			n.fno,
-			deptid,
+			n.deptid,
 			fname,
-			path
-		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f
+			path,
+			e.ename
+		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f, emp e
 		where n.fno=f.fno(+)
+		and n.writer = e.id
 		and noticeno=#{noticeno}
 	</select>
 	
@@ -113,4 +117,11 @@
 		delete from notice
 		where noticeno=#{no}
 	</delete>
+	
+	<!-- 댓글 조회 -->
+	<select id="noticeRepList" parameterType="notice">
+		SELECT n.*, e.ename FROM noticerep n, emp e
+		WHERE noticeno=#{noticeno}
+		AND n.WRITER = e.id
+	</select>
 </mapper>
