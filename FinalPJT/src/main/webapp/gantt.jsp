@@ -64,7 +64,6 @@
 		gantt.config.link_attribute = "prjno"
 		
 		gantt.locale.labels.section_owner = "담당자";
-		//gantt.locale.labels.section_prjno = "프로젝트 번호";
 		gantt.locale.labels.section_text = "업무명";
 		gantt.locale.labels.section_time = "진행기간";
 		gantt.locale.labels.section_description = "상세내용";
@@ -78,13 +77,6 @@
 
 
 		
-
-		// body에 있는 간트id, "시작일자","종료일자" month는 =1
-		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), new Date("${projectInfo.deadline}"));
-		// 초기데이터 ajax 호출
-		gantt.load("/showGantt.do?prjno="+prjno)
-		
-		
 		//## 업무에 마우스 올리면 업무 내용 뜨게 처리
 		gantt.plugins({ 
 			tooltip: true
@@ -94,6 +86,13 @@
 			tooltips.tooltip.setViewport(gantt.$task_data);
 		});
 		
+
+		// body에 있는 간트id, "시작일자","종료일자" month는 =1
+		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), new Date("${projectInfo.deadline}"));
+		// 초기데이터 ajax 호출
+		gantt.load("/showGantt.do?prjno="+prjno)
+		
+
 		//## 업무등록 이벤트
 		gantt.attachEvent("onAfterTaskAdd", function(id,item){
 		    console.log(id)

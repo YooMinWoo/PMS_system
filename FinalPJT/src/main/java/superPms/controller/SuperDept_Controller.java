@@ -19,7 +19,7 @@ import superPms.vo.SuperDept;
 public class SuperDept_Controller {
 	@Autowired(required=false)
 	private SuperDept_Service service;
-	
+	// http://49.238.187.241:7080/FinalPJT/superDeptList.do
 	// http://localhost:5080/FinalPJT/superDeptList.do
 	@RequestMapping("/superDeptList.do")
 	public String superDeptList(@ModelAttribute("sch") DeptSch sch,Model d) {

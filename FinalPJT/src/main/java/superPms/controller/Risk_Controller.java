@@ -47,14 +47,13 @@ public class Risk_Controller {
 	@PostMapping("/project_insertRisk.do")		// 리스크 등록
 	public String insertRisk(Risk ins, Model d){
 		service.insertRisk(ins);
-		d.addAttribute("msg","등록성공");
-		return "WEB-INF\\jungwooView\\project_riskForm.jsp";
+		return "redirect:project_riskList.do";
 	}	
-	@PostMapping("/riskUpdate.do")				// 리스크 수정
+	
+	@PostMapping("/project_riskUpdate.do")		// 리스크 수정
 	public String riskUpdate(Risk upt, Model d) {
 		service.updateRisk(upt);
 		d.addAttribute("risk",service.getRisk(upt.getRiskno()));
-		d.addAttribute("msg","수정완료");
-		return "a03_board";
+		return "redirect:project_riskList.do";
 	}
 }
