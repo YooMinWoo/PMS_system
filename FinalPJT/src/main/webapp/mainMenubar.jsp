@@ -222,13 +222,13 @@
               </a>
               <ul class="menu-sub">
               <li class="menu-item" id="menu-item-admin-organization">
-                  <a href="forms-input-groups.html" class="menu-link">
+                  <a href="${path }/superDeptList.do" class="menu-link">
                     <div data-i18n="Input groups">조직도</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-admin-hr">
-                  <a href="forms-input-groups.html" class="menu-link">
-                    <div data-i18n="Input groups">입/퇴사관리</div>
+                  <a href="${path }/getEmpList.do" class="menu-link">
+                    <div data-i18n="Input groups">사원관리</div>
                   </a>
                 </li>
               </ul>

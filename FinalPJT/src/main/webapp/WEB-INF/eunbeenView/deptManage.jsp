@@ -74,6 +74,8 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
    $(document).ready(function(){
+	$("#menu-item-admin").addClass('active open');	
+	$("#menu-item-admin-organization").addClass('active');
       var msg = "${msg}"
       if(msg!=""){
          alert(msg)

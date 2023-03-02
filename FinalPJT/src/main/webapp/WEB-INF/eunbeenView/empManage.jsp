@@ -56,9 +56,8 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		$("#menu-item-admin").addClass('active open');	
+		$("#menu-item-admin-hr").addClass('active');
 		$("[name=sename]").val("${sch.sename}");
 		$("[name=dname]").val("${sch.dname}");
 		$("[name=job]").val("${sch.job}");	
