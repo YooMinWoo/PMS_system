@@ -6,6 +6,7 @@
 <mapper namespace="superPms.dao.Risk_Dao">
 	<select id="riskList" resultType="risk" parameterType="risk">
 		select * from Risk
+		order by riskno desc
 	</select>
    	<select id="getRisk" resultType="risk" parameterType="risk">
        		SELECT * FROM risk
