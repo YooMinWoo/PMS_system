@@ -194,7 +194,7 @@
               </a>
             </li>
             <li class="menu-item" id="menu-item-notice">
-              <a href="*" class="menu-link">
+              <a href="${path }/goNotice.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Extended UI">공지사항</div>
               </a>
