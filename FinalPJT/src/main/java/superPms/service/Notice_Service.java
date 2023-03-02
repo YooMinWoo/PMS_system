@@ -25,6 +25,7 @@ public class Notice_Service {
 	public List<Notice> noticeList(NoticeSch sch){
 		if(sch.getSchInfo()==null) sch.setSchInfo("");
 		if(sch.getDeptid()==null) sch.setDeptid("");
+		if(sch.getDeptid().equals("전체")) sch.setDeptid("");
 		// 전체페이지 설정
 		sch.setCount(dao.totCnt(sch));
 		

@@ -75,10 +75,6 @@
 		})
 		$("#regBtn").click(function(){
 			if(confirm("등록 하시겠습니까?")){
-				console.log("제목 : "+$("[name=title]").val())
-				console.log("작성자 : "+$("[name=writer]").val())
-				console.log("내용 : "+$("[name=content]").val())
-				console.log("카테고리 : "+$("[name=deptid]").val())
 				if($("[name=title]").val()==""){
 					alert("제목을 입력하세요.")
 					$("[name=title]").focus()

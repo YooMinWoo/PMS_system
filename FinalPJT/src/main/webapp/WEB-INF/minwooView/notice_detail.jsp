@@ -40,6 +40,13 @@ input:read-only{
 textarea:read-only{
 	background:white !important;
 }
+.repList{
+	display: flex;
+}
+#regRepBtn, #repDelBtn{
+	height:50px;
+	width:7.5%;
+}
 </style>
 
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -88,19 +95,17 @@ textarea:read-only{
 		})
 		$("#uptBtn").click(function(){
 			if(confirm("수정하시겠습니까?")){
-				$("form").attr({
+				$("#frm01").attr({
 					action:"/FinalPJT/uptNotice.do",
 					enctype:"multipart/form-data"
 				})
-				$("form").submit()
+				$("#frm01").submit()
 			}
 		})
 		$("#delBtn").click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				$("form").attr({
-					action:"/FinalPJT/delNotice.do"
-				})
-				$("form").submit()
+				$("#frm01").attr("action","/FinalPJT/delNotice.do")
+				$("#frm01").submit()
 			}
 		})
 		$("#fileUptBtn").click(function(){
@@ -124,6 +129,13 @@ textarea:read-only{
 				$("#formFile2").val("선택된 파일이 없습니다.")
 			}else{
 				$("#formFile2").val($('#formFile').val().split("\\")[2])
+			}
+		})
+		$("#regRepBtn").click(function(){
+			if($("#repContent").length>150){
+				alert("150자 이하로 입력해주세요")
+				$("#repContent").focus()
+				return
 			}
 		})
 	});
@@ -155,7 +167,7 @@ textarea:read-only{
 		       <h4 class="fw-bold py-3 mb-4">공지사항 > <small class="text-muted">상세화면</small></h4>
 	           <div class="card mb-4 pb-3">
            			<div class="card-body">
-                      <form method="post">
+                      <form method="post" id="frm01">
                       	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                       	<input type="hidden" name="path" value="${noticeDetail.path }">
                         <div class="mb-3">
@@ -224,7 +236,45 @@ textarea:read-only{
                         </div>
                       </form>
                     </div>
+                    <hr>
+                    <div class="card-body">
+                    	<h6>댓글 &nbsp;&nbsp;&nbsp;10개</h6>
+                    	<form id="frm02" method="post">
+	                    	<label for="repContent" class="form-label">댓글 작성</label>
+	                    	<div class="repList">
+		                        <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
+		                        <button type="button" class="btn btn-secondary" id="regRepBtn">작성</button>
+	                        </div>
+	                        <hr>
+	                        <br><br>
+	                        <%-- 
+	                        <input type="hidden" name="writer" value="세션값으로 처리해야하는 사용자 ID">
+                        	--%>
+                        </form>
+                        <label class="form-label">사용자1</label>
+                        <div class="repList">
+	                        <textarea class="form-control" rows="3" style="height:50px;">내용1</textarea>
+	                         
+	                        <%-- <c:if 사용자 아이디와 입력된 아이디가 같을 때.> --%>
+	                        <button type="button" class="btn btn-danger" id="repDelBtn">삭제</button>
+	                        
+	                        <%-- </c:if> --%>
+	                        
+                        </div>
+                        <br>
+                        <label class="form-label">사용자2</label>
+                        <div class="repList">
+	                        <textarea class="form-control" rows="3" style="height:50px;">내용2</textarea>
+	                         
+	                        <c:if test="false">
+		                        <button type="button" class="btn btn-danger" id="repDelBtn">삭제</button>
+	                        </c:if>
+                        </div>
+                        <br>
+                    </div>
+                    
                  </div>
+                 
          	  <!-- /card -->
             </div>
             <!-- / Content -->

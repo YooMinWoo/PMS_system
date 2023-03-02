@@ -304,8 +304,9 @@ tbody tr{
 					
 					function category(msg){
 						$("#cateId").text($(msg).text())
-						if($(msg).text()=='전체') $("[name=deptid]").val($(''))
-						else $("[name=deptid]").val($(msg).text())
+						//if($(msg).text()=='전체') $("[name=deptid]").val($(''))
+						//else $("[name=deptid]").val($(msg).text())
+						$("[name=deptid]").val($(msg).text())
 						
 					}
 					
