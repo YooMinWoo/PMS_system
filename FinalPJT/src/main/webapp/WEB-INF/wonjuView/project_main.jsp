@@ -79,8 +79,16 @@
 		var projectName="${projectInfo.subject}" // 모델데이터
 		$("#subject").text(projectName)
 		var prjno = "${projectInfo.prjno}"
-		console.log(prjno)
-		console.log(typeof prjno)
+		var deadline = "${projectInfo.deadline}"
+		var deadlineNewDate = new Date(deadline.split("-")[0],deadline.split("-")[1],deadline.split("-")[2])
+		var minusdate = new Date(deadlineNewDate-new Date()).getDate()
+		
+		if(minusdate>=0){
+			$("#subject").append(" (D-"+minusdate+")")
+		}else{
+			$("#subject").append(" (종료된 프로젝트입니다.)")
+		}
+		
 		
 		// 모달창 input 추가
 		$("#plusBtn").click(function(){
@@ -153,10 +161,6 @@
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
 		  
-         
-
-
-
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
@@ -171,11 +175,75 @@
 		           <h3 id="subject"class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
 		           </div>
 		           <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
+		            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
 		            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">멤버초대</button>&nbsp;&nbsp;&nbsp;
 		            <button type="button" class="btn btn-sm btn-secondary">설정</button>
 		           </div>
 	           </div>
-	<!-- 멤버 초대  모달창 -->
+	
+		        <div class="nav navbar-nav me-auto d-flex flex-row">
+		          <a class="nav-item nav-link active" href="javascript:void(0)">진행상황</a>
+		          <a class="nav-item nav-link" >|</a>
+		          <a class="nav-item nav-link" href="javascript:void(0)">업무</a>
+		          <a class="nav-item nav-link">|</a>
+		          <a class="nav-item nav-link" href="javascript:void(0)">드라이브</a>
+		          <a class="nav-item nav-link">|</a>
+		          <a class="nav-item nav-link" href="javascript:void(0)">리스크 관리</a>
+		        </div>
+				
+				<hr class="mx-0">
+	         
+	          
+			<div id="gantt" class="row my-3 px-sm-3">
+			<div class="col my-3"><span><strong>담당 업무 등록</strong></span></div>
+		    <jsp:include page="/gantt.jsp"></jsp:include>
+		   </div>
+		   
+		    <div class="row my-3 px-sm-3 mt-5">
+		    <div class="col my-3"><span><strong>담당 업무 확인</strong></span></div>
+		    <table id="ganttTab" class="table table-hover">
+		      <thead>
+		        <tr>
+		          <th>업무명</th>
+		          <th>담당자</th>
+		          <th>시작일자</th>
+		          <th>종료일자</th>
+		          <th>진행률</th>
+		        </tr>
+		      </thead>
+		      <tbody class="table-border-bottom-0">
+		        <c:forEach var="g" items="${ganttInfo }">
+		        <tr>
+		        <td>${g.text }</td><td>${g.owner }</td>
+		        <td>${g.start_date }</td>
+		        <td>
+		       <!-- String 형태로 저장되어 있는 start_date를 날짜형태로 파싱 -->
+		        <fmt:parseDate var="sdate" value="${g.start_date }" pattern="yyyy-MM-dd"/>
+		        <!-- 날짜형태를 시간 숫자로 변형해서 duration(기간)을 더해줌 // -->
+		        <c:set var="ddate" value="${sdate.time + ((g.duration) * 24 * 60 * 60 * 1000)}"/>
+		        <%
+		        // 숫자형태를 날짜형으로 로 변경함
+				    Date date = new Date((Long) pageContext.getAttribute("ddate"));
+				%>	
+				<!-- 변경한 날짜형 데이터를 원하는 패턴으로 format 하여 출력 -->
+				<fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd" />
+		        </td>
+		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
+		        </tr>
+		        </c:forEach>
+		      </tbody>
+		    </table>
+		    
+		    </div>
+		    
+
+	          
+          
+       	   </div>
+       	    <!-- /card -->
+            </div>
+            <!-- / Content -->
+<!-- 멤버 초대  모달창 -->
 		<div class="modal fade" id="inviteModal" tabindex="-1" style="display: none;" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -269,74 +337,45 @@
           </div>
         </div>
 	<!-- /멤버 초대  모달창 -->
-		        <div class="nav navbar-nav me-auto d-flex flex-row">
-		          <a class="nav-item nav-link active" href="javascript:void(0)">진행상황</a>
-		          <a class="nav-item nav-link" >|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">업무</a>
-		          <a class="nav-item nav-link">|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">드라이브</a>
-		          <a class="nav-item nav-link">|</a>
-		          <a class="nav-item nav-link" href="javascript:void(0)">리스크 관리</a>
-		        </div>
-				
-				<hr class="mx-0">
-	         
-	          <div class="row my-3 px-sm-3">
-	            <span><strong>마감 D-27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;진행률 0%</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	             진행 0, 완료 0</span>
-	          </div>
-	          
-			<div id="gantt" class="row my-3 px-sm-3">
-			<div class="col my-3"><span><strong>담당 업무 등록</strong></span></div>
-		    <jsp:include page="/gantt.jsp"></jsp:include>
-		   </div>
-		   
-		    <div class="row my-3 px-sm-3 mt-5">
-		    <div class="col my-3"><span><strong>담당 업무 확인</strong></span></div>
-		    <table id="ganttTab" class="table table-hover">
-		      <thead>
-		        <tr>
-		          <th>업무명</th>
-		          <th>담당자</th>
-		          <th>시작일자</th>
-		          <th>종료일자</th>
-		          <th>진행률</th>
-		        </tr>
-		      </thead>
-		      <tbody class="table-border-bottom-0">
-		        <c:forEach var="g" items="${ganttInfo }">
-		        <tr>
-		        <td>${g.text }</td><td>${g.owner }</td>
-		        <td>${g.start_date }</td>
-		        <td>
-		       <!-- String 형태로 저장되어 있는 start_date를 날짜형태로 파싱 -->
-		        <fmt:parseDate var="sdate" value="${g.start_date }" pattern="yyyy-MM-dd"/>
-		        <!-- 날짜형태를 시간 숫자로 변형해서 duration(기간)을 더해줌 // -->
-		        <c:set var="ddate" value="${sdate.time + ((g.duration) * 24 * 60 * 60 * 1000)}"/>
-		        <%
-		        // 숫자형태를 날짜형으로 로 변경함
-				    Date date = new Date((Long) pageContext.getAttribute("ddate"));
-				%>	
-				<!-- 변경한 날짜형 데이터를 원하는 패턴으로 format 하여 출력 -->
-				<fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd" />
-		        </td>
-		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
-		        </tr>
-		        </c:forEach>
-		      </tbody>
-		    </table>
-		    
-		    </div>
-		    
-
-	          
-          
-       	   </div>
-       	    <!-- /card -->
+	<!-- 멤버 확인 모달창 -->
+	<div class="modal fade" id="memberModal" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">프로젝트 멤버</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="my-3 row">
+		        <div class="table-responsive text-nowrap">
+				    <table class="table table-striped">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
+				      <thead>
+				        <tr>
+				          <th>부서명</th>
+				          <th>직책</th>
+				          <th>담당파트</th>
+				          <th>이름</th>
+				        </tr>
+				      </thead>
+				      <tbody class="table-border-bottom-0">
+				        <tr>
+				        <td>마케팅</td><td>과장</td><td>디자인</td><td>홍사원</td>
+				        </tr>
+				      
+				      </tbody>
+				    </table>
+				  </div>
+                </div>
+              </div>
             </div>
-            <!-- / Content -->
-
-	
+          </div>
+        </div>
+	<!--/멤버 확인 모달창  -->
 
            
           </div>
