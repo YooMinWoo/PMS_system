@@ -33,12 +33,20 @@ SELECT * FROM BOARD b ;
 INSERT INTO risk VALUES (6660126, '높음', '1', '땡땡씨', '대기','이 문제가 무엇인가 ?', 'qwer@naver.com', 3330001);
 DELETE FROM risk
 WHERE RISKNO =6660126;
-SELECT * FROM risk;
+SELECT * FROM risk
+ORDER BY RISKNO DESC ;
 DELETE FROM RISK
 WHERE RISKNO =1;
 /*CREATE SEQUENCE risk_seq
 START WITH 1
 MINVALUE 1;*/
-INSERT INTO risk VALUES (risk_seq.nextval, '긴급', '1', '땡땡씨', '발생','페이징처리에 문제가 발생했습니다.', 'monsta@gmail.com', 1);
+INSERT INTO risk VALUES (risk_seq.nextval, '보통', '2', '땡땡씨', '발생','내일 점심은 무엇을 먹죠?', 'monsta@gmail.com', 22);
 SELECT * FROM PROJECT;
 SELECT * FROM EMP;
+CREATE SEQUENCE risk_seq
+START WITH 1
+MINVALUE 1;
+SELECT * FROM emp;
+SELECT * FROM project;
+SELECT * FROM dept;
+INSERT INTO PROJECT VALUES (pro_seq.nextVal,sysdate,sysdate+30,'프로젝트 예시','monsta@gmail.com',10008,'1');

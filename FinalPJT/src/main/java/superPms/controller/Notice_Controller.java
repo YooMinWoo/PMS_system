@@ -25,7 +25,7 @@ public class Notice_Controller {
 	
 	@RequestMapping("/goNotice.do")
 	public String goNotice(NoticeSch sch, Model d) {
-		// d.addAttribute("depts",service2.getParentDeptComb());
+		d.addAttribute("depts",service2.getParentDeptComb());
 		d.addAttribute("noticeList",service.noticeList(sch));
 		return "WEB-INF\\minwooView\\notice.jsp";
 	}
