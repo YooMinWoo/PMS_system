@@ -119,7 +119,7 @@
 	</delete>
 	
 	<!-- 댓글 조회 -->
-	<select id="noticeRepList" parameterType="notice">
+	<select id="noticeRepList" parameterType="notice" resultType="noticerep">
 		SELECT n.*, e.ename FROM noticerep n, emp e
 		WHERE noticeno=#{noticeno}
 		AND n.WRITER = e.id
