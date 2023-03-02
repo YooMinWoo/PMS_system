@@ -7,8 +7,23 @@
 	<select id="riskList" resultType="risk" parameterType="risk">
 		select * from Risk
 	</select>
-  	<select id="getRisk" resultType="risk" parameterType="risk">
+   	<select id="getRisk" resultType="risk" parameterType="risk">
        		SELECT * FROM risk
 			WHERE riskno= #{riskno}
   	</select>
+  	<insert id="insertRisk" parameterType="risk">
+  			INSERT INTO RISK VALUES (risk_seq.nextval, 
+  			#{risklevel},  #{riskpriority},
+  			#{riskmoniter}, #{riskstate}, 
+  			#{riskname}, 'monsta@gmail.com', 1)
+  	</insert>
+ 	<update id="updateRisk" parameterType="risk">
+		update risk
+		set
+			risklevel = #{risklevel},
+			riskpriority = #{riskpriority},
+			riskstate = #{riskstate},
+			riskname = #{riskname}
+	   where riskno = #{riskno}				
+	</update>	
 </mapper>

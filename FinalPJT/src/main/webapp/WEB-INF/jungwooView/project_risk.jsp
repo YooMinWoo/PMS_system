@@ -106,8 +106,9 @@ tr{text-align:left;}
 				$(item).addClass('btn-primary');
 			}
 		});	
-
-
+		$("#applyBtn").click(function(){
+			location.href = "${path}/project_riskForm.do";
+		})
 		
 
 		
@@ -143,7 +144,7 @@ tr{text-align:left;}
 			<div class="card-body">
 						<div class="risk-header">
                           <h5 class="text-primary">리스크 관리</h5>
-                          <input type="button" class="btn btn-primary" value="등록">	
+                          <input id="applyBtn" type="button" class="btn btn-primary" value="등록">	
 						</div>
                           <div class="input-group">
 							  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />

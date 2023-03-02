@@ -55,9 +55,15 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		$("#uptBtn").click(function(){			
+			if(confirm("수정하시겠습니까?")){
+				$("form").attr("action","${path}/project_riskUpdate.do");
+				$("form").submit();
+			}
+		})
+		$("#goMain").click(function(){
+			location.href="${path}/project_riskList.do"			
+		});	
 	});
 </script>
 </head>
@@ -103,7 +109,7 @@
 				          </div>  
 				          <div class="mb-3">
 				            <label for="subject">제목</label>
-				            <input name="riskname" value="${risk.riskname}" type="text" class="form-control  ckValid" id="subject" placeholder="제목 입력" required>
+				            <input name="riskname" value="${risk.riskname}" type="text" class="form-control  ckValid" id="riskname" placeholder="제목 입력" required>
 				            <div class="invalid-feedback">
 				              제목을 입력해주세요.
 					           </div>
@@ -111,7 +117,7 @@
 				          <div class="row">      
 					          <div class="col-md-6 mb-3">
 					            <label for="risklevel">긴급도</label>
-					            <input type="text" name="level"  readonly	
+					            <input type="text" name="risklevel"  	
 					            	 value="${risk.risklevel}"  class="form-control ckValid" id="risklevel" placeholder="작성자를 입력" required>
 					            <div class="invalid-feedback">
 					              작성자를 입력해주세요.
@@ -120,7 +126,7 @@
 					          <div class="col-md-6 mb-3">
 					            <label for="riskpriority">우선도</label>
 					            <input type="text" name="riskpriority"
-					            	 value="${risk.riskpriority}" readonly class="form-control ckValid" id="riskpriority"  required>
+					            	 value="${risk.riskpriority}"  class="form-control ckValid" id="riskpriority"  required>
 					            <div class="invalid-feedback">
 					              입력해주세요.
 					            </div>
@@ -130,7 +136,7 @@
 				            <div class="col-md-6 mb-3">
 				              <label for="riskmoniter" >모니터링 </label>
 				              <input type="text" name="riskmoniter"  class="form-control" 
-				              		value="${risk.riskmoniter }"  >
+				              		value="${risk.riskmoniter }" id="riskmoniter" >
 				              <div class="invalid-feedback">
 				                입력해주세요.
 				              </div>
@@ -138,7 +144,7 @@
 				            <div class="col-md-6 mb-3">
 				              <label for="riskstate" >리스크상태</label>
 				              <input type="text" name="riskstate"  class="form-control" 
-				              		value="${risk.riskstate }"  >
+				              		value="${risk.riskstate }" id="riskstate" >
 				              <div class="invalid-feedback">
 				                입력해주세요.
 				              </div>
@@ -154,9 +160,7 @@
 				          </div>  --%>     
 				          
 				          <div class="mb-4"></div>
-				          <button id="uptBtn" class="btn btn-warning btn-lg btn-block" type="button">게시물 수정</button>
-				          <button id="delBtn" class="btn btn-danger btn-lg btn-block" type="button">게시물 삭제</button>
-				          <button id="repBtn" class="btn btn-success btn-lg btn-block" type="button">답글</button>
+				          <button id="uptBtn" class="btn btn-warning btn-lg btn-block" type="button">리스크 수정</button>
 				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
 				        </form>
 				      </div>
