@@ -10,9 +10,17 @@ public class Gantt {
 	private String parent;
 	private int duration;
 	private boolean open;	
+	private String description;
 	private int prjno;
+	
 
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public boolean isOpen() {
 		return open;
 	}

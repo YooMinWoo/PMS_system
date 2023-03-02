@@ -20,6 +20,7 @@ public class Notice {
 	public Notice() {
 		// TODO Auto-generated constructor stub
 	}
+	
 	public Notice(int cnt, int noticeno, int refno, String regdte, String uptdte, String title, String content,
 			int viewcnt, String writer, String fno, String deptid, String fname, String path, MultipartFile report) {
 		this.cnt = cnt;
@@ -37,6 +38,7 @@ public class Notice {
 		this.path = path;
 		this.report = report;
 	}
+
 	public int getCnt() {
 		return cnt;
 	}

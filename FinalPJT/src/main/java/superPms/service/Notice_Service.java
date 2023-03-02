@@ -24,11 +24,13 @@ public class Notice_Service {
 	
 	public List<Notice> noticeList(NoticeSch sch){
 		if(sch.getSchInfo()==null) sch.setSchInfo("");
-		
+		if(sch.getDeptid()==null) sch.setDeptid("");
 		// 전체페이지 설정
 		sch.setCount(dao.totCnt(sch));
 		
 		// 클릭한 페이지 설정
+		
+		
 		if(sch.getCurPage()==0) {
 			sch.setCurPage(1);
 		}
@@ -41,7 +43,6 @@ public class Notice_Service {
 			(int)Math.ceil(
 			sch.getCount()/(double)sch.getPageSize())
 		);
-		
 		// 블럭의 [이후]에 대한 예외 처리..( 클릭한 현재 페이지 번호 > 총 페이지 수 ==> 현재 페이지 번호 = 총 페이지 수 )
 		if(sch.getCurPage()>sch.getPageCount()) {
 			sch.setCurPage(sch.getPageCount());
@@ -118,5 +119,11 @@ public class Notice_Service {
 			dao.insertFile(n);
 		}
 		dao.uptNotice(n);
+	}
+	
+	public void delNotice(int[] nos) {
+		for(int no : nos) {
+			dao.delNotice(no);
+		}
 	}
 }

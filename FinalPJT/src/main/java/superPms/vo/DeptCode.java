@@ -1,10 +1,10 @@
 package superPms.vo;
-public class Code {
+public class DeptCode {
 	private String key;
 	private String val;
-	public Code() {
+	public DeptCode() {
 	}
-	public Code(String key, String val) {
+	public DeptCode(String key, String val) {
 		this.key = key;
 		this.val = val;
 	}
@@ -20,5 +20,5 @@ public class Code {
 	public void setVal(String val) {
 		this.val = val;
 	}
-	
+
 }

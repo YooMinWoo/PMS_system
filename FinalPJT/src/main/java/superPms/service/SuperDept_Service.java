@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import superPms.dao.SuperDept_Dao;
-import superPms.vo.Code;
+import superPms.vo.DeptCode;
 import superPms.vo.DeptSch;
 import superPms.vo.SuperDept;
 
@@ -60,7 +60,7 @@ public class SuperDept_Service {
 	}
 	
 	// 상위부서 콤보박스
-	public List<Code> getParentDeptComb(){
+	public List<DeptCode> getParentDeptComb(){
 		return dao.getParentDeptComb();
 	}
 	
@@ -83,6 +83,7 @@ public class SuperDept_Service {
 	public void deleteDept(String deptid) {
 		dao.deleteDept(deptid);
 	}
+	
 	
 
 

@@ -21,12 +21,7 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-td{text-align:left;}
-tr{text-align:left;}
-.risk-header{
-	display: flex;
-	justify-content: space-between;
-}
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -59,58 +54,10 @@ tr{text-align:left;}
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
-
 	$(document).ready(function(){
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-
-  		$(".risklevel").each(function(index, item){
-			console.log($(item).val());
-			if($(item).val()=="긴급"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-danger');
-			}
-			if($(item).val()=="보통"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-warning');
-			}
-			if($(item).val()=="낮음"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-success');
-			}
-		});
-  		$(".riskpriority").each(function(index, item){
-			console.log($(item).val());
-			if($(item).val()=="1"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-danger');
-			}
-			if($(item).val()=="2"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-warning');
-			}
-			if($(item).val()=="3"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-success');
-			}
-		});	
-  		$(".riskstate").each(function(index, item){
-			console.log($(item).val());
-			if($(item).val()=="대기"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-secondary');
-			}
-			if($(item).val()=="승인"){
-				$(item).addClass('btn');
-				$(item).addClass('btn-primary');
-			}
-		});	
-
-
-		
-
-		
 	});
 </script>
 </head>
@@ -137,56 +84,13 @@ tr{text-align:left;}
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">리스크 관리</small></h4>
+           <h4 class="fw-bold py-3 mb-4">대제목넣으세요 > <small class="text-muted">소제목넣으세요</small></h4>
            
            <div class="card mb-4 pb-3">
-			<div class="card-body">
-						<div class="risk-header">
-                          <h5 class="text-primary">리스크 관리</h5>
-                          <input type="button" class="btn btn-primary" value="등록">	
-						</div>
-                          <div class="input-group">
-							  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-							  <button type="button" class="btn btn-outline-primary">search</button>
-						  </div>	
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>리스크 번호</th>
-                                            <th>리스크 이름</th>
-                                            <th>심각도</th>
-                                            <th>우선순위</th>
-                                            <th>PM승인</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach var="risk" items="${list}">
-                                    		<tr ondblclick="goDetail(${risk.riskno})">
-                                    			<td>${risk.riskno}</td>
-                                    			<td>${risk.riskname}</td>
-                                    			<td><input type="button" class="risklevel" value="${risk.risklevel}"></td>
-                                    			<td>
-                                    			<input type="button" class="riskpriority" value="${risk.riskpriority}">
-                                    			</td>
-                                    			<td>
-                                    			<input type="button" class="riskstate" value="${risk.riskstate}">
-                                    			</td>
-                                    		</tr>
-                                    	</c:forEach>
-                                    </tbody>
-                                </table>
-                                    <script>
-                              		function goDetail(riskno){
-                              			location.href="${path}/project_riskDetail.do?riskno="+riskno
-                              		}
-                                    </script>
-                            </div>
-                        </div>
            
+         	</div>
          	  <!-- /card -->
-         	  
-           </div>
+            </div>
             <!-- / Content -->
 
 	

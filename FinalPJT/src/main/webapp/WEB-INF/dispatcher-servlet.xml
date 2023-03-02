@@ -69,6 +69,5 @@
             
           	 <bean id="multipartResolver"
 			class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-			<!--<bean id="downloadViewer" class="springWeb.a06_util.Z01_DownloadView"/>
-		-->
+			<bean id="downloadViewer" class="resource.DownloadView"/>
 </beans>

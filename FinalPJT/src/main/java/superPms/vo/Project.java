@@ -11,8 +11,37 @@ public class Project {
 	
 	private String ename;
 	private String dname;
+	private int cnt; // 나의 프로젝트 총 인원수
+	private String part;
+	
+	private int rm; // rownum
 	
 	
+	
+	
+
+	
+	
+	
+	
+	public int getRm() {
+		return rm;
+	}
+	public void setRm(int rm) {
+		this.rm = rm;
+	}
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public String getDname() {
 		return dname;
 	}

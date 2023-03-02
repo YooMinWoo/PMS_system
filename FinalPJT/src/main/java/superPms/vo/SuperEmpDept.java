@@ -4,6 +4,7 @@ public class SuperEmpDept {
 	private String id;
 	private String pass;
 	private String ename;
+	private String sename; // 검색용 속성
 	private String cell;
 	private int auth;
 	private String deptid;
@@ -93,6 +94,14 @@ public class SuperEmpDept {
 
 	public void setParentDept(String parentDept) {
 		this.parentDept = parentDept;
+	}
+
+	public String getSename() {
+		return sename;
+	}
+
+	public void setSename(String sename) {
+		this.sename = sename;
 	}
 	
 	

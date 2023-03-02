@@ -2,6 +2,7 @@ package superPms.vo;
 
 public class NoticeSch {
 	private String schInfo;
+	private String deptid;
 	
 	private int count; // 전체 데이터 건수
 	private int pageSize; // 한 페이지에 보여줄 데이터 크기
@@ -112,6 +113,14 @@ public class NoticeSch {
 		this.endBlock = endBlock;
 	}
 
+	public String getDeptid() {
+		return deptid;
+	}
+
+	public void setDeptid(String deptid) {
+		this.deptid = deptid;
+	}
+	
 	
 	
 }

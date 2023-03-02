@@ -14,20 +14,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업무</title>
+<title>업무 등록</title>
 
 <style>
 .card.mb-4{
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-th{text-align:center;}
-td{text-align:center;}
-.btn{
+.divs{
+	display: flex;
+	justify-content: space-between;
+}
+.btns{
 	display: flex;
 	justify-content: flex-end;
 	gap:20px;
 }
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -64,13 +67,39 @@ td{text-align:center;}
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		$("#workIns").click(function(){
-			location.href="${path}/workInsFrm.do"
+		console.log($("[name=workno]").val())
+		var msg ="${msg}"
+		$("#clBtn").click(function(){
+			if(confirm("이전페이지로 이동하시겠습니까?")){
+				location.href="${path}/workDetail.do?no="+$("[name=workno]").val();	
+			}
+		})
+		$("#uptBtn").click(function(){
+			if(confirm("수정 하시겠습니까?")){
+				if($("[name=regdte]").val()==""){
+					alert("등록일을 입력하세요.")
+					$("[name=regdte]").focus()
+					return
+				}
+				if($("[name=enddte]").val()==""){
+					alert("만기일을 입력하세요.")
+					$("[name=enddte]").focus()
+					return
+				}
+				if($("[name=cont]").val()==""){
+					alert("내용을 입력하세요.")
+					$("[name=cont]").focus()
+					return
+				}
+				$("form").attr("action","${path}/workUpt.do");
+				$("form").submit();
+				if(msg!=""){
+					alert(msg)
+					location.href="${path}/workDetail.do?no="+$("[name=workno]").val();	
+				}
+			}
 		})
 	});
-	function goWork(no){
-		location.href="${path}/workDetail.do?no="+no
-	}
 </script>
 </head>
 
@@ -96,89 +125,79 @@ td{text-align:center;}
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무</small></h4>
+           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무 수정</small></h4>
            
            <div class="card mb-4 pb-3">
            <div class="demo-inline-spacing mt-5">
-           <div class="row">
-           <div class="col-3">
-          </div>
-          <div class="col-5"> </div>
-          <div class="col-4">
-            <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="allFrm" action="${path }/worklist.do" method="post">
-           		<select>
-	            	<option value="0">제목</option>
-	            	<option value="1">작성자</option>
-	            </select>
-	          <div class="input-group">
-	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="subject" value="${sch.subject}" class="form-control" placeholder="검색어를 입력하세요">
-	          </div>
-	       </form>
-	       <!-- /form 끝 -->
+ 			<form enctype="multipart/form-data" method="post">
+                <div class="divs">
+                <div class="mb-3" style="width:49%;">
+                   <label class="form-label" for="basic-default-prj">프로젝트명</label>
+                   <!-- 프로젝트명으로 수정필요 -->
+                   <input type="text" name="prjno"
+                   class="form-control-plaintext" id="basic-default-prj" value="1" disabled readonly />
+                 </div>
+                <div class="mb-3" style="width:49%;">
+                  <label class="form-label" for="basic-default-subject">업무명</label>
+                  <input name="subject" type="text" class="form-control-plaintext" id="basic-default-subject"
+                  value="${work.subject }" disabled readonly/>
+                  <input name="workno" type="hidden" value="${param.no}"/>
+                </div>
+                </div>
+                <div class="divs">
+                 <div class="mb-3" style="width:32%;">
+                   <label class="form-label" for="basic-default-id">작성자</label>
+                   <!-- 작성자로 수정필요 -->
+                   <input type="text" name="id"
+                   class="form-control-plaintext" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
+                 </div>
+                 <div class="mb-3" style="width:32%;">
+                  <label class="form-label">등록일</label>
+                  <input type="date" class="form-control" name="regdte" value="${work.regdte}">
+                  </div>
+                  <div class="mb-3" style="width:32%;">
+                  <label class="form-label">만기일</label>
+                  <input type="date" class="form-control" name="enddte" value="${work.enddte}">        
+                </div>
+                </div>
+                <!-- 
+                <div class="divs">
+                <div class="mb-3" style="width:49%;">
+                   <label class="form-label" for="basic-default-writer">담당자</label>
+                   <input type="text" name="writer"
+                   class="form-control" id="basic-default-writer" />
+                 </div>
+                <div class="mb-3" style="width:49%;">
+                  <label class="form-label" for="basic-default-title">참조</label>
+                  <input name="title" type="text" class="form-control" id="basic-default-title"/>
+                </div>
+                </div>
+                 -->
+                <div class="mb-3">
+                  <label class="form-label" for="basic-default-cont">내용</label>
+                  <textarea
+                  	name="cont"
+                    id="basic-default-cont"
+                    class="form-control"
+                    style="height: 300px;"
+                  >${work.cont }</textarea>
+                </div>
+                <div class="mb-3">
+                 <label for="formFile" class="form-label">파일첨부</label>
+                 <input type="file" name="report" class="form-control" id="formFile" />
+                </div>
+                <div class="btns">
+                	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
+                	<button type="button" class="btn btn-secondary" id="clBtn">취소</button>
+                </div>
+              </form>
           </div>
           </div>
           <div class="tab-content px-0 mt-0">
-          <!--  진행중 프로젝트 tab -->
-            <div class="tab-pane fade show active" id="horizontal-home">
-             <div class="table-responsive text-nowrap">
-			  <table class="table card-table" style="overflow: hidden;">
-			  <col width="13%">
-			  <col width="40%">
-			  <col width="17%">
-			  <col width="17%">
-			  <col width="13%">
-			    <thead>
-			      <tr>
-			        <th>번호</th>
-			        <th>업무</th>
-			        <th>등록일자</th>
-			        <th>마감일자</th>
-			        <th>작성자</th>
-			        <th>진행상태</th>
-			      </tr>
-			    </thead>
-			    <tbody class="table-border-bottom-0">
-			      <c:forEach var="work" items="${worklist}">
-			      <tr onclick="goWork(${work.workno})">
-			      <td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
-			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
-			      </c:forEach>
-			    </tbody>
-			  </table>
-			</div>
-            </div>
-             <!--  /진행중 프로젝트 tab -->
+
           </div>
         </div>
-          <div class="d-flex justify-content-center">
-          <!-- Basic Pagination -->
-          <nav id="pagination" aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-            </ul>
-          </nav>
-          <!--/ Basic Pagination -->
-         
-   		 </div>
-   		  <nav class="btn">
-          <button class="btn btn-primary" id="workIns">업무 등록</button>
-          </nav>   
+           
          	</div>
          	  <!-- /card -->
             </div>
@@ -191,8 +210,7 @@ td{text-align:center;}
           <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
-      </div>
-      </div>
+
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>

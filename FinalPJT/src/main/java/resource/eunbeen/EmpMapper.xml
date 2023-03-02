@@ -5,12 +5,68 @@
 
 <mapper namespace="superPms.dao.SuperEmp_Dao">
 	<select id="getEmpList" resultType="SuperEmpDept" parameterType="SuperEmpDept">
-		select e.id, e.ename, e.cell, e.deptid, d.dname, to_char(e.hiredate,'YYYY-MM-DD') hiredate
+		select e.id, e.ename, e.cell, e.deptid, d.dname, to_char(e.hiredate,'YYYY-MM-DD') hiredate, e.job
 		from superEmp e, superDept d
 		where e.deptid = d.deptid
-		AND e.ename like '%'||#{ename}||'%'
+		AND e.ename like '%'||#{sename}||'%'
 		and d.dname like '%'||#{dname}||'%'
-		AND to_char(hiredate) like '%'||#{hiredate}||'%'
+		AND e.job like '%'||#{job}||'%'
 		and d.dname NOT LIKE '최고경영진'
+	</select>
+	<select id="idChk" resultType="superempdept" parameterType="String">
+		SELECT * 
+		FROM superEmp
+		WHERE id=#{id}
+	</select>
+	<select id="cellChk" resultType="superempdept" parameterType="String">
+		SELECT * 
+		FROM superEmp
+		WHERE cell=#{cell}
+	</select>
+	<select id="getParentDeptComb" resultType="deptcode">
+      	SELECT DISTINCT d.deptid key, d.dname val
+		FROM superDept d
+		WHERE parentDept IS NULL
+		AND dname NOT LIKE '최고경영진'          
+   </select>
+	<insert id="insertEmp" parameterType="superempdept">	
+		INSERT INTO superEmp
+		values(#{id}, #{pass}, #{ename}, #{cell}, 4, #{deptid}, sysdate, '사원')		
+	</insert>
+	<delete id="deleteEmp" parameterType="String">
+		DELETE FROM superEmp WHERE id=#{id}
+	</delete>
+	<select id="getAuthSetting" resultType="superempdept" parameterType="String">
+		SELECT e.ename, e.id, e.auth, e.job, d.dname
+		FROM superEmp e, superDept d
+		WHERE e.deptid = d.deptid
+		AND e.id = #{id}			
+	</select>
+	<select id="getJobCom" resultType="string">
+		SELECT DISTINCT job
+		FROM superEmp
+		WHERE job NOT LIKE 'ceo'
+	</select>
+	<select id="getAuthComb" resultType="authcode">
+      	SELECT DISTINCT d.deptid key, d.dname val
+		FROM superDept d
+		WHERE parentDept IS NULL
+		AND dname NOT LIKE '최고경영진'          
+   </select>
+   <select id="getAuthCom" resultType="string">
+   		SELECT DISTINCT auth
+		FROM superEmp
+		WHERE auth NOT LIKE 1
+   </select>
+   <update id="uptEmp"  parameterType="superempdept">
+		update superEmp
+			set auth=#{auth},
+				job=#{job}
+			where id = #{id}
+	</update>
+	<select id="login" resultType="superempdept">
+		SELECT *
+		FROM superEmp 
+		where id = #{id} AND pass = #{pass}
 	</select>
 </mapper>

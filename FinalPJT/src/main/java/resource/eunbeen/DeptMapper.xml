@@ -19,7 +19,7 @@
 		select count(*)
 		from superdept	
 	</select>
-	<select id="getParentDeptComb" resultType="code">
+	<select id="getParentDeptComb" resultType="deptcode">
       	SELECT DISTINCT d.deptid key, d.dname val
 		FROM superDept d
 		WHERE parentDept IS NULL

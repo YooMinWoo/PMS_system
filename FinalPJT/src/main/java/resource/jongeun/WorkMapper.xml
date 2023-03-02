@@ -4,8 +4,29 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Work_Dao">
-	<select id="getWorkList" resultType="work">
+	<select id="getWorkList" parameterType="worksch" resultType="work">
 		select *
 		from work
+		where subject like '%'||#{subject}||'%'
 	</select>
+	<select id="getWork" resultType="work" parameterType="int">
+		SELECT * FROM WORK
+		WHERE WORKNO = #{WORKNO}
+	</select>
+	<insert id="insWork" parameterType="work">
+		INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
+			#{enddte},#{subject},#{cont},#{id},#{prjno},null,null)
+	</insert>
+	<update id="uptWork" parameterType="work">
+		update work
+		set regdte = #{regdte},
+			enddte = #{enddte},
+			cont = #{cont}
+		WHERE WORKNO = #{WORKNO}
+	</update>
+	<delete id="delWork" parameterType="int">
+		delete
+		from work
+		where WORKNO=#{WORKNO}
+	</delete>
 </mapper>

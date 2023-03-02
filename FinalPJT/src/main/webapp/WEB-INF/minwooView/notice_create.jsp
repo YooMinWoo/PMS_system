@@ -84,6 +84,10 @@
 					$("[name=title]").focus()
 					return
 				}
+				if($("[name=deptid]").val()=="X"){
+					alert("카테고리를 선택해주세요.")
+					return
+				}
 				if($("[name=content]").val()==""){
 					alert("내용을 입력하세요.")
 					$("[name=content]").focus()
@@ -143,10 +147,12 @@
 	                          class="form-control" id="basic-default-writer" value="홍길동" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%;">
-	                          <label class="form-label" for="basic-default-writer">카테고리</label>
-	                          <input type="text" name="deptid"
-	                          class="form-control" id="basic-default-writer" value="개발" />
-	                        </div>
+		                        <label for="deptid" class="form-label">카테고리 선택</label>
+		                        <select name="deptid" id="deptid" class="form-select">
+		                          <option value="X">카테고리 선택</option>
+		                          <option>개발</option>
+		                        </select>
+		                      </div>
                         </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-message">내용</label>

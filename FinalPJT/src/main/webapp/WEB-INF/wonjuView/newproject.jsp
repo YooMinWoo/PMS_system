@@ -70,7 +70,8 @@ tbody td{
 			// 멤버 초대 input의 갯수
 			var inputlen=$("#plusMem").find("input.form-control").length
 			var validCnt = 0;
-			// 만들어진 input에 값이 없으면 테두리 빨간색으로 표시 validCnt증가 ==> 유효성에서 validCnt가 초기값인 0이 아니면 ajax 호출 불가
+			// 만들어진 input에 값이 없으면 테두리 빨간색으로 표시 validCnt증가
+			// ==> 유효성에서 validCnt가 초기값인 0이 아니면 ajax 호출 불가
 			for(let i=0;i<inputlen;i++){ 
 				if($("#plusMem").find("input.form-control").eq(i).val()==''){
 					$("#plusMem").find("input.form-control").eq(i).css('border-color','#ff3e1d');
@@ -89,7 +90,8 @@ tbody td{
 			// 멤버 초대는 append로 만들어져서 선택자로 접근이 안되서 반복문 돌려서 따로 qstr을 만들어줌
 			var ownersPartsQstr=""
 			for(let i=0;i<inputlen/2;i++){
-				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()+"&parts="+$("#plusMem").find("input#part").eq(i).val()
+				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()
+				+"&parts="+$("#plusMem").find("input#part").eq(i).val()
 			}
 			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!=''&& validCnt==0
 				&& $("[name=deadline]").val()!='' && regdte<deadline && $("[name=regdte]").val()!=''){
@@ -119,8 +121,12 @@ tbody td{
 		})
 		// input 추가
 		$("#plusBtn").click(function(){
-			$("#plusMem").append("<div class='col-6'><label for='part' class='col-form-label'>파트</label><input class='form-control' type='text' name='part' placeholder='담당파트 입력' id='part'></div><div class='col-6'><label for='owner' class='col-form-label'>담당자이메일</label><input class='form-control' type='text' name='owner' placeholder='담당자 이메일입력' id='owner'></div>")
-			i++;
+			$("#plusMem").append("<div class='col-6'><label for='part' "+
+				"class='col-form-label'>파트</label><input class='form-control'"+
+				"type='text' name='part' placeholder='담당파트 입력' id='part'></div>"+
+				"<div class='col-6'><label for='owner' class='col-form-label'>"+
+				"담당자이메일</label><input class='form-control' type='text' name='owner'"+
+				"placeholder='담당자 이메일입력' id='owner'></div>")
 		})
 
 		// 이전 페이지로 이동
@@ -138,10 +144,9 @@ tbody td{
 			success:function(data){
 				console.log(data.msg)
 				console.log(data.prjno)
-				console.log(data)
 				if(data.msg=='등록성공'){
 					if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
-						location.href=""; // 만들어진 페이지로 이동 주소?prjno=prjno
+						location.href="/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
 					}else{
 						location.reload()
 					}
@@ -320,11 +325,11 @@ tbody td{
 		        <form id="insPmFrm">
 		          <div class="my-3 row" id="plusMem">
 			          <div class="col-6">
-			          <label for="part" class="col-form-label">파트1</label>
+			          <label for="part" class="col-form-label">파트</label>
 			            <input class="form-control" type="text" name="part" placeholder="담당파트 입력" id="part">
 			         </div>
 			          <div class="col-6">
-			          <label for="owner" class=" col-form-label">담당자이메일1</label>
+			          <label for="owner" class=" col-form-label">담당자이메일</label>
 			            <input class="form-control" type="text" name="owner" placeholder="담당자 이메일입력" id="owner">
 			         </div>
 		          </div>

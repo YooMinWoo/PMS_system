@@ -18,4 +18,10 @@ public class Risk_Service {
 	public Risk getRisk(int riskno) {
 		return dao.getRisk(riskno);
 	}
+	public void insertRisk(Risk ins) {
+		dao.insertRisk(ins);
+	}
+	public void updateRisk(Risk upt) {
+		dao.updateRisk(upt);
+	}
 }

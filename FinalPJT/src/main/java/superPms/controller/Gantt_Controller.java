@@ -28,6 +28,7 @@ public class Gantt_Controller {
 		service.insGantt(ins);
 		System.out.println(ins.getId());
 		System.out.println(ins.getPrjno());
+		System.out.println(ins.getDescription());
 
 		return "pageJsonReport";
 	}
@@ -35,6 +36,7 @@ public class Gantt_Controller {
 	@PostMapping("/uptGantt.do")
 	public String uptGantt(Gantt upt) {
 		service.uptGantt(upt);
+		System.out.println(upt.getDescription());
 		return "pageJsonReport";
 	}
 	@PostMapping("/delGantt.do")

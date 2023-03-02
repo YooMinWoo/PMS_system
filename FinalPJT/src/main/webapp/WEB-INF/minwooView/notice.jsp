@@ -92,7 +92,7 @@ tbody tr{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		if("${noticeSch.deptid}"!="") $("#cateId").text("${noticeSch.deptid}")
 	});
 </script>
 </head>
@@ -131,6 +131,7 @@ tbody tr{
 			                name="schInfo"
 			                value="${param.schInfo }"
 			              />
+			              <input type="hidden" name="deptid" value="${noticeSch.deptid}">
 			            </div>
 		            </div>
 		            <input type="hidden" name="curPage" value="${noticeSch.curPage}"/>
@@ -140,8 +141,24 @@ tbody tr{
 			           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 			           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
 			           <button type="button" class="btn btn-secondary" id="check">선택</button>
+			           <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        id = "cateId"
+                      >
+                      전체
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" onclick="category(this)">전체</a></li>
+                        <li><a class="dropdown-item" onclick="category(this)">개발</a></li>
+                      </ul>
+                    </div>
 		           </div>
 	          <%-- </c:if> --%>
+	          <form id="frm03" action="/FinalPJT/delNotice.do">
            <table class="table">
            	  <col width="3%">
            	  <col width="4%">
@@ -179,6 +196,8 @@ tbody tr{
                       	</c:forEach>
                     </tbody>
                   </table>
+                  </form>
+                  <c:if test="${noticeSch.startBlock>0 }">
                   <nav aria-label="Page navigation" style="padding-top: 30px">
                           <ul class="pagination justify-content-center">
                             <li class="page-item prev">
@@ -186,11 +205,13 @@ tbody tr{
                                 ><i class="tf-icon bx bx-chevrons-left"></i
                               ></a>
                             </li>
+                            
                             <c:forEach var="cnt" begin="${noticeSch.startBlock}" end="${noticeSch.endBlock}">
 	                            <li class="page-item ${noticeSch.curPage==cnt?'active':''}">
 	                              <a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
 	                            </li>
 	                        </c:forEach>
+	                        
                             <li class="page-item next">
                               <a class="page-link" href="javascript:goPage(${noticeSch.startBlock+1});"
                                 ><i class="tf-icon bx bx-chevrons-right"></i
@@ -198,6 +219,7 @@ tbody tr{
                             </li>
                           </ul>
                         </nav>
+                        </c:if>
                  </div>
                  <script>
                   // 선택 클릭시 체크박스 나타나고 사라지고 기능
@@ -205,10 +227,10 @@ tbody tr{
 						$("[name=curPage]").val(cnt);
 						$("#frm01").submit()
 					}
-                	var cnt = 0;
+                	var cntt = 0;
                 	$("#check").click(function(){
-                		cnt++;
-                		if(cnt%2==0) {
+                		cntt++;
+                		if(cntt%2==0) {
                 			$(".checkboxs").css({"visibility":"hidden"})
                 			$("#delBtn").hide()
                 		}
@@ -236,19 +258,22 @@ tbody tr{
 						var checked = $(".checkbox:checked").length;
 						if(checked==0) alert("하나 이상 체크하여야 삭제가 가능합니다.")
 						else{
+							/*
 							var nos = '';
 							$(".checkbox:checked").each(function(i,val){
 								if(checked-1 == i) nos += val.value
 								else nos += val.value+'/'
 							})
 							console.log(nos);
+							*/
+							$("#frm03").submit()
 						}
 					})
 					
-					$("[name=searchInfo]").keydown(function(e){
+					$("[name=schInfo]").keydown(function(e){
 						if(e.keyCode==13){
-							if($("[name=searchInfo]").val().length<=1) alert("2자 이상 입력하세요.")
-							else $("#frm01").submit()
+							$("[name=curPage]").val(0)
+							$("#frm01").submit()
 								// alert("검색한 내용 : "+$("[name=searchInf]").val())
 						}
 					})
@@ -276,6 +301,13 @@ tbody tr{
 						$("#frm02").attr("action","/FinalPJT/goNoticeDetail.do")
 						$("#frm02").submit()
 					})
+					
+					function category(msg){
+						$("#cateId").text($(msg).text())
+						if($(msg).text()=='전체') $("[name=deptid]").val($(''))
+						else $("[name=deptid]").val($(msg).text())
+						
+					}
 					
 					
 				</script>

@@ -59,14 +59,99 @@
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		$("[name=ename]").val("${sch.ename}");
+		$("[name=sename]").val("${sch.sename}");
 		$("[name=dname]").val("${sch.dname}");
-		$("[name=hiredate]").val("${sch.hiredate}");	
+		$("[name=job]").val("${sch.job}");	
+		var msg = "${msg}"
+		if(msg!=""){
+		    alert(msg)
+		}
+		if(msg=="계정생성 완료!" || msg=="사원삭제 완료!"){
+		  	location.href = "${path}/getEmpList.do";
+		}
+		
+		$("#regBtn").click(function(){
+	         if($("[name=ename]").val()==""){
+	            alert("사원명을 입력하세요.");
+	            $("[name=ename]").focus();
+	            return false;
+	         }
+	         if($("[name=id]").val()==""){
+	            alert("이메일을 입력하세요.");
+	            $("[name=id]").focus();
+	            return false;
+	         }
+	         if($("[name=pass]").val()==""){
+		         alert("비밀번호를 입력하세요.");
+		         $("[name=pass]").focus();
+		         return false;
+		     }
+	         if($("[name=cell]").val()==""){
+		         alert("핸드폰번호를 입력하세요.");
+		         $("[name=cell]").focus();
+		         return false;
+		     }
+	         if($("[name=deptid]").val()==""){
+		         alert("소속부서를 선택하세요.");
+		         $("[name=deptid]").focus();
+		         return false;
+		     }
+	         var idChkVal = $("#idChk").val();
+	         var cellChkVal = $("#cellChk").val();
+	         if(idChkVal == "N" || cellChkVal == "N"){
+	            alert("중복확인 버튼을 눌러주세요.");
+	            return false;
+	         }else if(idChkVal == "Y" && cellChkVal == "Y"){
+	            $("#frm02").submit();
+	         }
+	         
+	      });
+	 
 		
 	});
-	function delEmp(){
-		location.href="${path}/.do"
+	function goAuthSetting(id){
+		location.href="${path}/authSetting.do?id="+id
+	}	
+	function goDelete(id){
+		console.log("버튼누름")
+		if(confirm(id+"의 계정을 삭제하시겠습니까?")){
+			location.href="${path}/deleteEmp.do?id="+id
+		}
 	}
+	function fn_idChk(){
+	      console.log("버튼누름")
+	      $.ajax({
+	         url : "${path}/idChk.do",
+	         type : "post",
+	         data : "id="+$("[name=id]").val(),
+	         dataType:"json",
+	         success : function(data){
+	            if(data.idCheck != null){
+	               alert("중복된 이메일입니다.");
+	            }else if(data.idCheck == null){
+	               $("#idChk").attr("value", "Y");
+	               alert("등록가능한 이메일입니다.");
+	            }
+	         }
+	      })
+	   }
+	function fn_cellChk(){
+	      console.log("버튼누름")
+	      $.ajax({
+	         url : "${path}/cellChk.do",
+	         type : "post",
+	         data : "cell="+$("[name=cell]").val(),
+	         dataType:"json",
+	         success : function(data){
+	            if(data.cellCheck != null){
+	               alert("중복된 핸드폰번호입니다.");
+	            }else if(data.cellCheck == null){
+	               $("#cellChk").attr("value", "Y");
+	               alert("등록가능한 핸드폰번호입니다.");
+	            }
+	         }
+	      })
+	  }
 </script>
 </head>
 
@@ -97,35 +182,39 @@
 				<div style="margin-top:15px;" class="row text-center">
 					<div class="col">
 						<span style="font-size:18px;font-weight:bold;">사원명 </span>
-						<input name="ename" value="${sch.ename}" type="text" class="form-control" placeholder="사원명 입력">
+						<input name="sename" value="${sch.sename}" type="text" class="form-control" placeholder="사원명 입력">
 					</div>
 					<div class="col">
 						<span style="font-size:18px;font-weight:bold;">부서명 </span>
 						<input name="dname" value="${sch.dname}" type="text" class="form-control" placeholder="부서명 입력">
 					</div>
 					<div class="col">
-						<span style="font-size:18px;font-weight:bold;">입사일 </span>
-						<input name="hiredate" value="${sch.hiredate}" type="date" class="form-control">
+						<span style="font-size:18px;font-weight:bold;">직책명 </span>
+						<select class="select2 form-select" name="job" id="job">
+						    <option value="">직책선택</option>
+						    <c:forEach var="job" items="${jobCom}">
+						    <option>${job}</option>
+						    </c:forEach>
+						</select>
 					</div>
 				</div>
 				<div style="margin-top:30px;margin-bottom:15px;" class="row text-center">
 					<div class="col center">
 						<button style="color:white;font-weight:bold;width:15%;height:50px;border-radius:5px;" type="submit" class="btn btn-primary">검색</button>
-                   		<button style="color:white;font-weight:bold;width:15%;height:50px;border-radius:5px;" data-bs-toggle="modal" data-bs-target="#largeModal" type="button" class="btn btn-primary">신규 계정 생성</button>
+                   		<button style="color:white;font-weight:bold;width:15%;height:50px;border-radius:5px;" data-bs-toggle="modal" data-bs-target="#insertModal" type="button" class="btn btn-primary">신규 계정 생성</button>
 					</div>
 				</div>
 			</form>
 			</div>
 	</div>
            	<div style="font-size:20px;font-weight:bold;" class="table-responsive text-nowrap">
-                <form id="frm01">
-                </form>
                 <br>
                   <table class="table">
                     <thead>
                       <tr>
                         <th style="font-size:20px;font-weight:bold;text-align:center;">사원명</th>
                         <th style="font-size:20px;font-weight:bold;text-align:center;">소속부서</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;">직책</th>
                         <th style="font-size:20px;font-weight:bold;text-align:center;">입사일</th>
                         <th style="font-size:20px;font-weight:bold;text-align:center;">이메일</th>
                         <th style="font-size:20px;font-weight:bold;text-align:center;">전화번호</th>
@@ -139,12 +228,13 @@
                           ${ed.ename}
                         </td>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.dname}팀</td>               
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.job}</td>               
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.hiredate}</td>               
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.id}</td>               
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.cell}</td>               
                         <td>
-                           <button type="button" class="btn btn-primary">설정</button>
-                           <button onclick="goDelete('${ed.ename}')" type="button" class="btn btn-primary">삭제</button>
+                           <button onclick="goAuthSetting('${ed.id}')" type="button" class="btn btn-primary">설정</button>
+                           <button onclick="goDelete('${ed.id}')" type="button" class="btn btn-primary">삭제</button>
                         </td>
                       </tr>
                       </c:forEach>
@@ -158,7 +248,7 @@
          	  <!-- /card -->
             </div>
             <!-- / Content -->
-			<div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	           <div class="modal-dialog modal-dialog-centered" role="document">
 	             <div class="modal-content">
 	               <div class="modal-header">
@@ -178,7 +268,7 @@
                           	<input
 	                          type="text"
 	                          name="ename"
-	                          id="basic-default-name ename"
+	                          id="basic-default-name"
 	                          class="form-control"
 	                          placeholder="사원명을 입력하세요"
 	                        />
@@ -191,13 +281,13 @@
                           	<input
 	                          type="text"
 	                          name="id"
-	                          id="basic-default-name id"
+	                          id="basic-default-name"
 	                          class="form-control"
 	                          placeholder="이메일을 입력하세요"
 	                        />
 	                       </div>
 	                       <div style="display:inline-block">
-	                         <button class="btn btn-primary emailChk" type="button" id="emailChk" onclick="" value="N">중복확인</button>
+	                         <button class="btn btn-primary" type="button" id="idChk" onclick="fn_idChk()" value="N">중복확인</button>
                            </div>
                           </div>
                         </div>
@@ -207,7 +297,7 @@
                           	<input
 	                          type="text"
 	                          name="pass"
-	                          id="basic-default-name pass"
+	                          id="basic-default-name"
 	                          class="form-control"
 	                          placeholder="비밀번호를 입력하세요"
 	                        />
@@ -220,21 +310,24 @@
                           	<input
 	                          type="text"
 	                          name="cell"
-	                          id="basic-default-name cell"
+	                          id="basic-default-name"
 	                          class="form-control"
-	                          placeholder="핸드폰번호를 입력하세요"
+	                          placeholder="010-xxxx-yyyy"
 	                        />
 	                      </div>
 	                      <div style="display:inline-block">
-	                        <button class="btn btn-primary cellChk" type="button" id="cellChk" onclick="" value="N">중복확인</button>	                        
+	                        <button class="btn btn-primary" type="button" id="cellChk" onclick="fn_cellChk()" value="N">중복확인</button>	                        
                           </div>
                           </div>
                         </div>
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-deptid">소속부서</label>
                           <div class="col-sm-10">
-                          	<select name="deptid" id="deptid" class="select2 form-select">
+                          	<select class="select2 form-select" name="deptid" id="deptid">
 						    	<option value="">소속부서선택</option>
+						    	<c:forEach var="pd" items="${getParentDeptCom}">
+						    	<option value="${pd.key}">${pd.val}</option>
+						    	</c:forEach>
 						    </select>
                           </div>
                         </div>

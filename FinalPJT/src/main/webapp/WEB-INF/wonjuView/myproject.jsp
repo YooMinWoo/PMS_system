@@ -64,6 +64,8 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
+		
+		
 		$("[name=keyword]").keyup(function(){
 			if(event.keyCode==13){
 				$("#myFrm").submit()
@@ -71,14 +73,27 @@ tbody td{
 		})
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
-			$("#allFrm").submit()
+			$("[name=keyword]").val("")
+			$("#myFrm").submit()
 		})
 		$("#fin-pro").click(function(){
 			$("[name=isCon]").val("N")
-			$("#allFrm").submit()
+			$("[name=keyword]").val("")
+			$("#myFrm").submit()
+		})
+		
+		$("#newBtn").click(function(){
+			location.href="${path}/newProjectShow.do"
 		})
 
 	});
+	function goProjectMain(prjno){
+		location.href="${path}/projectMain.do?prjno="+prjno
+	}
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		$("#myFrm").submit()
+	}
 </script>
 </head>
 
@@ -120,44 +135,47 @@ tbody td{
           
           
           <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="myFrm" action="${path }/" method="get">
+          <form class="d-flex" id="myFrm" action="${path }/myProject.do" method="post">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="hidden" name="isCon" value="${param.isCon }">
-	            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="hidden" name="isCon" value="${sch.isCon }">
+	            <input type="hidden" name="curPage" value="${sch.curPage }">
+	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
           </div>
           </div>
           <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-info"><small>새 프로젝트</small></button>
+          <button type="button" id="newBtn" class="btn btn-info"><small>새 프로젝트</small></button>
           </div>
           <div class="tab-content px-0 mt-0">
           <!--  프로젝트table -->
-			  <table class="table card-table">
+			  <table class="table card-table table-hover" style="overflow: hidden;">
 			  <col width="13%">
-			  <col width="40%">
-			  <col width="5%">
-			  <col width="29%">
-			  <col width="13%">
+			  <col width="35%">
+			  <col width="10%">
+			  <col width="15%">
+			  <col width="27%">
 			    <thead>
 			      <tr>
 			        <th>카테고리</th>
 			        <th>프로젝트</th>
-			        <th>멤버</th>
-			        <th>내 담당업무</th>
+			        <th>멤버수</th>
+			        <th>담당 파트</th>
 			        <th>관리</th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
-			      <tr>
-			       <td>IT</td><td>프로젝트A</td><td>4</td><td><small>전체 10개<br>(진행 3, 완료 7)</small></td>
+			      <c:forEach var="myp" items="${list}">
+			      <tr ondblclick="goProjectMain(${myp.prjno})">
+			      <td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
 			       <button type="button" class="btn btn-sm btn-secondary">나가기</button>
 			       <button type="button" class="btn btn-sm btn-primary">설정</button>
 			       </td>
-			      </tr>
+			       </tr>
+			      </c:forEach>
 			    </tbody>
 			  </table>
              <!--  / 프로젝트 table -->
@@ -169,19 +187,14 @@ tbody td{
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.startBlock-1 });"><i class="tf-icon bx bx-chevron-left"></i></a>
               </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
+               <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }">
+			  <li class="page-item ${sch.curPage==cnt?'active':'' }">
+			  <a class="page-link" href="javascript:goPage(${cnt });">${cnt }</a></li>
+			  </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.endBlock+1 });"><i class="tf-icon bx bx-chevron-right"></i></a>
               </li>
             </ul>
           </nav>
