@@ -13,9 +13,12 @@ import superPms.vo.WorkSch;
 public class Work_Service {
 	@Autowired(required=false)
 	private Work_Dao dao;
-	public List<Work> getWorkList(WorkSch sch){
+	public List<Work> getWorkList(){
+		return dao.getWorkList();
+	}
+	public List<Work> schWork(WorkSch sch){
 		if(sch.getSubject()==null) sch.setSubject("");
-		return dao.getWorkList(sch);
+		return dao.schWork(sch);
 	}
 	public Work getWork(int no) {
 		return dao.getWork(no);

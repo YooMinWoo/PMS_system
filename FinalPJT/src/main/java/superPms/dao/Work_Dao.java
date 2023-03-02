@@ -6,7 +6,8 @@ import superPms.vo.Work;
 import superPms.vo.WorkSch;
 
 public interface Work_Dao {
-	public List<Work> getWorkList(WorkSch sch);
+	public List<Work> getWorkList();
+	public List<Work> schWork(WorkSch sch);
 	public void insWork(Work ins);
 	public Work getWork(int no);
 	public void uptWork(Work upt);

@@ -21,9 +21,17 @@ public class Work_Controller {
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do
 	// http://localhost:7080/FinalPJT/worklist.do
-	@RequestMapping("/worklist.do")
-	public String worklist(@ModelAttribute("sch") WorkSch sch, Model d) {
-		d.addAttribute("worklist",service.getWorkList(sch));
+	@GetMapping("/worklist.do")
+	public String worklist(Model d) {
+		d.addAttribute("worklist",service.getWorkList());
+		return "WEB-INF\\jongeunView\\workList.jsp";
+	}
+	@PostMapping("/workSch.do")
+	public String workSch(@ModelAttribute("sch") WorkSch sch, Model d) {
+		d.addAttribute("worklist",service.schWork(sch));
+		if(service.schWork(sch).size()==0) {
+			d.addAttribute("msg","검색된 결과가 없습니다.");
+		}
 		return "WEB-INF\\jongeunView\\workList.jsp";
 	}
 	// http://localhost:7080/FinalPJT/workInsFrm.do
@@ -34,7 +42,7 @@ public class Work_Controller {
 	@PostMapping("/workIns.do")
 	public String workIns(Work ins, Model d) {
 		service.insWork(ins);
-		d.addAttribute("msg","등록이 완료되었습니다.");
+		d.addAttribute("msg","등록완료");
 		return "WEB-INF\\jongeunView\\workIns.jsp";
 	}
 	// http://localhost:7080/FinalPJT/workDetail.do?no=1
@@ -43,6 +51,7 @@ public class Work_Controller {
 		d.addAttribute("work",service.getWork(no));
 		return "WEB-INF\\jongeunView\\workDetail.jsp";
 	}
+	/*
 	@GetMapping("/workUptFrm.do")
 	public String workUptFrm(@RequestParam("no") int no, Model d) {
 		d.addAttribute("work",service.getWork(no));
@@ -51,7 +60,15 @@ public class Work_Controller {
 	@PostMapping("/workUpt.do")
 	public String workUpt(Work upt, Model d) {
 		service.uptWork(upt);
-		d.addAttribute("work",service.getWork(upt.getWorkno()));
+		//d.addAttribute("work",service.getWork(upt.getWorkno()));
+		d.addAttribute("msg","수정완료");
+		return "WEB-INF\\jongeunView\\workUpt.jsp";
+	}
+	*/
+	@RequestMapping("/workUpt.do")
+	public String workUpt(@RequestParam("no") int no,Work upt, Model d) {
+		service.uptWork(upt);
+		d.addAttribute("work",service.getWork(no));
 		d.addAttribute("msg","수정완료");
 		return "WEB-INF\\jongeunView\\workUpt.jsp";
 	}

@@ -62,12 +62,11 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">	
 	$(document).ready(function(){
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		var msg ="${msg}"
 		$("#clBtn").click(function(){
 			if(confirm("업무페이지로 이동하시겠습니까?")){
 				location.href="${path}/worklist.do"
@@ -95,11 +94,7 @@
 					$("[name=cont]").focus()
 					return
 				}
-				$("form").submit();
-				if(msg!=""){
-					alert(msg)
-					location.href="${path}/worklist.do"
-				}
+				$("form").submit();	
 			}
 		})
 	});

@@ -4,7 +4,11 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Work_Dao">
-	<select id="getWorkList" parameterType="worksch" resultType="work">
+	<select id="getWorkList" resultType="work">
+		select *
+		from work
+	</select>
+	<select id="schWork" parameterType="worksch" resultType="work">
 		select *
 		from work
 		where subject like '%'||#{subject}||'%'

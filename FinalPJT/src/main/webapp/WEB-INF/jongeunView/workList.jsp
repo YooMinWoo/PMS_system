@@ -60,6 +60,8 @@ td{text-align:center;}
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+	var msg = "${msg}"
+	console.log(msg)
 	$(document).ready(function(){
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
@@ -67,6 +69,8 @@ td{text-align:center;}
 		$("#workIns").click(function(){
 			location.href="${path}/workInsFrm.do"
 		})
+		
+		alert(msg)
 	});
 	function goWork(no){
 		location.href="${path}/workDetail.do?no="+no
@@ -106,7 +110,7 @@ td{text-align:center;}
           <div class="col-5"> </div>
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="allFrm" action="${path }/worklist.do" method="post">
+          <form class="d-flex" id="allFrm" action="${path }/workSch.do" method="post">
            		<select>
 	            	<option value="0">제목</option>
 	            	<option value="1">작성자</option>
