@@ -18,8 +18,8 @@
 
 <style>
 .card.mb-4{
-	padding-left: 3rem !important;
-	padding-right: 3rem !important;
+   padding-left: 3rem !important;
+   padding-right: 3rem !important;
 }
 
 </style>
@@ -54,15 +54,15 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		
-	});
-	
-	function alertState(no){
-		location.href="${path}/alertState.do?no="+no
-		location.reload()
-	}
-	
+   $(document).ready(function(){
+      
+   });
+   
+   function alertState(no){
+      location.href="${path}/alertState.do?no="+no
+      location.reload()
+   }
+   
 </script>
 </head>
 
@@ -71,7 +71,7 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-	<jsp:include page="/mainMenubar.jsp"></jsp:include>
+   <jsp:include page="/mainMenubar.jsp"></jsp:include>
         <!-- / Menu -->
 
         <!-- Layout container
@@ -84,21 +84,21 @@
                <!-- alert -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-		           <i class="bx bx-bell bx-md"></i>
-		           <c:if test="${alertCount>0 }">
-		          <span class="badge badge-center rounded-pill bg-danger"
-		          	style="margin-left: -17px;">${alertCount }</span>
-		          	</c:if>
+                 <i class="bx bx-bell bx-md"></i>
+                 <c:if test="${alertCount>0 }">
+                <span class="badge badge-center rounded-pill bg-danger"
+                   style="margin-left: -17px;">${alertCount }</span>
+                   </c:if>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
-                  	<li>
-                        <span id="readAll" style="display: flex;
-    						justify-content: flex-end;"	>모두 읽음</span>
+                     <li>
+                        <span style="display: flex;
+                      justify-content: flex-end;"   >모두 읽음</span>
                      </li>
                      <li>
                       <div class="dropdown-divider"></div>
                     </li>  
-                 	 <li>
+                     <li>
                      <span class="dropdown-item" >
                        <span class="align-middle">알림</span>
                      </span>
@@ -107,22 +107,22 @@
                     <li>
                      <div class="card-body" >
                         <c:forEach var="alert" items="${alertList }"> 
-		           		<div class="bs-toast toast fade show bg-${alert.style }" 
-		           		role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
-	                        <div class="toast-header">
-	                          <i class="bx bx-bell me-2"></i>
-	                          <div class="me-auto fw-semibold">${alert.title }</div>
-	                          <small>${alert.state }</small>
-	                          <button type="button" onclick="alertState('${alert.no }')" 
-	                          	class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-	                        </div>
-	                        
-	                        <div class="toast-body">
-	                          <a class="dropdown-item" href=" ${path }/${alert.url}">
-	                         	 <span style="color:white;" onclick="alertState('${alert.no }')">${alert.content }</span>
-	                          </a>
-	                        </div>
-	                    </div>
+                       <div class="bs-toast toast fade show bg-${alert.style }" 
+                       role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
+                           <div class="toast-header">
+                             <i class="bx bx-bell me-2"></i>
+                             <div class="me-auto fw-semibold">${alert.title }</div>
+                             <small>${alert.state }</small>
+                             <button type="button" onclick="alertState('${alert.no }')" 
+                                class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                           </div>
+                           
+                           <div class="toast-body">
+                             <a class="dropdown-item" href=" ${path }/${alert.url}">
+                                <span style="color:white;" onclick="alertState('${alert.no }')">${alert.content }</span>
+                             </a>
+                           </div>
+                       </div>
                       </c:forEach>
                        </div>
                     </li>
@@ -137,8 +137,8 @@
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                    <div class="avatar avatar-online">
                       <svg>
-					  <circle cx="20" cy="20" r="20" fill="#0054a6" />
-					</svg>
+                 <circle cx="20" cy="20" r="20" fill="#0054a6" />
+               </svg>
                    </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -164,19 +164,19 @@
                 <!--/ User -->
               </ul>
             </div>
-	
+   
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-			
+         
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">알림</small></h4>
            
            <div class="card mb-4 pb-3">
-           	<c:forEach var="alert" items="${alertList }">
-           		<div class="bs-toast toast fade show bg-${alert.style }" 
-           		role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:475px;">
+              <c:forEach var="alert" items="${alertList }">
+                 <div class="bs-toast toast fade show bg-${alert.style }" 
+                 role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:475px;">
                         <div class="toast-header">
                           <i class="bx bx-bell me-2"></i>
                           <div class="me-auto fw-semibold">${alert.title }</div>
@@ -188,12 +188,12 @@
                         </div>
                       </div>
                       </c:forEach>
-         	</div>
-         	  <!-- /card -->
+            </div>
+              <!-- /card -->
             </div>
             <!-- / Content -->
 
-	
+   
 
            
           </div>

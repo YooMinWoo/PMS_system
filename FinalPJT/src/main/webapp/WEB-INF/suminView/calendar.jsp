@@ -56,14 +56,14 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
+    var toDay = new Date().toISOString().split("T")[0];
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      initialDate: '2023-02-01',
+      initialDate: toDay,
      // navLinks: true, // can click day/week names to navigate views
       selectable: true,
       selectMirror: true,
@@ -91,13 +91,13 @@
     	  detailForm(arg.event)
       },
       eventDrop:function(info){
-			addForm(info.event)
-			ajaxFun("uptCalendar.do")
+    	  detailForm(info.event)
+		  calAjax("updateCalendar.do")
 	  },
 		// 시간일정 스크롤해서 시간 변경했을 때
 	  eventResize:function(info){ 
-			addForm(info.event)
-			ajaxFun("uptCalendar.do")     
+		  detailForm(info.event)
+			calAjax("updateCalendar.do")     
 			
 	  },
       editable: true,
@@ -239,21 +239,7 @@
                     <i class="bx bx-star"></i>
                        <span class="align-middle">알림</span>
                         <c:forEach var="alert" items="${alertList }">
-                        <!--  
-		           		<div class="bs-toast toast fade show bg-${alert.style }" 
-		           		role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
-	                        <div class="toast-header">
-	                          <i class="bx bx-bell me-2"></i>
-	                          
-	                          <div class="me-auto fw-semibold">${alert.title }</div>
-	                          <small>${alert.state }</small>
-	                          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-	                        </div>
-	                        <div class="toast-body">
-	                         ${alert.content }
-	                        </div>
-	                      </div>
-	                      -->
+                  
 	                       <div class="card-body">
 	                       
 	                       <a class="dropdown-item" href="${path }/${alert.url}">
@@ -278,7 +264,7 @@
                <!-- /alert -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1"> 
-                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">홍길동</span>
+                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">${emp.ename }</span>
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                    <div class="avatar avatar-online">
                       <svg>
@@ -352,19 +338,19 @@
                                 <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="startWithTitle" class="form-label">시작일</label>
-                                    <input type="text" id="start" class="form-control"/>
+                                    <input type="text" id="start" class="form-control" readOnly/>
                                     <input type="hidden" name="start" class="form-control"/>
                                   </div>
                                   <div class="col mb-0">
                                     <label for="endWithTitle" class="form-label">종료일</label>
-                                    <input type="text" id="end" class="form-control"/>
+                                    <input type="text" id="end" class="form-control" readOnly/>
                                     <input type="hidden" name="end" class="form-control"/>
                                   </div>
                                 </div>
                                   <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="wrtier" class="form-label">작성자</label>
-                                    <input type="text" name="writer" class="form-control"/>
+                                    <input type="text" name="writer" class="form-control" value="${emp.id }" readOnly/>
                                   </div>
                                   <div class="col mb-0">
                                     <label for="allday" class="form-label">종일여부</label>

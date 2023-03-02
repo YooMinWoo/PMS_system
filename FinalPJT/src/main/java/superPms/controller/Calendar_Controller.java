@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Calendar_Service;
 import superPms.vo.Calendar;
+import superPms.vo.SuperEmpDept;
 
 @Controller
 public class Calendar_Controller {
@@ -18,10 +21,11 @@ public class Calendar_Controller {
 	
 //	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
-	public String calList(Model d) {
-		String id="monsta@gmail.com";
-		d.addAttribute("alertList", service.alertList(id));
-		d.addAttribute("alertCount", service.alertCount(id));
+	public String calList(Model d, HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		
+		d.addAttribute("alertList", service.alertList(sObj.getId()));
+		d.addAttribute("alertCount", service.alertCount(sObj.getId()));
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	

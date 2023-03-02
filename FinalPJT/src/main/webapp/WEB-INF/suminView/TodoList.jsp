@@ -70,9 +70,9 @@
 		})
 		
 		$("#regBtn").click(function(){
-			if($("[name=title]").val()==""){
+			if($("[name=todo]").val()==""){
 				alert("할 일을 입력하세요")
-				$("[name=title]").focus()
+				$("[name=todo]").focus()
 				return
 			}
 			todoAjax("insTodo.do")
@@ -87,7 +87,9 @@
 						stateAjax(tno)
 					}
 				}
+				alert("완료처리가 되었습니다.")
 			}
+			
 		})
 		$("#delBtn").click(function(){
 			if(confirm("삭제하시겠습니까?")){
@@ -98,6 +100,7 @@
 						delAjax(tno)
 					}
 				}
+				alert("삭제 되었습니다.")
 			}
 		})
 		$("#uptBtn").click(function(){
@@ -146,7 +149,7 @@
 			url:"${path}/uptStateTodo.do?tno="+tno,
 			dataType:"json",
 			success:function(data){
-				alert(data.msg)
+				//alert(data.msg)
 				location.reload()
 			},
 			error:function(err){
@@ -160,7 +163,7 @@
 			url:"${path}/delTodo.do?tno="+tno,
 			dataType:"json",
 			success:function(data){
-				alert(data.msg)
+				//alert(data.msg)
 				location.reload()
 			},
 			error:function(err){
@@ -258,8 +261,8 @@
                                 </div>
                                 <div class="row g-2">
                                   <div class="col mb-0">
-                                    <label for="idWithTitle" class="form-label">작성자</label>
-                                    <input type="text"  name="id" id="id" class="form-control"/>
+                                   
+                                    <input type="hidden"  name="id" id="id" class="form-control" value="${emp.id }"/>
                                   </div>
                                 </div>
                               </div>

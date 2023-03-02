@@ -11,7 +11,7 @@
 		<result column="url" property="urllink"></result>
 	</resultMap>
 	<select id="calList" resultMap="calRst">
-		select * from calendar		
+		select * from calendar where id=#{id}
 	</select>
 	
 	<insert id="insCalendar" parameterType="calendar">

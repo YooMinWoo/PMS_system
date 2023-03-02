@@ -112,12 +112,12 @@
 
               <ul class="menu-sub">
                 <li class="menu-item" id="menu-item-mypage-calendar">
-                  <a href="layouts-without-menu.html" class="menu-link">
+                  <a href="${path }/calList.do" class="menu-link">
                     <div data-i18n="Without menu">캘린더</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-mypage-todolist">
-                  <a href="layouts-without-navbar.html" class="menu-link">
+                  <a href="${path }/todoList.do" class="menu-link">
                     <div data-i18n="Without navbar">to do list</div>
                   </a>
                 </li>

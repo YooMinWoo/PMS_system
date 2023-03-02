@@ -1,13 +1,15 @@
 package superPms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Todolist_Service;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.Todolist;
 
 @Controller
@@ -23,9 +25,9 @@ public class Todolist_Controller {
 //	}
 	
 	@RequestMapping("/todoList.do")
-	public String todoAjax(Model d) {
-		String id="monsta@gmail.com";
-		d.addAttribute("todoList",service.todoList(id));
+	public String todoAjax(Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("todoList",service.todoList(sObj.getId()));
 		return "WEB-INF\\\\suminView\\\\TodoList.jsp";
 	}
 	
