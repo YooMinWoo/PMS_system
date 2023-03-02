@@ -21,6 +21,7 @@
       	<typeAlias alias="projectMember" type="superPms.vo.ProjectMember"/>
       	<typeAlias alias="gantt" type="superPms.vo.Gantt"/>
       	<typeAlias alias="link" type="superPms.vo.Link"/>
+      	<typeAlias alias="noticerep" type="superPms.vo.NoticeList"/>
       	
 	</typeAliases>
 
