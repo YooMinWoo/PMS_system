@@ -26,6 +26,7 @@ public class DownloadView extends AbstractView {
 				//  2) 경로명과 함께 파일 객체 생성
 				File file = new File(path+fname);
 				
+				
 				// 2. 파일 객체를 client에 전달하기 위한 response 객체 속성 선언
 				//	1) 파일을 클라이언트 전달하기 위해 contentType 설정
 				response.setContentType("application/download;charset=utf-8");
