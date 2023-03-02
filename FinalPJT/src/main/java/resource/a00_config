@@ -6,3 +6,4 @@ jdbc.user=superpm
 jdbc.pass=1234
 # 2. 파일업로드 정보(서버 위치 정보)
 user.upload=C:/drive/
+mail.upload=C:/mailFile/
