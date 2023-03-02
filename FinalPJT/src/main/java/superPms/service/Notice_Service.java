@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import superPms.dao.Notice_Dao;
 import superPms.vo.Notice;
+import superPms.vo.NoticeRep;
 import superPms.vo.NoticeSch;
 
 @Service
@@ -126,5 +127,13 @@ public class Notice_Service {
 		for(int no : nos) {
 			dao.delNotice(no);
 		}
+	}
+	
+	public List<NoticeRep> noticeRepList(Notice sch){
+		return dao.noticeRepList(sch);
+	}
+	
+	public void insertNoticeRep(NoticeRep sch) {
+		dao.insertNoticeRep(sch);
 	}
 }

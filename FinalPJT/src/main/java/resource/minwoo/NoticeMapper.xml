@@ -120,8 +120,19 @@
 	
 	<!-- 댓글 조회 -->
 	<select id="noticeRepList" parameterType="notice" resultType="noticerep">
-		SELECT n.*, e.ename FROM noticerep n, emp e
+		SELECT repno, refno, content, 
+			to_char(n.regdte,'yyyy-mm-dd') regdte,
+			to_char(n.uptdte,'yyyy-mm-dd') uptdte,
+			noticeno, writer, e.ename 
+		FROM noticerep n, emp e
 		WHERE noticeno=#{noticeno}
 		AND n.WRITER = e.id
 	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertNoticeRep" parameterType="noticerep">
+		insert into noticerep values(
+			noticeRep_seq.nextval,0,#{content},sysdate,sysdate,#{noticeno},#{writer}
+		)
+	</insert>
 </mapper>

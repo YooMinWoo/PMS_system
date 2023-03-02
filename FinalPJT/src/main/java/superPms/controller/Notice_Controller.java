@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import superPms.service.Notice_Service;
 import superPms.service.SuperDept_Service;
 import superPms.vo.Notice;
+import superPms.vo.NoticeRep;
 import superPms.vo.NoticeSch;
 
 @Controller
@@ -32,7 +33,8 @@ public class Notice_Controller {
 	
 //	http://localhost:2030/FinalPJT/goCreateNotice.do
 	@RequestMapping("/goCreateNotice.do")
-	public String goCreateNotice() {
+	public String goCreateNotice(Model d) {
+		d.addAttribute("depts",service2.getParentDeptComb());
 		return "WEB-INF\\minwooView\\notice_create.jsp";
 	}
 	
@@ -40,6 +42,7 @@ public class Notice_Controller {
 	public String goNoticeDetail(Notice sch, Model d) {
 		service.plusCnt(sch);
 		d.addAttribute("noticeDetail",service.noticeDetail(sch));
+		d.addAttribute("noticeRep",service.noticeRepList(sch));
 		return "WEB-INF\\minwooView\\notice_detail.jsp";
 	}
 	
@@ -75,6 +78,12 @@ public class Notice_Controller {
 		d.addAttribute("downloadFile", fname);
 		d.addAttribute("path", path);
 		return "downloadViewer";
+	}
+	
+	@PostMapping("/insertNoticeRep.do")
+	public String insertNoticeRep(NoticeRep ins) {
+		service.insertNoticeRep(ins);
+		return "forward:/goNoticeDetail.do";
 	}
 	
 	

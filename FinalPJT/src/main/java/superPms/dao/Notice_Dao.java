@@ -3,6 +3,7 @@ package superPms.dao;
 import java.util.List;
 
 import superPms.vo.Notice;
+import superPms.vo.NoticeRep;
 import superPms.vo.NoticeSch;
 
 public interface Notice_Dao {
@@ -14,4 +15,6 @@ public interface Notice_Dao {
 	public int totCnt(NoticeSch sch);
 	public void uptNotice(Notice sch);
 	public void delNotice(int no);
+	public List<NoticeRep> noticeRepList(Notice sch);
+	public void insertNoticeRep(NoticeRep sch);
 }

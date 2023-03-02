@@ -81,13 +81,12 @@ textarea:read-only{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		var authTF = ${empty session}
-		/*
-		if(authTF){ // 권한이 admin이 아니라면
-			$("input").attr("readonly","readonly")
-			$("textarea").attr("readonly","readonly")
+		var authTF = ${emp.auth==0}
+		if(!authTF){ // 권한이 admin이 아니라면
+			$("#frm01 input").attr("readonly","readonly")
+			$("#frm01 textarea").attr("readonly","readonly")
 		}
-		*/
+		$("#reps").attr("readonly","readonly")
 		$("#backBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
 				location.href="/FinalPJT/goNotice.do"
@@ -137,6 +136,13 @@ textarea:read-only{
 				$("#repContent").focus()
 				return
 			}
+			if($("#repContent").val()==""){
+				alert("댓글을 입력해주세요.")
+				$("#repContent").focus()
+				return
+			}
+			$("#frm02").attr("action","/FinalPJT/insertNoticeRep.do")
+			$("#frm02").submit()
 		})
 	});
 </script>
@@ -177,8 +183,9 @@ textarea:read-only{
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
+	                          <input type="hidden" name="writer" value="${emp.id }">
 	                          <input type="text"
-	                          class="form-control" id="basic-default-writer" name="writer" value="${noticeDetail.writer }" readonly />
+	                          class="form-control" id="basic-default-writer" value="${noticeDetail.ename }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%">
 	                          <label class="form-label" for="basic-default-cnt">조회수</label>
@@ -226,11 +233,11 @@ textarea:read-only{
                         </script>
                         
                         <div class="btns">
-                        	<%-- <c:if test="${not empty session }"> --%>
+                        	<c:if test="${emp.auth == 0 }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 	                        	<button type="button" class="btn btn-danger" id="fileUptBtn">파일 수정하기</button>
-                        	<%-- </c:if> --%>
+                        	</c:if>
                         	<button type="button" class="btn btn-primary" id="downloadBtn">파일 다운로드</button>
                         	<button type="button" class="btn btn-secondary" id="backBtn">조회화면 이동</button>
                         </div>
@@ -240,6 +247,8 @@ textarea:read-only{
                     <div class="card-body">
                     	<h6>댓글 &nbsp;&nbsp;&nbsp;10개</h6>
                     	<form id="frm02" method="post">
+                    		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
+                      		<input type="hidden" name="writer" value="${emp.id }">
 	                    	<label for="repContent" class="form-label">댓글 작성</label>
 	                    	<div class="repList">
 		                        <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
@@ -247,29 +256,20 @@ textarea:read-only{
 	                        </div>
 	                        <hr>
 	                        <br><br>
-	                        <%-- 
-	                        <input type="hidden" name="writer" value="세션값으로 처리해야하는 사용자 ID">
-                        	--%>
                         </form>
-                        <label class="form-label">사용자1</label>
-                        <div class="repList">
-	                        <textarea class="form-control" rows="3" style="height:50px;">내용1</textarea>
-	                         
-	                        <%-- <c:if 사용자 아이디와 입력된 아이디가 같을 때.> --%>
-	                        <button type="button" class="btn btn-danger" id="repDelBtn">삭제</button>
-	                        
-	                        <%-- </c:if> --%>
-	                        
-                        </div>
-                        <br>
-                        <label class="form-label">사용자2</label>
-                        <div class="repList">
-	                        <textarea class="form-control" rows="3" style="height:50px;">내용2</textarea>
-	                         
-	                        <c:if test="false">
+                        <c:forEach var="rep" items="${noticeRep}">
+                        	<label class="form-label">${rep.ename } (등록일자 : ${rep.regdte } / 수정일자 : ${rep.uptdte })</label>
+	                        <div class="repList">
+		                        <textarea id="reps" class="form-control" rows="3" style="height:50px;">${rep.content }</textarea>
+		                         
+		                        <%-- <c:if 사용자 아이디와 입력된 아이디가 같을 때.>
 		                        <button type="button" class="btn btn-danger" id="repDelBtn">삭제</button>
-	                        </c:if>
-                        </div>
+		                        <button type="button" class="btn btn-secondary" id="repDelBtn">수정</button>
+		                        </c:if> --%>
+		                        
+	                        </div>
+	                        <br>
+                        </c:forEach>
                         <br>
                     </div>
                     

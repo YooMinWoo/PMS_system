@@ -139,14 +139,18 @@
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%;">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
-	                          <input type="text" name="writer"
-	                          class="form-control" id="basic-default-writer" value="홍길동" readonly />
+	                          <input type="hidden" name="writer" value="${emp.id }">
+	                          <input type="text"
+	                          class="form-control" id="basic-default-writer" value="${emp.ename }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%;">
 		                        <label for="deptid" class="form-label">카테고리 선택</label>
 		                        <select name="deptid" id="deptid" class="form-select">
 		                          <option value="X">카테고리 선택</option>
-		                          <option>개발</option>
+		                          <option>사내공지</option>
+		                          <c:forEach var="dept" items="${depts }">
+			                      		<option>${dept.val }</option>
+			                      	</c:forEach>
 		                        </select>
 		                      </div>
                         </div>

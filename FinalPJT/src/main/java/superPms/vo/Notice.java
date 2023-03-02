@@ -12,6 +12,7 @@ public class Notice {
 	private String content;
 	private int viewcnt;
 	private String writer;
+	private String ename;
 	private String fno;
 	private String deptid;
 	private String fname;
@@ -123,6 +124,15 @@ public class Notice {
 	public void setReport(MultipartFile report) {
 		this.report = report;
 	}
+
+	public String getEname() {
+		return ename;
+	}
+
+	public void setEname(String ename) {
+		this.ename = ename;
+	}
+	
 	
 		
 }
