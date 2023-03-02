@@ -136,11 +136,13 @@ tbody tr{
 		            </div>
 		            <input type="hidden" name="curPage" value="${noticeSch.curPage}"/>
 		        </form>
-		     <%--  <c:if test="${not empty session }"> --%>
+		     
 			       <div class="tableTop">
+			       	<c:if test="${emp.auth == 0 }">
 			           <button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 			           <button type="button" class="btn btn-primary" id="regBtn">공지사항 등록</button>
 			           <button type="button" class="btn btn-secondary" id="check">선택</button>
+			        </c:if>
 			           <div class="btn-group">
                       <button
                         type="button"
@@ -152,12 +154,14 @@ tbody tr{
                       전체
                       </button>
                       <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" onclick="category(this)">전체</a></li>
-                        <li><a class="dropdown-item" onclick="category(this)">개발</a></li>
+                      	<li><a class="dropdown-item" onclick="category(this)">전체</a></li>
+                      	<li><a class="dropdown-item" onclick="category(this)">사내공지</a></li>
+                      	<c:forEach var="dept" items="${depts }">
+                      		<li><a class="dropdown-item" onclick="category(this)">${dept.val }</a></li>
+                      	</c:forEach>
                       </ul>
                     </div>
 		           </div>
-	          <%-- </c:if> --%>
 	          <form id="frm03" action="/FinalPJT/delNotice.do">
            <table class="table">
            	  <col width="3%">
@@ -187,7 +191,7 @@ tbody tr{
 	                      		<td><input name="noticeno" type="checkbox" class="checkbox checkboxs" value="${nt.noticeno }"></td>		                      	
 		                      	<td>${nt.cnt}</td>
 		                        <td>${nt.title}</td>
-		                        <td>${nt.writer}</td>
+		                        <td>${nt.ename}</td>
 		                        <td>${nt.viewcnt}</td>
 		                        <td>${nt.regdte}</td>
 		                        <td>${nt.uptdte}</td>
