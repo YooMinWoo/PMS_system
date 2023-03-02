@@ -135,7 +135,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item" id="menu-item-sendMail">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="${path }/sendMail.do" class="menu-link">
                     <div data-i18n="Account">메일 쓰기</div>
                   </a>
                 </li>
