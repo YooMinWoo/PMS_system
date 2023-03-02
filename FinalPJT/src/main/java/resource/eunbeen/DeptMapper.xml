@@ -8,7 +8,7 @@
 		select *
 		from (
 			select rownum cnt, level, s.*
-			from superDept s
+			from dept s
 			where 1=1
 			START WITH parentdept IS null
 			CONNECT BY PRIOR deptid =parentdept
@@ -17,29 +17,29 @@
 	</select>
 	<select id="totCnt" resultType="int" parameterType="deptsch">
 		select count(*)
-		from superdept	
+		from dept	
 	</select>
 	<select id="getParentDeptComb" resultType="deptcode">
       	SELECT DISTINCT d.deptid key, d.dname val
-		FROM superDept d
+		FROM dept d
 		WHERE parentDept IS NULL
 		AND dname NOT LIKE '최고경영진'          
    </select>
 	<insert id="insertDept" parameterType="superdept">	
-		INSERT INTO superDept 
-		values(#{deptid}, #{dname}, #{parentDept})
+		INSERT INTO dept 
+		values(deptid_seq.nextval, #{dname}, #{parentDept})
 	</insert>
 	<select id="dnameChk" resultType="superdept" parameterType="String">
 		SELECT * 
-		FROM superDept
+		FROM dept
 		WHERE dname=#{dname}
 	</select>
 	<select id="deptidChk" resultType="superdept" parameterType="String">
 		SELECT * 
-		FROM superDept
+		FROM dept
 		WHERE deptid=#{deptid}
 	</select>
 	<delete id="deleteDept" parameterType="String">
-		DELETE FROM superDept WHERE deptid=#{deptid}
+		DELETE FROM dept WHERE deptid=#{deptid}
 	</delete>
 </mapper>

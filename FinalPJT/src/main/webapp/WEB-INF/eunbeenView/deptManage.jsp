@@ -285,21 +285,7 @@
                   </div>
                  </div>
                  <br>
-                 <div class="row">
-                      <div class="col mb-3">
-                       <label for="nameWithTitle" class="form-label">부서코드명</label>
-                       <div class="deptidChkCla">
-                        <input
-                          type="text"
-                          name="deptid"
-                          id="deptid"
-                          class="form-control"
-                          placeholder="부서코드번호를 입력하세요"
-                        />
-                       <button class="btn btn-primary deptidChk" type="button" id="deptidChk" onclick="fn_deptidChk()" value="N">중복확인</button>
-                       </div>
-                      </div>
-                     </div>
+                 
          	        <button style="margin-right:220px" id="regBtn" type="button" class="btn btn-primary">등록</button>
                 </form> 
                </div>
