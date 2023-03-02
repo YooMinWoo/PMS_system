@@ -97,13 +97,16 @@ tr{text-align:left;}
 		});	
   		$(".riskstate").each(function(index, item){
 			console.log($(item).val());
-			if($(item).val()=="대기"){
+/* 			if($(item).val()=="발생"){
 				$(item).addClass('btn');
 				$(item).addClass('btn-secondary');
-			}
-			if($(item).val()=="승인"){
+			} */
+			if($(item).val()=="해결"){
 				$(item).addClass('btn');
 				$(item).addClass('btn-primary');
+			}else{
+				$(item).addClass('btn');
+				$(item).addClass('btn-secondary');
 			}
 		});	
 		$("#applyBtn").click(function(){
