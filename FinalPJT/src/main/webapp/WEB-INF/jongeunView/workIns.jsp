@@ -94,7 +94,9 @@
 					$("[name=cont]").focus()
 					return
 				}
-				$("form").submit();	
+				$("form").submit();
+				alert("등록완료")
+				//location.href="${path}/worklist.do"
 			}
 		})
 	});
@@ -133,7 +135,7 @@
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
                    <!-- 프로젝트명으로 수정필요 -->
                    <input type="text" name="prjno"
-                   class="form-control" id="basic-default-prj" value="1" readonly />
+                   class="form-control" id="basic-default-prj" value="23" readonly />
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>

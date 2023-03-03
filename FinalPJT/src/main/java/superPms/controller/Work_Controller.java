@@ -42,8 +42,9 @@ public class Work_Controller {
 	@PostMapping("/workIns.do")
 	public String workIns(Work ins, Model d) {
 		service.insWork(ins);
-		d.addAttribute("msg","등록완료");
-		return "WEB-INF\\jongeunView\\workIns.jsp";
+		//d.addAttribute("msg","등록완료");
+		//return "WEB-INF\\jongeunView\\workIns.jsp";
+		return "redirect:/worklist.do";
 	}
 	// http://localhost:7080/FinalPJT/workDetail.do?no=1
 	@GetMapping("/workDetail.do")

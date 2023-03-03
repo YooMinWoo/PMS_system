@@ -70,7 +70,7 @@ td{text-align:center;}
 			location.href="${path}/workInsFrm.do"
 		})
 		
-		alert(msg)
+		//alert(msg)
 	});
 	function goWork(no){
 		location.href="${path}/workDetail.do?no="+no
