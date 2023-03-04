@@ -7,11 +7,14 @@
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
 		<typeAlias alias="project" type="superPms.vo.Project"/>
 		<typeAlias alias="projectsch" type="superPms.vo.ProjectSch"/>
+		<!-- 은빈 -->
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
       	<typeAlias alias="superempdept" type="superPms.vo.SuperEmpDept"/>
       	<typeAlias alias="deptcode" type="superPms.vo.DeptCode"/>
       	<typeAlias alias="authcode" type="superPms.vo.AuthCode"/>
+      	<typeAlias alias="passmail" type="superPms.vo.PassMail"/>
+      	<!--  -->
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>

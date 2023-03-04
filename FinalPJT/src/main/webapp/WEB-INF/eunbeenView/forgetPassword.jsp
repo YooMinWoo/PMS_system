@@ -15,16 +15,14 @@
 <head>
 <meta charset="UTF-8">
 <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-<title>SuperPMS 시스템 로그인</title>
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+/>
+<title>비밀번호 재발급</title>
 <meta name="description" content="" />
-<style>
 
-</style>
-<script src="${path }/resources/a00_com/jquery.min.js"></script>
-<link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,36 +46,25 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/css/pages/page-auth.css" />
-
     <!-- Helpers -->
     <script src="${path }/resources/sneat-1.0.0/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		var msg = "${msg}"
-		if(msg!=""){
-			alert(msg)
-		}
-		$("#loginBtn").click(function(){
-			$("[name=frm01]").submit()
-		})
-	});
-</script>
+	<script src="${path }/resources/a00_com/jquery.min.js"></script>
+<style>
+	td{text-align:center;}
+</style>
 </head>
 
-<body>
+  <body>
     <!-- Content -->
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
+        <div class="authentication-inner py-4">
+          <!-- Forgot Password -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
@@ -142,12 +129,11 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 style="font-weight:bold;" class="mb-2">Welcome to Super! 👋</h4>
-              <p style="font-weight:bold;" class="mb-4">시스템을 사용하기 위한 로그인을 해주세요.</p>
-
-              <form name="frm01" id="formAuthentication" class="mb-3" method="POST">
+              <h4 class="mb-2">Forgot Password? 🔒</h4>
+              <p class="mb-4">이메일을 입력하면 임시 비밀번호를 해당 이메일주소로 보내드려요</p>
+              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
                 <div class="mb-3">
-                  <label style="font-weight:bold;" for="email" class="form-label">이메일</label>
+                  <label for="email" class="form-label">이메일</label>
                   <input
                     type="text"
                     class="form-control"
@@ -157,39 +143,23 @@
                     autofocus
                   />
                 </div>
-                <div class="mb-3 form-password-toggle">
-                	<div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">비밀번호</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="pass"
-                      class="form-control"
-                      name="pass"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                
-                <div class="mb-3">
-                  <button id="loginBtn" class="btn btn-primary d-grid w-100" type="submit">로그인</button>
-                </div>
+                <button type="submit" class="btn btn-primary d-grid w-100">임시 비밀번호 발급</button>
               </form>
-
+              <div class="text-center">
+                <a href="${path }/PMSLogin.do" class="d-flex align-items-center justify-content-center">
+                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                  로그인 페이지로 돌아가기
+                </a>
+              </div>
             </div>
           </div>
-          <!-- /Register -->
+          <!-- /Forgot Password -->
         </div>
       </div>
     </div>
 
     <!-- / Content -->
+
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -208,7 +178,5 @@
 
     <!-- Page JS -->
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
