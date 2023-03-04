@@ -213,6 +213,7 @@
             </li>
 
             <!-- Forms & Tables -->
+            <c:if test="${emp.auth==0}">
             <li class="menu-header small text-uppercase"><span class="menu-header-text">manager</span></li>
             <!-- Forms -->
             <li class="menu-item" id="menu-item-admin">
@@ -233,6 +234,7 @@
                 </li>
               </ul>
             </li>
+            </c:if>
          
         </aside>
 </body>

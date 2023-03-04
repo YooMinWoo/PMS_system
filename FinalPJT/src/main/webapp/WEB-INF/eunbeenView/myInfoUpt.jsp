@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원 권한 설정</title>
+<title>개인 정보 수정</title>
 
 <style>
 .card.mb-4{
@@ -59,10 +59,22 @@
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		$("#uptEmp").click(function(){
-			if(confirm("수정하시겠습니까?")){
-				$("#frm01").submit();
-			}
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg)
+		}
+		
+		$("#uptMyInfo").click(function(){
+			if($("#newPass").val() == $("#passChk").val()){
+				if(confirm("수정하시겠습니까?")){
+					$("#frm01").submit();
+					alert("변경된 비밀번호로 다시 로그인하세요")
+				}
+	         }else {
+	        	 alert("변경할 비밀번호와 비밀번호 확인 값이 같지 않습니다");
+		         $("#passChk").focus();
+		         return false;
+	         }
 		})
 	});
 	
@@ -91,15 +103,17 @@
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">사원 권한 설정 > <small class="text-muted">사원의 권한(직책)을 설정한다.</small></h4>
+           <h4 class="fw-bold py-3 mb-4">개인 정보 수정</h4>
            
            <div class="card mb-4 pb-3">
            		<div class="card-body">
-                      <form id="frm01" class="form" action="${path}/updateEmp.do" method="post">
+                      <form id="frm01" class="form" action="${path}/updateMyInfo.do" method="post">
+                      <input type="hidden" value="${my.id}">
+                      <input type="hidden" value="${my.pass}">
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-name">이름</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" value="${authSet.ename}" readonly/>
+                            <input type="text" class="form-control" value="${my.ename}" readonly/>
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -110,35 +124,43 @@
                               class="form-control"
                               id="id"
                               name="id"
-                              value="${authSet.id}"
+                              value="${my.id}"
                               readonly
                             />
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-auth">권한</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-auth">변경할 비밀번호</label>
                           <div class="col-sm-10">
-                            <select class="select2 form-select" name="auth" id="auth">
-                            	<c:if test="${authSet.auth == 0}"><option value="0">admin</option></c:if>
-                            	<c:if test="${authSet.auth == 2}"><option value="2">pm</option></c:if>
-                            	<c:if test="${authSet.auth == 3}"><option value="3">member</option></c:if>
-                            	<c:if test="${authSet.auth == 4}"><option value="4">user</option></c:if>
-						    	<option value="0">admin</option>
-                          		<option value="2">pm</option>
-                          		<option value="3">member</option>
-                          		<option value="4">user</option>
-						    </select>
+                            <input
+                              type="password"
+                              class="form-control"
+                              id="newPass"
+                              name="newPass"
+                            />
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-job">변경 직책</label>
+                          <label class="col-sm-2 col-form-label" for="basic-default-job">비밀번호 확인</label>
                           <div class="col-sm-10">
-                          	<select class="select2 form-select" name="job" id="job">
-						    	<option>${authSet.job}</option>
-						    	<c:forEach var="job" items="${jobCom}">
-						    	<option>${job}</option>
-						    	</c:forEach>
-						    </select>
+                          	<input
+                              type="password"
+                              class="form-control"
+                              id="passChk"
+                              name="passChk"
+                            />
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-2 col-form-label" for="basic-default-dept">핸드폰번호</label>
+                          <div class="col-sm-10">
+                          	<input
+                              type="text"
+                              id=""
+                              class="form-control phone-mask"
+                              value="${my.cell}"
+                              readonly
+                            />
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -148,14 +170,14 @@
                               type="text"
                               id=""
                               class="form-control phone-mask"
-                              value="${authSet.dname}"
+                              value="${my.dname}"
                               readonly
                             />
                           </div>
                         </div>
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button id="uptEmp" type="button" class="btn btn-primary">설정</button>
+                            <button id="uptMyInfo" type="button" class="btn btn-primary">수정</button>
                           </div>
                         </div>
                       </form>

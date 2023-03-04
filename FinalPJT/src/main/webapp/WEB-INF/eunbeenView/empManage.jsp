@@ -55,52 +55,56 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+var idChkVal = $("#idChk").val;
+var cellChkVal = $("#cellChk").val;
+idChkVal = false;
+cellChkVal = false;
 	$(document).ready(function(){
+		
 		$("#menu-item-admin").addClass('active open');	
 		$("#menu-item-admin-hr").addClass('active');
 		$("[name=sename]").val("${sch.sename}");
 		$("[name=dname]").val("${sch.dname}");
 		$("[name=job]").val("${sch.job}");	
 		var msg = "${msg}"
+		
 		if(msg!=""){
 		    alert(msg)
 		}
 		if(msg=="계정생성 완료!" || msg=="사원삭제 완료!"){
 		  	location.href = "${path}/getEmpList.do";
 		}
-		
+		/*
+		$("[name=cell]").keydown(function(){
+			cellChkVal = false;
+		})
+		$("[name=id]").keydown(function(){
+			idChkVal = false;
+		})
+		*/
 		$("#regBtn").click(function(){
 	         if($("[name=ename]").val()==""){
 	            alert("사원명을 입력하세요.");
 	            $("[name=ename]").focus();
 	            return false;
 	         }
-	         if($("[name=id]").val()==""){
-	            alert("이메일을 입력하세요.");
-	            $("[name=id]").focus();
-	            return false;
-	         }
+	         
 	         if($("[name=pass]").val()==""){
 		         alert("비밀번호를 입력하세요.");
 		         $("[name=pass]").focus();
 		         return false;
 		     }
-	         if($("[name=cell]").val()==""){
-		         alert("핸드폰번호를 입력하세요.");
-		         $("[name=cell]").focus();
-		         return false;
-		     }
+	    
 	         if($("[name=deptid]").val()==""){
 		         alert("소속부서를 선택하세요.");
 		         $("[name=deptid]").focus();
 		         return false;
 		     }
-	         var idChkVal = $("#idChk").val();
-	         var cellChkVal = $("#cellChk").val();
-	         if(idChkVal == "N" || cellChkVal == "N"){
+	         
+	         if(idChkVal == false || cellChkVal == false){
 	            alert("중복확인 버튼을 눌러주세요.");
 	            return false;
-	         }else if(idChkVal == "Y" && cellChkVal == "Y"){
+	         }else if(idChkVal == true && cellChkVal == true){
 	            $("#frm02").submit();
 	         }
 	         
@@ -108,6 +112,7 @@
 	 
 		
 	});
+	
 	function goAuthSetting(id){
 		location.href="${path}/authSetting.do?id="+id
 	}	
@@ -118,38 +123,61 @@
 		}
 	}
 	function fn_idChk(){
-	      console.log("버튼누름")
-	      $.ajax({
-	         url : "${path}/idChk.do",
-	         type : "post",
-	         data : "id="+$("[name=id]").val(),
-	         dataType:"json",
-	         success : function(data){
-	            if(data.idCheck != null){
-	               alert("중복된 이메일입니다.");
-	            }else if(data.idCheck == null){
-	               $("#idChk").attr("value", "Y");
-	               alert("등록가능한 이메일입니다.");
-	            }
-	         }
-	      })
+		if(!idChkVal){
+			var idReg = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+			if(!idReg.test($("input[name=id]").val() )){
+			    alert("이메일 형식이 올바르지 않습니다.");
+			    $("input[name=id]").focus()
+			    return;
+			  }
+		      console.log("버튼누름")
+		      $.ajax({
+		         url : "${path}/idChk.do",
+		         type : "post",
+		         data : "id="+$("[name=id]").val(),
+		         dataType:"json",
+		         success : function(data){
+		            if(data.idCheck != null){
+		               alert("중복된 이메일입니다.");
+		            }else if(data.idCheck == null){
+		            	idChkVal = true;
+		               $("[name=id]").attr("readonly", "readonly");
+		               alert("등록가능한 이메일입니다.");
+		               console.log(idChkVal)
+		            }
+		         }
+		      })
+		   
 	   }
+	}
 	function fn_cellChk(){
-	      console.log("버튼누름")
-	      $.ajax({
-	         url : "${path}/cellChk.do",
-	         type : "post",
-	         data : "cell="+$("[name=cell]").val(),
-	         dataType:"json",
-	         success : function(data){
-	            if(data.cellCheck != null){
-	               alert("중복된 핸드폰번호입니다.");
-	            }else if(data.cellCheck == null){
-	               $("#cellChk").attr("value", "Y");
-	               alert("등록가능한 핸드폰번호입니다.");
-	            }
-	         }
-	      })
+		if(!cellChkVal){
+			var phoneReg = /^01([0|1|6|7|8|9]?-)?([0-9]{3,4}-)?([0-9]{4})$/;
+			if(!phoneReg.test($("input[name=cell]").val() ) ) {
+	            alert("휴대폰 번호를 확인해주세요(01x-xxxx-yyyy)");
+	            $("input[name=cell]").focus()
+	            return;
+	        }
+		      console.log("버튼누름")
+		      $.ajax({
+		         url : "${path}/cellChk.do",
+		         type : "post",
+		         data : "cell="+$("[name=cell]").val(),
+		         dataType:"json",
+		         success : function(data){
+		        	 
+		            if(data.cellCheck != null){
+		               alert("중복된 핸드폰번호입니다.");
+		            }else if(data.cellCheck == null){
+		            	$("[name=cell]").attr("readonly", "readonly");
+		               alert("등록가능한 핸드폰번호입니다.");
+		               cellChkVal = true;
+		               console.log(cellChkVal)
+		            }
+		         }
+		      })
+		}
+		
 	  }
 </script>
 </head>
@@ -286,7 +314,7 @@
 	                        />
 	                       </div>
 	                       <div style="display:inline-block">
-	                         <button class="btn btn-primary" type="button" id="idChk" onclick="fn_idChk()" value="N">중복확인</button>
+	                         <button class="btn btn-primary" type="button" id="idChk" onclick="fn_idChk()">중복확인</button>
                            </div>
                           </div>
                         </div>
@@ -315,7 +343,7 @@
 	                        />
 	                      </div>
 	                      <div style="display:inline-block">
-	                        <button class="btn btn-primary" type="button" id="cellChk" onclick="fn_cellChk()" value="N">중복확인</button>	                        
+	                        <button class="btn btn-primary" type="button" id="cellChk" onclick="fn_cellChk()" >중복확인</button>	                        
                           </div>
                           </div>
                         </div>

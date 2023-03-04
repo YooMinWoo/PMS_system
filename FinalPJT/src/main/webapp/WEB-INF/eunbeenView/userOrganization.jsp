@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사원 권한 설정</title>
+<title>조직도</title>
 
 <style>
 .card.mb-4{
@@ -56,14 +56,10 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		$("#uptEmp").click(function(){
-			if(confirm("수정하시겠습니까?")){
-				$("#frm01").submit();
-			}
-		})
+		$("#menu-item-organization").addClass('active');
+		$("[name=sename]").val("${ch.sename}");
+		$("[name=dname]").val("${ch.dname}");
+		
 	});
 	
 </script>
@@ -81,90 +77,70 @@
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
 		  
-         
-
-
-
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">사원 권한 설정 > <small class="text-muted">사원의 권한(직책)을 설정한다.</small></h4>
+           <h4 class="fw-bold py-3 mb-4">조직도</h4>
            
-           <div class="card mb-4 pb-3">
-           		<div class="card-body">
-                      <form id="frm01" class="form" action="${path}/updateEmp.do" method="post">
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-name">이름</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" value="${authSet.ename}" readonly/>
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-email">이메일</label>
-                          <div class="col-sm-10">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="id"
-                              name="id"
-                              value="${authSet.id}"
-                              readonly
-                            />
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-auth">권한</label>
-                          <div class="col-sm-10">
-                            <select class="select2 form-select" name="auth" id="auth">
-                            	<c:if test="${authSet.auth == 0}"><option value="0">admin</option></c:if>
-                            	<c:if test="${authSet.auth == 2}"><option value="2">pm</option></c:if>
-                            	<c:if test="${authSet.auth == 3}"><option value="3">member</option></c:if>
-                            	<c:if test="${authSet.auth == 4}"><option value="4">user</option></c:if>
-						    	<option value="0">admin</option>
-                          		<option value="2">pm</option>
-                          		<option value="3">member</option>
-                          		<option value="4">user</option>
-						    </select>
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-job">변경 직책</label>
-                          <div class="col-sm-10">
-                          	<select class="select2 form-select" name="job" id="job">
-						    	<option>${authSet.job}</option>
-						    	<c:forEach var="job" items="${jobCom}">
-						    	<option>${job}</option>
-						    	</c:forEach>
-						    </select>
-                          </div>
-                        </div>
-                        <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="basic-default-dept">소속부서</label>
-                          <div class="col-sm-10">
-                          	<input
-                              type="text"
-                              id=""
-                              class="form-control phone-mask"
-                              value="${authSet.dname}"
-                              readonly
-                            />
-                          </div>
-                        </div>
-                        <div class="row justify-content-end">
-                          <div class="col-sm-10">
-                            <button id="uptEmp" type="button" class="btn btn-primary">설정</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
+           <div class="card mb-4 pb-3"><br>
+           <div class="row">
+			<div class="col" style="border-left:none;border-right:none;">
+			<form id="frm01" method="post">
+				<div style="margin-top:15px;" class="row text-center">
+					<div class="col">
+						<span style="font-size:18px;font-weight:bold;">사원명 </span>
+						<input name="sename" value="${ch.sename}" type="text" class="form-control" placeholder="사원명 입력">
+					</div>
+					<div class="col">
+						<span style="font-size:18px;font-weight:bold;">부서명 </span>
+						<input name="dname" value="${ch.dname}" type="text" class="form-control" placeholder="부서명 입력">
+					</div>
+				</div>
+				<div style="margin-top:30px;margin-bottom:15px;" class="row text-center">
+					<div class="col center">
+						<button style="color:white;font-weight:bold;width:15%;height:50px;border-radius:5px;" type="submit" class="btn btn-primary">검색</button>
+					</div>
+				</div>
+			</form>
+			</div>
+	</div>
+           	<div style="font-size:20px;font-weight:bold;" class="table-responsive text-nowrap">
+                <br>
+                  <table class="table">
+                    <thead>
+                      <tr style="background-color:#646EFF;">
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">사원명</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">직책</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">소속부서</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">이메일</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">전화번호</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <c:forEach var="ed" items="${ulist}">
+                      <tr>
+                        <td style="text-align:center;">
+                          ${ed.ename}
+                        </td>
+                        <td style="text-align:center;"><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.job}</td>      
+                        <td style="text-align:center;"><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.dname}팀</td>                
+                        <td style="text-align:center;"><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.id}</td>               
+                        <td style="text-align:center;"><i class="fab fa-angular fa-lg text-danger me-3"></i>${ed.cell}</td>      
+                      </tr>
+                      </c:forEach>
+                    </tbody>
+                  </table>
+                </div>
+              
+              </div><br>
+           
          	</div>
          	  <!-- /card -->
             </div>
             <!-- / Content -->
-
 	
 
            
@@ -172,7 +148,6 @@
           <!-- Content wrapper -->
         </div>
         <!-- / Layout page -->
-      </div>
       </div>
 
       <!-- Overlay -->

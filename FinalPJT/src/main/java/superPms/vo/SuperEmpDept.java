@@ -5,6 +5,7 @@ public class SuperEmpDept {
 	private String pass;
 	private String ename;
 	private String sename; // 검색용 속성
+	private String newPass; // 비밀번호 변경용 속성
 	private String cell;
 	private int auth;
 	private String deptid;
@@ -102,6 +103,14 @@ public class SuperEmpDept {
 
 	public void setSename(String sename) {
 		this.sename = sename;
+	}
+
+	public String getNewPass() {
+		return newPass;
+	}
+
+	public void setNewPass(String newPass) {
+		this.newPass = newPass;
 	}
 	
 	

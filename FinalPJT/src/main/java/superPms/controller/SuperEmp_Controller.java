@@ -93,13 +93,28 @@ public class SuperEmp_Controller {
 	}
 	
 	// 로그아웃시 session 종료
-	@GetMapping("/logout.do")
-	public String logout(HttpSession session, Model d) {
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session, String id, Model d) {
 		if(session.getAttribute("emp")!=null) {
 			session.removeAttribute("emp");
 		}
-		d.addAttribute("msg", "로그아웃 완료");
-		return "WEB-INF\\eunbeenView\\login.jsp";
+		return "/PMSLogin.do";
 	}
-
+	@RequestMapping("/userGetEmpList.do")
+	public String userGetEmpList(@ModelAttribute("ch") SuperEmpDept ch, Model d) {
+		d.addAttribute("ulist", service.getEmpList(ch));
+		return "WEB-INF\\eunbeenView\\userOrganization.jsp";
+	}
+	@GetMapping("/myPage.do")
+	public String getMyPage(@RequestParam("id") String id, Model d) {
+		d.addAttribute("my", service.getAuthSetting(id));
+		return "WEB-INF\\eunbeenView\\myInfoUpt.jsp";
+	}
+	@RequestMapping("/updateMyInfo.do")
+	public String updateMyInfo(SuperEmpDept upt, Model d) {
+		service.updateMyInfo(upt);
+		d.addAttribute("my", service.getAuthSetting(upt.getId()));
+		d.addAttribute("msg", "비밀번호 변경 완료");
+		return "redirect:/PMSLogin.do";
+	} 
 }

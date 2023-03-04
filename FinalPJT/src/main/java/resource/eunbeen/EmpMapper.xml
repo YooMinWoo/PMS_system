@@ -37,7 +37,7 @@
 		DELETE FROM emp WHERE id=#{id}
 	</delete>
 	<select id="getAuthSetting" resultType="superempdept" parameterType="String">
-		SELECT e.ename, e.id, e.auth, e.job, d.dname
+		SELECT e.ename, e.id, e.auth, e.job, d.dname, e.cell
 		FROM emp e, dept d
 		WHERE e.deptid = d.deptid
 		AND e.id = #{id}			
@@ -69,4 +69,9 @@
 		FROM emp 
 		where id = #{id} AND pass = #{pass}
 	</select>
+	<update id="updateMyInfo"  parameterType="superempdept">
+		update emp
+			set pass=#{newPass}
+			where id = #{id}
+	</update>
 </mapper>
