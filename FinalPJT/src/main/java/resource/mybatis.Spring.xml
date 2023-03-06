@@ -16,6 +16,7 @@
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
+      	<typeAlias alias="risksch" type="superPms.vo.RiskSch"/>
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
       	<typeAlias alias="alert" type="superPms.vo.Alert"/> 	

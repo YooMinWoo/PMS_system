@@ -174,7 +174,7 @@
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-project-lisk">
-                  <a href="auth-register-basic.html" class="menu-link">
+                  <a href="${path }/project_pagingRisk.do" class="menu-link">
                     <div data-i18n="Basic">리스크 관리</div>
                   </a>
                 </li>
