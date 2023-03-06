@@ -17,10 +17,15 @@
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="risksch" type="superPms.vo.RiskSch"/>
+      	<typeAlias alias="alert" type="superPms.vo.Alert"/> 
+      	
+      	<!-- 민우 -->	
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
-      	<typeAlias alias="alert" type="superPms.vo.Alert"/> 	
       	<typeAlias alias="noticerep" type="superPms.vo.NoticeRep"/>
+      	<typeAlias alias="noticerepsch" type="superPms.vo.NoticeRepSch"/>
+      	<!--  -->
+      	
       	<!-- 원주 -->
       	<typeAlias alias="project" type="superPms.vo.Project"/>
 		<typeAlias alias="projectsch" type="superPms.vo.ProjectSch"/>
