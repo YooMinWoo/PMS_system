@@ -6,6 +6,7 @@ public class ProjectMember {
 	private String part;
 	private String[] owners;
 	private String[] parts;
+
 	
 	public String[] getOwners() {
 		return owners;

@@ -31,4 +31,10 @@
 	<delete id="delLink2" parameterType="string">
 	delete from link where target=#{target} or source=#{source}
 	</delete>
+	
+	<select id="getMinMaxDate" parameterType="int" resultType="gantt">
+	SELECT min(START_DATE) AS mindate,
+	to_char(MAX(to_date(start_date,'yyyy-mm-dd') + duration),'yyyy-mm-dd') AS maxdate 
+	FROM gantt WHERE PRJNO =#{prjno}
+	</select>
 </mapper>

@@ -5,8 +5,6 @@
 	<typeAliases>
 		<typeAlias alias="calendar" type="superPms.vo.Calendar"/>
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
-		<typeAlias alias="project" type="superPms.vo.Project"/>
-		<typeAlias alias="projectsch" type="superPms.vo.ProjectSch"/>
 		<!-- 은빈 -->
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
@@ -20,12 +18,17 @@
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
-      	<typeAlias alias="alert" type="superPms.vo.Alert"/>
-      	<typeAlias alias="projectMember" type="superPms.vo.ProjectMember"/>
+      	<typeAlias alias="alert" type="superPms.vo.Alert"/> 	
+      	<typeAlias alias="noticerep" type="superPms.vo.NoticeRep"/>
+      	<!-- 원주 -->
+      	<typeAlias alias="project" type="superPms.vo.Project"/>
+		<typeAlias alias="projectsch" type="superPms.vo.ProjectSch"/>
+		<typeAlias alias="projectMember" type="superPms.vo.ProjectMember"/>
+		<typeAlias alias="pmList" type="superPms.vo.ProjectMemberList"/>
       	<typeAlias alias="gantt" type="superPms.vo.Gantt"/>
       	<typeAlias alias="link" type="superPms.vo.Link"/>
-      	<typeAlias alias="noticerep" type="superPms.vo.NoticeRep"/>
-      	
+      	<typeAlias alias="superempdeptsch" type="superPms.vo.SuperEmpDeptSch"/>
+      	<!-- /원주 -->
 	</typeAliases>
 
 	<mappers>

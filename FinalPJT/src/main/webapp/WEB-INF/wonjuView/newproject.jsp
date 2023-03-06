@@ -65,6 +65,17 @@ tbody td{
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-newproject").addClass('active');	
 		
+		// 초기에 멤버 출력되도록 멤버 리스트 empAjax(empqstr)
+		var empqstr ="keyword="+$("[name=keyword]").val()
+		empAjax(empqstr)
+		
+		$("[name=keyword]").keyup(function(){
+			if(event.keyCode==13){
+				empqstr ="keyword="+$("[name=keyword]").val()
+				empAjax(empqstr)
+			}
+		})
+		
 		// 등록 버튼
 		$("#regBtn").click(function(){	
 			// 멤버 초대 input의 갯수
@@ -133,6 +144,7 @@ tbody td{
 		$("#canBtn").click(function(){	
 			//location.href="" // 내 프로젝트 페이지로 이동
 		})
+
 	});
 
    function insAjax(qstr){
@@ -157,7 +169,57 @@ tbody td{
 			}
 		})
    }
+   function empAjax(empqstr){
+	   $.ajax({
+		   url:"${path}/empInfoList.do",
+			type:"post",
+			data:empqstr,
+			dataType:"json",
+			success:function(data){
+				console.log(data.sch)
+				var addHTML=""
+				$.each(data.empList,function(index,emp){
+					addHTML+="<tr>"
+					addHTML+="<td>"+emp.dname+"</td>"
+					addHTML+="<td>"+emp.ename+"</td>"
+					addHTML+="<td>"+emp.job+"</td>"
+					addHTML+="<td>"+emp.id+"</td>"
+					addHTML+="</tr>"
+				})
+				$("#empTab tbody").html(addHTML)
 
+				 var pagination = $('#pagination ul.pagination');
+				 pagination.empty(); // ajax 시작시 초기화
+				  
+				  // 이전 페이지로 이동하는 버튼
+				  pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
+						    	+ (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
+				  // 페이지 번호를 생성하는 반복문
+				  for (var i = 1; i <= data.sch.endBlock; i++) {
+				    var pageLi = $('<li class="page-item"></li>');
+				    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
+				    if (i === data.sch.curPage) {
+				      pageLi.addClass('active');
+				    }
+				    pageLi.append(pageLink);
+				    pagination.append(pageLi);
+				  }
+				  // 다음 페이지로 이동하는 버튼
+				  pagination.append($('<li class="page-item next"></li><a class="page-link" href="javascript:goPage(' 
+						  + (data.sch.endBlock + 1) + ');"><i class="tf-icon bx bx-chevron-right"></i></a>'));
+
+				
+			},
+			error:function(err){
+				console.log(err)
+			}
+	   })
+   }
+   function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		empqstr ="keyword="+$("[name=keyword]").val()+"&curPage="+$("[name=curPage]").val()
+		empAjax(empqstr)
+	}
 </script>
 </head>
 
@@ -222,8 +284,8 @@ tbody td{
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="김관리" placeholder="" id="html5-search-input" readonly="readonly">
-		          	<input type="hidden" name="tlid" value="admin1@gmail.com"><!-- 세션에 있는 pm 아이디 -->
+		            <input class="form-control" type="text" value="고대수" placeholder="" id="html5-search-input" readonly="readonly">
+		          	<input type="hidden" name="tlid" value="admin2@gmail.com"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
@@ -268,14 +330,15 @@ tbody td{
               	 		<!-- 검색어 ajax로 넘기기 -->
 			          <div class="input-group">
 			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-			            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+			            <input type="hidden" name="curPage" value="${sch.curPage }">
+			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 			          </div>
 			  	
               	</div>
               	</div>
 		        <div class="my-3 row">
 		        <div class="table-responsive text-nowrap">
-				    <table class="table table-striped">
+				    <table class="table table-striped" id="empTab">
 				    <col width="20%">
 				    <col width="20%">
 				    <col width="20%">
@@ -289,34 +352,25 @@ tbody td{
 				        </tr>
 				      </thead>
 				      <tbody class="table-border-bottom-0">
-				        <tr>
-				        <td>마케팅</td><td>홍길동</td><td></td><td>wjekr@gmail.com</td>
-				        </tr>
-				        <tr>
-				        <td>재무</td><td>홍설</td><td>eeesr@gmail.com</td>
-				        </tr>
-				       
 				      </tbody>
 				    </table>
 				  </div>
 		          <!-- Basic Pagination -->
 		          <nav id="pagination" aria-label="Page navigation">
-		            <ul class="pagination pagination-sm justify-content-end">
-		              <li class="page-item prev">
-		                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+		      	  <ul class="pagination pagination-sm justify-content-end">
+		            <!--   <li class="page-item prev">
+		                <a id="pageStart"class="page-link" href="javascript:goPage(${sch.startBlock-1 });"><i class="tf-icon bx bx-chevron-left"></i></a>
 		              </li>
-		              <li class="page-item">
-		                <a class="page-link" href="javascript:void(0);">1</a>
-		              </li>
-		              <li class="page-item">
-		                <a class="page-link" href="javascript:void(0);">2</a>
-		              </li>
-		              <li class="page-item active">
-		                <a class="page-link" href="javascript:void(0);">3</a>
-		              </li>
+		      		   <c:forEach var="cnt" begin="${sch.startBlock }" end="${sch.endBlock }"> 
+					  <div id="pagepage">
+					  <li id="pageLi" class="page-item"> 
+					  <a id="pageCnt" class="page-link" href="javascript:goPage(${cnt });">${cnt }</a></li>
+					  </div>
+					   </c:forEach>
 		              <li class="page-item next">
-		                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-		              </li>
+		                <a class="page-link" href="javascript:goPage(${sch.endBlock+1 });"><i class="tf-icon bx bx-chevron-right"></i></a>
+		              </li> 
+		              -->
 		            </ul>
 		          </nav>
 		          <!--/ Basic Pagination -->

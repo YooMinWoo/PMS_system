@@ -14,4 +14,6 @@ public interface Gantt_Dao {
 	public void insLink(Link ins);
 	public void delLink(String id);
 	public void delLink2(String gid);
+	
+	public Gantt getMinMaxDate(int prjno);
 }

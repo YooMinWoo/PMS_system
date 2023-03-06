@@ -17,6 +17,8 @@ import superPms.vo.Project;
 import superPms.vo.ProjectMember;
 import superPms.vo.ProjectSch;
 import superPms.vo.SuperDept;
+import superPms.vo.SuperEmpDept;
+import superPms.vo.SuperEmpDeptSch;
 
 @Controller
 public class Project_Controller {
@@ -28,7 +30,7 @@ public class Project_Controller {
 	public List<SuperDept> deptCom(){
 		return service.deptCom();
 	}
-	
+	// 전체 프로젝트 검색
 	@RequestMapping("/allProject.do")
 	public String allProject(@ModelAttribute("sch") ProjectSch sch,Model d) {
 		System.out.println(sch.getKeyword());
@@ -44,6 +46,12 @@ public class Project_Controller {
 		System.out.println(sch.getCurPage());
 		d.addAttribute("list",service.myProject(sch));
 		return "WEB-INF\\wonjuView\\myproject.jsp";
+	}
+	// 사원 검색 
+	@RequestMapping("/empInfoList.do")
+	public String empInfoList(@ModelAttribute("sch")SuperEmpDeptSch sch, Model d) {
+		d.addAttribute("empList",service.empInfoList(sch));
+		return "pageJsonReport";
 	}
 	// 프로젝트 등록 화면
 	@GetMapping("/newProjectShow.do")
@@ -64,9 +72,16 @@ public class Project_Controller {
 	// 프로젝트 메인화면
 	@GetMapping("/projectMain.do")
 	public String projectMain(@RequestParam("prjno") int prjno,Model d) {
-		d.addAttribute("projectInfo",service.projectInfo(prjno));
+		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",ganttService.showGantt(prjno));
 		return "WEB-INF\\wonjuView\\project_main.jsp";
+	}
+	// 프로젝트 PM + 멤버정보
+	@RequestMapping("/memList.do")
+	public String memList(@RequestParam("prjno") int prjno,Model d) {
+		d.addAttribute("memList",service.memberList(prjno));
+		d.addAttribute("pm",service.getPm(prjno));
+		return "pageJsonReport";
 	}
 	
 	// 프로젝트 멤버 추가
@@ -77,4 +92,26 @@ public class Project_Controller {
 		d.addAttribute("msg","등록성공");
 		return "pageJsonReport";
 	}
+	// 프로젝트 수정화면 초기호출
+	@GetMapping("/uptProject.do")
+	public String uptProject(@RequestParam("prjno") int prjno,Model d) {
+		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
+		d.addAttribute("ganttDate",ganttService.getMinMaxDate(prjno));
+		return "WEB-INF\\wonjuView\\uptproject.jsp";
+	}
+	// 프로젝트 수정 프로세스
+	@PostMapping("/uptProInfo.do")
+	public String uptProInfo(Project upt,Model d) {
+		service.uptProInfo(upt);
+		d.addAttribute("msg","수정완료");
+		return "pageJsonReport";
+	}
+	// 프로젝트 삭제 프로세스
+	@PostMapping("/delProject.do")
+	public String delProject(@RequestParam("prjno") int prjno,Model d) {
+		service.delProject(prjno);
+		d.addAttribute("msg","삭제완료");
+		return "pageJsonReport";
+	}
+  
 }

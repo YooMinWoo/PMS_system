@@ -76,12 +76,18 @@
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
+
 		var projectName="${projectInfo.subject}" // 모델데이터
 		$("#subject").text(projectName)
 		var prjno = "${projectInfo.prjno}"
+		
 		var deadline = "${projectInfo.deadline}"
-		var deadlineNewDate = new Date(deadline.split("-")[0],deadline.split("-")[1],deadline.split("-")[2])
-		var minusdate = new Date(deadlineNewDate-new Date()).getDate()
+		var deadlineDate = new Date(deadline.split("-")[0],deadline.split("-")[1]-1,deadline.split("-")[2])
+		var today = new Date()
+		console.log(deadlineDate)
+		
+		var minustime = deadlineDate.getTime()-today.getTime() // 시간으로 변환해서 연산(초단위)
+		var minusdate = Math.ceil(minustime / (1000 * 3600 * 24));  // 시간을 날짜로 변환(올림처리)
 		
 		if(minusdate>=0){
 			$("#subject").append(" (D-"+minusdate+")")
@@ -89,6 +95,32 @@
 			$("#subject").append(" (종료된 프로젝트입니다.)")
 		}
 		
+		// 수정 화면으로 이동
+		$("#uptBtn").click(function(){
+			location.href="${path}/uptProject.do?prjno="+prjno
+		}) 
+		
+		//멤버 확인 버튼 클릭시
+		$("#memBtn").click(function(){
+			let url="${path}/memList.do?prjno="+prjno
+			fetch(url).then(function(response){
+				console.log(response)
+				return response.json()
+			}).then(function(json){			
+				let pminfo = json.pm
+				let meminfo = json.memList
+				let listHTML = ""
+				listHTML+="<tr><td>"+pminfo.dname+"</td><td>"+pminfo.job+"</td><td>담당PM</td><td>"+pminfo.ename+"</td></tr>"
+				for(let i=0;i<meminfo.length;i++){
+					listHTML+="<tr><td>"+meminfo[i].dname+"</td><td>"+meminfo[i].job+"</td><td>"+
+					meminfo[i].part+"</td><td>"+meminfo[i].ename+"</td></tr>"
+				}
+				$("#memberListTab tbody").html(listHTML)
+				
+			}).catch(function(err){
+				console.log(err)
+			})
+		})
 		
 		// 모달창 input 추가
 		$("#plusBtn").click(function(){
@@ -100,8 +132,21 @@
 			"placeholder='담당자 이메일입력' id='owner'></div>")
 		})
 		
+		// 새로 등록할 멤버가 이미 등록된 멤버인지 확인하기 위해 기존 멤버 아이디를 배열로 가져오기
+		var memlist=[]
+		let url="${path}/memList.do?prjno="+prjno
+		fetch(url).then(function(response){
+			return response.json()
+		}).then(function(json){
+			// 기존 멤버 아이디만 배열에 넣기
+			$.each(json.memList,function(index,mlist){
+				memlist.push(mlist.id)
+			})
+		}).catch(function(err){
+			console.log(err)
+		})		
 		// 모달창 등록버튼
-		$("#regBtn").click(function(){	
+		$("#regBtn").click(function(){			
 			// 멤버 초대 input의 갯수
 			var inputlen=$("#plusMem").find("input.form-control").length
 			var validCnt = 0;
@@ -113,17 +158,32 @@
 				}else{
 					$("#plusMem").find("input.form-control").eq(i).css('border-color','');
 				}
+			}		
+			// 생성된input 에서 아이디인 이메일만 반복문을 통해 가져와서 
+			// inArray(value,arr) 해당 값이 배열에 있으면 위치를 리턴 없으면 -1 리턴
+			// inArray를 통해 이미 등록된 아이디인지 확인하여 리턴값이 -1이 아니면(이미 등록된 사람이면) 테두리 붉은색 표시
+			// validCnt 를 -1로 해서 alert 창에 이미 등록된 담당자가 있다는 문구 띄우기
+			for(let i=0;i<inputlen;i+=2){
+				if($.inArray($("#plusMem").find("input.form-control").eq(i+1).val(), memlist) !== -1){
+					validCnt=-1
+					$("#plusMem").find("input.form-control").eq(i+1).css('border-color','#ff3e1d')
+				}
 			}
-			 $("#insPmFrm").addClass('was-validated')
+
+			$("#insPmFrm").addClass('was-validated')
 			// 멤버 초대는 append로 만들어져서 선택자로 접근이 안되서 반복문 돌려서 따로 qstr을 만들어줌
 			var ownersPartsQstr=""
 			for(let i=0;i<inputlen/2;i++){
 				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()
 				+"&parts="+$("#plusMem").find("input#part").eq(i).val()
 			}
+			
 			var qstr = "prjno="+prjno+ownersPartsQstr
-			console.log(qstr)
-			if(validCnt==0){
+			if(validCnt==-1){
+				alert("이미 등록된 담당자가 있습니다")
+			}else if(validCnt>0){
+				alert("빈칸을 입력해주세요")
+			}else{
 				$.ajax({
 					url:"${path}/inviteProMem.do",
 					type:"post",
@@ -140,12 +200,74 @@
 						console.log(err)
 					}
 				})
-			}else{
-				alert("빈칸을 입력해주세요")
 			}
 		})
 		
+		// 초기에 멤버 출력되도록 멤버 리스트 empAjax(empqstr)
+		var empqstr ="keyword="+$("[name=keyword]").val()
+		empAjax(empqstr)
+		
+		$("[name=keyword]").keyup(function(){
+			if(event.keyCode==13){
+				empqstr ="keyword="+$("[name=keyword]").val()
+				empAjax(empqstr)
+			}
+		})
+
+		
 	});
+	 function empAjax(empqstr){
+		   $.ajax({
+			   url:"${path}/empInfoList.do",
+				type:"post",
+				data:empqstr,
+				dataType:"json",
+				success:function(data){
+					console.log(data.sch)
+					var addHTML=""
+					$.each(data.empList,function(index,emp){
+						addHTML+="<tr>"
+						addHTML+="<td>"+emp.dname+"</td>"
+						addHTML+="<td>"+emp.ename+"</td>"
+						addHTML+="<td>"+emp.job+"</td>"
+						addHTML+="<td>"+emp.id+"</td>"
+						addHTML+="</tr>"
+					})
+					$("#empTab tbody").html(addHTML)
+
+					 var pagination = $('#pagination ul.pagination');
+					 pagination.empty(); // ajax 시작시 초기화
+					  
+					  // 이전 페이지로 이동하는 버튼
+					  pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
+							    	+ (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
+					  // 페이지 번호를 생성하는 반복문
+					  for (var i = 1; i <= data.sch.endBlock; i++) {
+					    var pageLi = $('<li class="page-item"></li>');
+					    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
+					    if (i === data.sch.curPage) {
+					      pageLi.addClass('active');
+					    }
+					    pageLi.append(pageLink);
+					    pagination.append(pageLi);
+					  }
+					  // 다음 페이지로 이동하는 버튼
+					  pagination.append($('<li class="page-item next"></li><a class="page-link" href="javascript:goPage(' 
+							  + (data.sch.endBlock + 1) + ');"><i class="tf-icon bx bx-chevron-right"></i></a>'));
+
+					
+				},
+				error:function(err){
+					console.log(err)
+				}
+		   })
+	   }
+	  function goPage(cnt){
+			$("[name=curPage]").val(cnt);
+			empqstr ="keyword="+$("[name=keyword]").val()+"&curPage="+$("[name=curPage]").val()
+			empAjax(empqstr)
+		}
+	
 </script>
 </head>
 
@@ -167,17 +289,16 @@
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-         <!--   <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">프로젝트 이름</small></h4> -->
-           
+          
            <div class="card mb-4 pb-3">
 	           <div class="row">
 		           <div class="col-8">
 		           <h3 id="subject"class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
 		           </div>
 		           <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
-		            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
+		            <button type="button" id="memBtn" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
 		            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">멤버초대</button>&nbsp;&nbsp;&nbsp;
-		            <button type="button" class="btn btn-sm btn-secondary">설정</button>
+		            <button type="button" id="uptBtn" class="btn btn-sm btn-secondary">설정</button>
 		           </div>
 	           </div>
 	
@@ -256,59 +377,38 @@
               	<div class="col-6"> </div>
               	<div class="col-6"> 
               	 		<!-- 검색어 ajax로 넘기기 -->
-			          <div class="input-group">
+			         <div class="input-group">
 			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-			            <input type="text" name="keyword" value="${param.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+			            <input type="hidden" name="curPage" value="${sch.curPage }">
+			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
 			          </div>
 			  	
               	</div>
               	</div>
 		        <div class="my-3 row">
-			        <div class="table-responsive text-nowrap">
-					    <table class="table table-striped">
-					    <col width="20%">
-					    <col width="20%">
-					    <col width="20%">
-					    <col width="40%">
-					      <thead>
-					        <tr>
-					          <th>부서명</th>
-					          <th>이름</th>
-					          <th>직책</th>
-					          <th>이메일</th>
-					        </tr>
-					      </thead>
-					      <tbody class="table-border-bottom-0">
-					        <tr>
-					        <td>마케팅</td><td>홍길동</td><td>사원</td><td>wjekr@gmail.com</td>
-					        </tr>
-					        <tr>
-					        <td>재무</td><td>홍설</td><td>사원</td><td>eeesr@gmail.com</td>
-					        </tr>
-					       
-					      </tbody>
-					    </table>
-					  </div>
+			      <div class="table-responsive text-nowrap">
+				    <table class="table table-striped" id="empTab">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="40%">
+				      <thead>
+				        <tr>
+				          <th>부서명</th>
+				          <th>이름</th>
+				          <th>직책</th>
+				          <th>이메일</th>
+				        </tr>
+				      </thead>
+				      <tbody class="table-border-bottom-0">
+				      </tbody>
+				    </table>
+				  </div>
 			          <!-- Basic Pagination -->
-			          <nav id="pagination" aria-label="Page navigation">
-			            <ul class="pagination pagination-sm justify-content-end">
-			              <li class="page-item prev">
-			                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-			              </li>
-			              <li class="page-item">
-			                <a class="page-link" href="javascript:void(0);">1</a>
-			              </li>
-			              <li class="page-item">
-			                <a class="page-link" href="javascript:void(0);">2</a>
-			              </li>
-			              <li class="page-item active">
-			                <a class="page-link" href="javascript:void(0);">3</a>
-			              </li>
-			              <li class="page-item next">
-			                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-			              </li>
-			            </ul>
-			          </nav>
+		          <nav id="pagination" aria-label="Page navigation">
+		            <ul class="pagination pagination-sm justify-content-end">
+		            </ul>
+		          </nav>
               	</div>
               	<form id="insPmFrm">
 		          <div class="my-3 row" id="plusMem">
@@ -349,7 +449,7 @@
                 <div class="row">
                   <div class="my-3 row">
 		        <div class="table-responsive text-nowrap">
-				    <table class="table table-striped">
+				    <table class="table table-striped" id="memberListTab">
 				    <col width="25%">
 				    <col width="25%">
 				    <col width="25%">
@@ -363,9 +463,6 @@
 				        </tr>
 				      </thead>
 				      <tbody class="table-border-bottom-0">
-				        <tr>
-				        <td>마케팅</td><td>과장</td><td>디자인</td><td>홍사원</td>
-				        </tr>
 				      
 				      </tbody>
 				    </table>
@@ -384,7 +481,7 @@
         <!-- / Layout page -->
       </div>
       </div>
-
+	</div>
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
    

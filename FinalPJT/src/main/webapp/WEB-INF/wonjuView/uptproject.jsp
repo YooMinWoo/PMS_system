@@ -64,8 +64,98 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
-		$("#startDate").val(new Date().toISOString().substring(0, 10))
+		var prjno = "${projectInfo.prjno}"
+		var gMindate="${ganttDate.mindate}"
+		var gMaxdate="${ganttDate.maxdate}"
+		
+
+		// 수정 버튼 클릭
+		$("#uptBtn").click(function(){
+			 $("#uptProFrm").addClass('was-validated')
+			 var regdteVal = $("[name=regdte]").val()
+			 var deadlineVal = $("[name=deadline]").val()
+			 var subjectVal = $("[name=subject]").val()
+			 var deptidVal = $("[name=deptid]").val()
+			 var openStatusVal = $("[name=openStatus]:checked").val()
+			 
+			 if(deadlineVal>regdteVal){
+				 $("#deadCk").hide()
+				 $("[name=deadline]").css('border-color','');
+				 if(gMindate!=''){
+					 if(gMindate>=regdteVal && gMaxdate<=deadlineVal){
+						 $("#regCk").hide()
+						 $("[name=regdte]").css('border-color','');
+						 $("#deadCk").hide()
+						 $("[name=deadline]").css('border-color','');
+						 uptAjax(prjno,deptidVal,subjectVal,regdteVal,deadlineVal,openStatusVal)
+					 }else if(gMindate<regdteVal && gMaxdate<=deadlineVal){
+						 $("#regCk").show()
+						 $("[name=regdte]").css('border-color','#ff3e1d');
+						 $("#regCk").text('이전 날짜에 등록된 업무가 있습니다')
+						 $("#deadCk").hide()
+						 $("[name=deadline]").css('border-color','');
+					 }else if(gMaxdate>deadlineVal && gMindate>=regdteVal){
+						 $("#deadCk").show()
+						 $("[name=deadline]").css('border-color','#ff3e1d');
+						 $("#deadCk").text('이후 날짜에 등록된 업무가 있습니다')
+						 $("#regCk").hide()
+						 $("[name=regdte]").css('border-color','');
+					 }else{
+						 $("#deadCk").show()
+						 $("[name=deadline]").css('border-color','#ff3e1d');
+						 $("#deadCk").text('이후 날짜에 등록된 업무가 있습니다')
+						 $("#regCk").show()
+						 $("[name=regdte]").css('border-color','#ff3e1d');
+						 $("#regCk").text('이전 날짜에 등록된 업무가 있습니다')
+					 }
+			 	}else{
+			 		uptAjax(prjno,deptidVal,subjectVal,regdteVal,deadlineVal,openStatusVal)
+			 	}
+			 }else{
+				 $("#deadCk").show()
+				 $("[name=deadline]").css('border-color','#ff3e1d');
+				 $("#deadCk").text('종료일자는 시작일자보다 빠를수 없습니다')
+			 }
+		})
+		// 삭제 버튼
+		$("#delBtn").click(function(){
+			let url="${path}/delProject.do?prjno="+prjno
+			fetch(url,{method:'POST'}).then(function(response){
+				return response.json()
+			}).then(function(json){
+				console.log(json.msg)
+				if(json.msg=='삭제완료'){
+					alert("프로젝트 삭제되었습니다")
+					location.href="${path}/allProject.do"
+				}
+			}).catch(function(err){
+				console.log(err)
+			})		
+		})
+		// 취소 버튼
+		$("#clsBtn").click(function(){
+			location.href="${path}/projectMain.do?prjno="+prjno
+		})
+		
 	});
+	function uptAjax(prjno,deptidVal,subjectVal,regdteVal,deadlineVal,openStatusVal){
+		 if(deptidVal!=null && subjectVal!=''){
+			 let url="${path}/uptProInfo.do?prjno="+prjno+"&subject="+subjectVal+
+					 "&regdte="+regdteVal+"&deadline="+deadlineVal+"&deptid="+deptidVal+"&openStatus="+openStatusVal
+			  console.log(url)		 
+			 fetch(url,{method: 'POST'}).then(function(response){
+				 return response.json()
+			 }).then(function(json){
+				 if(json.msg=='수정완료'){
+					 if(confirm("프로젝트 수정되었습니다\n프로젝트로 돌아가시겠습니까?")){
+						 location.href="${path}/projectMain.do?prjno="+prjno
+					 }
+				 }
+			 }).catch(function(err){
+				 console.log(err)
+			 })
+		 }
+	}
 </script>
 </head>
 
@@ -102,92 +192,74 @@ tbody td{
               </p>
 		      <div class="card-body">
 		       <!-- 등록 form  -->
-		      <form>
+		      <form class="needs-validation" id="uptProFrm">
 		        <div class="mb-3 row">
 		          <label for="html5-text-input" class="col-md-2 col-form-label">카테고리</label>
 		          <div class="col-md-10">
-			           <select id="html5-text-input" class="form-select">
-			            <option>카테고리를 선택하세요</option>
-			            <option value="1">One</option>
-			            <option value="2">Two</option>
-			            <option value="3">Three</option>
+			           <select id="html5-text-input" class="form-select" name="deptid" required="required">
+			            <c:forEach var="dept" items="${deptCom}">
+							<option <c:if test="${dept.deptid==projectInfo.deptid}">selected</c:if> value="${dept.deptid }">${dept.dname}</option>
+				    	</c:forEach>
 			          </select>
+			          <div class="invalid-feedback">
+					      카테고리를 선택해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">프로젝트 명</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="" placeholder="프로젝트 이름을 입력하세요" id="html5-search-input">
+		            <input class="form-control" value="${projectInfo.subject}" type="text" name="subject" placeholder="프로젝트 이름을 입력하세요" id="html5-search-input" required="required">
+		           	<div class="invalid-feedback">
+					      프로젝트 명을 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">관리자</label>
+		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="" placeholder="세션에 있는 pm의 이름" id="html5-search-input" readonly="readonly">
+		            <input class="form-control" type="text" value="${projectInfo.ename }" id="html5-search-input" readonly="readonly">
+		          	<input type="hidden" name="tlid" value="${projectInfo.tlid}"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">시작 일자</label>
-		          <div class="col-md-10">
-		            <input class="form-control" id="startDate" type="date" value="" placeholder="프로젝트 생성을 한 오늘 날짜" id="html5-search-input" readonly="readonly">
+		          <label for="startDate" class="col-md-2 col-form-label">시작 일자</label>
+		          <div class="col-md-10"> 
+		            <input class="form-control" name="regdte" id="startDate" type="date" value="${projectInfo.regdte }" required="required">
+		         	 <div class="invalid-feedback" id="regCk">
+					    프로젝트 시작 일자를 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
-		          <label for="html5-search-input" class="col-md-2 col-form-label">종료 일자</label>
+		          <label for="endDate" class="col-md-2 col-form-label">종료 일자</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="date" value="" placeholder="프로젝트 종료 일자를 입력하세요" id="html5-search-input">
+		            <input class="form-control validCk" name="deadline" type="date" value="${projectInfo.deadline }" id="endDate" required="required">
+		          	 <div class="invalid-feedback" id="deadCk">
+					    프로젝트 종료 일자를 입력해주세요
+					  </div>
 		          </div>
 		        </div>
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">공개 여부</label>
 		          <div class="col-md-10">
 			          <div class="form-check form-check-inline">
-			              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked="checked">
+			              <input class="form-check-input" type="radio" name="openStatus" id="inlineRadio1" value="0" 
+			              <c:if test="${projectInfo.openStatus eq '0' }">checked</c:if>>
 			              <label class="form-check-label" for="inlineRadio1">전체 공개</label>
 			            </div>
 		          	  <div class="form-check form-check-inline">
-		                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+		                  <input class="form-check-input" type="radio" name="openStatus" id="inlineRadio2" value="1"
+		                  <c:if test="${projectInfo.openStatus eq '1' }">checked</c:if>>
 		                  <label class="form-check-label" for="inlineRadio2">멤버 공개</label>
 		               </div>
 		          </div>
 		        </div>
-		        <hr class="my-sm-5">
-		        <h5 class="card-header pt-5 fw-bold">참여 멤버</h5> 
-		        <p class="text-muted mb-3 px-4" style="font-size: 0.5rem;">
-                ※ 상태를 통해 초대 응답을 확인할 수 있습니다.<br>
-              </p>
-		        <div class="mb-3 row">
-		        <div class="table-responsive text-nowrap">
-				    <table class="table table-striped">
-				    <col width="15%">
-				    <col width="15%">
-				    <col width="55%">
-				    <col width="15%">
-				      <thead>
-				        <tr>
-				          <th>부서명</th>
-				          <th>이름</th>
-				          <th>이메일</th>
-				          <th>상태</th>
-				        </tr>
-				      </thead>
-				      <tbody class="table-border-bottom-0">
-				        <tr>
-				        <td>마케팅</td><td>홍길동</td><td>wjekr@gmail.com</td><td>초대중</td>
-				        </tr>
-				        <tr>
-				        <td>재무</td><td>홍설</td><td>eeesr@gmail.com</td><td>참여</td>
-				        </tr>
-				       
-				      </tbody>
-				    </table>
-				  </div>
-		        </div>
 		        <div class="card-footer">
 			        <div class="d-flex justify-content-center">
-			        <button type="button" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			        <button type="button" class="btn btn-secondary">취소</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			        <button type="button" class="btn btn-danger">삭제</button>
+			        <button id="uptBtn" type="button" class="btn btn-primary">확인</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        <button id="clsBtn" type="button" class="btn btn-secondary">취소</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        <button id="delBtn" type="button" class="btn btn-danger">삭제</button>
 			        </div>
 		        </div>
 		        </form>

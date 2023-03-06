@@ -13,8 +13,26 @@ public class Gantt {
 	private String description;
 	private int prjno;
 	
+	private String mindate;
+	private String maxdate;
+	
+	
+	
+	
 
 	
+	public String getMindate() {
+		return mindate;
+	}
+	public void setMindate(String mindate) {
+		this.mindate = mindate;
+	}
+	public String getMaxdate() {
+		return maxdate;
+	}
+	public void setMaxdate(String maxdate) {
+		this.maxdate = maxdate;
+	}
 	public String getDescription() {
 		return description;
 	}

@@ -29,7 +29,25 @@
 	$(document).ready(function(){
 		// 컨트롤러에서 모델데이터로 받은 prjno
 		var prjno = "${projectInfo.prjno}"
-		
+		var members=[]
+		let url="${path}/memList.do?prjno="+prjno
+		fetch(url).then(function(response){
+			return response.json()
+		}).then(function(json){
+			let pmArr = {}
+			pmArr.key=json.pm.ename
+			pmArr.label=json.pm.ename
+			members.push(pmArr)
+			$.each(json.memList,function(index,mlist){
+				let memArr = {}
+				memArr.key=mlist.ename
+				memArr.label=mlist.ename+"("+mlist.part+")"
+				members.push(memArr)
+			})	
+		}).catch(function(err){
+			console.log(err)
+		})
+
 		
 		// 주말 
 		gantt.templates.scale_cell_class = function (date) {
@@ -67,12 +85,13 @@
 		gantt.locale.labels.section_text = "업무명";
 		gantt.locale.labels.section_time = "진행기간";
 		gantt.locale.labels.section_description = "상세내용";
+		gantt.locale.labels.section_progress = "진행률";
 		gantt.config.lightbox.sections = [
-			{ name:"text", height: 38, map_to: "text", type: "textarea", focus: true },
-			{name:"owner", type: "textarea", height:33, map_to: "owner"},
+			{name:"text", height: 38, map_to: "text", type: "textarea", focus: true },
+			{name:"owner", type:"select",options:members, map_to: "owner"},
 			{name:"prjno", type: "hidden",map_to: "prjno"},
-			{ name:"time", type: "duration", map_to: "auto" },
-			{ name:"description", type: "textarea",height: 50,map_to:"description"  }
+			{name:"time", type: "duration", map_to: "auto" },
+			{name:"description", type: "textarea",height: 50,map_to:"description"}
 		]
 
 
@@ -95,8 +114,6 @@
 
 		//## 업무등록 이벤트
 		gantt.attachEvent("onAfterTaskAdd", function(id,item){
-		    console.log(id)
-		    console.log(item)
 		    var startDate = timeConvert(item.start_date)
 			var qstr="text="+item.text+"&start_date="+startDate+"&progress="+item.progress+"&owner="
 			+item.owner+"&parent="+item.parent+"&duration="+item.duration+"&prjno="+prjno+"&id="+item.id+"&description="+item.description    	
@@ -105,14 +122,11 @@
 		});
 	    //## 업무삭제 이벤트
 		gantt.attachEvent("onAfterTaskDelete", function(id,item){
-			console.log(id)
-		    console.log(item)
 		    var qstr="id="+id+"&parent="+item.parent
 		    callAjax("/delGantt.do",qstr)
 		});
 		// ## 업무 변경시 수정 메서드
 		gantt.attachEvent("onAfterTaskUpdate", function(id,item){
-		    console.log(item) 
 		    var startDate = timeConvert(item.start_date)
 		    var qstr="text="+item.text+"&start_date="+startDate+"&progress="+item.progress+"&owner="
 		    +item.owner+"&parent="+item.parent+"&duration="+item.duration+"&id="+item.id+"&description="+item.description
@@ -121,14 +135,12 @@
 		
 		//## 링크 드래그했을 시 링크 생성 메서드
 		gantt.attachEvent("onLinkCreated", function(link){
-		    console.log(link)
 		    var qstr="id="+link.id+"&source="+link.source+"&target="+link.target+"&type="+link.type+"&prjno="+prjno
 		    callAjax("/insLink.do",qstr)
 		    return true;
 		});
 		//## 링크 더블클릭시 링크 삭제 메서드
 		gantt.attachEvent("onLinkDblClick", function(id,e){
-			console.log(id)
 		    var qstr="id="+id
 		    callAjax("/delLink.do",qstr)
 		    return true;

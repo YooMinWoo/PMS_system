@@ -39,7 +39,7 @@ CREATE TABLE project (
 	FROM project p,PROJECTMEMBER m
 	WHERE m.PRJNO =p.PRJNO ;
 	
-	
+SELECT * FROM dept777;	
 SELECT * FROM PROJECT;
 -- openStatus 0이면 전체 공개 1이면 멤버공개
 INSERT INTO project values(pro_seq.nextval,sysdate,to_date('2023-03-30','yyyy-mm-dd'),'첫번째 프로젝트','admin1@gmail.com','10','0');
@@ -73,6 +73,7 @@ SELECT * FROM emp777;
 SELECT deptid, dname FROM dept777;
 SELECT e.id, e.ename, e.job, d.dname FROM emp777 e, dept777 d;
 SELECT * FROM project;
+
 INSERT INTO projectMember values(20,'emp2@gmail.com','마케팅');
 SELECT * FROM projectMember;
 ALTER TABLE projectMember ADD CONSTRAINT PK_ProjectMember PRIMARY KEY (
@@ -86,9 +87,14 @@ INSERT INTO emp777 values('emp1@gmail.com','emp1','홍사원','010-2222-1111','1
 INSERT INTO emp777 values('emp2@gmail.com','emp2','박사원','010-2124-1111','1','10',sysdate,'사원');
 INSERT INTO emp777 values('emp3@gmail.com','emp3','금사원','010-3435-1111','1','10',sysdate,'사원');
 INSERT INTO emp777 values('admin1@gmail.com','admin1','김관리','010-1111-2222','1','10',sysdate,'PM');
-UPDATE emp777 SET auth='1' WHERE ename='김관리';
+INSERT INTO emp777 values('admin2@gmail.com','admin2','고관리','010-1211-2222','1','20',sysdate,'PM');
+INSERT INTO emp777 values('emp4@gmail.com','emp4','김대리','010-1111-2222','1','20',sysdate,'대리');
+INSERT INTO emp777 values('emp5@gmail.com','emp5','송대리','010-1111-2222','1','20',sysdate,'대리');
+INSERT INTO emp777 values('emp6@gmail.com','emp6','구과장','010-1111-2222','1','30',sysdate,'과장');
+INSERT INTO emp777 values('emp7@gmail.com','emp7','주대리','010-1111-2222','1','30',sysdate,'대리');
+UPDATE emp777 SET ename='이민지' WHERE pass='emp7';
 DELETE FROM emp777 WHERE ename='김관리';
-SELECT * FROM emp;
+
 select * FROM emp777;
 CREATE TABLE emp777 (
 	id	varchar2(50)	PRIMARY key,
@@ -104,7 +110,10 @@ CREATE TABLE emp777 (
 );
 -- # 부서 테이블
 DROP TABLE dept777;
-INSERT INTO dept777 VALUES('10','IT','');
+INSERT INTO dept777 VALUES('10','개발','');
+INSERT INTO dept777 VALUES('20','마케팅','');
+INSERT INTO dept777 VALUES('30','디자인','');
+UPDATE dept777 SET dname='개발' WHERE deptid='10';
 CREATE TABLE dept777 (
 	deptid	varchar2(30)		PRIMARY key,
 	dname	varchar2(100)		NULL,
@@ -139,6 +148,8 @@ INSERT INTO gantt values(gantt_seq.nextval,'테스트업무2','gantt.config.type
 INSERT INTO gantt values(gantt_seq.nextval,'테스트업무3','gantt.config.types.task','2023-03-07',0,'금사원',23,5,null,55);
 
 SELECT * FROM gantt;
+SELECT * FROM link;
+SELECT * FROM gantt g, link l WHERE g.id=
 
 DELETE FROM gantt;
 update gantt set text='수정테스트',
@@ -173,9 +184,26 @@ MINVALUE 1;
 CREATE SEQUENCE link_seq
 START WITH 1
 MINVALUE 1;
+SELECT * FROM PROJECTMEMBER WHERE prjno=#{prjno};
 
+SELECT d.dname, e.job, e.ename FROM dept777 d, emp777 e, project p
+WHERE p.PRJNO =51 AND e.id=p.TLID AND e.DEPTID =d.DEPTID ;
+SELECT d.dname,e.job, m.part, e.ename FROM dept777 d, emp777 e, projectmember m
+WHERE m.prjno=51 AND m.owner=e.id AND e.deptid=d.deptid;
+SELECT * FROM gantt;
+SELECT min(START_DATE) AS mindate,
+to_char(MAX(to_date(start_date,'yyyy-mm-dd') + duration),'yyyy-mm-dd') AS maxdate 
+FROM gantt WHERE PRJNO =61;
 
-
+SELECT p.*, ename FROM project p, emp777 e WHERE p.tlid=e.ID;
 SELECT rownum cnt, p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
 	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
 	and cnt BETWEEN 5 AND 8;
+	
+	select * from (select rownum, d.dname, e.ename, e.job, e.id from emp e, dept d 
+	where 1=1 and  e.deptid = d.deptid AND 
+	(e.ename like '%'||''||'%' or d.dname like '%'||''||'%')
+	and d.dname NOT LIKE '최고경영진';
+	--where rm between #{start} and #{end};
+	SELECT d.dname, e.ename, e.job, e.id FROM emp e, dept d WHERE 1=1 AND e.deptid=d.deptid AND (e.ename LIKE '%'||''||'%' OR d.dname LIKE '%'||''||'%')
+	AND dname NOT LIKE '최고경영진';

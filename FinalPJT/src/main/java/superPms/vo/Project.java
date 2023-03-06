@@ -13,17 +13,10 @@ public class Project {
 	private String dname;
 	private int cnt; // 나의 프로젝트 총 인원수
 	private String part;
-	
+
 	private int rm; // rownum
 	
-	
-	
-	
 
-	
-	
-	
-	
 	public int getRm() {
 		return rm;
 	}

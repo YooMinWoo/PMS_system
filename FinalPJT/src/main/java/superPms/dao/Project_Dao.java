@@ -4,8 +4,11 @@ import java.util.List;
 
 import superPms.vo.Project;
 import superPms.vo.ProjectMember;
+import superPms.vo.ProjectMemberList;
 import superPms.vo.ProjectSch;
 import superPms.vo.SuperDept;
+import superPms.vo.SuperEmpDept;
+import superPms.vo.SuperEmpDeptSch;
 
 public interface Project_Dao {
 	public void insProject(Project ins);
@@ -22,6 +25,11 @@ public interface Project_Dao {
 	
 	public List<SuperDept> deptCom();
 	
+	public Integer empInfoTot(SuperEmpDeptSch sch);
+	public List<SuperEmpDept> empInfoList(SuperEmpDeptSch sch);
 	
-
+	public List<ProjectMemberList> memberList(int prjno);
+	public ProjectMemberList getPm(int prjno);
+	public void uptProInfo(Project upt);
+	public void delProject(int prjno);
 }

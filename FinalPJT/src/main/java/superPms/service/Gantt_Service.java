@@ -39,4 +39,7 @@ public class Gantt_Service {
 	public void delLink2(String gid) {
 		dao.delLink2(gid);
 	};
+	public Gantt getMinMaxDate(int prjno) {
+		return dao.getMinMaxDate(prjno);
+	};
 }
