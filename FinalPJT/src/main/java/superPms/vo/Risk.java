@@ -1,6 +1,7 @@
 package superPms.vo;
 
 public class Risk {
+	private int cnt;
 	private int riskno;
 	private String risklevel;
 	private String riskpriority;
@@ -24,6 +25,26 @@ public class Risk {
 		this.riskname = riskname;
 		this.id = id;
 		this.prjno = prjno;
+	}
+	
+	public Risk(int cnt, int riskno, String risklevel, String riskpriority, String riskmoniter, String riskstate,
+			String riskname, String id, int prjno) {
+		super();
+		this.cnt = cnt;
+		this.riskno = riskno;
+		this.risklevel = risklevel;
+		this.riskpriority = riskpriority;
+		this.riskmoniter = riskmoniter;
+		this.riskstate = riskstate;
+		this.riskname = riskname;
+		this.id = id;
+		this.prjno = prjno;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	public int getRiskno() {
 		return riskno;

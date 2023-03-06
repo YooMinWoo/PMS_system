@@ -5,8 +5,26 @@
 
 <mapper namespace="superPms.dao.Risk_Dao">
 	<select id="riskList" resultType="risk" parameterType="risk">
-		select * from Risk
-		order by riskno desc
+			select * from Risk
+			order by riskpriority
+	</select>
+	<select id="totCnt" resultType="int" 
+			parameterType="risksch">
+			select count(*)
+			from risk 
+	</select>
+	<select id="pagingRisk" resultType="risk" parameterType="risksch">
+			select *
+			from
+			    (select rownum cnt, A.*
+			    from
+			        (select *
+			        from RISK 
+			        where riskno>0
+			        order by riskpriority
+			        ) A
+			    )
+			where cnt between #{start} and #{end}
 	</select>
    	<select id="getRisk" resultType="risk" parameterType="risk">
        		SELECT * FROM risk

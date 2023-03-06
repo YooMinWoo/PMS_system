@@ -37,6 +37,8 @@ SELECT * FROM risk
 ORDER BY RISKNO DESC ;
 DELETE FROM RISK
 WHERE RISKNO =1;
+		select * from Risk
+		order by riskno DESC;
 /*CREATE SEQUENCE risk_seq
 START WITH 1
 MINVALUE 1;*/
@@ -46,7 +48,60 @@ SELECT * FROM EMP;
 CREATE SEQUENCE risk_seq
 START WITH 1
 MINVALUE 1;
+		select * from Risk
+		order by riskpriority;
 SELECT * FROM emp;
 SELECT * FROM project;
 SELECT * FROM dept;
 INSERT INTO PROJECT VALUES (pro_seq.nextVal,sysdate,sysdate+30,'프로젝트 예시','monsta@gmail.com',10008,'1');
+select *
+from
+    (select rownum as rn, A.*
+    from
+        (select *
+        from RISK r 
+        where riskno>0
+        order by riskno desc
+        ) A
+    )
+where rn between 1 and 5;
+
+SELECT * from
+(SELECT rownum cnt, A.* FROM 
+(SELECT * FROM risk
+WHERE riskno>0
+ORDER BY riskno DESC)A ) T
+WHERE cnt BETWEEN 6 AND 8; 
+
+SELECT cnt, A.* FROM
+(SELECT COUNT(*) cnt FROM risk WHERE riskno>0 ) cnt,
+(SELECT * FROM risk WHERE riskno>0) A;
+WHERE cnt BETWEEN 1 AND 5;
+
+select *
+from
+    (select rownum as cnt, A.*
+    from
+        (select *
+        from RISK
+        where riskno>0
+        order by riskno desc
+        ) A
+    )
+where cnt between 3 and 5;
+
+
+/*
+select *
+from
+    (select rownum cnt rn, A.*
+    from
+        (select *
+        from RISK r 
+        where riskno>0
+        order by riskno desc
+        ) A
+    )
+where cnt between #{start} and #{end}
+
+*/

@@ -112,10 +112,12 @@ tr{text-align:left;}
 		$("#applyBtn").click(function(){
 			location.href = "${path}/project_riskForm.do";
 		})
-		
-
-		
 	});
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		$("form").submit()
+		console.log("하나용?"+$("[name=curPage]").val(cnt))
+	}	
 </script>
 </head>
 
@@ -150,6 +152,9 @@ tr{text-align:left;}
                           <input id="applyBtn" type="button" class="btn btn-primary" value="등록">	
 						</div>
                           <div class="input-group">
+							    <form id="frm01" class="d-flex"  method="post"> 			
+								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+								</form> 
 							  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
 							  <button type="button" class="btn btn-outline-primary">search</button>
 						  </div>	
@@ -157,29 +162,44 @@ tr{text-align:left;}
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>리스크 번호</th>
                                             <th>리스크 이름</th>
                                             <th>심각도</th>
                                             <th>우선순위</th>
-                                            <th>PM승인</th>
+                                            <th>리스크 상태</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     	<c:forEach var="risk" items="${list}">
                                     		<tr ondblclick="goDetail(${risk.riskno})">
-                                    			<td>${risk.riskno}</td>
                                     			<td>${risk.riskname}</td>
                                     			<td><input type="button" class="risklevel" value="${risk.risklevel}"></td>
                                     			<td>
                                     			<input type="button" class="riskpriority" value="${risk.riskpriority}">
                                     			</td>
                                     			<td>
-                                    			<input type="button" class="riskstate" value="${risk.riskstate}">
+                                    			<input type="button" class="riskstate" value="${risk.riskstate}" style="width: 86.6px;">
+                                    			</td>
+												<td>
+                                    				<input type="hidden" value="${risk.riskno }" />
+                                    				<input type="hidden" name="curPage" value="${sch.curPage}"/>
                                     			</td>
                                     		</tr>
                                     	</c:forEach>
                                     </tbody>
                                 </table>
+								<ul class="pagination  justify-content-end"> 
+									<li class="page-item"><a class="page-link" 
+										href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
+								
+									<c:forEach var="cnt" begin="${sch.startBlock}" 
+											end="${sch.endBlock}">
+								  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+								  		<a class="page-link" 
+								  			href="javascript:goPage(${cnt});">${cnt}</a></li>
+								  	</c:forEach>
+								  	<li class="page-item"><a class="page-link" 
+								  			href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
+								</ul>
                                     <script>
                               		function goDetail(riskno){
                               			location.href="${path}/project_riskDetail.do?riskno="+riskno

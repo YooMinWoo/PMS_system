@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Risk_Service;
 import superPms.vo.Risk;
+import superPms.vo.RiskSch;
 
 
 @Controller
@@ -25,6 +28,12 @@ public class Risk_Controller {
 	public String riskList(
 			@ModelAttribute("sch") Risk sch, Model d) {
 		d.addAttribute("list", service.riskList(sch));
+		return "WEB-INF\\jungwooView\\project_risk.jsp";
+	}
+	// public List<Risk> pagingRisk(RiskSch sch);
+	@RequestMapping("/project_pagingRisk.do")
+	public String pagingRisk(@ModelAttribute("sch") RiskSch sch, Model d) {
+		d.addAttribute("list", service.pagingRisk(sch));
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
 	}
 
@@ -47,13 +56,13 @@ public class Risk_Controller {
 	@PostMapping("/project_insertRisk.do")		// 리스크 등록
 	public String insertRisk(Risk ins, Model d){
 		service.insertRisk(ins);
-		return "redirect:project_riskList.do";
+		return "redirect:project_pagingRisk.do";
 	}	
 	
 	@PostMapping("/project_riskUpdate.do")		// 리스크 수정
 	public String riskUpdate(Risk upt, Model d) {
 		service.updateRisk(upt);
 		d.addAttribute("risk",service.getRisk(upt.getRiskno()));
-		return "redirect:project_riskList.do";
+		return "redirect:project_pagingRisk.do";
 	}
 }

@@ -57,13 +57,27 @@
 	$(document).ready(function(){
 		$("#uptBtn").click(function(){			
 			if(confirm("수정하시겠습니까?")){
+				$("option").attr("disabled", false)
 				$("form").attr("action","${path}/project_riskUpdate.do");
 				$("form").submit();
 			}
 		})
 		$("#goMain").click(function(){
 			location.href="${path}/project_riskList.do"			
-		});	
+		});
+<%--		$("[name=risklevel]").val()("${risk.risklevel}"))
+		$("[name=risklevel]").val()("${risk.riskpriority}")) --%>
+<%--
+ 		if(${emp.auth!=2}){
+			$("[name=risklevel]").attr('readonly',true)
+			$("[name=riskpriority]").attr('readonly',true)
+			if("[name=riskmoniter]".val()==${emp.ename}){
+				$("[name=risklevel]").attr('readonly',false)
+				$("[name=riskpriority]").attr('readonly',false)
+			}
+		}
+--%>
+		
 	});
 </script>
 </head>
@@ -80,9 +94,6 @@
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
 		  
-         
-
-
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
@@ -116,20 +127,24 @@
 						  </div>
 				          <div class="row">      
 					          <div class="col-md-6 mb-3">
-					            <label for="risklevel">긴급도</label>
-					            <input type="text" name="risklevel"  	
-					            	 value="${risk.risklevel}"  class="form-control ckValid" id="risklevel" placeholder="작성자를 입력" required>
-					            <div class="invalid-feedback">
-					              작성자를 입력해주세요.
-					            </div>
+					            <label for="risklevel">심각도</label>
+					            <select class="form-control" name="risklevel" id="risklevel" required>
+					            	<option selected disabled value="${risk.risklevel}">${risk.risklevel}</option>
+					            	<option disabled="disabled">--------------------------------------------------------------------------------------</option>
+					            	<option value="긴급">긴급</option>
+					            	<option value="보통">보통</option>
+					            	<option value="낮음">낮음</option>
+					            </select>
 					          </div> 
 					          <div class="col-md-6 mb-3">
 					            <label for="riskpriority">우선도</label>
-					            <input type="text" name="riskpriority"
-					            	 value="${risk.riskpriority}"  class="form-control ckValid" id="riskpriority"  required>
-					            <div class="invalid-feedback">
-					              입력해주세요.
-					            </div>
+					            <select class="form-control" name="riskpriority" id="riskpriority" required>
+					            	<option selected disabled value="${risk.riskpriority}">${risk.riskpriority}</option>
+					            	<option disabled="disabled">--------------------------------------------------------------------------------------</option>
+					            	<option value="1">1</option>
+					            	<option value="2">2</option>
+					            	<option value="3">3</option>
+					            </select>
 					          </div> 	          
 				          </div> 
 				          <div class="row">
