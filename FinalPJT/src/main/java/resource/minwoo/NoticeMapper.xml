@@ -31,7 +31,7 @@
 	</select>
 	
 	<!-- 페이지 상세조회 -->
-	<select id="noticeDetail" parameterType="notice" resultType="notice">
+	<select id="noticeDetail" parameterType="noticerepsch" resultType="notice">
 		SELECT rownum, 
 			noticeno,
 			refno,
@@ -74,7 +74,7 @@
 	</update>
 	
 	<!-- 조회수 +1 처리 -->
-	<update id="plusCnt" parameterType="notice">
+	<update id="plusCnt" parameterType="noticerepsch">
 		update notice
 		set
 			viewcnt = viewcnt+1
@@ -119,14 +119,18 @@
 	</delete>
 	
 	<!-- 댓글 조회 -->
-	<select id="noticeRepList" parameterType="notice" resultType="noticerep">
-		SELECT repno, refno, content, 
-			to_char(n.regdte,'yyyy-mm-dd') regdte,
-			to_char(n.uptdte,'yyyy-mm-dd') uptdte,
-			noticeno, writer, e.ename 
-		FROM noticerep n, emp e
-		WHERE noticeno=#{noticeno}
-		AND n.WRITER = e.id
+	<select id="noticeRepList" parameterType="noticerepsch" resultType="noticerep">
+		SELECT repno, refno, content, regdte, uptdte, noticeno, writer, ename FROM (
+			SELECT rownum cnt, repno, refno, content, 
+						to_char(n.regdte,'yyyy-mm-dd') regdte,
+						to_char(n.uptdte,'yyyy-mm-dd') uptdte,
+						noticeno, writer, e.ename 
+			FROM noticerep n, emp e
+			WHERE noticeno=#{noticeno}
+			AND n.WRITER = e.id
+			ORDER BY regdte
+			) r
+		WHERE cnt BETWEEN #{start} AND #{end}
 	</select>
 	
 	<!-- 댓글 작성 -->
@@ -135,4 +139,26 @@
 			noticeRep_seq.nextval,0,#{content},sysdate,sysdate,#{noticeno},#{writer}
 		)
 	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteNoticeRep" parameterType="noticerep">
+		delete from noticerep
+		where repno=#{repno}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateNoticeRep" parameterType="noticerep">
+		update noticerep
+		set
+			uptdte = sysdate,
+			content = #{content}
+		where repno=#{repno}
+	</update>
+	
+	<!-- 페이징 처리를 위한 댓글 전체 개수 가져오기 -->
+	<select id="totRepCnt" parameterType="noticerepsch" resultType="int">
+		select count(*)
+    		from noticerep
+    	where noticeno=#{noticeno}
+	</select>
 </mapper>

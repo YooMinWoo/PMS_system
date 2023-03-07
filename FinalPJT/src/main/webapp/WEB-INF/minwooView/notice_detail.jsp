@@ -40,12 +40,30 @@ input:read-only{
 textarea:read-only{
 	background:white !important;
 }
-.repList{
+.repList2{
 	display: flex;
 }
-#regRepBtn, #repDelBtn{
+.repList{
+	display: flex;
+    align-items: baseline;
+}
+#regRepBtn{
 	height:50px;
-	width:7.5%;
+	width:8.5%;
+}
+.offBtn{
+	display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+}
+.repList3{
+	display:flex;
+	flex-direction: column;
+	gap:4px;
+}
+.btns{
+	border: none;
+    background: inherit;
 }
 </style>
 
@@ -81,6 +99,7 @@ textarea:read-only{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$(".offBtn").hide()
 		var authTF = ${emp.auth==0}
 		if(!authTF){ // 권한이 admin이 아니라면
 			$("#frm01 input").attr("readonly","readonly")
@@ -145,6 +164,35 @@ textarea:read-only{
 			$("#frm02").submit()
 		})
 	});
+	
+	function repUptBtn(idx){
+		$("#repForm"+idx).attr("action","/FinalPJT/updateNoticeRep.do")
+		$("#repForm"+idx).submit()
+	}
+	function repDelBtn(idx){
+		location.href="/FinalPJT/deleteNoticeRep.do?noticeno=${noticeDetail.noticeno }&repno="+idx
+	}
+	function RepBtnClick(idx){
+		$(".canBtn").click()
+		$("#repId"+idx).find(".onBtn").hide()
+		
+		$("#repId"+idx).find(".offBtn").show()
+		$("#repId"+idx).find(".offBtn").attr("display","flex")
+		$("#repId"+idx).find("textarea").attr("readonly",false)
+		$("#repId"+idx).find("textarea").focus()
+	}
+	function offBtnClick(idx){
+		var beforeUpt = $("#beforeUpt"+idx).val()
+		$("#repId"+idx).find(".offBtn").hide()
+		$("#repId"+idx).find(".onBtn").show()
+		$("#repId"+idx).find("textarea").attr("readonly",true)
+		$("#repId"+idx).find("textarea").val(beforeUpt)
+	}
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		location.href="/FinalPJT/goNoticeDetail.do?noticeno=${param.noticeno }&curPage="+$('[name=curPage]').val()
+		<%--$("#frm01").submit()--%>
+	}
 </script>
 </head>
 
@@ -174,8 +222,9 @@ textarea:read-only{
 	           <div class="card mb-4 pb-3">
            			<div class="card-body">
                       <form method="post" id="frm01">
-                      	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
+                      	
                       	<input type="hidden" name="path" value="${noticeDetail.path }">
+                      	<input type="hidden" name="curPage" value="${noticeRepSch.curPage }">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
                           <input name="title" type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>
@@ -245,36 +294,86 @@ textarea:read-only{
                     </div>
                     <hr>
                     <div class="card-body">
-                    	<h6>댓글 &nbsp;&nbsp;&nbsp;10개</h6>
+                    	<h6>댓글 &nbsp;&nbsp;&nbsp;${noticeRepSch.count }개</h6>
                     	<form id="frm02" method="post">
                     		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                       		<input type="hidden" name="writer" value="${emp.id }">
 	                    	<label for="repContent" class="form-label">댓글 작성</label>
-	                    	<div class="repList">
+	                    	<div class="repList2">
 		                        <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
 		                        <button type="button" class="btn btn-secondary" id="regRepBtn">작성</button>
 	                        </div>
 	                        <hr>
 	                        <br><br>
                         </form>
-                        <c:forEach var="rep" items="${noticeRep}">
-                        	<label class="form-label">${rep.ename } (등록일자 : ${rep.regdte } / 수정일자 : ${rep.uptdte })</label>
-	                        <div class="repList">
-		                        <textarea id="reps" class="form-control" rows="3" style="height:50px;">${rep.content }</textarea>
-		                         
-		                        <%-- <c:if 사용자 아이디와 입력된 아이디가 같을 때.>
-		                        <button type="button" class="btn btn-danger" id="repDelBtn">삭제</button>
-		                        <button type="button" class="btn btn-secondary" id="repDelBtn">수정</button>
-		                        </c:if> --%>
-		                        
+                        <c:forEach var="rep" items="${noticeRep}" varStatus="status">
+                        	<form id="repForm${rep.repno }">
+                        		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
+                        		<input type="hidden" name="repno" value="${rep.repno}">
+	                        	<label class="form-label">${rep.ename } (등록일자 : ${rep.regdte } / 수정일자 : ${rep.uptdte })</label>
+	                        <div class="repList3" id="repId${rep.repno }">
+	                        	<div class="offBtn">
+	                        		<button class="btns" type="button" onclick="repUptBtn(${rep.repno })">수정</button>
+	                        		<button class="btns canBtn" id="canBtn" type="button" onclick="offBtnClick(${rep.repno })">취소</button>
+	                        	</div>
+	                        	<div class="repList">
+			                        <textarea name="content" id="reps" class="form-control" rows="3" style="height:50px;" readonly>${rep.content } </textarea>
+			                        <input type="hidden" id="beforeUpt${rep.repno }" value="${rep.content }">
+			                        <c:if test="${emp.id == rep.writer }">
+			                        	<div class="demo-inline-spacing">
+					                        <div class="btn-group">
+					                          <button
+					                            type="button"
+					                            class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow onBtn"
+					                            data-bs-toggle="dropdown"
+					                            aria-expanded="false"
+					                            
+					                          >
+					                            <i class="bx bx-dots-vertical-rounded"></i>
+					                          </button>
+					                          <ul class="dropdown-menu dropdown-menu-end">
+					                            <li><button type="button" class="dropdown-item RepBtn" onclick="RepBtnClick(${rep.repno })">수정</button></li>
+					                            <li><button type="button" class="dropdown-item delRepBtn" onclick="repDelBtn(${rep.repno})">삭제</button></li>
+					                          </ul>
+					                        </div>
+					                      </div>
+			                        </c:if>
+		                        </div>
 	                        </div>
 	                        <br>
+	                        </form>
                         </c:forEach>
                         <br>
+                        <c:if test="${noticeRepSch.startBlock>0 }">
+                  <nav aria-label="Page navigation" style="padding-top: 30px">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item prev">
+                              <a class="page-link" href="javascript:goPage(${noticeRepSch.startBlock-1});"
+                                ><i class="tf-icon bx bx-chevrons-left"></i
+                              ></a>
+                            </li>
+                            
+                            <c:forEach var="cnt" begin="${noticeRepSch.startBlock}" end="${noticeRepSch.endBlock}">
+	                            <li class="page-item ${noticeRepSch.curPage==cnt?'active':''}">
+	                              <a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
+	                            </li>
+	                        </c:forEach>
+	                        
+                            <li class="page-item next">
+                              <a class="page-link" href="javascript:goPage(${noticeRepSch.startBlock+1});"
+                                ><i class="tf-icon bx bx-chevrons-right"></i
+                              ></a>
+                            </li>
+                          </ul>
+                        </nav>
+                        </c:if>
                     </div>
                     
                  </div>
-                 
+                 <script>
+		                        
+                    	
+                    </script>
          	  <!-- /card -->
             </div>
             <!-- / Content -->

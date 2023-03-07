@@ -12,12 +12,13 @@ import superPms.service.Notice_Service;
 import superPms.service.SuperDept_Service;
 import superPms.vo.Notice;
 import superPms.vo.NoticeRep;
+import superPms.vo.NoticeRepSch;
 import superPms.vo.NoticeSch;
 
 @Controller
 public class Notice_Controller {
 //	http://localhost:2030/FinalPJT/goNotice.do		==> user
-//	http://localhost:2030/FinalPJT/goNoticePM.do	==> admin
+	// http://localhost:2030/FinalPJT/PMSLogin.do	==> login
 	@Autowired(required = false)
 	private Notice_Service service;
 	
@@ -39,7 +40,7 @@ public class Notice_Controller {
 	}
 	
 	@RequestMapping("/goNoticeDetail.do")
-	public String goNoticeDetail(Notice sch, Model d) {
+	public String goNoticeDetail(NoticeRepSch sch, Model d) {
 		service.plusCnt(sch);
 		d.addAttribute("noticeDetail",service.noticeDetail(sch));
 		d.addAttribute("noticeRep",service.noticeRepList(sch));
@@ -83,8 +84,19 @@ public class Notice_Controller {
 	@PostMapping("/insertNoticeRep.do")
 	public String insertNoticeRep(NoticeRep ins) {
 		service.insertNoticeRep(ins);
-		return "forward:/goNoticeDetail.do";
+		return "redirect:/goNoticeDetail.do?noticeno="+ins.getNoticeno();
 	}
 	
+	@RequestMapping("/deleteNoticeRep.do")
+	public String deleteNoticeRep(NoticeRep ins) {
+		service.deleteNoticeRep(ins);
+		return "redirect:/goNoticeDetail.do?noticeno="+ins.getNoticeno();
+	}
+	
+	@RequestMapping("/updateNoticeRep.do")
+	public String updateNoticeRep(NoticeRep ins) {
+		service.updateNoticeRep(ins);
+		return "redirect:/goNoticeDetail.do?noticeno="+ins.getNoticeno();
+	}
 	
 }
