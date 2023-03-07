@@ -56,6 +56,14 @@
 <style>
 	td{text-align:center;}
 </style>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var msg = "${msg}"
+		if(msg!=""){
+			alert(msg)
+		}
+	});
+</script>
 </head>
 
   <body>
@@ -129,21 +137,22 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Forgot Password? 🔒</h4>
-              <p class="mb-4">이메일을 입력하면 임시 비밀번호를 해당 이메일주소로 보내드려요</p>
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <h4 style="font-weight:bold;" class="mb-2">Forgot Password? 🔒</h4>
+              <p style="font-weight:bold;" class="mb-4">이메일을 입력하면 임시 비밀번호를 해당 이메일주소로 보내드려요</p>
+              <form id="frm01" class="mb-3" action="${path}/mailSender.do" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">이메일</label>
                   <input
                     type="text"
                     class="form-control"
                     id="id"
-                    name="id"
+                    name="receiver"
                     placeholder="이메일을 입력해주세요"
                     autofocus
                   />
                 </div>
-                <button type="submit" class="btn btn-primary d-grid w-100">임시 비밀번호 발급</button>
+                <br>
+                <button class="btn btn-primary d-grid w-100">임시 비밀번호 발급</button>
               </form>
               <div class="text-center">
                 <a href="${path }/PMSLogin.do" class="d-flex align-items-center justify-content-center">

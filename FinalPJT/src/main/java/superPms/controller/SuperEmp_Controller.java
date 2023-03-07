@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.SuperEmp_Service;
 import superPms.vo.DeptCode;
+import superPms.vo.PassMail;
 import superPms.vo.SuperEmpDept;
 
 @Controller
@@ -117,4 +119,13 @@ public class SuperEmp_Controller {
 		d.addAttribute("msg", "비밀번호 변경 완료");
 		return "redirect:/PMSLogin.do";
 	} 
+	@GetMapping("/forgetPassword.do")
+	public String forgetPassword() {
+		return "WEB-INF\\eunbeenView\\forgetPassword.jsp";
+	}
+	@PostMapping("/mailSender.do")
+	public String mailSender(PassMail mail, Model d) {
+		d.addAttribute("msg",service.sendMail(mail));
+		return "WEB-INF\\eunbeenView\\forgetPassword.jsp";
+	}
 }

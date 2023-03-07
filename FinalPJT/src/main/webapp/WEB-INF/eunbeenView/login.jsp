@@ -160,7 +160,7 @@
                 <div class="mb-3 form-password-toggle">
                 	<div class="d-flex justify-content-between">
                     <label class="form-label" for="password">비밀번호</label>
-                    <a href="auth-forgot-password-basic.html">
+                    <a href="${path }/forgetPassword.do">
                       <small>Forgot Password?</small>
                     </a>
                   </div>
@@ -176,7 +176,7 @@
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
-                
+                <br>
                 <div class="mb-3">
                   <button id="loginBtn" class="btn btn-primary d-grid w-100" type="submit">로그인</button>
                 </div>
