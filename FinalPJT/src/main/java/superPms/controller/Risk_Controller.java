@@ -65,4 +65,9 @@ public class Risk_Controller {
 		d.addAttribute("risk",service.getRisk(upt.getRiskno()));
 		return "redirect:project_pagingRisk.do";
 	}
+	@PostMapping("/project_riskDelete.do")		// 리스크 등록
+	public String deleteRisk(Risk del, Model d){
+		service.deleteRisk(del);
+		return "redirect:project_pagingRisk.do";
+	}	
 }

@@ -13,5 +13,5 @@ public interface Risk_Dao {
 	public Risk getRisk(int riskno);
 	public void insertRisk(Risk ins);
 	public void updateRisk(Risk upt);
-	
+	public void deleteRisk(Risk del);
 }

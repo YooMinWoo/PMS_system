@@ -31,17 +31,16 @@ CREATE TABLE risk (
 );
 SELECT * FROM BOARD b ;
 INSERT INTO risk VALUES (6660126, '높음', '1', '땡땡씨', '대기','이 문제가 무엇인가 ?', 'qwer@naver.com', 3330001);
-DELETE FROM risk
-WHERE RISKNO =6660126;
-SELECT * FROM risk
+SELECT * FROM risk r
 ORDER BY RISKNO DESC ;
 DELETE FROM RISK
-WHERE RISKNO =1;
+WHERE RISKNO =46;
 		select * from Risk
 		order by riskno DESC;
 /*CREATE SEQUENCE risk_seq
 START WITH 1
 MINVALUE 1;*/
+SELECT * FROM project;
 INSERT INTO risk VALUES (risk_seq.nextval, '보통', '2', '땡땡씨', '발생','내일 점심은 무엇을 먹죠?', 'monsta@gmail.com', 22);
 SELECT * FROM PROJECT;
 SELECT * FROM EMP;
@@ -89,8 +88,25 @@ from
         ) A
     )
 where cnt between 3 and 5;
+SELECT * FROM RISK r ;
+SELECT * FROM solution;
+ALTER TABLE risk DROP COLUMN risksolution;
 
+SELECT * FROM EMP;
 
+UPDATE risk 
+SET risklevel = '보통' 
+WHERE id IN (
+  SELECT id
+  FROM emp 
+  WHERE id = 'monsta@gmail.com' 
+    AND auth = 2
+);
+
+		SELECT DISTINCT e.mgr key, m.ename val
+		FROM emp100 e, emp100 m
+		WHERE e.mgr = m.empno	;
+SELECT * FROM emp;
 /*
 select *
 from
@@ -105,3 +121,19 @@ from
 where cnt between #{start} and #{end}
 
 */
+SELECT * FROM emp;
+SELECT * FROM PROJECT p ;
+SELECT * FROM RISK r ;
+INSERT INTO RISK (riskno, risklevel, riskpriority,
+riskstate, riskname, id, prjno) VALUES
+(risk_seq.nextval, 
+'긴급',  '1', '발생', 
+'이 프로젝트에 투입된 인원이 적다', 'monsta@gmail.com', 23);
+		update risk
+		set
+			risklevel = '긴급',
+			riskpriority = '1',
+			riskmoniter = '김은빈',
+			riskstate = 'PM담당',
+			riskname = '수정이 잘 되는가 ?'
+	   where riskno = 47;

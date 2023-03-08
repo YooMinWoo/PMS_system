@@ -55,6 +55,7 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		console.log($("[name=risklevel]").val())
 		$("#insertBtn").click(function(){			
 			if(confirm("등록하시겠습니까?")){
 				$("form").attr("action","${path}/project_insertRisk.do");

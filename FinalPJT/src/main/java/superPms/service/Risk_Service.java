@@ -75,7 +75,10 @@ public class Risk_Service {
 		dao.insertRisk(ins);
 	}
 	public void updateRisk(Risk upt) {
-		
+		if(upt.getSolno()==null) upt.setSolno("");
 		dao.updateRisk(upt);
+	}
+	public void deleteRisk(Risk del) {
+		dao.deleteRisk(del);
 	}
 }

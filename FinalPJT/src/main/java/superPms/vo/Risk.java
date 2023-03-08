@@ -10,12 +10,15 @@ public class Risk {
 	private String riskname;
 	private String id;
 	private int prjno;
+	private String solno;
 	public Risk() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	public Risk(int riskno, String risklevel, String riskpriority, String riskmoniter, String riskstate,
-			String riskname, String id, int prjno) {
+			String riskname, String id, int prjno, String solno) {
 		super();
 		this.riskno = riskno;
 		this.risklevel = risklevel;
@@ -25,8 +28,10 @@ public class Risk {
 		this.riskname = riskname;
 		this.id = id;
 		this.prjno = prjno;
+		this.solno = solno;
 	}
-	
+
+
 	public Risk(int cnt, int riskno, String risklevel, String riskpriority, String riskmoniter, String riskstate,
 			String riskname, String id, int prjno) {
 		super();
@@ -94,5 +99,12 @@ public class Risk {
 	public void setPrjno(int prjno) {
 		this.prjno = prjno;
 	}
+	public String getSolno() {
+		return solno;
+	}
+	public void setSolno(String solno) {
+		this.solno = solno;
+	}
+	
 	
 }

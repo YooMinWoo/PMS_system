@@ -267,7 +267,7 @@ CREATE TABLE risk (
 	riskstate	varchar2(50),
 	riskname	varchar2(100),
 	id	varchar2(50),
-	prjno	number
+	prjno	NUMBER
 );
 
 CREATE SEQUENCE risk_seq
@@ -278,6 +278,19 @@ ALTER TABLE risk ADD CONSTRAINT FK_risk_1 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 ALTER TABLE risk ADD CONSTRAINT FK_risk_2 FOREIGN KEY(prjno)
 references project(prjno) on delete CASCADE;
+ALTER TABLE risk ADD CONSTRAINT FK_risk_3 FOREIGN KEY(solno)
+references solution(solno) on delete CASCADE;
+
+CREATE TABLE solution(
+	solno NUMBER PRIMARY KEY,
+	solution_content varchar2(4000),
+	riskno NUMBER,
+	id varchar2(50),
+);
+ALTER TABLE solution ADD CONSTRAINT FK_solution_1 FOREIGN KEY(riskno)
+references risk(riskno) on delete CASCADE;
+ALTER TABLE solution ADD CONSTRAINT FK_solution_2 FOREIGN KEY(id)
+references emp(id) on delete CASCADE;
 
 DROP TABLE gantt;
 CREATE TABLE gantt(
