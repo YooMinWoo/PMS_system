@@ -64,6 +64,7 @@
 
 		var id="${ganttDetail.id}"
 		var prjno="${ganttDetail.prjno}"
+		var projectName = "${projectInfo.subject}"
 		var progress=parseInt("${ganttDetail.progress}"*100)
 		$("[name=progressShow]").val(progress)
 		// 저장 버튼
@@ -87,11 +88,19 @@
 		})
 		// 캘린더 저장
 		$("#callendarBtn").click(function(){
-			var writer="monsta@gmail.com" // 세션에 있는 아이디
-			var qstr="start=${ganttDetail.start_date}&end=${ganttDetail.end_date}&writer="+writer+"&textColor="
-				#{start},#{end},#{writer},
-				#{textColor},#{backgroundColor},
-				#{allDay},#{content},#{urllink})
+			let writer="monsta@gmail.com" // 세션에 있는 아이디
+			let start="${ganttDetail.start_date}"
+			let end = "${ganttDetail.end_date}"
+			let textColor="#ffffff"
+			let backgroundColor="#ffc300"
+			let content = "${ganttDetail.description}"
+			let title=projectName+"> ${ganttDetail.text}"
+			
+			var qstr="start="+start+"&end="+end+"&writer="+writer+"&textColor="+textColor+
+				"&backgroundColor="+backgroundColor+"&allDay=1&content="+content+"&urllink="+"&title="+title
+			console.log(qstr)
+			callAjax("${path}/insertCalendar.do",qstr)		
+
 		})
 		
 	})
@@ -102,6 +111,7 @@
 		    	data:qstr,
 		    	dataType:"json",
 		    	success:function(data){
+		    		alert("완료 되었습니다.")
 		    		location.reload()
 		    	},
 		    	error:function(err){
