@@ -98,6 +98,7 @@ a.hover{
 		
 			$("input[name=chk]").prop("checked", true)
 		})
+		
 	})
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
@@ -170,6 +171,7 @@ a.hover{
                     </tbody>
                   </table>
                 </div>
+                
                 <nav aria-label="Page navigation" style="display: flex; justify-content: center;">
                           <ul class="pagination">
                         
@@ -192,6 +194,7 @@ a.hover{
                            
                           </ul>
                         </nav>
+                       
          	</div>
          	  <!-- /card -->
             </div>

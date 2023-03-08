@@ -331,7 +331,7 @@ tbody td{
 			          <div class="input-group">
 			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 			            <input type="hidden" name="curPage" value="${sch.curPage }">
-			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="부서 또는 사원명으로 검색">
 			          </div>
 			  	
               	</div>

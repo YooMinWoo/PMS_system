@@ -135,6 +135,7 @@ CREATE TABLE gantt(
 	duration NUMBER,
 	OPEN char(1),	--1이면 TRUE, 0 이면 false
 	prjno NUMBER,
+	description varchar2(4000),
 	foreign key(prjno) references project(prjno)
     on delete CASCADE
 );
@@ -174,6 +175,7 @@ CREATE TABLE link(
 );
 DELETE FROM link;
 SELECT * FROM link;
+SELECT * FROM gantt;
 SELECT * FROM project p, gantt g, link l WHERE p.PRJNO =g.prjno AND p.prjno=l.prjno;
 SELECT * FROM gantt g, link l WHERE g.id=l.gid;
 SELECT * FROM PROJECT p, gantt g WHERE p.prjno=g.prjno;
@@ -188,12 +190,17 @@ SELECT * FROM PROJECTMEMBER;
 DELETE FROM projectmember WHERE prjno=66 AND owner='emp7@gmail.com';
 
 SELECT * FROM dept WHERE PARENTDEPT IS null;
-
+SELECT * FROM CALENDAR;
 SELECT d.dname, e.job, e.ename FROM dept777 d, emp777 e, project p
 WHERE p.PRJNO =51 AND e.id=p.TLID AND e.DEPTID =d.DEPTID ;
 SELECT d.dname,e.job, m.part, e.ename FROM dept777 d, emp777 e, projectmember m
 WHERE m.prjno=51 AND m.owner=e.id AND e.deptid=d.deptid;
+SELECT g1.*, g2.TEXT FROM gantt g1, gantt g2, link l WHERE g2.id=l.SOURCE AND g1.id=l.TARGET ;
+SELECT g1.*, to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
+g2.text AS parentText from gantt g1 LEFT join gantt g2 ON g1.PARENT =g2.ID where g1.prjno=23 AND g1.id='1678242824344';
+SELECT * FROM link;
 SELECT * FROM gantt;
+UPDATE gantt SET progress=0.5 WHERE id='1678242824344';
 SELECT min(START_DATE) AS mindate,
 to_char(MAX(to_date(start_date,'yyyy-mm-dd') + duration),'yyyy-mm-dd') AS maxdate 
 FROM gantt WHERE PRJNO =61;

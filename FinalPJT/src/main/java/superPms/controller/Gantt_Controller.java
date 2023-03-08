@@ -51,4 +51,9 @@ public class Gantt_Controller {
 		service.delLink(id);
 		return "pageJsonReport";
 	}
+	@PostMapping("/uptProgress.do")
+	public String uptProgress(Gantt upt) {
+		service.uptProgress(upt);
+		return "pageJsonReport";
+	}
 }

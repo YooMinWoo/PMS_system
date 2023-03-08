@@ -12,7 +12,7 @@ import superPms.dao.Mail_Dao;
 import superPms.vo.Mail;
 import superPms.vo.MailFile;
 import superPms.vo.MailSch;
-import superPms.vo.SuperEmpDept;
+
 
 @Service
 public class Mail_Service {
@@ -96,16 +96,14 @@ public class Mail_Service {
         }
         sch.setEndBlock(endBlock);
         //     4) 시작 블럭
-        sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+        
+        if(blocknum!=0)
+            sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
         // 
 		return dao.mySendMail(sch);
 	}
 	
-	
-	
-	
-	
-	
+
 	public Mail sendDetail(int mailno) {
 		Mail m = dao.sendDetail(mailno);
 		m.setFname(dao.getMailFile(mailno));
@@ -159,6 +157,7 @@ public class Mail_Service {
         }
         sch.setEndBlock(endBlock);
         //     4) 시작 블럭
+        if(blocknum!=0)
         sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
         // 
 		return dao.myReceiveMail(sch);
