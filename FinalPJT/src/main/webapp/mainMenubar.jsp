@@ -140,12 +140,12 @@
                   </a>
                 </li>
                  <li class="menu-item" id="menu-item-sentMailbox">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                  <a href="${path }/mySendMail.do" class="menu-link">
                     <div data-i18n="Notifications">보낸 메일함</div>
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-mailbox">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                  <a href="${path}/myReceiveMail.do" class="menu-link">
                     <div data-i18n="Notifications">받은 메일함</div>
                   </a>
                 </li>
