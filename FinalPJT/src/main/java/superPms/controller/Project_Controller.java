@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Gantt_Service;
 import superPms.service.Project_Service;
+import superPms.vo.Gantt;
 import superPms.vo.Project;
 import superPms.vo.ProjectMember;
 import superPms.vo.ProjectSch;
 import superPms.vo.SuperDept;
-import superPms.vo.SuperEmpDept;
 import superPms.vo.SuperEmpDeptSch;
 
 @Controller
@@ -41,7 +41,7 @@ public class Project_Controller {
 	// 나의 프로젝트 검색
 	@RequestMapping("/myProject.do")
 	public String myProject(@ModelAttribute("sch") ProjectSch sch,Model d) {
-		String owner = "monsta@gmail.com"; //세션에 있는 로그인한 아이디를 owner에 넣기
+		String owner = "randlod@gmail.com"; //세션에 있는 로그인한 아이디를 owner에 넣기
 		sch.setOwner(owner);
 		System.out.println(sch.getCurPage());
 		d.addAttribute("list",service.myProject(sch));
@@ -119,5 +119,15 @@ public class Project_Controller {
 		service.delProjectMember(del);
 		d.addAttribute("msg","나가기성공");
 		return "pageJsonReport";
+	}
+	
+	// 간트차트 상세페이지 초기호출
+	@GetMapping("/ganttDetailPage.do")
+	public String ganttDetailPage(Gantt det,Model d) {
+		System.out.println(det.getPrjno());
+		System.out.println(det.getId());
+		d.addAttribute("projectInfo",service.projectInfo(det.getPrjno())); 
+		d.addAttribute("ganttDetail",ganttService.ganttDetail(det));
+		return "WEB-INF\\wonjuView\\ganttDetail.jsp";
 	}
 }

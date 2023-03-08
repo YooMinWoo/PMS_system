@@ -155,7 +155,7 @@ tbody td{
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="hidden" name="isCon" value="${sch.isCon }">
 	            <input type="hidden" name="curPage" value="${sch.curPage }">
-	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="프로젝트명으로 검색">
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->
@@ -186,7 +186,7 @@ tbody td{
 			      <tr ondblclick="goProjectMain(${myp.prjno})">
 			      <td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
-			       <button id="outBtn" onclick="out('${myp.prjno}','emp1@gmail.com','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
+			       <button id="outBtn" onclick="out('${myp.prjno}','randlod@gmail.com','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
 			       <!--  세션에 로그인한 아이디로 바꾸기 -->
 			       <button id="uptBtn" onclick="upt('${myp.prjno}')" type="button" class="btn btn-sm btn-primary">설정</button>
 			       </td>

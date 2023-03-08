@@ -37,4 +37,12 @@
 	to_char(MAX(to_date(start_date,'yyyy-mm-dd') + duration),'yyyy-mm-dd') AS maxdate 
 	FROM gantt WHERE PRJNO =#{prjno}
 	</select>
+	
+	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
+	SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
+	g2.text AS parentText from gantt g1 LEFT join gantt g2 ON g1.PARENT =g2.ID where g1.prjno=#{prjno} AND g1.id=#{id}
+	</select>
+	<update id="uptProgress" parameterType="gantt">
+	UPDATE gantt SET progress=#{progress}, description=#{description} WHERE id=#{id}
+	</update>
 </mapper>

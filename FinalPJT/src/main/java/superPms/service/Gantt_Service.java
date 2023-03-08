@@ -22,9 +22,11 @@ public class Gantt_Service {
 	}
 	public void insGantt(Gantt ins) {
 		if(ins.getOwner()==null) ins.setOwner(" ");
+		if(ins.getDescription()==null) ins.setDescription("");
 		dao.insGantt(ins);
 	}
 	public void uptGantt(Gantt upt) {
+		if(upt.getDescription()==null) upt.setDescription("");
 		dao.uptGantt(upt);
 	};
 	public void insLink(Link ins) {
@@ -41,5 +43,11 @@ public class Gantt_Service {
 	};
 	public Gantt getMinMaxDate(int prjno) {
 		return dao.getMinMaxDate(prjno);
+	};
+	public Gantt ganttDetail(Gantt det) {
+		return dao.ganttDetail(det);
+	};
+	public void uptProgress(Gantt upt) {
+		 dao.uptProgress(upt);
 	};
 }

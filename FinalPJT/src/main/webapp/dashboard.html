@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Define date range</title>
+	<script src="/resources/gantt/codebase/dhtmlxgantt.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="/resources/a00_com/jquery.min.js"></script>
+	<style>
+		html, body {
+			height: 100%;
+			padding: 0px;
+			margin: 0px;
+			overflow: auto;
+		}
+	
+	</style>
+<script>
+$(document).ready(function(){
+	var options = {
+			  chart: {
+			    type: 'donut'
+			  },
+			  series: [44, 55, 41, 17],
+			  labels: ['개발', '영업', '마케팅', '디자인']
+			}
+	var chart = new ApexCharts(document.querySelector("#chart"), options);
+	chart.render();	
+})
+</script>	
+</head>
+<body>
+
+<div id="chart" style="width: 800px;height: 800px;"></div>
+
+
+</body>

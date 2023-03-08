@@ -15,12 +15,27 @@ public class Gantt {
 	
 	private String mindate;
 	private String maxdate;
+	private String parentText;
+	private String end_date;
+
 	
 	
 	
 	
 
 	
+	public String getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
+	}
+	public String getParentText() {
+		return parentText;
+	}
+	public void setParentText(String parentText) {
+		this.parentText = parentText;
+	}
 	public String getMindate() {
 		return mindate;
 	}
