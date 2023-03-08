@@ -22,7 +22,7 @@
 	</delete>
 	<!-- 부서 콤보박스 만들기 -->
 	<select id="deptCom" resultType="superdept">
-		SELECT deptid, dname FROM dept where dname NOT LIKE '최고경영진'
+		SELECT deptid, dname FROM dept where dname NOT LIKE '최고경영진' and PARENTDEPT IS null
 	</select>
 	
 	<select id="projectInfo" resultType="project" parameterType="int">

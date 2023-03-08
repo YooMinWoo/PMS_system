@@ -41,7 +41,7 @@ public class Project_Controller {
 	// 나의 프로젝트 검색
 	@RequestMapping("/myProject.do")
 	public String myProject(@ModelAttribute("sch") ProjectSch sch,Model d) {
-		String owner = "emp1@gmail.com"; //세션에 있는 로그인한 아이디를 owner에 넣기
+		String owner = "monsta@gmail.com"; //세션에 있는 로그인한 아이디를 owner에 넣기
 		sch.setOwner(owner);
 		System.out.println(sch.getCurPage());
 		d.addAttribute("list",service.myProject(sch));

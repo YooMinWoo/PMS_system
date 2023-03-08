@@ -284,8 +284,8 @@ tbody td{
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="고대수" placeholder="" id="html5-search-input" readonly="readonly">
-		          	<input type="hidden" name="tlid" value="admin2@gmail.com"><!-- 세션에 있는 pm 아이디 -->
+		            <input class="form-control" type="text" value="김관리" placeholder="" id="html5-search-input" readonly="readonly">
+		          	<input type="hidden" name="tlid" value="imadmin@gmail.com"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
