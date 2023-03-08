@@ -72,8 +72,8 @@
                       <div class="dropdown-divider"></div>
                     </li>
                      -->
-                    <li>
-                      <a class="dropdown-item" href="${path }/logout.do">
+                   <li>
+                      <a class="dropdown-item" href="${path }/PMSLogin.do">
                         <i class="bx bx-power-off me-2"></i>
                         <input type="hidden" value="${emp.id}">
                         <span class="align-middle">Log Out</span>
