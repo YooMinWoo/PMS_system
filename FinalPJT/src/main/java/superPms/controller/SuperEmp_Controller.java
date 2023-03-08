@@ -128,4 +128,9 @@ public class SuperEmp_Controller {
 		d.addAttribute("msg",service.sendMail(mail));
 		return "WEB-INF\\eunbeenView\\forgetPassword.jsp";
 	}
+	@PostMapping("/mailSenderNewEmp.do")
+	public String mailSenderNewEmp(PassMail mail, Model d) {
+		d.addAttribute("msg",service.sendMailNewEmp(mail));
+		return "redirect:/getEmpList.do";
+	}
 }

@@ -94,6 +94,11 @@ cellChkVal = false;
 		         $("[name=pass]").focus();
 		         return false;
 		     }
+	         if($("[name=pass]").val().length > 15){
+		         alert("비밀번호는 15자리 이하이여야 합니다.");
+		         $("[name=pass]").focus();
+		         return false;
+		     }
 	    
 	         if($("[name=deptid]").val()==""){
 		         alert("소속부서를 선택하세요.");
@@ -288,7 +293,7 @@ cellChkVal = false;
 	                    ></button>
 	               </div>
 	               <div class="modal-body">
-	               <form id="frm02" class="form" action="${path}/insertEmp.do" method="post">
+	               <form id="frm02" class="form" action="${path}/mailSenderNewEmp.do" method="post">
 	               		<div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-ename">사원명</label>
                           <div class="col-sm-10">

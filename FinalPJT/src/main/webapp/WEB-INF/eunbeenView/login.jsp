@@ -85,7 +85,7 @@
                 <a href="index.html" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <svg
-                      width="25"
+                      width="50"
                       viewBox="0 0 25 42"
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@
               <p style="font-weight:bold;" class="mb-4">시스템을 사용하기 위한 로그인을 해주세요.</p>
 
               <form name="frm01" id="formAuthentication" class="mb-3" method="POST">
-                <div class="mb-3">
+                <div class="mb-2">
                   <label style="font-weight:bold;" for="email" class="form-label">이메일</label>
                   <input
                     type="text"
