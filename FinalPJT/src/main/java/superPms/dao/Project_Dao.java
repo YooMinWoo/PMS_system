@@ -32,4 +32,5 @@ public interface Project_Dao {
 	public ProjectMemberList getPm(int prjno);
 	public void uptProInfo(Project upt);
 	public void delProject(int prjno);
+	public void delProjectMember(ProjectMember del);
 }

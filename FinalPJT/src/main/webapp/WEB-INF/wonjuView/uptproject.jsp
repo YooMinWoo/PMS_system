@@ -141,7 +141,8 @@ tbody td{
 	function uptAjax(prjno,deptidVal,subjectVal,regdteVal,deadlineVal,openStatusVal){
 		 if(deptidVal!=null && subjectVal!=''){
 			 let url="${path}/uptProInfo.do?prjno="+prjno+"&subject="+subjectVal+
-					 "&regdte="+regdteVal+"&deadline="+deadlineVal+"&deptid="+deptidVal+"&openStatus="+openStatusVal
+					 "&regdte="+regdteVal+"&deadline="+deadlineVal+"&deptid="+
+					 deptidVal+"&openStatus="+openStatusVal
 			  console.log(url)		 
 			 fetch(url,{method: 'POST'}).then(function(response){
 				 return response.json()
@@ -198,7 +199,8 @@ tbody td{
 		          <div class="col-md-10">
 			           <select id="html5-text-input" class="form-select" name="deptid" required="required">
 			            <c:forEach var="dept" items="${deptCom}">
-							<option <c:if test="${dept.deptid==projectInfo.deptid}">selected</c:if> value="${dept.deptid }">${dept.dname}</option>
+							<option <c:if test="${dept.deptid==projectInfo.deptid}">selected</c:if>
+							 value="${dept.deptid }">${dept.dname}</option>
 				    	</c:forEach>
 			          </select>
 			          <div class="invalid-feedback">
@@ -218,14 +220,16 @@ tbody td{
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="${projectInfo.ename }" id="html5-search-input" readonly="readonly">
+		            <input class="form-control" type="text" value="${projectInfo.ename }" 
+		            id="html5-search-input" readonly="readonly">
 		          	<input type="hidden" name="tlid" value="${projectInfo.tlid}"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
 		          <label for="startDate" class="col-md-2 col-form-label">시작 일자</label>
 		          <div class="col-md-10"> 
-		            <input class="form-control" name="regdte" id="startDate" type="date" value="${projectInfo.regdte }" required="required">
+		            <input class="form-control" name="regdte" id="startDate" type="date"
+		             value="${projectInfo.regdte }" required="required">
 		         	 <div class="invalid-feedback" id="regCk">
 					    프로젝트 시작 일자를 입력해주세요
 					  </div>
@@ -234,7 +238,8 @@ tbody td{
 		         <div class="mb-3 row">
 		          <label for="endDate" class="col-md-2 col-form-label">종료 일자</label>
 		          <div class="col-md-10">
-		            <input class="form-control validCk" name="deadline" type="date" value="${projectInfo.deadline }" id="endDate" required="required">
+		            <input class="form-control validCk" name="deadline" type="date" 
+		            value="${projectInfo.deadline }" id="endDate" required="required">
 		          	 <div class="invalid-feedback" id="deadCk">
 					    프로젝트 종료 일자를 입력해주세요
 					  </div>

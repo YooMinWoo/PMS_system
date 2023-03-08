@@ -26,17 +26,12 @@ public class Gantt_Controller {
 	@RequestMapping("/insGantt.do")
 	public String insGantt(Gantt ins) {
 		service.insGantt(ins);
-		System.out.println(ins.getId());
-		System.out.println(ins.getPrjno());
-		System.out.println(ins.getDescription());
-
 		return "pageJsonReport";
 	}
 	
 	@PostMapping("/uptGantt.do")
 	public String uptGantt(Gantt upt) {
 		service.uptGantt(upt);
-		System.out.println(upt.getDescription());
 		return "pageJsonReport";
 	}
 	@PostMapping("/delGantt.do")
@@ -52,7 +47,7 @@ public class Gantt_Controller {
 		return "pageJsonReport";
 	}
 	@PostMapping("/delLink.do")
-	public String delLink(@RequestParam("id")String id,Model d) {
+	public String delLink(@RequestParam("id")String id) {
 		service.delLink(id);
 		return "pageJsonReport";
 	}

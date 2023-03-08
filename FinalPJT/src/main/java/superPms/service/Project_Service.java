@@ -72,6 +72,9 @@ public class Project_Service {
 	public void delProject(int prjno) {
 		dao.delProject(prjno);
 	};
+	public void delProjectMember(ProjectMember del) {
+		dao.delProjectMember(del);
+	}
 	// 페이징 처리(sch, 한번에 보여줄 페이지수, 한번에 보여줄 블럭 수, 전체 게시글갯수)
 	public void pagination(ProjectSch sch,int pageSize, int blockSize, int tot ) {
 		sch.setCount(tot); // 전체 데이터 건수

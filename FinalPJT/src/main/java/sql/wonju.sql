@@ -184,7 +184,8 @@ MINVALUE 1;
 CREATE SEQUENCE link_seq
 START WITH 1
 MINVALUE 1;
-SELECT * FROM PROJECTMEMBER WHERE prjno=#{prjno};
+SELECT * FROM PROJECTMEMBER;
+DELETE FROM projectmember WHERE prjno=66 AND owner='emp7@gmail.com';
 
 SELECT d.dname, e.job, e.ename FROM dept777 d, emp777 e, project p
 WHERE p.PRJNO =51 AND e.id=p.TLID AND e.DEPTID =d.DEPTID ;

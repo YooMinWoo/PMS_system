@@ -81,10 +81,11 @@ tbody td{
 			$("[name=keyword]").val("")
 			$("#myFrm").submit()
 		})
-		
+		// 새 프로젝트 등록 버튼
 		$("#newBtn").click(function(){
 			location.href="${path}/newProjectShow.do"
 		})
+		
 
 	});
 	function goProjectMain(prjno){
@@ -93,6 +94,20 @@ tbody td{
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
 		$("#myFrm").submit()
+	}
+	function out(prjno,owner,subject){
+		if(confirm("<"+subject+"> 프로젝트에서 나가시겠습니까?")){
+			let url="${path}/delProjectMember.do?prjno="+prjno+"&owner="+owner
+			fetch(url,{method: 'POST'}).then(function(response){
+				return response.json()
+			}).then(function(json){
+				if(json.msg=='나가기성공'){
+					location.reload()
+				}
+			}).catch(function(err){
+				console.log(err)
+			})
+		}
 	}
 </script>
 </head>
@@ -171,8 +186,9 @@ tbody td{
 			      <tr ondblclick="goProjectMain(${myp.prjno})">
 			      <td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
-			       <button type="button" class="btn btn-sm btn-secondary">나가기</button>
-			       <button type="button" class="btn btn-sm btn-primary">설정</button>
+			       <button id="outBtn" onclick="out('${myp.prjno}','emp1@gmail.com','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
+			       <!--  세션에 로그인한 아이디로 바꾸기 -->
+			       <button id="uptBtn" onclick="upt('${myp.prjno}')" type="button" class="btn btn-sm btn-primary">설정</button>
 			       </td>
 			       </tr>
 			      </c:forEach>

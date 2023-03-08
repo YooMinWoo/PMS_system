@@ -92,7 +92,7 @@
 		if(minusdate>=0){
 			$("#subject").append(" (D-"+minusdate+")")
 		}else{
-			$("#subject").append(" (종료된 프로젝트입니다.)")
+			$("#subject").append(" (종료)")
 		}
 		
 		// 수정 화면으로 이동
@@ -237,11 +237,8 @@
 
 					 var pagination = $('#pagination ul.pagination');
 					 pagination.empty(); // ajax 시작시 초기화
-					  
-					  // 이전 페이지로 이동하는 버튼
-					  pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
-							    	+ (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
-					  // 페이지 번호를 생성하는 반복문
+					 pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
+							  + (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
 					  for (var i = 1; i <= data.sch.endBlock; i++) {
 					    var pageLi = $('<li class="page-item"></li>');
 					    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
@@ -251,9 +248,8 @@
 					    pageLi.append(pageLink);
 					    pagination.append(pageLi);
 					  }
-					  // 다음 페이지로 이동하는 버튼
 					  pagination.append($('<li class="page-item next"></li><a class="page-link" href="javascript:goPage(' 
-							  + (data.sch.endBlock + 1) + ');"><i class="tf-icon bx bx-chevron-right"></i></a>'));
+						+ (data.sch.endBlock + 1) + ');"><i class="tf-icon bx bx-chevron-right"></i></a>'));
 
 					
 				},
@@ -296,8 +292,10 @@
 		           <h3 id="subject"class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
 		           </div>
 		           <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
-		            <button type="button" id="memBtn" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
-		            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#inviteModal">멤버초대</button>&nbsp;&nbsp;&nbsp;
+		            <button type="button" id="memBtn" class="btn btn-sm btn-success" data-bs-toggle="modal"
+		             data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
+		            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" 
+		            data-bs-target="#inviteModal">멤버초대</button>&nbsp;&nbsp;&nbsp;
 		            <button type="button" id="uptBtn" class="btn btn-sm btn-secondary">설정</button>
 		           </div>
 	           </div>

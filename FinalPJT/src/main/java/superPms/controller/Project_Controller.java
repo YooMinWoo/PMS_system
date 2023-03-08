@@ -113,5 +113,11 @@ public class Project_Controller {
 		d.addAttribute("msg","삭제완료");
 		return "pageJsonReport";
 	}
-  
+	// 프로젝트 나가기 프로세스
+	@PostMapping("/delProjectMember.do")
+	public String delProjectMember(ProjectMember del, Model d) {
+		service.delProjectMember(del);
+		d.addAttribute("msg","나가기성공");
+		return "pageJsonReport";
+	}
 }

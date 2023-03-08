@@ -107,7 +107,8 @@
 		
 
 		// body에 있는 간트id, "시작일자","종료일자" month는 =1
-		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), new Date("${projectInfo.deadline}"));
+		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), 
+				new Date("${projectInfo.deadline}"));
 		// 초기데이터 ajax 호출
 		gantt.load("/showGantt.do?prjno="+prjno)
 		
@@ -128,8 +129,9 @@
 		// ## 업무 변경시 수정 메서드
 		gantt.attachEvent("onAfterTaskUpdate", function(id,item){
 		    var startDate = timeConvert(item.start_date)
-		    var qstr="text="+item.text+"&start_date="+startDate+"&progress="+item.progress+"&owner="
-		    +item.owner+"&parent="+item.parent+"&duration="+item.duration+"&id="+item.id+"&description="+item.description
+		    var qstr="text="+item.text+"&start_date="+startDate+"&progress="
+		    +item.progress+"&owner="+item.owner+"&parent="+item.parent+
+		    "&duration="+item.duration+"&id="+item.id+"&description="+item.description
 		    callAjax("/uptGantt.do",qstr)
 		});
 		
