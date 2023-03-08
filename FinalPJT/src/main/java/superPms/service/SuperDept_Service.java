@@ -25,7 +25,7 @@ public class SuperDept_Service {
 		// 3. 한페이지에 보일 데이터 갯수
 		//   - 초기화면 현재 페이지 번호 0 ==> default설정
 		if(sch.getPageSize()==0) {
-			sch.setPageSize(6);
+			sch.setPageSize(5);
 		}
 		// 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
 		//    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지

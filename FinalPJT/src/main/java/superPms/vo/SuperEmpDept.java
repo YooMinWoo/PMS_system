@@ -13,6 +13,8 @@ public class SuperEmpDept {
 	private String job;
 	private String dname;
 	private String parentDept;
+	private int level;
+	private int cnt;
 	
 	public SuperEmpDept() {
 		// TODO Auto-generated constructor stub
@@ -112,6 +114,23 @@ public class SuperEmpDept {
 	public void setNewPass(String newPass) {
 		this.newPass = newPass;
 	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 	
 	
 }

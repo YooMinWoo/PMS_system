@@ -3,6 +3,11 @@ package superPms.vo;
 public class SuperEmpDeptSch {
 	// 원주 추가 부분
 	private String keyword;
+	// 은빈 추가 부분
+	private String sename; // 사원명 검색
+	private String dname; // 부서명 검색
+	private String job; // 직책 검색
+	
 	private int count; // 전체 데이터 건수
 	private int pageSize; // 한 페이지에 보여줄 데이터 건수
 	private int pageCount; // 총 페이지 수 counte÷pageSize
@@ -73,5 +78,24 @@ public class SuperEmpDeptSch {
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
 	}
+	public String getSename() {
+		return sename;
+	}
+	public void setSename(String sename) {
+		this.sename = sename;
+	}
+	public String getDname() {
+		return dname;
+	}
+	public void setDname(String dname) {
+		this.dname = dname;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
+	}
+	
 	
 }
