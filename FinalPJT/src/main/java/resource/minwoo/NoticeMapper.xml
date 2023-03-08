@@ -113,23 +113,31 @@
 		      and title like '%'||#{schInfo}||'%'
 	</select>
 	
+	<!-- 공지사항 삭제 -->
 	<delete id="delNotice" parameterType="int">
 		delete from notice
+		where noticeno=#{no}
+	</delete>
+	<!-- 공지사항 삭제시 그 공지사항에 있던 댓글 삭제 -->
+	<delete id="delNoticeRep" parameterType="int">
+		delete from noticerep
 		where noticeno=#{no}
 	</delete>
 	
 	<!-- 댓글 조회 -->
 	<select id="noticeRepList" parameterType="noticerepsch" resultType="noticerep">
-		SELECT repno, refno, content, regdte, uptdte, noticeno, writer, ename FROM (
-			SELECT rownum cnt, repno, refno, content, 
-						to_char(n.regdte,'yyyy-mm-dd') regdte,
-						to_char(n.uptdte,'yyyy-mm-dd') uptdte,
-						noticeno, writer, e.ename 
-			FROM noticerep n, emp e
-			WHERE noticeno=#{noticeno}
-			AND n.WRITER = e.id
-			ORDER BY regdte
-			) r
+		SELECT * FROM (
+			SELECT rownum cnt, repno, refno, content, regdte, uptdte, noticeno, writer, ename FROM (
+				SELECT repno, refno, content, 
+							to_char(n.regdte,'yyyy-mm-dd') regdte,
+							to_char(n.uptdte,'yyyy-mm-dd') uptdte,
+							noticeno, writer, e.ename 
+				FROM noticerep n, emp e
+				WHERE noticeno=#{noticeno}
+				AND n.WRITER = e.id
+				ORDER BY n.regdte 
+				) r
+			)
 		WHERE cnt BETWEEN #{start} AND #{end}
 	</select>
 	

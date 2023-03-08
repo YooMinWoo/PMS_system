@@ -217,7 +217,7 @@ tbody tr{
 	                        </c:forEach>
 	                        
                             <li class="page-item next">
-                              <a class="page-link" href="javascript:goPage(${noticeSch.startBlock+1});"
+                              <a class="page-link" href="javascript:goPage(${noticeSch.endBlock+1});"
                                 ><i class="tf-icon bx bx-chevrons-right"></i
                               ></a>
                             </li>
@@ -262,14 +262,6 @@ tbody tr{
 						var checked = $(".checkbox:checked").length;
 						if(checked==0) alert("하나 이상 체크하여야 삭제가 가능합니다.")
 						else{
-							/*
-							var nos = '';
-							$(".checkbox:checked").each(function(i,val){
-								if(checked-1 == i) nos += val.value
-								else nos += val.value+'/'
-							})
-							console.log(nos);
-							*/
 							$("#frm03").submit()
 						}
 					})

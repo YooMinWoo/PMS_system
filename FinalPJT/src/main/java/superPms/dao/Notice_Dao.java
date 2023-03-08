@@ -16,6 +16,7 @@ public interface Notice_Dao {
 	public int totCnt(NoticeSch sch);
 	public void uptNotice(Notice sch);
 	public void delNotice(int no);
+	public void delNoticeRep(int no);
 	public List<NoticeRep> noticeRepList(NoticeRepSch sch);
 	public void insertNoticeRep(NoticeRep sch);
 	public void deleteNoticeRep(NoticeRep sch);

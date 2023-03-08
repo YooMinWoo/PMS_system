@@ -59,7 +59,7 @@ public class Notice_Service {
 		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
 		
 		// 블럭 크기 지정( 한 번에 보여줄 block의 크기 )
-		sch.setBlockSize(5);
+		sch.setBlockSize(3);
 		
 		
 		
@@ -127,6 +127,7 @@ public class Notice_Service {
 	public void delNotice(int[] nos) {
 		for(int no : nos) {
 			dao.delNotice(no);
+			dao.delNoticeRep(no);
 		}
 	}
 	

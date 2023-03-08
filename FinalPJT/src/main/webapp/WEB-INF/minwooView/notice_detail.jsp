@@ -166,6 +166,17 @@ textarea:read-only{
 	});
 	
 	function repUptBtn(idx){
+		
+		if($("#repForm"+idx).find("[name=content]").val().length>150){
+			alert("150자 이하로 입력해주세요")
+			$("#repForm"+idx).find("[name=content]").focus()
+			return
+		}
+		if($("#repForm"+idx).find("[name=content]").val()==""){
+			alert("댓글을 입력해주세요.")
+			$("#repForm"+idx).find("[name=content]").focus()
+			return
+		}
 		$("#repForm"+idx).attr("action","/FinalPJT/updateNoticeRep.do")
 		$("#repForm"+idx).submit()
 	}
@@ -222,7 +233,7 @@ textarea:read-only{
 	           <div class="card mb-4 pb-3">
            			<div class="card-body">
                       <form method="post" id="frm01">
-                      	
+                      	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                       	<input type="hidden" name="path" value="${noticeDetail.path }">
                       	<input type="hidden" name="curPage" value="${noticeRepSch.curPage }">
                         <div class="mb-3">
@@ -360,7 +371,7 @@ textarea:read-only{
 	                        </c:forEach>
 	                        
                             <li class="page-item next">
-                              <a class="page-link" href="javascript:goPage(${noticeRepSch.startBlock+1});"
+                              <a class="page-link" href="javascript:goPage(${noticeRepSch.endBlock+1});"
                                 ><i class="tf-icon bx bx-chevrons-right"></i
                               ></a>
                             </li>

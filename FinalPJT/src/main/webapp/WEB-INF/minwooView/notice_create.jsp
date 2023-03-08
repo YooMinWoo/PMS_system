@@ -74,7 +74,6 @@
 			}
 		})
 		$("#regBtn").click(function(){
-			if(confirm("등록 하시겠습니까?")){
 				if($("[name=title]").val()==""){
 					alert("제목을 입력하세요.")
 					$("[name=title]").focus()
@@ -94,8 +93,9 @@
 					$("[name=content]").focus()
 					return
 				}
-				$("form").submit();
-			}
+				if(confirm("등록 하시겠습니까?")){
+					$("form").submit();
+				}
 		})
 		/*
 		$("[name=report]").on("change",function(){
