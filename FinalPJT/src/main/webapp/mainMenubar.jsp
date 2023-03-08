@@ -200,7 +200,7 @@
               </a>
             </li>
              <li class="menu-item" id="menu-item-chatting">
-              <a href="*" class="menu-link">
+              <a href="${path }/chatting.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-chat"></i>
                 <div data-i18n="Extended UI">채팅</div>
               </a>
