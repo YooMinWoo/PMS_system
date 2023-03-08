@@ -1,5 +1,6 @@
 package superPms.vo;
 
+import org.springframework.web.multipart.MultipartFile;
 
 public class Work {
 	private int workno;	
@@ -13,6 +14,8 @@ public class Work {
 	private int hisno;	
 	private int Field;	
 	private String state;
+	private String fname;
+	private MultipartFile report;
 	public Work() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -82,6 +85,24 @@ public class Work {
 	}
 	public void setState(String state) {
 		this.state = state;
+	}
+	public String getEnddte() {
+		return enddte;
+	}
+	public void setEnddte(String enddte) {
+		this.enddte = enddte;
+	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	public MultipartFile getReport() {
+		return report;
+	}
+	public void setReport(MultipartFile report) {
+		this.report = report;
 	}
 	
 }

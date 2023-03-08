@@ -21,10 +21,8 @@
 		INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
 			#{enddte},#{subject},#{cont},#{id},#{prjno},null,null)
 	</insert>
-	<insert id="insFile" parameterType="work">
-		insert into files values(
-			files_seq.nextval,#{fname},sysdate,sysdate,#{path}
-		)
+	<insert id="insFile" parameterType="workFile">
+		INSERT INTO FILES VALUES(files_seq.nextval,#{fname},sysdate,sysdate,#{path})
 	</insert>
 	<update id="uptWork" parameterType="work">
 		update work

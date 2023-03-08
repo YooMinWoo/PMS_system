@@ -35,7 +35,7 @@ public class Work_Controller {
 		return "WEB-INF\\jongeunView\\workList.jsp";
 	}
 	// http://localhost:7080/FinalPJT/workInsFrm.do
-	@GetMapping("/workInsFrm.do")
+	@RequestMapping("/workInsFrm.do")
 	public String workInsFrm() {
 		return "WEB-INF\\jongeunView\\workIns.jsp";
 	}
@@ -66,17 +66,22 @@ public class Work_Controller {
 		return "WEB-INF\\jongeunView\\workUpt.jsp";
 	}
 	*/
-	@RequestMapping("/workUpt.do")
+	@PostMapping("/workUpt.do")
 	public String workUpt(@RequestParam("no") int no,Work upt, Model d) {
 		service.uptWork(upt);
 		d.addAttribute("work",service.getWork(no));
 		d.addAttribute("msg","수정완료");
 		return "WEB-INF\\jongeunView\\workUpt.jsp";
 	}
-	@GetMapping("/delWork.do")
-	public String delWork(@RequestParam("no") int no, Model d) {
+	@GetMapping("/workDel.do")
+	public String workDel(@RequestParam("no") int no, Model d) {
 		service.delWork(no);
 		d.addAttribute("msg","삭제완료");
 		return "WEB-INF\\jongeunView\\workDetail.jsp";
+	}
+	@GetMapping("/workFileDownload.do")
+	public String workFileDownload(@RequestParam("fname") String fname, Model d) {
+		d.addAttribute("downloadFile", fname);
+		return "downloadViewer";
 	}
 }
