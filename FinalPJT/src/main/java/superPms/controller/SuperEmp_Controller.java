@@ -62,6 +62,7 @@ public class SuperEmp_Controller {
 		d.addAttribute("authSet", service.getAuthSetting(id));
 		return "WEB-INF\\eunbeenView\\authSetting.jsp";
 	}
+	
 	@ModelAttribute("jobCom")
 	public List<String> getJobCom(){
 		return service.getJobCom();
@@ -81,6 +82,9 @@ public class SuperEmp_Controller {
 	// http://localhost:5080/FinalPJT/PMSLogin.do
 	@RequestMapping("/PMSLogin.do")
 	public String login(SuperEmpDept e, HttpSession session, Model d) {
+		if(session.getAttribute("emp")!=null) {
+			session.removeAttribute("emp");
+		}
 		if(e.getId()==null) {
 			return "WEB-INF\\eunbeenView\\login.jsp";
 		}else if(service.login(e)==null) {
@@ -95,13 +99,13 @@ public class SuperEmp_Controller {
 	}
 	
 	// 로그아웃시 session 종료
-	@RequestMapping("/logout.do")
-	public String logout(HttpSession session, String id, Model d) {
-		if(session.getAttribute("emp")!=null) {
-			session.removeAttribute("emp");
-		}
-		return "redirect:/PMSLogin.do";
-	}
+//	@RequestMapping("/logout.do")
+//	public String logout(HttpSession session) {
+//		if(session.getAttribute("emp")!=null) {
+//			session.removeAttribute("emp");
+//		}
+//		return "forward:/PMSLogin.do";
+//	}
 	@RequestMapping("/userGetEmpList.do")
 	public String userGetEmpList(@ModelAttribute("ch") SuperEmpDept ch, Model d) {
 		d.addAttribute("ulist", service.getEmpList(ch));

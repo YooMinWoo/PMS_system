@@ -12,6 +12,7 @@
 		and d.dname like '%'||#{dname}||'%'
 		AND e.job like '%'||#{job}||'%'
 		and d.dname NOT LIKE '최고경영진'
+		ORDER BY d.dname
 	</select>
 	<select id="idChk" resultType="superempdept" parameterType="String">
 		SELECT * 

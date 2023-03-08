@@ -61,6 +61,10 @@
 		$("[name=dname]").val("${ch.dname}");
 		
 	});
+	function goPage(cnt){
+	      $("[name=curPage]").val(cnt);
+	      $("#frm01").submit()
+	   }
 	
 </script>
 </head>
@@ -89,6 +93,7 @@
            <div class="row">
 			<div class="col" style="border-left:none;border-right:none;">
 			<form id="frm01" method="post">
+			<input type="hidden" name="curPage" value="${sch.curPage }">
 				<div style="margin-top:15px;" class="row text-center">
 					<div class="col">
 						<span style="font-size:18px;font-weight:bold;">사원명 </span>
@@ -134,7 +139,28 @@
                     </tbody>
                   </table>
                 </div>
-              
+               <div style="display:flex; justify-content:center;" class="demo-inline-spacing">
+              <nav aria-label="Page navigation">
+                 <ul class="pagination pagination-lg">
+                    <li class="page-item prev">
+                       <a class="page-link" href="javascript:goPage(${sch.startBlock-1});"
+                                ><i class="tf-icon bx bx-chevrons-left"></i
+                              ></a>
+                            </li>
+                            <c:forEach var="cnt" begin="${sch.startBlock}" 
+                           end="${sch.endBlock}">
+                          <li class="page-item ${sch.curPage==cnt?'active':''}">
+                          <a class="page-link" 
+                             href="javascript:goPage(${cnt});">${cnt}</a></li>
+                       </c:forEach>
+                            <li class="page-item next">
+                              <a class="page-link" href="javascript:goPage(${sch.endBlock+1});"
+                                ><i class="tf-icon bx bx-chevrons-right"></i
+                              ></a>
+                       </li>
+                    </ul>
+                 </nav>
+               </div>
               </div><br>
            
          	</div>
