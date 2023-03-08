@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
+
+<mapper namespace="superPms.dao.Mail_Dao">
+	<insert id="insSender" parameterType="mail">
+		INSERT INTO mail values(mail_seq.nextval,#{title},#{content},
+				#{sender},sysdate,0,#{receiver})
+	</insert>
+	
+	<insert id="insReceiver" parameterType="mail">
+		insert into receiver values(mail_seq.currval,#{receiver},#{title},#{content},sysdate,0,#{sender})
+	</insert>
+	
+	<insert id="insertUploadFile" parameterType="mailfile">
+		insert into mailFile values(mail_seq.currval,#{fname},sysdate)
+	</insert>
+	<select id="totCntSend" resultType="int" parameterType="mailsch">
+		SELECT count(*) FROM mail WHERE sender=#{sender}
+	</select>
+	<select id="mySendMail" parameterType="mailsch" resultType="mail">
+		SELECT * 
+          FROM (
+      		SELECT rownum cnt, m.* 
+      		FROM (
+	         SELECT *
+	         FROM mail
+	         where 1=1
+	         and sender=#{sender}
+	         ORDER BY senddte DESC) m )
+	      WHERE cnt BETWEEN #{start} AND #{end}
+	</select>
+	<select id="totCntReceive" resultType="int" parameterType="mailsch">
+		SELECT count(*) FROM receiver WHERE receiver=#{receiver}
+	</select>
+	<select id="myReceiveMail" parameterType="mailsch" resultType="mail">
+		SELECT * 
+          FROM (
+      		SELECT rownum cnt, m.* 
+      		FROM (
+	         SELECT *
+	         FROM receiver
+	         where 1=1
+	         and receiver=#{receiver}
+	         ORDER BY receivedte DESC) m )
+	      WHERE cnt BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="sendDetail" parameterType="string" resultType="mail">
+		SELECT * FROM mail WHERE mailno=#{mailno}
+	</select>
+	
+	<select id="receiveDetail" parameterType="string" resultType="mail">
+		SELECT * FROM receiver WHERE mailno=#{mailno}
+	</select>
+	
+	<select id="getMailFile" parameterType="int" resultType="string">
+		SELECT DISTINCT(fname) FROM MAILFILE where mailfno=#{mailfno}
+	</select>
+	
+	
+	
+	<update id="uptSendState" parameterType="string">
+		UPDATE mail SET state = 1 WHERE mailno = #{mailno}
+	</update>
+	
+	<update id="uptReceiveState" parameterType="string">
+		UPDATE receiver SET state = 1 WHERE mailno = #{mailno}
+	</update>
+	
+	<delete id="delSendMail" parameterType="string">
+		DELETE FROM mail WHERE mailno=#{mailno}
+	</delete>
+	
+	<delete id="delReceiveMail" parameterType="string">
+		DELETE FROM receiver WHERE mailno=#{mailno}
+	</delete>
+	
+	<delete id="delFile" parameterType="string">
+		DELETE FROM mailfile WHERE mailfno=#{mailno}
+	</delete>
+	
+	
+</mapper>

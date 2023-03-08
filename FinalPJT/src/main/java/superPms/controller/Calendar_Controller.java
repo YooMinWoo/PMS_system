@@ -23,7 +23,6 @@ public class Calendar_Controller {
 	@GetMapping("/calList.do")
 	public String calList(Model d, HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-		
 		d.addAttribute("alertList", service.alertList(sObj.getId()));
 		d.addAttribute("alertCount", service.alertCount(sObj.getId()));
 		return "WEB-INF\\suminView\\calendar.jsp";
@@ -31,8 +30,9 @@ public class Calendar_Controller {
 	
 //	http://49.238.187.241:7080/FinalPJT/calListAjax.do
 	@RequestMapping("/calListAjax.do")
-	public String calListAjax(Model d) {
-		d.addAttribute("calList", service.calList());
+	public String calListAjax(HttpSession session,Model d) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("calList", service.calList(sObj.getId()));
 		return "pageJsonReport";
 	}
 	
@@ -60,5 +60,5 @@ public class Calendar_Controller {
 		service.alertState(no);
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
-	
+
 }

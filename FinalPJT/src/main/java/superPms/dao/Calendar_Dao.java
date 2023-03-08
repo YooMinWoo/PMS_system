@@ -7,7 +7,7 @@ import superPms.vo.Calendar;
 
 public interface Calendar_Dao {
 	
-	public List<Calendar> calList();
+	public List<Calendar> calList(String id);
 	
 	public void insCalendar(Calendar ins);
 	
@@ -18,4 +18,6 @@ public interface Calendar_Dao {
 	public List<Alert> alertList(String id);
 	public int alertCount(String id);
 	public void alertState(int no);
+	
+	
 }
