@@ -15,8 +15,8 @@ public class Calendar_Service {
 	@Autowired
 	private Calendar_Dao dao;
 	
-	public List<Calendar> calList(){
-		return dao.calList();
+	public List<Calendar> calList(String id){
+		return dao.calList(id);
 	}
 	
 	public void insCalendar(Calendar ins) {
@@ -38,4 +38,6 @@ public class Calendar_Service {
 	public void alertState(int no) {
 		dao.alertState(no);
 	}
+	
+	
 }

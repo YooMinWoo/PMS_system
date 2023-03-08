@@ -3,8 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<!-- 수민 -->
 		<typeAlias alias="calendar" type="superPms.vo.Calendar"/>
 		<typeAlias alias="todolist" type="superPms.vo.Todolist"/>
+		<typeAlias alias="mailfile" type="superPms.vo.MailFile"/>
+      	<typeAlias alias="mail" type="superPms.vo.Mail"/>
+      	<typeAlias alias="mailsch" type="superPms.vo.MailSch"/>
+      	<typeAlias alias="alert" type="superPms.vo.Alert"/> 
 		<!-- 은빈 -->
 		<typeAlias alias="superdept" type="superPms.vo.SuperDept"/>
       	<typeAlias alias="deptsch" type="superPms.vo.DeptSch"/>
@@ -17,7 +22,7 @@
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="risksch" type="superPms.vo.RiskSch"/>
-      	<typeAlias alias="alert" type="superPms.vo.Alert"/> 
+      	
       	
       	<!-- 민우 -->	
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
@@ -41,6 +46,7 @@
 		<mapper resource="resource/sumin/CalendarMapper.xml"/>
 		<mapper resource="resource/sumin/TodolistMapper.xml"/>
 		<mapper resource="resource/sumin/AlertMapper.xml"/>
+		<mapper resource="resource/sumin/MailMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/wonju/GanttMapper.xml"/>
 		<mapper resource="resource/eunbeen/DeptMapper.xml"/>

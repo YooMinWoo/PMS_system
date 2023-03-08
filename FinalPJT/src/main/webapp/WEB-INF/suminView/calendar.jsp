@@ -57,6 +57,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var toDay = new Date().toISOString().split("T")[0];
+   
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
         left: 'prev,next today',
@@ -150,6 +151,7 @@
  	})		
      
   });
+ 
    	function calAjax(url){
 		$.ajax({
 			type:"post",
@@ -192,6 +194,8 @@
 		location.href="${path}/alertState01.do?no="+no
 		location.reload()
 	}
+   	
+   	
 </script>
 <style>
 
@@ -302,8 +306,9 @@
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">캘린더</small></h4>
-           
+         
            <div class="card mb-4 pb-3">
+           
            	 <div id='calendar'></div>
          	</div>
          	  <!-- /card -->

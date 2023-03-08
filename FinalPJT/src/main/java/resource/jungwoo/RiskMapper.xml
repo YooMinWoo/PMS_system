@@ -31,18 +31,25 @@
 			WHERE riskno= #{riskno}
   	</select>
   	<insert id="insertRisk" parameterType="risk">
-  			INSERT INTO RISK VALUES (risk_seq.nextval, 
+  			INSERT INTO RISK (riskno, risklevel, riskpriority, 
+  			riskmoniter, riskstate, riskname, id, prjno) VALUES
+  			(risk_seq.nextval, 
   			#{risklevel},  #{riskpriority},
-  			#{riskmoniter}, #{riskstate}, 
-  			#{riskname}, 'monsta@gmail.com', 1)
+  			#{riskmoniter}, '발생', 
+  			#{riskname}, 'monsta@gmail.com', 23)
   	</insert>
  	<update id="updateRisk" parameterType="risk">
 		update risk
 		set
 			risklevel = #{risklevel},
 			riskpriority = #{riskpriority},
+			riskmoniter = #{riskmoniter},
 			riskstate = #{riskstate},
 			riskname = #{riskname}
-	   where riskno = #{riskno}				
-	</update>	
+	   where riskno = #{riskno}			
+	</update>
+  	<delete id="deleteRisk" parameterType="risk">
+			DELETE FROM RISK
+			WHERE RISKNO =#{riskno}
+  	</delete>	
 </mapper>

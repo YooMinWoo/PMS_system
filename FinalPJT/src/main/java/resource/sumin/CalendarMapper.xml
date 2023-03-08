@@ -11,7 +11,7 @@
 		<result column="url" property="urllink"></result>
 	</resultMap>
 	<select id="calList" resultMap="calRst">
-		select * from calendar where id=#{id}
+		select * from calendar where writer=#{writer}
 	</select>
 	
 	<insert id="insCalendar" parameterType="calendar">
@@ -49,4 +49,6 @@
 	<update id="alertState" parameterType="int">
 		UPDATE alert SET state='읽음' WHERE no=#{no}
 	</update>
+	
+	
 </mapper>

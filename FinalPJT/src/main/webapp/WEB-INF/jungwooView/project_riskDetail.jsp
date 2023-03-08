@@ -54,29 +54,54 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
+		console.log($("[name=risklevel]").val())
 		$("#uptBtn").click(function(){			
-			if(confirm("수정하시겠습니까?")){
+			if(confirm("수정 하시겠습니까?")){
 				$("option").attr("disabled", false)
-				$("form").attr("action","${path}/project_riskUpdate.do");
-				$("form").submit();
+				$("#form1").attr("action","${path}/project_riskUpdate.do");
+				$("#form1").submit();
+			}
+		})
+		$("#delBtn").click(function(){			
+			if(confirm("삭제 하시겠습니까?")){
+				$("option").attr("disabled", false)
+				$("#form1").attr("action","${path}/project_riskDelete.do");
+				$("#form1").submit();
 			}
 		})
 		$("#goMain").click(function(){
-			location.href="${path}/project_riskList.do"			
+			location.href="${path}/project_pagingRisk.do"			
 		});
-<%--		$("[name=risklevel]").val()("${risk.risklevel}"))
-		$("[name=risklevel]").val()("${risk.riskpriority}")) --%>
-<%--
+		var ename="${emp.ename}"
+		console.log(ename)
  		if(${emp.auth!=2}){
 			$("[name=risklevel]").attr('readonly',true)
 			$("[name=riskpriority]").attr('readonly',true)
-			if("[name=riskmoniter]".val()==${emp.ename}){
+			$("[name=riskmoniter]").attr('readonly',true)
+			$("[name=riskstate]").attr('readonly',true)
+			if($("[name=riskmoniter]").val()==ename){
 				$("[name=risklevel]").attr('readonly',false)
 				$("[name=riskpriority]").attr('readonly',false)
+				$("[name=riskstate]").attr('readonly',false)
 			}
 		}
---%>
+<%--		$('form input[readonly], form select[readonly]').click(function() {
+			
+				alert("pm과 담당자만가능")
+			
+		}); --%>
+		$("#riskmoniter").click(function(){
+			if(${emp.auth!=2}){
+				alert("pm만 가능")
+			}
+		})
+		$("#risklevel, #riskpriority, #riskstate").click(function(){
+			if($("[name=riskmoniter]").val()!=ename && ${emp.auth!=2}){
+				alert("pm과 담당자만 가능")
+			}
+		})
 		
 	});
 </script>
@@ -107,7 +132,7 @@
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
 				        <h4 class="mb-3">리스크 상세</h4>
-				        <form method="post" class="validation-form" novalidate>
+				        <form method="post" id="form1" class="validation-form" novalidate>
 				          <div class="row">
 				            <div class="col-md-6 mb-3">
 				              <label for="riskno">리스크번호</label>
@@ -165,23 +190,35 @@
 				              </div>
 				            </div>
 				          </div> 
-				        
-<%-- 				          <div class="mb-3">
-				            <label for="content">내용</label>
-				            <textarea name="content"  class="form-control  ckValid" id="content" placeholder="내용 입력" required rows="5" >${board.content}</textarea>
-				            <div class="invalid-feedback">
-				              내용를 입력해주세요.
-				            </div>
-				          </div>  --%>     
-				          
 				          <div class="mb-4"></div>
 				          <button id="uptBtn" class="btn btn-warning btn-lg btn-block" type="button">리스크 수정</button>
+				          <button id="delBtn" class="btn btn-danger   btn-lg btn-block" type="button">리스크 삭제</button>
 				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
 				        </form>
 				      </div>
            		</div>
          	</div>
          	  <!-- /card -->
+			<div class="card mb-4 pb-3">
+           		<div class="card-body">
+           			<div class="input-form col-md-12 mx-auto">
+				        <h4 class="mb-3">솔루션</h4>
+				        <form method="post" id="form2" class="validation-form" novalidate>
+				          <div class="row">
+				            <div class="col-md-6 mb-3">
+				              <input type="hidden" value="${risk.riskno}">
+				            </div>
+				          </div>  
+				          <div class="mb-3">
+				            <label for="subject">솔루션</label>
+				            <input name="" value="" type="text" class="form-control  ckValid" id="" placeholder="솔루션 입력" required>
+						  </div>
+				          <div class="mb-4"></div>
+				          
+				        </form>
+				      </div>
+           		</div>
+         	</div> 
             </div>
             <!-- / Content -->
 
