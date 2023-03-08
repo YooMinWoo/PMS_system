@@ -17,9 +17,12 @@
       	<typeAlias alias="deptcode" type="superPms.vo.DeptCode"/>
       	<typeAlias alias="authcode" type="superPms.vo.AuthCode"/>
       	<typeAlias alias="passmail" type="superPms.vo.PassMail"/>
-      	<!--  -->
+      	<!-- 종은 -->
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
+      	<typeAlias alias="workFile" type="superPms.vo.WorkFile"/>
+      	<!-- /종은 -->
+      	
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="risksch" type="superPms.vo.RiskSch"/>
       	
