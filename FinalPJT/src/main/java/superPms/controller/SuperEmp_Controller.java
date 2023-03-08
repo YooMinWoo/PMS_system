@@ -100,7 +100,7 @@ public class SuperEmp_Controller {
 		if(session.getAttribute("emp")!=null) {
 			session.removeAttribute("emp");
 		}
-		return "/PMSLogin.do";
+		return "redirect:/PMSLogin.do";
 	}
 	@RequestMapping("/userGetEmpList.do")
 	public String userGetEmpList(@ModelAttribute("ch") SuperEmpDept ch, Model d) {

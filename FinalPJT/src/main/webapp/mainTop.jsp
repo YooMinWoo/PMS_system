@@ -73,7 +73,7 @@
                     </li>
                      -->
                     <li>
-                      <a class="dropdown-item" href="logout.do">
+                      <a class="dropdown-item" href="${path }/logout.do">
                         <i class="bx bx-power-off me-2"></i>
                         <input type="hidden" value="${emp.id}">
                         <span class="align-middle">Log Out</span>
