@@ -21,6 +21,7 @@ public class Work_Controller {
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do
 	// http://localhost:7080/FinalPJT/worklist.do
+	/*
 	@GetMapping("/worklist.do")
 	public String worklist(Model d) {
 		d.addAttribute("worklist",service.getWorkList());
@@ -32,6 +33,13 @@ public class Work_Controller {
 		if(service.schWork(sch).size()==0) {
 			d.addAttribute("msg","검색된 결과가 없습니다.");
 		}
+		return "WEB-INF\\jongeunView\\workList.jsp";
+	}
+	*/
+	// http://localhost:7080/FinalPJT/workList.do
+	@RequestMapping("/workList.do")
+	public String workList(@ModelAttribute("sch") WorkSch sch, Model d) {
+		d.addAttribute("worklist",service.schWork(sch));
 		return "WEB-INF\\jongeunView\\workList.jsp";
 	}
 	// http://localhost:7080/FinalPJT/workInsFrm.do

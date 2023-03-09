@@ -3,6 +3,7 @@ package superPms.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Work {
+	// 기본
 	private int workno;	
 	private String regdte;
 	private String enddte;
@@ -14,8 +15,12 @@ public class Work {
 	private int hisno;	
 	private int Field;	
 	private String state;
-	private String fname;
+	// 파일업로드
 	private MultipartFile report;
+	private String fname;
+	// 페이징
+	private int cnt;
+	
 	public Work() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -103,6 +108,12 @@ public class Work {
 	}
 	public void setReport(MultipartFile report) {
 		this.report = report;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 }

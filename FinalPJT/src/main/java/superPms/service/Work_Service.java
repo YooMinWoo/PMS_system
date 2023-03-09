@@ -26,6 +26,28 @@ public class Work_Service {
 	}
 	public List<Work> schWork(WorkSch sch){
 		if(sch.getSubject()==null) sch.setSubject("");
+		if(sch.getId()==null) sch.setId("");
+		sch.setCount(dao.totCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
 		return dao.schWork(sch);
 	}
 	public Work getWork(int no) {

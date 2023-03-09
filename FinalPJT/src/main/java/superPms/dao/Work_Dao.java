@@ -15,6 +15,8 @@ public interface Work_Dao {
 	public Work getWork(int no);
 	public void uptWork(Work upt);
 	public void delWork(int no);
+	// 페이징
+	public int totCnt(WorkSch sch);
 	// 답글
 	public List<WorkRep> getWorkRepList(int no);
 }

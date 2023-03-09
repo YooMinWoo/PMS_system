@@ -6,12 +6,24 @@
 <mapper namespace="superPms.dao.Work_Dao">
 	<select id="getWorkList" resultType="work">
 		select *
-		from work
+		from (
+			select rownum cnt, w.*
+			from work w
+			where 1=1
+			and subject like '%'||#{subject}||'%'
+			and id like '%'||#{id}||'%'
+			ORDER BY WORKNO DESC)
+		where cnt between #{start} and #{end}
 	</select>
 	<select id="schWork" parameterType="worksch" resultType="work">
 		select *
-		from work
-		where subject like '%'||#{subject}||'%'
+		from (
+			select rownum cnt, w.*
+			from work w
+			where 1=1
+			and subject like '%'||#{subject}||'%'
+			and id like '%'||#{id}||'%')
+		where cnt between #{start} and #{end}
 	</select>
 	<select id="getWork" resultType="work" parameterType="int">
 		SELECT * FROM WORK
@@ -42,6 +54,14 @@
 		from work
 		where WORKNO=#{WORKNO}
 	</delete>
+	<!-- 페이징 -->
+	<select id="totCnt" resultType="int" parameterType="worksch">
+		select count(*)
+		from work
+		where 1=1
+		and subject like '%'||#{subject}||'%'
+		and id like '%'||#{id}||'%'	
+	</select>
 	<!-- 답글 -->
 	<select id="getWorkRepList" resultType="workrep" parameterType="int">
 		SELECT * FROM WORKREP

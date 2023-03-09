@@ -75,6 +75,10 @@ td{text-align:center;}
 	function goWork(no){
 		location.href="${path}/workDetail.do?no="+no
 	}
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		$("form").submit()
+	}
 </script>
 </head>
 
@@ -110,7 +114,7 @@ td{text-align:center;}
           <div class="col-5"> </div>
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="allFrm" action="${path }/workSch.do" method="post">
+          <form class="d-flex" id="allFrm" method="post">
            		<select>
 	            	<option value="0">제목</option>
 	            	<option value="1">작성자</option>
@@ -119,6 +123,7 @@ td{text-align:center;}
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="text" name="subject" value="${sch.subject}" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
+	          <input type="hidden" name="curPage" value="${sch.curPage}"/>
 	       </form>
 	       <!-- /form 끝 -->
           </div>
@@ -146,7 +151,7 @@ td{text-align:center;}
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
 			      <tr onclick="goWork(${work.workno})">
-			      <td>${work.workno }</td><td>${work.subject }</td><td>${work.regdte }</td>
+			      <td>${work.cnt }</td><td>${work.subject }</td><td>${work.regdte }</td>
 			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
 			      </c:forEach>
 			    </tbody>
@@ -161,19 +166,15 @@ td{text-align:center;}
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.startBlock-1});"><i class="tf-icon bx bx-chevron-left"></i></a>
               </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
+              <c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
+             	 <li class="page-item ${sch.curPage==cnt?'active':''}">
+    				<a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
+    			</li>
+              </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.endBlock+1});"><i class="tf-icon bx bx-chevron-right"></i></a>
               </li>
             </ul>
           </nav>
