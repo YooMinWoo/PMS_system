@@ -44,28 +44,17 @@ public class Work_Controller {
 		service.insWork(ins);
 		//d.addAttribute("msg","등록완료");
 		//return "WEB-INF\\jongeunView\\workIns.jsp";
-		return "redirect:/worklist.do";
+		return "WEB-INF\\jongeunView\\workIns.jsp";
 	}
 	// http://localhost:7080/FinalPJT/workDetail.do?no=1
 	@GetMapping("/workDetail.do")
 	public String workDetail(@RequestParam("no") int no, Model d) {
 		d.addAttribute("work",service.getWork(no));
+		if(service.getWorkRepList(no).size()>0) {
+			d.addAttribute("workrep",service.getWorkRepList(no));
+		}
 		return "WEB-INF\\jongeunView\\workDetail.jsp";
 	}
-	/*
-	@GetMapping("/workUptFrm.do")
-	public String workUptFrm(@RequestParam("no") int no, Model d) {
-		d.addAttribute("work",service.getWork(no));
-		return "WEB-INF\\jongeunView\\workUpt.jsp";
-	}
-	@PostMapping("/workUpt.do")
-	public String workUpt(Work upt, Model d) {
-		service.uptWork(upt);
-		//d.addAttribute("work",service.getWork(upt.getWorkno()));
-		d.addAttribute("msg","수정완료");
-		return "WEB-INF\\jongeunView\\workUpt.jsp";
-	}
-	*/
 	@PostMapping("/workUpt.do")
 	public String workUpt(@RequestParam("no") int no,Work upt, Model d) {
 		service.uptWork(upt);

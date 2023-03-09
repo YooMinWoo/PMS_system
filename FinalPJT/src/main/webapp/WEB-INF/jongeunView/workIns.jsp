@@ -99,6 +99,9 @@
 				//location.href="${path}/worklist.do"
 			}
 		})
+		$(".custom-file-input").on("change",function(){
+        	$(this).next(".custom-file-label").text($(this).val())
+        })
 	});
 </script>
 </head>
@@ -182,7 +185,7 @@
                   ></textarea>
                 </div>
                 <div class="mb-3">
-                 <label for="formFile" class="form-label">파일첨부</label>
+                 <label for="formFile" class="custom-file-label">파일첨부</label>
                  <input type="file" name="report" class="form-control" id="formFile" />
                 </div>
                 <div class="btns">

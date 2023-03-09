@@ -72,6 +72,12 @@
 				location.href="${path}/delWork.do?no="+$("[name=workno]").val();		
 			}
 		})
+		$("#downFile").click(function(){
+	  		if(confirm($(this).val()+"을 다운로드하시겠습니까?")){
+	  			location.href="${path}/download.do?fname="+$(this).val()
+	  		}
+	  		
+	  	})
 	});
 	var msg = "${msg}"
 	if(msg=="삭제완료"){
@@ -108,7 +114,7 @@
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
             	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" id="back">뒤로<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/arrow-left.svg"> --></button>
+             		<button type="button" class="btn" id="back">뒤로<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/arrow-left.svg"> --></button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
             		<button type="button" id="more" class="btn dropdown-toggle" 
@@ -177,11 +183,47 @@
                   >${work.cont}</textarea>
                 </div>
                 <div class="mb-3">
-                 <label for="formFile" class="form-label">파일첨부</label>
-                 <input type="file" name="report" class="form-control" id="formFile" />
+                 <label>첨부파일</label>
+                 <input id="downFile"  value="${work.fno}" type="text" class="form-control" placeholder="첨부 입력" required>
                 </div>
+                <div class="mb-3">
+                 <label for="formFile" class="form-label">${empty work.fname?'첨부 파일을 선택하세요':'수정시 선택'}</label>
+                 <input type="file" name="report" class="custom-file-input" id="formFile" />
+                </div>
+                <script type="text/javascript">
+					  $(".custom-file-input").on("change",function(){
+				        	$(this).next(".custom-file-label").text($(this).val())
+				        })  
+				  </script>	
               </form>
           </div>
+          <hr>
+          	<div class="card-body">
+          		<form id="frm02" method="post">
+             		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
+               		<input type="hidden" name="writer" value="${emp.id }">
+              	<label for="repContent" class="form-label">답글 작성</label>
+              	<div class="repList2">
+                   <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
+                   <button type="button" class="btn btn-secondary" id="regRepBtn">등록</button>
+                  </div>
+                  <hr>
+                  <br><br>
+                 </form>
+          	</div>
+          	 <c:forEach var="rep" items="${workrep}" varStatus="status">
+               
+                  <div class="repList">
+                  "${rep.id}"
+                  "${rep.regdte}"
+                   <textarea name="content" id="reps" class="form-control-plaintext" rows="3" style="height:50px;" disabled readonly>${rep.cont } </textarea>
+
+
+                  
+                     </div>
+                     <br>
+ 
+               </c:forEach>
           </div>
           <div class="tab-content px-0 mt-0">
 

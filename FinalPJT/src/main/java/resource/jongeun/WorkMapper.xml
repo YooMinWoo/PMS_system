@@ -17,12 +17,18 @@
 		SELECT * FROM WORK
 		WHERE WORKNO = #{WORKNO}
 	</select>
-	<insert id="insWork" parameterType="work">
-		INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
-			#{enddte},#{subject},#{cont},#{id},#{prjno},null,null)
-	</insert>
 	<insert id="insFile" parameterType="workFile">
 		INSERT INTO FILES VALUES(files_seq.nextval,#{fname},sysdate,sysdate,#{path})
+	</insert>
+	<insert id="insWork" parameterType="work">
+		<if test= "fname != null and !fname.equals('')">
+			INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
+				#{enddte},#{subject},#{cont},#{id},#{prjno},files_seq.currval,null)
+		</if>
+		<if test= "fname == null or fname.equals('')">
+			INSERT INTO WORK VALUES (work_seq.nextVal,#{regdte},
+				#{enddte},#{subject},#{cont},#{id},#{prjno},null,null)
+		</if>
 	</insert>
 	<update id="uptWork" parameterType="work">
 		update work
@@ -36,4 +42,13 @@
 		from work
 		where WORKNO=#{WORKNO}
 	</delete>
+	<!-- 답글 -->
+	<select id="getWorkRepList" resultType="workrep" parameterType="int">
+		SELECT * FROM WORKREP
+		WHERE WORKNO = #{WORKNO}
+	</select>
+	<!-- 
+	<insert id="insWork" parameterType="workrep">
+	</insert>
+	 -->
 </mapper>
