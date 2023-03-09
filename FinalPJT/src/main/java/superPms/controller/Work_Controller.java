@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Work_Service;
 import superPms.vo.Work;
+import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
 @Controller
@@ -80,5 +81,19 @@ public class Work_Controller {
 	public String workFileDownload(@RequestParam("fname") String fname, Model d) {
 		d.addAttribute("downloadFile", fname);
 		return "downloadViewer";
+	}
+	// 답글
+	@PostMapping("/workRepIns.do")
+	public String workRepIns(WorkRep ins, Model d) {
+		service.insWorkRep(ins);
+		//return "WEB-INF\\jongeunView\\workDetail.jsp";
+		return "redirect:/workDetail.do?no="+ins.getWorkno();
+	}
+	@GetMapping("/workRepDel.do")
+	public String workRepDel(@RequestParam("no") int no, Model d) {
+		service.delWorkRep(no);
+		d.addAttribute("msg","삭제완료");
+		//return "WEB-INF\\jongeunView\\workDetail.jsp";
+		return "redirect:/workDetail.do";
 	}
 }

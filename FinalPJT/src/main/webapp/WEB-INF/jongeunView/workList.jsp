@@ -21,7 +21,7 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-th{text-align:center;}
+th{text-align:center !important;}
 td{text-align:center;}
 .btn{
 	display: flex;

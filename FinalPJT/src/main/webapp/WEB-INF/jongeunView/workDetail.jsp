@@ -25,6 +25,12 @@
 	display: flex;
 	justify-content: space-between;
 }
+input:read-only{
+	background:white !important;
+}
+textarea:read-only{
+	background:white !important;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -39,7 +45,7 @@
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/fonts/boxicons.css" />
-
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <!-- Core CSS -->
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="${path }/resources/sneat-1.0.0/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
@@ -62,14 +68,14 @@
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 		$("#back").click(function(){
-			location.href="${path}/worklist.do"
+			location.href="${path}/workList.do"
 		})
 		$("#upt").click(function(){
 			location.href="${path}/workUptFrm.do?no="+$("[name=workno]").val();	
 		})
 		$("#del").click(function(){
 			if(confirm("삭제하시겠습니까?")){
-				location.href="${path}/delWork.do?no="+$("[name=workno]").val();		
+				location.href="${path}/workDel.do?no="+$("[name=workno]").val();
 			}
 		})
 		$("#downFile").click(function(){
@@ -78,11 +84,29 @@
 	  		}
 	  		
 	  	})
+	  	$("#regRep").click(function(){
+	  		if(confirm("등록 하시겠습니까?")){
+				if($("[name=repCont]").val()==""){
+					alert("내용을 입력하세요.")
+					$("[name=repCont]").focus()
+					return
+				}
+				$("#frm02").submit();
+			}
+		})
 	});
 	var msg = "${msg}"
 	if(msg=="삭제완료"){
 		alert(msg+" 이전화면으로 이동합니다.");
-		location.href = "${path}/worklist.do";
+		location.href = "${path}/workList.do";
+	}
+	function delRep(no,workno){
+		console.log(no)
+		console.log(workno)
+		if(confirm("삭제하시겠습니까?")){
+			location.href="${path}/workRepDel.do?no="+no;		
+			location.href="${path}/workDetail.do?no="+workno;		
+		}
 	}
 </script>
 </head>
@@ -114,11 +138,14 @@
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
             	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" class="btn" id="back">뒤로<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/arrow-left.svg"> --></button>
+             		<button type="button" class="btn" id="back">
+             			<i class="bi bi-arrow-left"></i>
+             		</button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-            		<button type="button" id="more" class="btn dropdown-toggle" 
-            			data-bs-toggle="dropdown" aria-expanded="false">more<!-- <img src="/resources/sneat-1.0.0/assets/img/etc/more-horizontal.svg"> --></button>
+            		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown" aria-expanded="false">
+            			<i class="bi bi-three-dots"></i>
+            		</button>
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
@@ -132,11 +159,11 @@
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
                    <!-- 프로젝트명으로 수정필요 -->
                    <input type="text" name="prjno"
-                   class="form-control-plaintext" id="basic-default-prj" value="1" disabled readonly />
+                   class="form-control" id="basic-default-prj" value="1" disabled readonly />
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
-                  <input name="subject" type="text" class="form-control-plaintext" id="basic-default-subject" value="${work.subject}"
+                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${work.subject}"
                   disabled readonly/>
                   <input name="workno" type="hidden" value="${work.workno}"/>
                 </div>
@@ -146,16 +173,16 @@
                    <label class="form-label" for="basic-default-id">작성자</label>
                    <!-- 작성자로 수정필요 -->
                    <input type="text" name="id"
-                   class="form-control-plaintext" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
+                   class="form-control" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
                  </div>
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label">등록일</label>
-                  <input type="text" class="form-control-plaintext" name="regdte" value="${work.regdte}"
+                  <input type="text" class="form-control" name="regdte" value="${work.regdte}"
                   disabled readonly>
                   </div>
                   <div class="mb-3" style="width:32%;">
                   <label class="form-label">만기일</label>
-                  <input type="text" class="form-control-plaintext" name="enddte" value="${work.enddte}"
+                  <input type="text" class="form-control" name="enddte" value="${work.enddte}"
                   disabled readonly>        
                 </div>
                 </div>
@@ -177,7 +204,7 @@
                   <textarea
                   	name="cont"
                     id="basic-default-cont"
-                    class="form-control-plaintext"
+                    class="form-control"
                     style="height: 300px;"
                     disabled readonly
                   >${work.cont}</textarea>
@@ -197,33 +224,31 @@
 				  </script>	
               </form>
           </div>
+          <!-- 답글 입력부분 -->
           <hr>
           	<div class="card-body">
-          		<form id="frm02" method="post">
-             		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
-               		<input type="hidden" name="writer" value="${emp.id }">
+          		<form id="frm02" method="post" action="${path}/workRepIns.do">
+               		<input type="hidden" name="id" value="monsta@gmail.com">
+               		<input type="hidden" name="workno" value="${work.workno}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
-                   <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
-                   <button type="button" class="btn btn-secondary" id="regRepBtn">등록</button>
-                  </div>
-                  <hr>
-                  <br><br>
-                 </form>
-          	</div>
-          	 <c:forEach var="rep" items="${workrep}" varStatus="status">
-               
-                  <div class="repList">
-                  "${rep.id}"
-                  "${rep.regdte}"
-                   <textarea name="content" id="reps" class="form-control-plaintext" rows="3" style="height:50px;" disabled readonly>${rep.cont } </textarea>
-
-
-                  
-                     </div>
-                     <br>
- 
-               </c:forEach>
+                   <textarea class="form-control" name="cont" id="repContent" rows="3" style="height:50px;"></textarea>
+                   <button type="button" class="btn btn-secondary" id="regRep">등록</button>
+                </div>
+                </form>
+              </div>
+              <hr>
+            <!-- 답글 출력부분 -->
+          	<div class="card-body">
+          	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
+              <div class="repList">
+              	<input type="hidden" name="no" value="${rep.no }">
+                <label class="form-label">${rep.id } (${rep.regdte })</label>
+                <button type="button" class="btn" id="delRep" onclick="delRep(${rep.no},${rep.workno})"> <i class="bi bi-x"></i></button>     
+                <textarea id="reps" class="form-control" rows="3" style="height:50px;" disabled readonly>${rep.cont } </textarea>
+              </div>
+              <br>
+             </c:forEach>
           </div>
           <div class="tab-content px-0 mt-0">
 
@@ -244,7 +269,7 @@
         </div>
         <!-- / Layout page -->
 
-
+	</div>
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
    

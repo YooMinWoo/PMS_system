@@ -19,4 +19,6 @@ public interface Work_Dao {
 	public int totCnt(WorkSch sch);
 	// 답글
 	public List<WorkRep> getWorkRepList(int no);
+	public void insWorkRep(WorkRep ins);
+	public void delWorkRep(int no);
 }
