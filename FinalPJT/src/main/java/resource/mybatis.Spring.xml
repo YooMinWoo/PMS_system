@@ -42,6 +42,8 @@
 		<typeAlias alias="pmList" type="superPms.vo.ProjectMemberList"/>
       	<typeAlias alias="gantt" type="superPms.vo.Gantt"/>
       	<typeAlias alias="link" type="superPms.vo.Link"/>
+      	<typeAlias alias="bar" type="superPms.vo.BarChart"/>
+      	<typeAlias alias="donut" type="superPms.vo.DonutChart"/>
       	<typeAlias alias="superempdeptsch" type="superPms.vo.SuperEmpDeptSch"/>
       	<!-- /원주 -->
 	</typeAliases>
@@ -53,6 +55,7 @@
 		<mapper resource="resource/sumin/MailMapper.xml"/>
 		<mapper resource="resource/wonju/ProjectMapper.xml"/>
 		<mapper resource="resource/wonju/GanttMapper.xml"/>
+		<mapper resource="resource/wonju/ChartMapper.xml"/>
 		<mapper resource="resource/eunbeen/DeptMapper.xml"/>
 		<mapper resource="resource/eunbeen/EmpMapper.xml"/>
 		<mapper resource="resource/jungwoo/RiskMapper.xml"/>

@@ -25,7 +25,7 @@
 	padding-right: 1rem !important;
 }
 #gantt{
-	height: 400px;
+	height: 600px;
 }
 #ganttTab thead{
 	background-color: #3db9d3;

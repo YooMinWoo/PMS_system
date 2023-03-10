@@ -38,9 +38,23 @@ CREATE TABLE project (
 	SELECT p.prjno,p.subject,p.tlid,p.deptid
 	FROM project p,PROJECTMEMBER m
 	WHERE m.PRJNO =p.PRJNO ;
-	
+-- 프로젝트별 진행률	(23년 3월에 종료되는 프로젝트별 간트차트 업무 진행률)
+SELECT DISTINCT a.avgs,p.subject, p.deadline FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, project p
+WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,3,2))=23 AND TO_NUMBER(SUBSTR(p.deadline,6,2))=3
+;
+-- 현재 진행중인 프로젝트의 카테고리별 갯수
+SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid 
+FROM (SELECT * FROM PROJECT p WHERE p.deadline>=to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
+WHERE ppp.deptid=d.deptid;
+
+
+SELECT * from gantt;
 SELECT * FROM dept777;	
-SELECT * FROM PROJECT;
+SELECT * FROM PROJECt WHERE SUBSTR(DEADLINE,6,2)='02';
+
+
+
+
 -- openStatus 0이면 전체 공개 1이면 멤버공개
 INSERT INTO project values(pro_seq.nextval,sysdate,to_date('2023-03-30','yyyy-mm-dd'),'첫번째 프로젝트','admin1@gmail.com','10','0');
 INSERT INTO project values(pro_seq.nextval,'2023-02-01','2023-02-25','지난 프로젝트3','admin1@gmail.com','10','0');

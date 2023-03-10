@@ -51,44 +51,67 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script type="text/javascript">
+/*
+--bs-blue: #007bff;
+--bs-indigo: #6610f2;
+--bs-purple: #696cff;
+--bs-pink: #e83e8c;
+--bs-red: #ff3e1d;
+--bs-orange: #fd7e14;
+--bs-yellow: #ffab00;
+--bs-green: #71dd37;
+--bs-teal: #20c997;
+--bs-cyan: #03c3ec;
+--bs-primary: #696cff;
+--bs-secondary: #8592a3;
+--bs-success: #71dd37;
+--bs-info: #03c3ec;
+--bs-warning: #ffab00;
+--bs-danger: #ff3e1d;
+--bs-light: #fcfdfd;
+--bs-dark: #233446;	
+*/
 	$(document).ready(function(){
+		
+		var avgsArr=[]
+		var subArr=[]
+		
+		var cntsArr=[]
+		var dnameArr=[]
+		let url="${path}/chartShow.do?year=23&month=3"
+		fetch(url).then(function(response){
+			return response.json()
+		}).then(function(json){
+			$.each(json.barC,function(index,b){
+				avgsArr.push(b.avgs)
+				subArr.push(b.subject)
+			})	
+			$.each(json.donutC,function(index,d){
+				cntsArr.push(d.cnts)
+				dnameArr.push(d.dname)
+			})	
+		}).catch(function(err){
+			console.log(err)
+		})
+		console.log(avgsArr)
 		var options = {
 				  chart: {
 				    type: 'donut'
 				  },
 				  colors:['#696cff', '#8592a3', '#71dd37','#03c3ec','#007bff','#e83e8c','#696cff','#71dd37'],
-				  series: [44, 55, 41, 17],
-				  labels: ['개발', '영업', '마케팅', '디자인'],
+				  series: cntsArr,
+				  labels: dnameArr,
 				  legend: {
 					    position: 'bottom'
 					}
 				}
 		var chart = new ApexCharts(document.querySelector("#chart"), options);
 		chart.render();	
-		/*
-		--bs-blue: #007bff;
-    --bs-indigo: #6610f2;
-    --bs-purple: #696cff;
-    --bs-pink: #e83e8c;
-    --bs-red: #ff3e1d;
-    --bs-orange: #fd7e14;
-    --bs-yellow: #ffab00;
-    --bs-green: #71dd37;
-    --bs-teal: #20c997;
-    --bs-cyan: #03c3ec;
-		--bs-primary: #696cff;
-	    --bs-secondary: #8592a3;
-	    --bs-success: #71dd37;
-	    --bs-info: #03c3ec;
-	    --bs-warning: #ffab00;
-	    --bs-danger: #ff3e1d;
-	    --bs-light: #fcfdfd;
-	    --bs-dark: #233446;	
-		*/
+
 		
 		var options2 = {
 		          series: [{
-		          data: [40, 43, 44.8, 47.0, 54.0, 58.0, 69.0, 100, 12, 13.8]
+		          data:avgsArr// [40, 43, 44.8, 47.0, 54.0, 58.0, 69.0, 100, 12, 13.8]
 		        }],
 		          chart: {
 		          type: 'bar',
@@ -107,9 +130,8 @@
 		        	colors:['#696cff']
 		        },
 		        xaxis: {
-		          categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-		            'United States', 'China', 'Germany'
-		          ],
+		          categories: subArr
+		        	  // ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan','United States', 'China', 'Germany']
 		        },
 		        yaxis: {
 		            max: 100, //100%가 최대값이도록 설정
@@ -153,7 +175,33 @@
  			<div class="row">
  			<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
 	           <div class="card">
-	           	<div class="row row-bordered g-0">
+	           	<div class="row">
+	           	<div class="col-8">
+	           		<h5 class="card-header m-0 me-2 pb-3">프로젝트 진행률</h5>
+	           	</div>
+	           	
+	           	<div class="col-4">
+		           	<div class="dropdown">
+	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="growthReportId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	                  2022
+	                </button>
+	          	 <ul class="dropdown-menu show" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
+		          <li><a class="dropdown-item" href="javascript:void(0);">2021</a></li>
+		          <li><a class="dropdown-item" href="javascript:voi0d(0);">2020</a></li>
+		          <li><a class="dropdown-item" href="javascript:void(0);">2019</a></li>
+		          </ul>
+	              </div>
+	              
+	              <!-- 
+
+		          
+	                <div class="dropdown-menu dropdown-menu-end show" aria-labelledby="growthReportId" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-46.4px, 28.8px, 0px);">
+                  <a class="dropdown-item" href="javascript:void(0);">2021</a>
+                  <a class="dropdown-item" href="javascript:void(0);">2020</a>
+                  <a class="dropdown-item" href="javascript:void(0);">2019</a>
+	                </div>
+	               -->
+	           	</div>
 	         	  <div id="chart2" style="width: 100%;height: 100%;"></div>
 
 	           </div>
@@ -162,6 +210,7 @@
           	 
           	 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
 	          	  <div class="card">
+	          	  <h5 class="card-header m-0 me-2 pb-3">부서별 프로젝트</h5>
 	           		<div id="chart" style="width: 100%;height: 100%;"></div>
 	         	 </div>
          	</div>
