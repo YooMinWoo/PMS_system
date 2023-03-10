@@ -78,8 +78,9 @@
 		
 		var cntsArr=[]
 		var dnameArr=[]
+		
 		let url="${path}/chartShow.do?year=23&month=3"
-		fetch(url).then(function(response){
+		fetch(url,{cache:'no-cache'}).then(function(response){
 			return response.json()
 		}).then(function(json){
 			$.each(json.barC,function(index,b){
