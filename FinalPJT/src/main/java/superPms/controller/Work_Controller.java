@@ -86,14 +86,12 @@ public class Work_Controller {
 	@PostMapping("/workRepIns.do")
 	public String workRepIns(WorkRep ins, Model d) {
 		service.insWorkRep(ins);
-		//return "WEB-INF\\jongeunView\\workDetail.jsp";
 		return "redirect:/workDetail.do?no="+ins.getWorkno();
 	}
 	@GetMapping("/workRepDel.do")
 	public String workRepDel(@RequestParam("no") int no, Model d) {
 		service.delWorkRep(no);
 		d.addAttribute("msg","삭제완료");
-		//return "WEB-INF\\jongeunView\\workDetail.jsp";
 		return "redirect:/workDetail.do";
 	}
 }

@@ -69,7 +69,7 @@
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 		$("#clBtn").click(function(){
 			if(confirm("업무페이지로 이동하시겠습니까?")){
-				location.href="${path}/worklist.do"
+				location.href="${path}/workList.do"
 			}
 		})
 		$("#regBtn").click(function(){

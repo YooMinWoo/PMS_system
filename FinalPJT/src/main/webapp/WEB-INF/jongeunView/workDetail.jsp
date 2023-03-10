@@ -101,8 +101,6 @@ textarea:read-only{
 		location.href = "${path}/workList.do";
 	}
 	function delRep(no,workno){
-		console.log(no)
-		console.log(workno)
 		if(confirm("삭제하시겠습니까?")){
 			location.href="${path}/workRepDel.do?no="+no;		
 			location.href="${path}/workDetail.do?no="+workno;		
@@ -143,7 +141,8 @@ textarea:read-only{
              		</button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-            		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown" aria-expanded="false">
+            		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
+            			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
@@ -232,7 +231,8 @@ textarea:read-only{
                		<input type="hidden" name="workno" value="${work.workno}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
-                   <textarea class="form-control" name="cont" id="repContent" rows="3" style="height:50px;"></textarea>
+                   <textarea class="form-control" name="cont" id="repContent"
+                   	rows="3" style="height:50px;"></textarea>
                    <button type="button" class="btn btn-secondary" id="regRep">등록</button>
                 </div>
                 </form>
@@ -244,8 +244,12 @@ textarea:read-only{
               <div class="repList">
               	<input type="hidden" name="no" value="${rep.no }">
                 <label class="form-label">${rep.id } (${rep.regdte })</label>
-                <button type="button" class="btn" id="delRep" onclick="delRep(${rep.no},${rep.workno})"> <i class="bi bi-x"></i></button>     
-                <textarea id="reps" class="form-control" rows="3" style="height:50px;" disabled readonly>${rep.cont } </textarea>
+                <button type="button" class="btn" id="delRep" 
+                	onclick="delRep(${rep.no},${rep.workno})">
+                	<i class="bi bi-x"></i></button>     
+                <textarea id="reps" class="form-control" 
+                	rows="3" style="height:50px;" disabled readonly>${rep.cont}
+                </textarea>
               </div>
               <br>
              </c:forEach>

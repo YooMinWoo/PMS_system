@@ -69,10 +69,12 @@
 	</select>
 	<insert id="insWorkRep" parameterType="workrep">
 		<if test= "fname != null and !fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
+			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+				#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
 		</if>
 		<if test= "fname == null or fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,#{cont},sysdate,sysdate,#{id},null,#{workno})
+			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+				#{cont},sysdate,sysdate,#{id},null,#{workno})
 		</if>
 	</insert>
 	<delete id="delWorkRep" parameterType="int">

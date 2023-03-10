@@ -58,7 +58,7 @@ td{text-align:center;}
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
+    <script src="${path }/resources/sneatㄴ-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	var msg = "${msg}"
 	console.log(msg)
@@ -151,14 +151,15 @@ td{text-align:center;}
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="work" items="${worklist}">
 			      <tr onclick="goWork(${work.workno})">
-			      <td>${work.cnt }</td><td>${work.subject }</td><td>${work.regdte }</td>
-			      <td>${work.enddte }</td><td>${work.id }</td><td>${work.state }</td></tr>
+			      <td>${work.cnt }</td><td>${work.subject }</td>
+			      <td>${work.regdte }</td><td>${work.enddte }</td>
+			      <td>${work.id }</td><td>${work.state }</td>
+			      </tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
 			</div>
             </div>
-             <!--  /진행중 프로젝트 tab -->
           </div>
         </div>
           <div class="d-flex justify-content-center">
@@ -166,7 +167,9 @@ td{text-align:center;}
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:goPage(${sch.startBlock-1});"><i class="tf-icon bx bx-chevron-left"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.startBlock-1});">
+                	<i class="tf-icon bx bx-chevron-left"></i>
+                </a>
               </li>
               <c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
              	 <li class="page-item ${sch.curPage==cnt?'active':''}">
@@ -174,7 +177,9 @@ td{text-align:center;}
     			</li>
               </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:goPage(${sch.endBlock+1});"><i class="tf-icon bx bx-chevron-right"></i></a>
+                <a class="page-link" href="javascript:goPage(${sch.endBlock+1});">
+                	<i class="tf-icon bx bx-chevron-right"></i>
+                </a>
               </li>
             </ul>
           </nav>
