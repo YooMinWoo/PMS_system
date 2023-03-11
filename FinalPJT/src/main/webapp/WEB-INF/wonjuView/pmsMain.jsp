@@ -73,6 +73,10 @@
 */
 	$(document).ready(function(){
 		
+		$("#dropYear").val(2023)
+		$("#dropMonth").val(3)
+		console.log($("#dropYear").val())
+		
 		var avgsArr=[]
 		var subArr=[]
 		
@@ -181,17 +185,21 @@
 	           		<h5 class="card-header m-0 me-2 pb-3">프로젝트 진행률</h5>
 	           	</div>
 	           	
-	           	<div class="col-4">
-		           	<div class="dropdown">
-	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="growthReportId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	                  2022
+	           	<div class="col-4 justify-content-end">
+		           <div class="dropdown">
+	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="dropYear" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">2023</button>
+	          	    <ul class="dropdown-menu" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
+			          <li><a class="dropdown-item" href="javascript:void(0);">2022</a></li>
+		            </ul>
+	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="dropMonth" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	                 3
 	                </button>
-	          	 <ul class="dropdown-menu show" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
-		          <li><a class="dropdown-item" href="javascript:void(0);">2021</a></li>
-		          <li><a class="dropdown-item" href="javascript:voi0d(0);">2020</a></li>
-		          <li><a class="dropdown-item" href="javascript:void(0);">2019</a></li>
-		          </ul>
-	              </div>
+	          	    <ul class="dropdown-menu" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
+			          <c:forEach begin="1" end="12" var="months">
+			          <li><a class="dropdown-item" href="javascript:void(0);">${months }</a></li>
+			          </c:forEach>
+		            </ul>
+	              </div>	              
 	              
 	              <!-- 
 
