@@ -86,13 +86,11 @@ public class Notice_Controller {
 		service.insertNoticeRep(ins);
 		return "redirect:/goNoticeDetail.do?noticeno="+ins.getNoticeno();
 	}
-	
 	@RequestMapping("/deleteNoticeRep.do")
 	public String deleteNoticeRep(NoticeRep ins) {
 		service.deleteNoticeRep(ins);
 		return "redirect:/goNoticeDetail.do?noticeno="+ins.getNoticeno();
 	}
-	
 	@RequestMapping("/updateNoticeRep.do")
 	public String updateNoticeRep(NoticeRep ins) {
 		service.updateNoticeRep(ins);

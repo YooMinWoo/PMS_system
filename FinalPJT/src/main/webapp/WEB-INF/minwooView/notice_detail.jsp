@@ -180,9 +180,12 @@ textarea:read-only{
 		$("#repForm"+idx).attr("action","/FinalPJT/updateNoticeRep.do")
 		$("#repForm"+idx).submit()
 	}
+	
 	function repDelBtn(idx){
 		location.href="/FinalPJT/deleteNoticeRep.do?noticeno=${noticeDetail.noticeno }&repno="+idx
 	}
+	
+	
 	function RepBtnClick(idx){
 		$(".canBtn").click()
 		$("#repId"+idx).find(".onBtn").hide()
@@ -202,7 +205,6 @@ textarea:read-only{
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
 		location.href="/FinalPJT/goNoticeDetail.do?noticeno=${param.noticeno }&curPage="+$('[name=curPage]').val()
-		<%--$("#frm01").submit()--%>
 	}
 </script>
 </head>
@@ -238,7 +240,8 @@ textarea:read-only{
                       	<input type="hidden" name="curPage" value="${noticeRepSch.curPage }">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
-                          <input name="title" type="text" class="form-control" id="basic-default-title" value="${noticeDetail.title}"/>
+                          <input name="title" type="text" class="form-control" 
+                          	id="basic-default-title" value="${noticeDetail.title}"/>
                         </div>
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%">
@@ -267,12 +270,8 @@ textarea:read-only{
                         </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-message">내용</label>
-                          <textarea
-                            id="basic-default-message"
-                            class="form-control"
-                            name="content"
-                            style="height: 300px;"
-                          >${noticeDetail.content }</textarea>
+                          <textarea id="basic-default-message" class="form-control"
+                            name="content" style="height: 300px;">${noticeDetail.content }</textarea>
                         </div>
                         <div class="mb-3" style="display:none;">
 	                        <label for="formFile" class="form-label">파일첨부</label>
@@ -280,14 +279,10 @@ textarea:read-only{
                         </div>
                         <div class="mb-3">
 	                        <label class="form-label">파일명</label>
-	                        <input class="form-control" type="text" id="formFile2"
+	                        <input class="form-control" type="text" id="formFile2" readonly
 	                        value="${not empty noticeDetail.fname?
 	                        	noticeDetail.fname
 	                        	:'등록된 파일이 없습니다.' }"/>
-	                        <%-- 
-	                        ${not empty noticeDetail.fno?
-	                        	noticeDetail.content
-	                        	:'등록된 파일이 없습니다.' }"--%> 
                         </div>
                         <script>
                         </script>
@@ -321,30 +316,32 @@ textarea:read-only{
                         	<form id="repForm${rep.repno }">
                         		<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                         		<input type="hidden" name="repno" value="${rep.repno}">
-	                        	<label class="form-label">${rep.ename } (등록일자 : ${rep.regdte } / 수정일자 : ${rep.uptdte })</label>
+	                        	<label class="form-label">${rep.ename } (등록일자 : ${rep.regdte }
+	                        	 / 수정일자 : ${rep.uptdte })</label>
 	                        <div class="repList3" id="repId${rep.repno }">
 	                        	<div class="offBtn">
 	                        		<button class="btns" type="button" onclick="repUptBtn(${rep.repno })">수정</button>
-	                        		<button class="btns canBtn" id="canBtn" type="button" onclick="offBtnClick(${rep.repno })">취소</button>
+	                        		<button class="btns canBtn" id="canBtn" type="button" onclick="offBtnClick(${rep.repno })">
+	                        		취소</button>
 	                        	</div>
 	                        	<div class="repList">
-			                        <textarea name="content" id="reps" class="form-control" rows="3" style="height:50px;" readonly>${rep.content } </textarea>
+			                        <textarea name="content" id="reps" class="form-control" rows="3" style="height:50px;" 
+			                        readonly>${rep.content } </textarea>
 			                        <input type="hidden" id="beforeUpt${rep.repno }" value="${rep.content }">
 			                        <c:if test="${emp.id == rep.writer }">
 			                        	<div class="demo-inline-spacing">
 					                        <div class="btn-group">
 					                          <button
-					                            type="button"
+					                            type="button" 
 					                            class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow onBtn"
-					                            data-bs-toggle="dropdown"
-					                            aria-expanded="false"
-					                            
-					                          >
+					                            data-bs-toggle="dropdown"aria-expanded="false">
 					                            <i class="bx bx-dots-vertical-rounded"></i>
 					                          </button>
 					                          <ul class="dropdown-menu dropdown-menu-end">
-					                            <li><button type="button" class="dropdown-item RepBtn" onclick="RepBtnClick(${rep.repno })">수정</button></li>
-					                            <li><button type="button" class="dropdown-item delRepBtn" onclick="repDelBtn(${rep.repno})">삭제</button></li>
+					                            <li><button type="button" class="dropdown-item RepBtn" 
+					                            onclick="RepBtnClick(${rep.repno })">수정</button></li>
+					                            <li><button type="button" class="dropdown-item delRepBtn" 
+					                            onclick="repDelBtn(${rep.repno})">삭제</button></li>
 					                          </ul>
 					                        </div>
 					                      </div>

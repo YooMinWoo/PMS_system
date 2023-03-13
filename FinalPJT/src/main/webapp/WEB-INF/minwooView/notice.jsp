@@ -122,15 +122,9 @@ tbody tr{
 	           <div class="schDiv">
 			           <div class="input-group input-group-merge">
 			              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-			              <input
-			                type="text"
-			                class="form-control"
-			                placeholder="Search..."
-			                aria-label="Search..."
-			                aria-describedby="basic-addon-search31"
-			                name="schInfo"
-			                value="${param.schInfo }"
-			              />
+			              <input type="text" class="form-control" placeholder="Search..."
+			                aria-label="Search..." aria-describedby="basic-addon-search31"
+			                name="schInfo" value="${param.schInfo }"/>
 			              <input type="hidden" name="deptid" value="${noticeSch.deptid}">
 			            </div>
 		            </div>
@@ -188,7 +182,8 @@ tbody tr{
                     <tbody class="table-border-bottom-0">
                       <c:forEach var="nt" items="${noticeList}">
 	                      	<tr>
-	                      		<td><input name="noticeno" type="checkbox" class="checkbox checkboxs" value="${nt.noticeno }"></td>		                      	
+	                      		<td><input name="noticeno" type="checkbox" class="checkbox checkboxs" 
+	                      				value="${nt.noticeno }"></td>		                      	
 		                      	<td>${nt.cnt}</td>
 		                        <td>${nt.title}</td>
 		                        <td>${nt.ename}</td>
@@ -226,11 +221,13 @@ tbody tr{
                         </c:if>
                  </div>
                  <script>
-                  // 선택 클릭시 체크박스 나타나고 사라지고 기능
+                  
                   	function goPage(cnt){
 						$("[name=curPage]").val(cnt);
 						$("#frm01").submit()
 					}
+                  	
+                 // 선택 클릭시 체크박스 나타나고 사라지고 기능
                 	var cntt = 0;
                 	$("#check").click(function(){
                 		cntt++;
@@ -270,7 +267,6 @@ tbody tr{
 						if(e.keyCode==13){
 							$("[name=curPage]").val(0)
 							$("#frm01").submit()
-								// alert("검색한 내용 : "+$("[name=searchInf]").val())
 						}
 					})
 					
@@ -281,14 +277,6 @@ tbody tr{
 					})
 					$("tbody tr td:nth-child(n+2)").click(function(){
 						var parm = $(this).parent().children().first().children("input").val()
-						// location.href="/FinalPJT/goNoticeDetail.do?noticeno="+parm
-						/*
-						<div style="display: none">
-		                  	<form method="post">
-		                  		<input name="noticeno">
-		                  	</form>
-		                  </div>
-						*/
 						$('body').append("<div style='display: none'>"
 			                  	+"<form method='post' id='frm02'>"
 			                  	+"	<input name='noticeno'>"
@@ -300,8 +288,6 @@ tbody tr{
 					
 					function category(msg){
 						$("#cateId").text($(msg).text())
-						//if($(msg).text()=='전체') $("[name=deptid]").val($(''))
-						//else $("[name=deptid]").val($(msg).text())
 						$("[name=deptid]").val($(msg).text())
 						
 					}

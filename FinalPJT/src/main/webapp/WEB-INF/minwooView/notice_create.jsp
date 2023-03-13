@@ -134,14 +134,16 @@
                       <form enctype="multipart/form-data" action="/FinalPJT/insertFN.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
-                          <input name="title" type="text" class="form-control" id="basic-default-title" placeholder="제목을 입력하세요." />
+                          <input name="title" type="text" class="form-control" 
+                          	id="basic-default-title" placeholder="제목을 입력하세요." />
                         </div>
                         <div class="divs">
 	                        <div class="mb-3" style="width:45%;">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
 	                          <input type="hidden" name="writer" value="${emp.id }">
 	                          <input type="text"
-	                          class="form-control" id="basic-default-writer" value="${emp.ename }" readonly />
+	                          class="form-control" id="basic-default-writer" 
+	                          value="${emp.ename }" readonly />
 	                        </div>
 	                        <div class="mb-3" style="width:45%;">
 		                        <label for="deptid" class="form-label">카테고리 선택</label>
@@ -166,7 +168,8 @@
                         </div>
                         <div class="mb-3">
 	                        <label for="formFile" class="form-label">파일첨부</label>
-	                        <input type="file" name="report" class="form-control" id="formFile" />
+	                        <input type="file" name="report" 
+	                        class="form-control" id="formFile" />
                         </div>
                         <div class="btns">
                         	<button type="button" class="btn btn-primary" id="regBtn">등록</button>

@@ -8,19 +8,9 @@
 	<!-- 검색 데이터 가져오기, 페이징 처리 O -->
 	<select id="noticeList" parameterType="noticesch" resultType="notice">
 		select * from(
-			SELECT rownum cnt, 
-				noticeno,
-				refno,
-				to_char(n.regdte,'yyyy-mm-dd') regdte,
-				to_char(n.uptdte,'yyyy-mm-dd') uptdte,
-				title,
-				content,
-				viewcnt,
-				writer,
-				n.fno,
-				n.deptid,
-				fname,
-				e.ename
+			SELECT rownum cnt, noticeno,refno,
+				to_char(n.regdte,'yyyy-mm-dd') regdte, to_char(n.uptdte,'yyyy-mm-dd') uptdte,
+				title,content,viewcnt,writer,n.fno,n.deptid,fname,e.ename
 			FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f, emp e
 			where n.fno=f.fno(+)
 			and n.writer = e.id
@@ -147,13 +137,11 @@
 			noticeRep_seq.nextval,0,#{content},sysdate,sysdate,#{noticeno},#{writer}
 		)
 	</insert>
-	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteNoticeRep" parameterType="noticerep">
 		delete from noticerep
 		where repno=#{repno}
 	</delete>
-	
 	<!-- 댓글 수정 -->
 	<update id="updateNoticeRep" parameterType="noticerep">
 		update noticerep
