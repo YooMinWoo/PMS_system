@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import superPms.dao.Work_Dao;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
+import superPms.vo.Project;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -120,5 +121,18 @@ public class Work_Service {
 		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
 		return dao.showGantt(sch);
 	}
+	
+	public Project projectInfo(int prjno) {
+		return dao.projectInfo(prjno);
+	}
+	
+	public Gantt ganttDetail(Gantt det) {
+		return dao.ganttDetail(det);
+	};
+	
+	public Gantt ganttDetailExp(String no) {
+		return dao.ganttDetailExp(no);
+	};
+	
 
 }

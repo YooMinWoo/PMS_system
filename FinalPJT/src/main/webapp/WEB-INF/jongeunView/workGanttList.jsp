@@ -73,7 +73,7 @@ td{text-align:center;}
 		//alert(msg)
 	});
 	function goWork(no){
-		location.href="${path}/workDetail.do?no="+no
+		location.href="${path}/workGanttDetail.do?no="+no
 	}
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
@@ -121,7 +121,7 @@ td{text-align:center;}
 	            </select>
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="subject" value="${sch.subject}" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="text" name="subject" value="" class="form-control" placeholder="검색어를 입력하세요">
 	          </div>
 	          <input type="hidden" name="curPage" value="${sch.curPage}"/>
 	       </form>
@@ -135,6 +135,7 @@ td{text-align:center;}
 			  <table class="table card-table" style="overflow: hidden;">
 			    <thead>
 			      <tr>
+			        <th>번호</th>
 			        <th>업무명</th>
 			        <th>담당자</th>
 			        <th>시작일자</th>
@@ -144,7 +145,8 @@ td{text-align:center;}
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 		        <c:forEach var="g" items="${ganttInfo }">
-		        <tr ondblclick="goDetailPage('${g.id}','${projectInfo.prjno}')">
+		        <tr onclick="goWork(${g.id})">
+		        <td>${g.cnt }</td>
 		        <td>${g.text }</td><td>${g.owner }</td>
 		        <td>${g.start_date }</td>
 		        <td>
@@ -169,8 +171,7 @@ td{text-align:center;}
           </div>
         </div>
           <div class="d-flex justify-content-center">
-          <!-- Basic Pagination -->
-          <!-- 
+          <!-- Basic Pagination --> 
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
@@ -190,7 +191,6 @@ td{text-align:center;}
               </li>
             </ul>
           </nav>
-           -->
           <!--/ Basic Pagination -->
          
    		 </div>   

@@ -99,4 +99,17 @@
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
 	</select>
+	<select id="projectInfo" resultType="project" parameterType="int">
+		select p.*, ename from project p, emp e where prjno=#{prjno} and p.tlid=e.ID
+	</select>
+	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
+		SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
+		g2.text AS parentText from gantt g1 LEFT join gantt g2 ON g1.PARENT =g2.ID where g1.prjno=#{prjno} AND g1.id=#{id}
+	</select>
+	<select id="ganttDetailExp" parameterType="string" resultType="gantt">
+		SELECT g.*, to_char(to_date(g.START_DATE,'yyyy-mm-dd') + g.duration,'yyyy-mm-dd') AS end_date
+		FROM GANTT g
+		WHERE id = #{id}
+	</select>
+	
 </mapper>

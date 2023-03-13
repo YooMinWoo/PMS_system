@@ -148,6 +148,7 @@ textarea:read-only{
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
+				    <li><a class="dropdown-item" id="">담당자 추가</a></li>
 				  </ul>
             	</div> 
            </div>
@@ -156,48 +157,32 @@ textarea:read-only{
                 <div class="divs">
                 <div class="mb-3" style="width:49%;">
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
-                   <!-- 프로젝트명으로 수정필요 -->
                    <input type="text" name="prjno"
                    class="form-control" id="basic-default-prj" value="1" disabled readonly />
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
-                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${work.subject}"
+                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${ganttDetail.text}"
                   disabled readonly/>
-                  <input name="workno" type="hidden" value="${work.workno}"/>
                 </div>
                 </div>
                 <div class="divs">
                  <div class="mb-3" style="width:32%;">
-                   <label class="form-label" for="basic-default-id">작성자</label>
-                   <!-- 작성자로 수정필요 -->
+                   <label class="form-label" for="basic-default-id">담당자</label>
                    <input type="text" name="id"
-                   class="form-control" id="basic-default-id" value="monsta@gmail.com" disabled readonly />
+                   class="form-control" id="basic-default-id" value="${ganttDetail.owner}" disabled readonly />
                  </div>
                  <div class="mb-3" style="width:32%;">
-                  <label class="form-label">등록일</label>
-                  <input type="text" class="form-control" name="regdte" value="${work.regdte}"
+                  <label class="form-label">시작일자</label>
+                  <input type="text" class="form-control" name="regdte" value="${ganttDetail.start_date}"
                   disabled readonly>
                   </div>
                   <div class="mb-3" style="width:32%;">
-                  <label class="form-label">만기일</label>
-                  <input type="text" class="form-control" name="enddte" value="${work.enddte}"
+                  <label class="form-label">종료일자</label>
+                  <input type="text" class="form-control" name="enddte" value="${ganttDetail.end_date }"
                   disabled readonly>        
                 </div>
                 </div>
-                <!-- 
-                <div class="divs">
-                <div class="mb-3" style="width:49%;">
-                   <label class="form-label" for="basic-default-writer">담당자</label>
-                   <input type="text" name="writer"
-                   class="form-control" id="basic-default-writer" />
-                 </div>
-                <div class="mb-3" style="width:49%;">
-                  <label class="form-label" for="basic-default-title">참조</label>
-                  <input name="title" type="text" class="form-control" id="basic-default-title"/>
-                </div>
-                </div>
-                 -->
                 <div class="mb-3">
                   <label class="form-label" for="basic-default-cont">내용</label>
                   <textarea
@@ -206,8 +191,9 @@ textarea:read-only{
                     class="form-control"
                     style="height: 300px;"
                     disabled readonly
-                  >${work.cont}</textarea>
+                  >${ganttDetail.description}</textarea>
                 </div>
+                <!-- 
                 <div class="mb-3">
                  <label>첨부파일</label>
                  <input id="downFile"  value="${work.fno}" type="text" class="form-control" placeholder="첨부 입력" required>
@@ -220,10 +206,12 @@ textarea:read-only{
 					  $(".custom-file-input").on("change",function(){
 				        	$(this).next(".custom-file-label").text($(this).val())
 				        })  
-				  </script>	
+				  </script>
+				-->	
               </form>
           </div>
           <!-- 답글 입력부분 -->
+          <!-- 
           <hr>
           	<div class="card-body">
           		<form id="frm02" method="post" action="${path}/workRepIns.do">
@@ -238,7 +226,9 @@ textarea:read-only{
                 </form>
               </div>
               <hr>
+              -->
             <!-- 답글 출력부분 -->
+            <!--
           	<div class="card-body">
           	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
               <div class="repList">
@@ -254,6 +244,7 @@ textarea:read-only{
               <br>
              </c:forEach>
           </div>
+           -->
           <div class="tab-content px-0 mt-0">
 
           </div>

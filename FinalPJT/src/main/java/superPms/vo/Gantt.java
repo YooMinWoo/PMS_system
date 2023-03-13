@@ -17,6 +17,9 @@ public class Gantt {
 	private String maxdate;
 	private String parentText;
 	private String end_date;
+	
+	// 페이징
+	private int cnt;
 
 	
 	
@@ -114,6 +117,12 @@ public class Gantt {
 	}
 	public void setPrjno(int prjno) {
 		this.prjno = prjno;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 	
