@@ -110,7 +110,7 @@
 		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), 
 				new Date("${projectInfo.deadline}"));
 		// 초기데이터 ajax 호출
-		gantt.load("/showGantt.do?prjno="+prjno)
+		gantt.load("${path}/showGantt.do?prjno="+prjno)
 		
 
 		//## 업무등록 이벤트
