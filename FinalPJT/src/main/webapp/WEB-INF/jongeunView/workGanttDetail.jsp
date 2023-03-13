@@ -157,8 +157,9 @@ textarea:read-only{
                 <div class="divs">
                 <div class="mb-3" style="width:49%;">
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
-                   <input type="text" name="prjno"
-                   class="form-control" id="basic-default-prj" value="1" disabled readonly />
+                   <input type="text" name="prjname"
+                   class="form-control" id="basic-default-prj" value="${prj.subject}" disabled readonly />
+                   <input type="hidden" name="prjno" value="${ganttDetail.prjno} }">
                  </div>
                 <div class="mb-3" style="width:49%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
