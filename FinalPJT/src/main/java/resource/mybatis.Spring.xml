@@ -22,6 +22,7 @@
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
       	<typeAlias alias="workFile" type="superPms.vo.WorkFile"/>
       	<typeAlias alias="workrep" type="superPms.vo.WorkRep"/>
+      	<typeAlias alias="ganttsch" type="superPms.vo.GanttSch"/>
       	<!-- /종은 -->
       	
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>

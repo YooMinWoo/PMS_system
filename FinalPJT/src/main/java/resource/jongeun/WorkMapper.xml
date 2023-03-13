@@ -82,4 +82,21 @@
 		from workrep
 		where NO=#{no}
 	</delete>
+	<!-- gantt -->
+	<select id="showGantt" resultType="gantt" parameterType="ganttsch">
+		SELECT *
+		FROM (SELECT rownum cnt, g.* 
+			FROM gantt g, project p 
+			WHERE g.PRJNO =p.PRJNO
+			AND p.prjno=#{prjno}
+			)
+		WHERE cnt BETWEEN #{start} and #{end}
+		ORDER BY START_date
+	</select>
+	<select id="totGanttCnt" resultType="int" parameterType="ganttsch">
+		SELECT count(*) 
+		FROM gantt g, project p 
+		WHERE g.PRJNO =p.PRJNO 
+		AND p.prjno=#{prjno}
+	</select>
 </mapper>

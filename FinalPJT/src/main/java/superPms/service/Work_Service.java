@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import superPms.dao.Work_Dao;
+import superPms.vo.Gantt;
+import superPms.vo.GanttSch;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -92,6 +94,31 @@ public class Work_Service {
 	}
 	public void delWorkRep(int no) {
 		dao.delWorkRep(no);
+	}
+	// gantt
+	public List<Gantt> showGantt(GanttSch sch){
+		sch.setCount(dao.totGanttCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		return dao.showGantt(sch);
 	}
 
 }

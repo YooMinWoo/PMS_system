@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Work_Service;
+import superPms.vo.Gantt;
+import superPms.vo.GanttSch;
 import superPms.vo.Work;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
@@ -94,4 +96,14 @@ public class Work_Controller {
 		d.addAttribute("msg","삭제완료");
 		return "redirect:/workDetail.do";
 	}
+	
+	// gantt 연동
+	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
+	@RequestMapping("/workGanttList.do")
+	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+		d.addAttribute("ganttInfo",service.showGantt(sch));
+		return "WEB-INF\\jongeunView\\workGanttList.jsp";
+	}
+	
+	
 }

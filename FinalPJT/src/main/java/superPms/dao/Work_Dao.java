@@ -2,6 +2,8 @@ package superPms.dao;
 
 import java.util.List;
 
+import superPms.vo.Gantt;
+import superPms.vo.GanttSch;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -21,4 +23,7 @@ public interface Work_Dao {
 	public List<WorkRep> getWorkRepList(int no);
 	public void insWorkRep(WorkRep ins);
 	public void delWorkRep(int no);
+	// gantt
+	public List<Gantt> showGantt(GanttSch sch);
+	public int totGanttCnt(GanttSch sch);
 }
