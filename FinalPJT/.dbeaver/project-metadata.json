@@ -1,1 +1,1 @@
-{"resources":{"src/main/java/sql/wonju.sql":{"default-schema":"SCOTT","default-datasource":"oracle_thin-185ed3ef3b6-6fecaddb32c36ba"}}}
+{"resources":{"src/main/java/sql/wonju.sql":{"default-schema":"SUPERPM","default-datasource":"oracle_thin-1867810338e-7ebdded916f7d02e"}}}

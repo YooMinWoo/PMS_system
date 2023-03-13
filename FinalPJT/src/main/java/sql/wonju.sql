@@ -57,14 +57,14 @@ SELECT p.REGDTE,p.DEADLINE,p.SUBJECT FROM project p WHERE p.TLID ='admin1@gmail.
 SELECT * FROM PROJECTMEMBER;
 SELECT * FROM PROJECT;
 SELECT * from gantt;
-SELECT * FROM dept777;	
+SELECT * FROM dept;	
 SELECT * FROM PROJECt WHERE SUBSTR(DEADLINE,6,2)='02';
 
 	SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline
 	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 
 	project p
 	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023
-	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=3;
+	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=4;
 
 
 -- openStatus 0이면 전체 공개 1이면 멤버공개

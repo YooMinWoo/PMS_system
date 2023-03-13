@@ -54,6 +54,8 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
 <script type="text/javascript">
 /*
 --bs-blue: #007bff;
@@ -76,12 +78,8 @@
 --bs-dark: #233446;	
 */
 	$(document).ready(function(){
-		
 
-		// 초기데이터 로딩
-		//getData(curYear,curMonth,avgsArr,subArr,cntsArr,dnameArr)
-		//getData()
-		// 연도랑 월 변경할때 차트가 안바뀜 ㅜㅜ...;;;
+	      
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
 			var year = $(this).val()
@@ -92,13 +90,12 @@
 			var year = $("[name=year]").val()
 			var month = $(this).val()
 			getData(year,month)
-			//chart2 = new ApexCharts(document.querySelector(."#chart2"), options2);
-			//chart2.render()
-			
+
 		})
 
 	
 	})
+	
 		function optFun(cntsArr,dnameArr,avgsArr,subArr){
 			var options = {
 					  chart: {
@@ -114,16 +111,11 @@
 			        	    text: 'Loading...'
 			        	  }	
 					}
-
-	
-			console.log("#옵션#")
-			console.log(avgsArr)
-			
 			var options2 = {
 		           series: [{
 		           	  data:avgsArr
 			        }],
-			          chart: {
+			          chart: {  
 			          type: 'bar',
 			          //height: 500
 			        },
@@ -163,23 +155,29 @@
 		        	}
 		        	  
 			  };
-				
+			
+			console.log("#옵션#")
+			console.log(avgsArr)	
 			console.log("#options2#")
 			console.log(options2)
-			/*
-			setTimeout(function(){
-				var chart = new ApexCharts(document.querySelector("#chart"), options);
-				chart.render();				
-				var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
-				chart2.render();	
-							
-			},1000)
-			*/
-
+			
+			var chart = new ApexCharts(document.querySelector("#chart"), options);
+			chart.render();				
+			var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+			chart2.render();	
 			
 		}	
-	function getData(curYear,curMonth){
 		
+	
+  
+	
+	
+	
+	
+	
+
+	function getData(curYear,curMonth){
+	
 	if(curYear=='')  curYear=parseInt(new Date().toISOString().split("T")[0].split("-")[0])
 	if(curMonth=='') curMonth= curMonth = parseInt(new Date().toISOString().split("T")[0].split("-")[1])
 	console.log(typeof curYear)
@@ -195,13 +193,9 @@
 			return response.json()
 		}).then(function(json){
 			console.log(json)
-			//avgsArr=[]
-			//subArr=[]
-			//cntsArr=[]
-			//dnameArr=[]
+		
 			var avgsArr=[]
 			var subArr=[]
-			
 			var cntsArr=[]
 			var dnameArr=[]			
 			console.log("#####")
@@ -219,10 +213,9 @@
 				cntsArr.push(d.cnts)
 				dnameArr.push(d.dname)
 			})	
+			
 			optFun(cntsArr,dnameArr,avgsArr,subArr)
-			
-			
-			
+
 		}).catch(function(err){
 			console.log(err)
 		})
@@ -232,7 +225,7 @@
 	
 </script>
 </head>
-
+<!--  -->
 <body onload="javascript:getData('','');" style="overflow-x: hidden">
    <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -331,7 +324,7 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     
-    <script type="text/javascript">
-    </script>
+   
+   
   </body>
 </html>
