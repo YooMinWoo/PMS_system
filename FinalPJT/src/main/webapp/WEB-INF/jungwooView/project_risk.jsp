@@ -116,7 +116,6 @@ tr{text-align:left;}
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
 		$("form").submit()
-		console.log("하나용?"+$("[name=curPage]").val(cnt))
 	}	
 </script>
 </head>

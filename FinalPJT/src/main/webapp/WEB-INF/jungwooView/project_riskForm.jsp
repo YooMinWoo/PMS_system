@@ -4,6 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
@@ -64,7 +65,15 @@
 		})
 		$("#goMain").click(function(){
 			location.href="${path}/project_riskList.do"			
-		});	
+		});
+		$("#selLan").val("${param.lang}")
+		$("#selLan").change(function(){
+			if($(this).val()!=""){
+				$("[name=lang]").val($(this).val())
+				console.log($("[name=lang]").val($(this).val()))
+				$("form").submit();
+			}
+		});		
 	});
 </script>
 </head>
@@ -90,57 +99,59 @@
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">리스크 관리</small></h4>
-           
+           <h4 class="fw-bold py-3 mb-4"><spring:message code="project"/> > <small class="text-muted"><spring:message code="riskmanage"/></small></h4>
+		  	<select class="form-control" id="selLan">
+		  		<option value=""><spring:message code="chlang"/></option>
+		  		<option value="ko"><spring:message code="ko"/></option>
+		  		<option value="en"><spring:message code="en"/></option>
+		  	</select>
            <div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="mb-3">리스크 등록</h4>
+				        <h4 class="text-primary"><spring:message code="riskregistration"/></h4>
 				        <form method="post" class="validation-form" novalidate> 
+				        <input type="hidden" name="lang" value=""/>
 				          <div class="mb-3">
-				            <label for="subject">제목</label>
+				            <label for="riskname"><spring:message code="riskname"/></label>
 				            <input name="riskname"
 				            type="text" class="form-control  ckValid" 
-				            id="riskname" placeholder="제목 입력" required>
-				            <div class="invalid-feedback">
-				              제목을 입력해주세요.
-					           </div>
+				            id="riskname" placeholder="<spring:message code="writetitle"/>" required>
 						  </div>
 				          <div class="row">      
 					          <div class="col-md-6 mb-3">
-					            <label for="risklevel">심각도</label>
-					            <input type="text" name="risklevel"
-					            class="form-control ckValid" id="risklevel" placeholder="긴급도 입력" required>
-					            <div class="invalid-feedback">
-					              작성자를 입력해주세요.
-					            </div>
+					            <label for="risklevel"><spring:message code="risklevel"/></label>
+					            <select class="form-control" name="risklevel" id="risklevel" required>
+					            	<option value="" selected><spring:message code="choption"/></option>
+					            	<option value="긴급"><spring:message code="emergency"/></option>
+					            	<option value="보통"><spring:message code="common"/></option>
+					            	<option value="낮음"><spring:message code="low"/></option>
+					            </select>
 					          </div> 
 					          <div class="col-md-6 mb-3">
-					            <label for="riskpriority">우선도</label>
-					            <input type="text" name="riskpriority"
-					            class="form-control ckValid" id="riskpriority" placeholder="우선순위 입력"  required>
-					            <div class="invalid-feedback">
-					              입력해주세요.
-					            </div>
+					            <label for="riskpriority"><spring:message code="riskpriority"/></label>
+					            <select class="form-control" name="riskpriority" id="riskpriority" required>
+					            	<option value="" selected><spring:message code="choption"/></option>
+					            	<option value="1">1</option>
+					            	<option value="2">2</option>
+					            	<option value="3">3</option>
+					            </select>
 					          </div> 	          
 				          </div> 
 				          <div class="row">
 				            <div class="col-md-6 mb-3">
-				              <label for="riskmoniter" >모니터링 </label>
+				              <label for="riskmoniter" ><spring:message code="riskmoniter"/> </label>
 				              <input type="text" name="riskmoniter"  class="form-control"
-				              id="riskmoniter" placeholder="배정자 입력" >
-				              <div class="invalid-feedback">
-				                입력해주세요.
-				              </div>
+				              id="riskmoniter" placeholder="<spring:message code="writemoniter"/>">
 				            </div>
 				            <div class="col-md-6 mb-3">
-				              <label for="riskstate" >리스크상태</label>
-				              <input type="text" name="riskstate"  class="form-control" 
-				              id="riskstate" placeholder="상태 입력" >
-				              <div class="invalid-feedback">
-				                입력해주세요.
-				              </div>
+				              <label for="riskstate" ><spring:message code="riskstate"/></label>
+					            <select class="form-control" name="riskstate" id="riskstate" required>
+					            	<option value="" selected><spring:message code="choption"/></option>
+					            	<option value="발생"><spring:message code="generation"/></option>
+					            	<option value="PM확인"><spring:message code="checkpm"/></option>
+					            	<option value="처리중"><spring:message code="progress"/></option>
+					            	<option value="해결"><spring:message code="solve"/></option>
+					            </select>
 				            </div>
 				          </div> 
 				        
@@ -151,10 +162,10 @@
 				              내용를 입력해주세요.
 				            </div>
 				          </div>  --%>     
-				          
+				          <input type="text" value="${myp.prjno}">
 				          <div class="mb-4"></div>
-				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button">리스크 등록</button>
-				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
+				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button"><spring:message code="regist"/></button>
+				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button"><spring:message code="main"/></button>
 				        </form>
 				      </div>
            		</div>

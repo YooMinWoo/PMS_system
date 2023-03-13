@@ -105,4 +105,12 @@
 		 		<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		 	</websocket:handshake-interceptors>
 		 </websocket:handlers>
+		 	<!-- 1. 언어변환 처리를위한 객체등록 -->
+		<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+		<!-- 2. 다국어 코드 등록 설정 위치 지정 -->
+		<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+			<property name="basenames">
+				<value>message.msg</value> <!-- 패지키명 기준을 java밑에 message패키지에 msg파일설정 -->
+			</property>
+		</bean>
 </beans>

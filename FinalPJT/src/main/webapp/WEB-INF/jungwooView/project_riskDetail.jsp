@@ -87,11 +87,6 @@
 				$("[name=riskstate]").attr('readonly',false)
 			}
 		}
-<%--		$('form input[readonly], form select[readonly]').click(function() {
-			
-				alert("pm과 담당자만가능")
-			
-		}); --%>
 		$("#riskmoniter").click(function(){
 			if(${emp.auth!=2}){
 				alert("pm만 가능")
@@ -131,7 +126,7 @@
            <div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="mb-3">리스크 상세</h4>
+				        <h4 class="text-primary">리스크 상세</h4>
 				        <form method="post" id="form1" class="validation-form" novalidate>
 				          <div class="row">
 				            <div class="col-md-6 mb-3">

@@ -92,7 +92,7 @@ SELECT * FROM RISK r ;
 SELECT * FROM solution;
 ALTER TABLE risk DROP COLUMN risksolution;
 
-SELECT * FROM EMP;
+SELECT * FROM MAIL m ;
 
 UPDATE risk 
 SET risklevel = '보통' 
@@ -129,11 +129,13 @@ riskstate, riskname, id, prjno) VALUES
 (risk_seq.nextval, 
 '긴급',  '1', '발생', 
 '이 프로젝트에 투입된 인원이 적다', 'monsta@gmail.com', 23);
-		update risk
-		set
-			risklevel = '긴급',
-			riskpriority = '1',
-			riskmoniter = '김은빈',
-			riskstate = 'PM담당',
-			riskname = '수정이 잘 되는가 ?'
-	   where riskno = 47;
+update risk
+set
+	risklevel = '긴급',
+	riskpriority = '1',
+	riskmoniter = '김은빈',
+	riskstate = 'PM담당',
+	riskname = '수정이 잘 되는가 ?'
+   where riskno = 47;
+   
+SELECT * FROM PROJECT p ;

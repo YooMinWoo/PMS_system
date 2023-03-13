@@ -47,8 +47,6 @@ public class Risk_Service {
 				// 6. 블럭처리
 				//    1) 블럭 크기 지정
 				sch.setBlockSize(5);
-			
-				
 				//	  2) 블럭 번호 지정 : 현재페이지번호/블럭의 크기 올림 처리
 				int blocknum = (int)Math.ceil(sch.getCurPage()/
 							(double)sch.getBlockSize());
@@ -57,12 +55,10 @@ public class Risk_Service {
 				if(endBlock>sch.getPageCount()) {
 					endBlock = sch.getPageCount();
 				}
-
-				
-				
 				sch.setEndBlock(endBlock);
 				//	  4) 시작 블럭
-				sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		        if(blocknum!=0)
+		        sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
 				// 
 				
 				

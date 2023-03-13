@@ -36,7 +36,7 @@
   			(risk_seq.nextval, 
   			#{risklevel},  #{riskpriority},
   			#{riskmoniter}, '발생', 
-  			#{riskname}, 'monsta@gmail.com', 23)
+  			#{riskname}, #{id}, #{prjno})
   	</insert>
  	<update id="updateRisk" parameterType="risk">
 		update risk
