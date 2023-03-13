@@ -33,6 +33,7 @@
       	<typeAlias alias="noticesch" type="superPms.vo.NoticeSch"/>
       	<typeAlias alias="noticerep" type="superPms.vo.NoticeRep"/>
       	<typeAlias alias="noticerepsch" type="superPms.vo.NoticeRepSch"/>
+      	<typeAlias alias="noticerepsch" type="superPms.vo.Drive"/>
       	<!--  -->
       	
       	<!-- 원주 -->
