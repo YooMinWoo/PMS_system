@@ -15,7 +15,7 @@
 	<select id="getDonut" resultType="donut">
 	SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid 
 	FROM (SELECT * FROM PROJECT p WHERE p.deadline>=
-	to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept777 d
+	to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
 	WHERE ppp.deptid=d.deptid
 	</select>
 </mapper>
