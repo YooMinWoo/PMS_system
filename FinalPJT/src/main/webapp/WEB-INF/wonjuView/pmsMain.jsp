@@ -17,7 +17,11 @@
 <title>Insert title here</title>
 
 <style>
-	td{text-align:center;}
+	.form-select.form-select-sm{
+		display: inline-block !important;
+		width: 40% !important;
+		height: 50% !important;
+	}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -73,90 +77,163 @@
 */
 	$(document).ready(function(){
 		
-		$("#dropYear").val(2023)
-		$("#dropMonth").val(3)
-		console.log($("#dropYear").val())
+
+		// 초기데이터 로딩
+		//getData(curYear,curMonth,avgsArr,subArr,cntsArr,dnameArr)
+		//getData()
+		// 연도랑 월 변경할때 차트가 안바뀜 ㅜㅜ...;;;
+		$("[name=year]").change(function(){
+			var month = $("[name=month]").val()
+			var year = $(this).val()
+			getData(year,month)
+			
+		})
+		$("[name=month]").change(function(){
+			var year = $("[name=year]").val()
+			var month = $(this).val()
+			getData(year,month)
+			//chart2 = new ApexCharts(document.querySelector(."#chart2"), options2);
+			//chart2.render()
+			
+		})
+
+	
+	})
+		function optFun(cntsArr,dnameArr,avgsArr,subArr){
+			var options = {
+					  chart: {
+					    type: 'donut'
+					  },
+					  colors:['#696cff', '#8592a3', '#71dd37','#03c3ec','#007bff','#e83e8c','#696cff','#71dd37'],
+					  series: cntsArr,
+					  labels: dnameArr,
+					  legend: {
+						    position: 'bottom'
+						},
+					 noData: {
+			        	    text: 'Loading...'
+			        	  }	
+					}
+
+	
+			console.log("#옵션#")
+			console.log(avgsArr)
+			
+			var options2 = {
+		           series: [{
+		           	  data:avgsArr
+			        }],
+			          chart: {
+			          type: 'bar',
+			          //height: 500
+			        },
+			        plotOptions: {
+			          bar: {
+			            borderRadius: 4,
+			            horizontal: true,
+			          }
+			        },
+			        dataLabels: {
+			          enabled: false
+			        },
+			        fill:{
+			        	colors:['#696cff']
+			        },
+			        xaxis: {
+			          categories: subArr,
+	
+			        },
+			        yaxis: {
+			            max: 100, //100%가 최대값이도록 설정
+			           
+			        },
+			        tooltip: {
+			        	x:{
+			        		show:false
+			        	},
+			        	 y: {
+			        		 formatter: (value) => { return value+"%" },
+			                 title: {
+			                     formatter: (seriesName) => "진행률", 
+			                 },
+			             }
+			        },
+		          	noData: {
+		        	    text: 'Loading...'
+		        	}
+		        	  
+			  };
+				
+			console.log("#options2#")
+			console.log(options2)
+			/*
+			setTimeout(function(){
+				var chart = new ApexCharts(document.querySelector("#chart"), options);
+				chart.render();				
+				var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+				chart2.render();	
+							
+			},1000)
+			*/
+
+			
+		}	
+	function getData(curYear,curMonth){
 		
-		var avgsArr=[]
-		var subArr=[]
-		
-		var cntsArr=[]
-		var dnameArr=[]
-		
-		let url="${path}/chartShow.do?year=23&month=3"
-		fetch(url,{cache:'no-cache'}).then(function(response){
+	if(curYear=='')  curYear=parseInt(new Date().toISOString().split("T")[0].split("-")[0])
+	if(curMonth=='') curMonth= curMonth = parseInt(new Date().toISOString().split("T")[0].split("-")[1])
+	console.log(typeof curYear)
+	
+	$("[name=year]").val(curYear).prop("selected", true); 
+	$("[name=month]").val(curMonth).prop("selected", true); 
+	
+
+	
+	
+		let url="${path}/chartShow.do?year="+curYear+"&month="+curMonth
+		fetch(url).then(function(response){
 			return response.json()
 		}).then(function(json){
+			console.log(json)
+			//avgsArr=[]
+			//subArr=[]
+			//cntsArr=[]
+			//dnameArr=[]
+			var avgsArr=[]
+			var subArr=[]
+			
+			var cntsArr=[]
+			var dnameArr=[]			
+			console.log("#####")
+			console.log(json.barC)
+			console.log(json.donutC)
+			console.log(json.barC.length)
+				
 			$.each(json.barC,function(index,b){
+				console.log("###추가##")
+				console.log(b)
 				avgsArr.push(b.avgs)
-				subArr.push(b.subject)
+				subArr.push([b.subject,"(~"+b.deadline+")"])
 			})	
 			$.each(json.donutC,function(index,d){
 				cntsArr.push(d.cnts)
 				dnameArr.push(d.dname)
 			})	
+			optFun(cntsArr,dnameArr,avgsArr,subArr)
+			
+			
+			
 		}).catch(function(err){
 			console.log(err)
 		})
-		console.log(avgsArr)
-		var options = {
-				  chart: {
-				    type: 'donut'
-				  },
-				  colors:['#696cff', '#8592a3', '#71dd37','#03c3ec','#007bff','#e83e8c','#696cff','#71dd37'],
-				  series: cntsArr,
-				  labels: dnameArr,
-				  legend: {
-					    position: 'bottom'
-					}
-				}
-		var chart = new ApexCharts(document.querySelector("#chart"), options);
-		chart.render();	
+	}
 
-		
-		var options2 = {
-		          series: [{
-		          data:avgsArr// [40, 43, 44.8, 47.0, 54.0, 58.0, 69.0, 100, 12, 13.8]
-		        }],
-		          chart: {
-		          type: 'bar',
-		          height: 500
-		        },
-		        plotOptions: {
-		          bar: {
-		            borderRadius: 4,
-		            horizontal: true,
-		          }
-		        },
-		        dataLabels: {
-		          enabled: false
-		        },
-		        fill:{
-		        	colors:['#696cff']
-		        },
-		        xaxis: {
-		          categories: subArr
-		        	  // ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan','United States', 'China', 'Germany']
-		        },
-		        yaxis: {
-		            max: 100, //100%가 최대값이도록 설정
-		        },
-		        tooltip: {
-		        	 y: {
-		                 formatter: undefined,
-		                 title: {
-		                     formatter: (seriesName) => "진행률", 
-		                 },
-		             }
-		          }
-		  };
-		var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
-		chart2.render();		
-	})
+	
+	
 </script>
 </head>
 
-<body style="overflow-x: hidden">
+<body onload="javascript:getData('','');" style="overflow-x: hidden">
    <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -185,37 +262,26 @@
 	           		<h5 class="card-header m-0 me-2 pb-3">프로젝트 진행률</h5>
 	           	</div>
 	           	
-	           	<div class="col-4 justify-content-end">
-		           <div class="dropdown">
-	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="dropYear" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">2023</button>
-	          	    <ul class="dropdown-menu" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
-			          <li><a class="dropdown-item" href="javascript:void(0);">2022</a></li>
-		            </ul>
-	                <button class="btn btn-sm btn-outline-primary dropdown-toggle show" type="button" id="dropMonth" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	                 3
-	                </button>
-	          	    <ul class="dropdown-menu" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 40px, 0px);" data-popper-placement="bottom-start">
-			          <c:forEach begin="1" end="12" var="months">
-			          <li><a class="dropdown-item" href="javascript:void(0);">${months }</a></li>
-			          </c:forEach>
-		            </ul>
-	              </div>	              
+	           	<div class="col-4 d-flex justify-content-center">
+			           <select id="year" name="year" class="form-select form-select-sm align-self-center">
+			            <c:forEach begin="2022" end="2023" var="years">
+			            <option>${years }</option>
+			            </c:forEach>
+			          </select>
+			          <select id="month" name="month" class="form-select form-select-sm align-self-center">
+			            <c:forEach begin="1" end="12" var="months">
+			            <option>${months }</option>
+			            </c:forEach>
+			          </select>
+	             </div>	              
 	              
-	              <!-- 
 
-		          
-	                <div class="dropdown-menu dropdown-menu-end show" aria-labelledby="growthReportId" data-popper-placement="bottom-end" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(-46.4px, 28.8px, 0px);">
-                  <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                  <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                  <a class="dropdown-item" href="javascript:void(0);">2019</a>
-	                </div>
-	               -->
 	           	</div>
 	         	  <div id="chart2" style="width: 100%;height: 100%;"></div>
 
 	           </div>
 	           </div>
-          	 </div>
+          	
           	 
           	 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
 	          	  <div class="card">
@@ -264,5 +330,8 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
+    <script type="text/javascript">
+    </script>
   </body>
 </html>

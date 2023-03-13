@@ -4,8 +4,12 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 
 <mapper namespace="superPms.dao.Gantt_Dao">
-	<select id="showGantt" resultType="gantt" parameterType="int">
-	SELECT g.* FROM gantt g, project p WHERE g.PRJNO =p.PRJNO AND p.prjno=#{prjno} ORDER BY START_date
+	<select id="showGantt" resultType="gantt" parameterType="gantt">
+	SELECT g.* FROM gantt g, project p WHERE g.PRJNO =p.PRJNO AND p.prjno=#{prjno} 
+	<if test="owner!=''">
+	and g.owner=#{owner} 
+	</if>
+	ORDER BY START_date
 	</select>
 	<select id="showLink" resultType="link" parameterType="int">
 		select l.* from link l, project p where p.prjno=l.prjno and p.prjno=#{prjno}

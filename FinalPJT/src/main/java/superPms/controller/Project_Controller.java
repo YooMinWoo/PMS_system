@@ -71,9 +71,11 @@ public class Project_Controller {
 	
 	// 프로젝트 메인화면
 	@GetMapping("/projectMain.do")
-	public String projectMain(@RequestParam("prjno") int prjno,Model d) {
+	public String projectMain(@RequestParam("prjno") int prjno,Gantt g,Model d) {
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
-		d.addAttribute("ganttInfo",ganttService.showGantt(prjno));
+		d.addAttribute("ganttInfo",ganttService.showGantt(g));
+		d.addAttribute("memList",service.memberList(prjno));
+		d.addAttribute("pm",service.getPm(prjno));
 		return "WEB-INF\\wonjuView\\project_main.jsp";
 	}
 	// 프로젝트 PM + 멤버정보

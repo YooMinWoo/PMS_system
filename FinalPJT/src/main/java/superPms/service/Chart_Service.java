@@ -15,8 +15,6 @@ public class Chart_Service {
 	private Chart_Dao dao;
 	
 	public List<BarChart> getBar(BarChart date){
-		if(date.getYear()==0) date.setYear(23);
-		if(date.getMonth()==0) date.setMonth(3);
 		return dao.getBar(date);
 	};
 	public List<DonutChart> getDonut(){

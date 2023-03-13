@@ -39,20 +39,32 @@ CREATE TABLE project (
 	FROM project p,PROJECTMEMBER m
 	WHERE m.PRJNO =p.PRJNO ;
 -- 프로젝트별 진행률	(23년 3월에 종료되는 프로젝트별 간트차트 업무 진행률)
-SELECT DISTINCT a.avgs,p.subject, p.deadline FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, project p
-WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,3,2))=23 AND TO_NUMBER(SUBSTR(p.deadline,6,2))=3
+SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, project p
+WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023 AND TO_NUMBER(SUBSTR(p.deadline,6,2))=4
 ;
 -- 현재 진행중인 프로젝트의 카테고리별 갯수
 SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid 
 FROM (SELECT * FROM PROJECT p WHERE p.deadline>=to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
 WHERE ppp.deptid=d.deptid;
 
+SELECT * FROM gantt;
+SELECT * FROM projectmember;
 
+SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT FROM project p, PROJECTMEMBER m WHERE p.prjno=m.PRJNO 
+AND owner='admin1@gmail.com' OR p.tlid='admin1@gmail.com';
+SELECT p.REGDTE,p.DEADLINE,p.SUBJECT FROM project p WHERE p.TLID ='admin1@gmail.com';
+
+SELECT * FROM PROJECTMEMBER;
+SELECT * FROM PROJECT;
 SELECT * from gantt;
 SELECT * FROM dept777;	
 SELECT * FROM PROJECt WHERE SUBSTR(DEADLINE,6,2)='02';
 
-
+	SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline
+	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 
+	project p
+	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023
+	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=3;
 
 
 -- openStatus 0이면 전체 공개 1이면 멤버공개

@@ -6,7 +6,7 @@ import superPms.vo.Gantt;
 import superPms.vo.Link;
 
 public interface Gantt_Dao {
-	public List<Gantt> showGantt(int prjno);
+	public List<Gantt> showGantt(Gantt g);
 	public List<Link> showLink(int prjno);
 	public void insGantt(Gantt ins);
 	public void uptGantt(Gantt upt);

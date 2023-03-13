@@ -17,8 +17,8 @@ public class Gantt_Controller {
 	private Gantt_Service service;
 	
 	@RequestMapping("/showGantt.do")
-	public String showGantt(@RequestParam("prjno") int prjno,Model d) {
-		d.addAttribute("tasks",service.showGantt(prjno));
+	public String showGantt(@RequestParam("prjno") int prjno,Gantt g,Model d) {
+		d.addAttribute("tasks",service.showGantt(g));
 		d.addAttribute("links",service.showLink(prjno));
 		return "pageJsonReport";
 	}

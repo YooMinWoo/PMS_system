@@ -22,23 +22,23 @@
 	</delete>
 	<!-- 부서 콤보박스 만들기 -->
 	<select id="deptCom" resultType="superdept">
-		SELECT deptid, dname FROM dept where dname NOT LIKE '최고경영진' and PARENTDEPT IS null
+		SELECT deptid, dname FROM dept777 where dname NOT LIKE '최고경영진' and PARENTDEPT IS null
 	</select>
 	
 	<select id="projectInfo" resultType="project" parameterType="int">
-		select p.*, ename from project p, emp e where prjno=#{prjno} and p.tlid=e.ID
+		select p.*, ename from project p, emp777 e where prjno=#{prjno} and p.tlid=e.ID
 	</select>
 	
 	<!-- 검색된 사원 총 갯수 -->
 	<select id="empInfoTot" resultType="int" parameterType="superempdeptsch">
-	select count(*) from emp e, dept d 
+	select count(*) from emp777 e, dept777 d 
 	where 1=1 and e.deptid = d.deptid AND 
 	(e.ename like '%'||#{keyword}||'%' or d.dname like '%'||#{keyword}||'%')
 	and d.dname NOT LIKE '최고경영진'	
 	</select>
 	<!-- 검색된 사원 리스트 조회 -->
 	<select id="empInfoList" resultType="SuperempDept" parameterType="superempdeptsch" >
-	select * from (select rownum rm, d.dname, e.ename, e.job, e.id from emp e, dept d 
+	select * from (select rownum rm, d.dname, e.ename, e.job, e.id from emp777 e, dept777 d 
 	where 1=1 and  e.deptid = d.deptid AND 
 	(e.ename like '%'||#{keyword}||'%' or d.dname like '%'||#{keyword}||'%')
 	and d.dname NOT LIKE '최고경영진')
@@ -49,7 +49,7 @@
 	
 	<!-- 페이징처리 : 전체 게시글 갯수 allproject -->
 	<select id="allProjectTot" resultType="int" parameterType="projectsch">
-	SELECT count(*) FROM project p,emp e, dept d 
+	SELECT count(*) FROM project p,emp777 e, dept777 d 
 	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
 	<if test='isCon!=null and isCon.equals("Y")'>
 			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
@@ -62,7 +62,7 @@
 	</select>
 	<!--  allproject 전체 데이터 list -->
 	<select id="allProject" parameterType="projectsch" resultType="project">
-	select * from (SELECT rownum rm, p.*,e.ename, d.dname FROM project p,emp e, dept d 
+	select * from (SELECT rownum rm, p.*,e.ename, d.dname FROM project p,emp777 e, dept777 d 
 	WHERE 1=1 and openstatus='0' AND e.id=p.tlid and d.deptid=p.deptid
 	<if test='isCon!=null and isCon.equals("Y")'>
 			and to_date(p.deadline,'yyyy-mm-dd')>=TO_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') 
@@ -76,7 +76,7 @@
 	</select>
 	<!-- 페이징처리 : 전체 게시글 갯수 myproject -->
 	<select id="myProjectTot" resultType="int" parameterType="projectsch" >
-	SELECT count(*) FROM  PROJECT p, PROJECTMEMBER m, dept d,
+	SELECT count(*) FROM  PROJECT p, PROJECTMEMBER m, dept777 d,
 	(SELECT prjno,COUNT(*)+1 cnt FROM projectmember GROUP BY prjno) c
 	WHERE 1=1 AND p.PRJNO =m.PRJNO AND m.OWNER =#{owner}
 	AND d.DEPTID =p.DEPTID AND c.prjno=p.PRJNO
@@ -91,7 +91,7 @@
 	<!--  myProject 전체 데이터 list -->
 	<select id="myProject" parameterType="projectsch" resultType="project">
 	select * from (SELECT rownum rm, d.DNAME,p.SUBJECT ,p.PRJNO,m.PART, c.cnt
-	FROM  PROJECT p, PROJECTMEMBER m, dept d,
+	FROM  PROJECT p, PROJECTMEMBER m, dept777 d,
 	(SELECT prjno,COUNT(*)+1 cnt FROM projectmember GROUP BY prjno) c
 	WHERE 1=1 AND p.PRJNO =m.PRJNO AND m.OWNER =#{owner}
 	AND d.DEPTID =p.DEPTID AND c.prjno=p.PRJNO
@@ -105,11 +105,11 @@
 	where rm between #{start} and #{end}
 	</select>
 	<select id="memberList" parameterType="int" resultType="pmList">
-	SELECT d.dname,e.job, m.part, e.ename, e.id FROM dept d, emp e, projectmember m
+	SELECT d.dname,e.job, m.part, e.ename, e.id FROM dept777 d, emp777 e, projectmember m
 	WHERE m.prjno=#{prjno} AND m.owner=e.id AND e.deptid=d.deptid
 	</select>
 	<select id="getPm" parameterType="int" resultType="pmList">
-	SELECT d.dname, e.job, e.ename FROM dept d, emp e, project p
+	SELECT d.dname, e.job, e.ename FROM dept777 d, emp777 e, project p
 	WHERE p.PRJNO =#{prjno} AND e.id=p.TLID AND e.DEPTID =d.DEPTID
 	</select>
 	

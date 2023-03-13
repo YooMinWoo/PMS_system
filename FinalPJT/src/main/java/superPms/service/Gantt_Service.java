@@ -14,8 +14,9 @@ public class Gantt_Service {
 	@Autowired(required = false)
 	private Gantt_Dao dao;
 	
-	public List<Gantt> showGantt(int prjno){
-		return dao.showGantt(prjno);
+	public List<Gantt> showGantt(Gantt g){
+		if(g.getOwner()==null) g.setOwner("");
+		return dao.showGantt(g);
 	}
 	public List<Link> showLink(int prjno){
 		return dao.showLink(prjno);

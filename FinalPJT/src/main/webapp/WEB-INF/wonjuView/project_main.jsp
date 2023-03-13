@@ -76,6 +76,12 @@
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');	
+		
+		var prjno="${projectInfo.prjno}"
+		$("#proMem").change(function(){
+			console.log($("#proMem").val())
+			location.href="${path}/projectMain.do?prjno="+prjno+"&owner="+$("#proMem").val()
+		})
 
 	})
 	 function goDetailPage(id,prjno){
@@ -115,7 +121,16 @@
 		   </div>
 		   
 		    <div class="row my-3 px-sm-3 mt-5">
-		    <div class="col my-3"><span><strong>담당 업무 확인</strong></span></div>
+		    <div class="col-10 my-3"><span><strong>담당 업무 확인</strong></span></div>
+		    <div class="col-2 my-3">
+		    	<select id="proMem" class="form-select form-select-sm align-self-center">
+		    		<option value="">담당자 선택</option>
+		    		<option>${pm.ename }</option>
+		    		<c:forEach var="m" items="${memList }">
+		    		<option>${m.ename }</option>
+		    		</c:forEach>
+		    	</select>
+		    </div>
 		    <table id="ganttTab" class="table table-hover">
 		      <thead>
 		        <tr>
@@ -146,6 +161,9 @@
 		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
 		        </tr>
 		        </c:forEach>
+		        <c:if test="${empty ganttInfo }">
+		        <tr><td>등록된 업무가 없습니다</td><td></td><td></td><td></td><td></td></tr>
+		        </c:if>
 		      </tbody>
 		    </table>
 		    
