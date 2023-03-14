@@ -61,9 +61,6 @@ public class Work_Controller {
 	@GetMapping("/workDetail.do")
 	public String workDetail(@RequestParam("no") int no, Model d) {
 		d.addAttribute("work",service.getWork(no));
-		if(service.getWorkRepList(no).size()>0) {
-			d.addAttribute("workrep",service.getWorkRepList(no));
-		}
 		return "WEB-INF\\jongeunView\\workDetail.jsp";
 	}
 	@PostMapping("/workUpt.do")
@@ -84,19 +81,6 @@ public class Work_Controller {
 		d.addAttribute("downloadFile", fname);
 		return "downloadViewer";
 	}
-	// 답글
-	@PostMapping("/workRepIns.do")
-	public String workRepIns(WorkRep ins, Model d) {
-		service.insWorkRep(ins);
-		return "redirect:/workDetail.do?no="+ins.getWorkno();
-	}
-	@GetMapping("/workRepDel.do")
-	public String workRepDel(@RequestParam("no") int no, Model d) {
-		service.delWorkRep(no);
-		d.addAttribute("msg","삭제완료");
-		return "redirect:/workDetail.do";
-	}
-	
 	// gantt 연동
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
@@ -108,7 +92,26 @@ public class Work_Controller {
 	public String workGanttDetail(@RequestParam("no") String no, Model d) {		
 		d.addAttribute("prj",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
+		if(service.ganttDetailExp(no).getParent()!=null) {
+			d.addAttribute("parent",service.ganttDetailExp(service.ganttDetailExp(no).getParent()));
+		}
+		if(service.getWorkRepList(no).size()>0) {
+			d.addAttribute("workrep",service.getWorkRepList(no));
+		}
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
+	// 답글
+	@PostMapping("/workRepIns.do")
+	public String workRepIns(WorkRep ins, Model d) {
+		service.insWorkRep(ins);
+		return "redirect:/workGanttDetail.do?no="+ins.getWorkno();
+	}
+	@GetMapping("/workRepDel.do")
+	public String workRepDel(@RequestParam("no") int no, Model d) {
+		service.delWorkRep(no);
+		d.addAttribute("msg","삭제완료");
+		return "redirect:/workGanttDetail.do";
+	}
+	// 결재
 	
 }

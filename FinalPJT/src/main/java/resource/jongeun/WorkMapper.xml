@@ -63,7 +63,7 @@
 		and id like '%'||#{id}||'%'	
 	</select>
 	<!-- 답글 -->
-	<select id="getWorkRepList" resultType="workrep" parameterType="int">
+	<select id="getWorkRepList" resultType="workrep" parameterType="string">
 		SELECT * FROM WORKREP
 		WHERE WORKNO = #{WORKNO}
 	</select>

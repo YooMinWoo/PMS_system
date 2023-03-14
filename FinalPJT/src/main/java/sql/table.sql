@@ -251,14 +251,13 @@ references work(workno) on delete CASCADE;
 
 CREATE TABLE workMember (
 	id	varchar2(50),
-	workno	number,
-	div	char(1)
+	workno	varchar2(100)
 );
 
 ALTER TABLE workMember ADD CONSTRAINT FK_workMember_1 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 ALTER TABLE workMember ADD CONSTRAINT FK_workMember_2 FOREIGN KEY(workno)
-references work(workno) on delete CASCADE;
+references gantt(id) on delete CASCADE;
 
 CREATE TABLE risk (
 	riskno	number	PRIMARY KEY,

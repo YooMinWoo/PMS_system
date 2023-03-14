@@ -87,7 +87,7 @@ public class Work_Service {
 		dao.delWork(no);
 	}
 	//답글
-	public List<WorkRep> getWorkRepList(int no) {
+	public List<WorkRep> getWorkRepList(String no) {
 		return dao.getWorkRepList(no);
 	}
 	public void insWorkRep(WorkRep ins) {
