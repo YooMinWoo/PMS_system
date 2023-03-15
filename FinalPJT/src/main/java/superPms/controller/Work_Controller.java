@@ -24,10 +24,6 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
-	// 세션
-	//private HttpSession session;
-	//private SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-	
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do
 	// http://localhost:7080/FinalPJT/worklist.do
@@ -100,7 +96,8 @@ public class Work_Controller {
 		return "WEB-INF\\jongeunView\\workGanttList.jsp";
 	}
 	@GetMapping("/workGanttDetail.do")
-	public String workGanttDetail(@RequestParam("no") String no, Model d) {
+	public String workGanttDetail(@RequestParam("no") String no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("projectInfo",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
 		if(service.ganttDetailExp(no).getParent()!=null) {
@@ -124,5 +121,25 @@ public class Work_Controller {
 		return "redirect:/workGanttDetail.do";
 	}
 	// 결재
-	
+	@GetMapping("/reqApprove.do")
+	public String reqApprove(@RequestParam("no") String no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		service.reqApprove(no);
+		d.addAttribute("msg","결재요청");
+		return "redirect:/workGanttDetail.do?no="+no;
+	}
+	@GetMapping("/rejApprove.do")
+	public String rejApprove(@RequestParam("no") String no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		service.rejApprove(no);
+		d.addAttribute("msg","결재반려");
+		return "redirect:/workGanttDetail.do?no="+no;
+	}
+	@GetMapping("/approve.do")
+	public String approve(@RequestParam("no") String no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		service.approve(no);
+		d.addAttribute("msg","결재승인");
+		return "redirect:/workGanttDetail.do?no="+no;
+	}
 }

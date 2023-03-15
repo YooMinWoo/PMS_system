@@ -94,6 +94,19 @@ textarea:read-only{
 				$("#frm02").submit();
 			}
 		})
+		// 결재 요청
+		$("#req").click(function(){
+			console.log($("[name=ganttid]").val())
+			location.href="${path}/reqApprove.do?no="+$("[name=ganttid]").val();
+		})
+		// 결재 승인
+		$("#apprv").click(function(){
+			location.href="${path}/rejApprove.do?no="+$("[name=ganttid]").val();
+		})
+		// 결재 반려
+		$("#rej").click(function(){
+			location.href="${path}/approve.do?no="+$("[name=ganttid]").val();
+		})
 		// 캘린더 저장
 		var id="${ganttDetail.id}"
 		var prjno="${ganttDetail.prjno}"
@@ -176,7 +189,8 @@ textarea:read-only{
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
              		<button class="btn btn-primary" id="req">결재 요청</button>
-             		<button class="btn btn-primary" id="aprv">결재 승인</button>
+             		<button class="btn btn-primary" id="rej">결재 승인</button>
+             		<button class="btn btn-danger" id="apprv">결재 반려</button>
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
@@ -264,7 +278,7 @@ textarea:read-only{
                   <label class="form-label" for="basic-default-subject">상위 업무</label>
                   <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${parent.text}"
                   disabled readonly/>
-                  <input type="hidden" name="ganttid" value="${parent.id}">
+                  <input type="hidden" name="parentid" value="${parent.id}">
                 </div>
                 <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>

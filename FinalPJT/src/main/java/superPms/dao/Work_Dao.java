@@ -30,4 +30,9 @@ public interface Work_Dao {
 	public Project projectInfo(int prjno);
 	public Gantt ganttDetail(Gantt det);
 	public Gantt ganttDetailExp(String no);
+	// 결재
+	public void reqApprove(String no);
+	public void rejApprove(String no);
+	public void approve(String no);
+
 }

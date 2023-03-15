@@ -115,5 +115,23 @@
 		FROM GANTT g
 		WHERE id = #{id}
 	</select>
-	
+	<!-- 결재 -->
+	<update id="reqApprove" parameterType="string">
+		UPDATE GANTT
+		SET
+			state = 1
+		WHERE ID = #{id}
+	</update>
+	<update id="rejApprove" parameterType="string">
+		UPDATE GANTT
+		SET
+			state = 0
+		WHERE ID = #{id}
+	</update>
+	<update id="approve" parameterType="string">
+		UPDATE GANTT
+		SET
+			apprv = 1
+		WHERE ID = #{id}
+	</update>
 </mapper>

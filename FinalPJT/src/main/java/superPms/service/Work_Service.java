@@ -134,6 +134,15 @@ public class Work_Service {
 	public Gantt ganttDetailExp(String no) {
 		return dao.ganttDetailExp(no);
 	};
-	
+	// 결재
+	public void reqApprove(String no) {
+		dao.reqApprove(no);
+	}
+	public void rejApprove(String no) {
+		dao.rejApprove(no);
+	}	
+	public void approve(String no) {
+		dao.approve(no);
+	}
 
 }
