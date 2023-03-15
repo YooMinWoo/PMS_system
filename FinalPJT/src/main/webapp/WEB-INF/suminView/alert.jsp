@@ -55,14 +55,27 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
    $(document).ready(function(){
-      
+	   
+      $("#readAll").click(function(){
+    	  $("input[name=chk]").prop("checked", true)
+    	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+				if($("input[name=chk]:checkbox")[idx].checked==true){
+					var alertno = $("input[name=chk]:checkbox")[idx].value
+					location.href="${path}/alertState.do?no="+alertno
+				}
+			}
+    	  location.reload()
+      })
    });
    
    function alertState(no){
       location.href="${path}/alertState.do?no="+no
       location.reload()
    }
-   
+   function alertDelete(no){
+	   location.href="${path}/alertDelete.do?no="+no
+	   location.reload()   
+   }
 </script>
 </head>
 
@@ -92,8 +105,8 @@
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                      <li>
-                        <span style="display: flex;
-                      justify-content: flex-end;"   >모두 읽음</span>
+                        <button style="margin-left: 300px; border:none;
+                         background:white; color:#848484;" id="readAll">모두 읽음</button>
                      </li>
                      <li>
                       <div class="dropdown-divider"></div>
@@ -106,19 +119,23 @@
                      
                     <li>
                      <div class="card-body" >
+                     <c:if test="${alertCount==0 }">
+                     	<span style="display: flex; justify-content: center; width: 330px;">알림 없음</span>
+                     </c:if>
                         <c:forEach var="alert" items="${alertList }"> 
                        <div class="bs-toast toast fade show bg-${alert.style }" 
                        role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
                            <div class="toast-header">
+                           <input type="checkbox" name="chk" style="display:none;" value="${alert.no }">
                              <i class="bx bx-bell me-2"></i>
                              <div class="me-auto fw-semibold">${alert.title }</div>
                              <small>${alert.state }</small>
-                             <button type="button" onclick="alertState('${alert.no }')" 
+                             <button type="button" onclick="alertDelete('${alert.no }')" 
                                 class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                            </div>
                            
                            <div class="toast-body">
-                             <a class="dropdown-item" href=" ${path }/${alert.url}">
+                             <a class="dropdown-item" href="${path }/${alert.url}">
                                 <span style="color:white;" onclick="alertState('${alert.no }')">${alert.content }</span>
                              </a>
                            </div>

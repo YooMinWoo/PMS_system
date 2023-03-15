@@ -43,4 +43,9 @@ public interface Mail_Dao {
 	
 	public String getFname(String mailno);
 	
+	public String uptfileSState(String mailno);
+	public String uptfileRState(String mailno);
+	
+	public MailFile getFileState(String mailno);
+	
 }

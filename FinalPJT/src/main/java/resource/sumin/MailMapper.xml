@@ -15,7 +15,7 @@
 	</insert>
 	
 	<insert id="insertUploadFile" parameterType="mailfile">
-		insert into mailFile values(mail_seq.currval,#{fname},sysdate)
+		insert into mailFile values(mail_seq.currval,#{fname},sysdate,0,0);
 	</insert>
 	
 	<select id="totCntSend" resultType="int" parameterType="mailsch">
@@ -58,7 +58,7 @@
 	</select>
 	
 	<select id="getMailFile" parameterType="int" resultType="string">
-		SELECT DISTINCT(fname) FROM MAILFILE where mailfno=#{mailfno}
+		SELECT fname FROM MAILFILE where mailfno=#{mailfno}
 	</select>
 	
 	
@@ -80,7 +80,15 @@
 	<delete id="delSendMail" parameterType="string">
 		DELETE FROM mail WHERE mailno=#{mailno}
 	</delete>
-	
+	<update id="uptfileSState" parameterType="string">
+		update mailfile set sstate='1' where mailfno=#{mailno}
+	</update>
+	<update id="uptfileRState" parameterType="string">
+		update mailfile set rstate='1' where mailfno=#{mailno}
+	</update>
+	<select id="getFileState" parameterType="string" resultType="mailfile">
+		select * from mailfile where mailfno=#{mailno} 
+	</select>
 	<delete id="delReceiveMail" parameterType="string">
 		DELETE FROM receiver WHERE mailno=#{mailno}
 	</delete>

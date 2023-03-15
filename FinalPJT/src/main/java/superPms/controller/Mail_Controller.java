@@ -88,7 +88,6 @@ public class Mail_Controller {
 	@RequestMapping("/delReceiveMail.do")
 	public String delReceiveMail(@RequestParam("mailno")String  mailno) {
 		service.delReceiveMail(mailno);
-		service.delFile(mailno);
 		return "redirect:/myReceiveMail.do";
 	}
 	@RequestMapping("/uptSendState.do")
