@@ -89,6 +89,9 @@ public class Work_Controller {
 		return "downloadViewer";
 	}
 	// gantt 연동
+	// http://localhost:7080/FinalPJT/PMSLogin.do
+	// t711txt@gmail.com
+	// 12345
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
 	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {

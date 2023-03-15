@@ -236,7 +236,7 @@ $(document).ready(function(){
         <div class="nav navbar-nav me-auto d-flex flex-row">
           <a class="nav-item nav-link active" href="javascript:void(0)">진행상황</a>
           <a class="nav-item nav-link" >|</a>
-          <a class="nav-item nav-link" href="javascript:void(0)">업무</a>
+          <a class="nav-item nav-link" href="${path}/workGanttList.do?prjno=${projectInfo.prjno}">업무</a>
           <a class="nav-item nav-link">|</a>
           <a class="nav-item nav-link" href="javascript:void(0)">드라이브</a>
           <a class="nav-item nav-link">|</a>
