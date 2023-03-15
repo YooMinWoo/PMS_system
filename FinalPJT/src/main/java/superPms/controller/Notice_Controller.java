@@ -17,6 +17,7 @@ import superPms.vo.NoticeSch;
 
 @Controller
 public class Notice_Controller {
+	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do	==> 서버컴 실행
 //	http://localhost:2030/FinalPJT/goNotice.do		==> user
 	// http://localhost:2030/FinalPJT/PMSLogin.do	==> login
 	@Autowired(required = false)

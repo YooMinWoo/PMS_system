@@ -61,6 +61,7 @@ tbody tr{
 </style>
 
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
@@ -93,8 +94,11 @@ tbody tr{
 <script type="text/javascript">
 	$(document).ready(function(){
 		if("${emp}"==""){
-			alert("로그인 후 서비스 이용이 가능합니다. 로그인 페이지로 이동합니다.")
-			location.href="${path}/PMSLogin.do";
+			swal("로그인 후 서비스 이용이 가능합니다. 로그인 페이지로 이동합니다.")
+			.then(function(){
+				location.href="${path}/PMSLogin.do";                  
+			})
+			
 		}
 		$("#menu-item-notice").addClass('active open');
 		if("${noticeSch.deptid}"!="") $("#cateId").text("${noticeSch.deptid}")
@@ -129,6 +133,8 @@ tbody tr{
 			              <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
 			              <input type="text" class="form-control" placeholder="Search..."
 			                aria-label="Search..." aria-describedby="basic-addon-search31"
+			                style="border-right: 1px solid #d9dee3;
+    								border-radius: 0.375rem;"
 			                name="schInfo" value="${param.schInfo }"/>
 			              <input type="hidden" name="deptid" value="${noticeSch.deptid}">
 			            </div>
