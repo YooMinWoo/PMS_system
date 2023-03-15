@@ -228,7 +228,7 @@
                   </a>
                 </li>
                 <li class="menu-item" id="menu-item-admin-hr">
-                  <a href="${path }/getEmpList.do" class="menu-link">
+                  <a href="${path }/getEmpListPage.do" class="menu-link">
                     <div data-i18n="Input groups">사원관리</div>
                   </a>
                 </li>

@@ -3,7 +3,9 @@ package superPms.dao;
 import java.util.List;
 
 import superPms.vo.DeptCode;
+import superPms.vo.DeptSch;
 import superPms.vo.SuperEmpDept;
+import superPms.vo.SuperEmpDeptSch;
 
 
 public interface SuperEmp_Dao {
@@ -19,4 +21,8 @@ public interface SuperEmp_Dao {
 	public void uptEmp(SuperEmpDept upt);
 	public SuperEmpDept login(SuperEmpDept se); //로그인 
 	public void updateMyInfo(SuperEmpDept upt);
+	public List<SuperEmpDept> getEmpListPage(SuperEmpDeptSch sch);
+	public int empTot(SuperEmpDeptSch sch);
+
+
 }

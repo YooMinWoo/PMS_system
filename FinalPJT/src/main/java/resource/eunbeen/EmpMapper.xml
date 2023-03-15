@@ -14,6 +14,23 @@
 		and d.dname NOT LIKE '최고경영진'
 		ORDER BY d.dname
 	</select>
+	<select id="getEmpListPage" resultType="SuperEmpDept" parameterType="superempdeptsch">
+		select * from (select rownum rm, e.id, e.ename, e.cell, e.deptid, d.dname, to_char(e.hiredate,'YYYY-MM-DD') hiredate, e.job
+						from emp e, dept d
+						where 1=1
+						and e.deptid = d.deptid
+						AND e.ename like '%'||#{sename}||'%'
+						and d.dname like '%'||#{dname}||'%'
+						AND e.job like '%'||#{job}||'%'
+						and d.dname NOT LIKE '최고경영진'
+						ORDER BY d.dname)
+		where rm between #{start} and #{end}
+	</select>
+	<select id="empTot" resultType="int" parameterType="superempdeptsch">
+		SELECT count(*) 
+		FROM emp
+		WHERE ename NOT LIKE '이회장'	
+	</select>
 	<select id="idChk" resultType="superempdept" parameterType="String">
 		SELECT * 
 		FROM emp

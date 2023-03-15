@@ -185,6 +185,10 @@ cellChkVal = false;
 		
 		
 	  }
+	function goPage(cnt){
+	      $("[name=curPage]").val(cnt);
+	      $("#frm03").submit()
+	   }
 </script>
 </head>
 
@@ -241,17 +245,20 @@ cellChkVal = false;
 			</div>
 	</div>
            	<div style="font-size:20px;font-weight:bold;" class="table-responsive text-nowrap">
+           	<form id="frm03">
+                <input type="hidden" name="curPage" value="${sch.curPage}"/>
+             </form>
                 <br>
                   <table class="table">
                     <thead>
-                      <tr>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">사원명</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">소속부서</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">직책</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">입사일</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">이메일</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">전화번호</th>
-                        <th style="font-size:20px;font-weight:bold;text-align:center;">설정</th>
+                      <tr style="background-color:#646EFF;">
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">사원명</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">소속부서</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">직책</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">입사일</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">이메일</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">전화번호</th>
+                        <th style="font-size:20px;font-weight:bold;text-align:center;color:white;">설정</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -274,6 +281,28 @@ cellChkVal = false;
                     </tbody>
                   </table>
                 </div>
+                 <div style="display:flex; justify-content:center;" class="demo-inline-spacing">
+              <nav aria-label="Page navigation">
+                 <ul class="pagination pagination-lg">
+                    <li class="page-item prev">
+                       <a class="page-link" href="javascript:goPage(${sch.startBlock-1});"
+                                ><i class="tf-icon bx bx-chevrons-left"></i
+                              ></a>
+                            </li>
+                            <c:forEach var="cnt" begin="${sch.startBlock}" 
+                           end="${sch.endBlock}">
+                          <li class="page-item ${sch.curPage==cnt?'active':''}">
+                          <a class="page-link" 
+                             href="javascript:goPage(${cnt});">${cnt}</a></li>
+                       </c:forEach>
+                            <li class="page-item next">
+                              <a class="page-link" href="javascript:goPage(${sch.endBlock+1});"
+                                ><i class="tf-icon bx bx-chevrons-right"></i
+                              ></a>
+                       </li>
+                    </ul>
+                 </nav>
+               </div>
               
               </div><br>
            
