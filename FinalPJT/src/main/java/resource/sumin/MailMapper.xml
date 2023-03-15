@@ -7,15 +7,15 @@
 
 	<insert id="insSender" parameterType="mail">
 		INSERT INTO mail values(mail_seq.nextval,#{title},#{content},
-				#{sender},sysdate,0,#{receiver})
+				#{sender},sysdate,'0',#{receiver})
 	</insert>
 	
 	<insert id="insReceiver" parameterType="mail">
-		insert into receiver values(mail_seq.currval,#{receiver},#{title},#{content},sysdate,0,#{sender})
+		insert into receiver values(mail_seq.currval,#{receiver},#{title},#{content},sysdate,'0',#{sender})
 	</insert>
 	
 	<insert id="insertUploadFile" parameterType="mailfile">
-		insert into mailFile values(mail_seq.currval,#{fname},sysdate,0,0);
+		insert into mailFile values(mail_seq.currval,#{fname},sysdate,'0','0')
 	</insert>
 	
 	<select id="totCntSend" resultType="int" parameterType="mailsch">

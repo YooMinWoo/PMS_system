@@ -26,25 +26,18 @@ public class Mail_Service {
 	public void insSender(Mail ins) {
 		dao.insSender(ins);
 		String fname = ins.getReport().getOriginalFilename();
+		System.out.println(fname+"##############");
 		if(!fname.equals("")) {
 			uploadFile(ins.getReport());
 			MailFile f = new MailFile();
 			f.setFname(fname);
+			System.out.println(f.getFname()+"##############");
 			dao.insertUploadFile(f);
 		}
 		
 	}
 	public void insReceiver(Mail ins) {
-		dao.insReceiver(ins);
-		
-//		String fname = ins.getReport().getOriginalFilename();
-//		if(!fname.equals("")) {
-//			uploadFile(ins.getReport());
-//			MailFile f = new MailFile();
-//			f.setFname(fname);
-//			dao.insertUploadFile(f);
-//		}
-//		
+		dao.insReceiver(ins);		
 	}
 	
 	private void uploadFile(MultipartFile f){
@@ -53,7 +46,7 @@ public class Mail_Service {
 	    try{
 	       f.transferTo(fObj);
 	    }catch(Exception e){
-	          System.out.println("업로드예외:"+e.getMessage());
+	       System.out.println("업로드예외:"+e.getMessage());
 	    }         
 	}
 	  
