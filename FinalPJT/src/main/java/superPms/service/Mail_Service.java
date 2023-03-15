@@ -36,14 +36,15 @@ public class Mail_Service {
 	}
 	public void insReceiver(Mail ins) {
 		dao.insReceiver(ins);
-		String fname = ins.getReport().getOriginalFilename();
-		if(!fname.equals("")) {
-			uploadFile(ins.getReport());
-			MailFile f = new MailFile();
-			f.setFname(fname);
-			dao.insertUploadFile(f);
-		}
 		
+//		String fname = ins.getReport().getOriginalFilename();
+//		if(!fname.equals("")) {
+//			uploadFile(ins.getReport());
+//			MailFile f = new MailFile();
+//			f.setFname(fname);
+//			dao.insertUploadFile(f);
+//		}
+//		
 	}
 	
 	private void uploadFile(MultipartFile f){
@@ -109,6 +110,7 @@ public class Mail_Service {
 		m.setFname(dao.getMailFile(mailno));
 		return m;
 	}
+	
 	public Mail receiveDetail(int mailno) {
 		Mail m = dao.receiveDetail(mailno);
 		m.setFname(dao.getMailFile(mailno));
@@ -163,22 +165,57 @@ public class Mail_Service {
 		return dao.myReceiveMail(sch);
 	}
 	
-	public void uptSendState(int mailno) {
-		dao.uptSendState(mailno);
-	}
-	public void uptReceiveState(int mailno) {
-		dao.uptReceiveState(mailno);
+	public void uptSendState(String mailno) {
+		String[] mailnoArray = mailno.split(",");
+		for(int i=0; i<mailnoArray.length; i++) {
+			dao.uptSendState(mailnoArray[i]);
+		}
 		
 	}
-	public void delSendMail(int mailno) {
-		dao.delSendMail(mailno);
+	public void uptReceiveState(String mailno) {
+		String[] mailnoArray = mailno.split(",");
+		for(int i=0; i<mailnoArray.length; i++) {
+			dao.uptReceiveState(mailnoArray[i]);
+		}
+	
 	}
-	public void delReceiveMail(int mailno) {
-		dao.delReceiveMail(mailno);
-	}
-	public void delFile(int mailno) {
-		dao.delFile(mailno);
+	public void uptSendStateDetail(int mailno) {
+		dao.uptSendStateDetail(mailno);
 	}
 	
+	public void uptReceiveStateDetail(int mailno) {
+		dao.uptReceiveStateDetail(mailno);
+	}
+	public void delSendMail(String mailno) {
+		String[] mailnoArray = mailno.split(",");
+		for(int i=0; i<mailnoArray.length; i++) {
+			dao.delSendMail(mailnoArray[i]);
+		}
+	
+	}
+	public void delReceiveMail(String mailno) {
+		String[] mailnoArray = mailno.split(",");
+		for(int i=0; i<mailnoArray.length; i++) {
+			dao.delReceiveMail(mailnoArray[i]);
+		}
+	}
+	public void delFile(String mailno) {
+		String[] mailnoArray = mailno.split(",");
+		String fname = "";
+		for(int i=0; i<mailnoArray.length; i++) {
+			fname = dao.getFname(mailnoArray[i]);
+			dao.delFile(mailnoArray[i]);
+			File file = new File(upload + fname);
+			System.out.println("파일명###########"+fname);
+			if(file.exists()) { // 파일이 존재하면
+				file.delete(); // 파일 삭제   
+			}
+		
+		}
+		
+	
+	}
+	
+	 
 	
 }

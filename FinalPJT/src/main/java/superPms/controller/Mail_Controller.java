@@ -2,6 +2,7 @@ package superPms.controller;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ public class Mail_Controller {
 	
 	// http://localhost:7080/FinalPJT/PMSLogin.do
 	//http://localhost:7080/FinalPJT/sendMail.do
+	
 	@GetMapping("/sendMail.do")
 	public String sendMail() {
 		return "WEB-INF\\suminView\\sendMail.jsp";
@@ -71,27 +73,26 @@ public class Mail_Controller {
 	
 	@RequestMapping("/receiveDetail.do")
 	public String receiveDetail(@RequestParam("mailno")int mailno,Model d) {
-		service.uptSendState(mailno);
-		service.uptReceiveState(mailno);
+		service.uptSendStateDetail(mailno);
+		service.uptReceiveStateDetail(mailno);
 		d.addAttribute("receiveDetail", service.receiveDetail(mailno));
 		return "WEB-INF\\suminView\\receiveDetail.jsp";
 	}
 	
 	@RequestMapping("/delSendMail.do")
-	public String delSendMail(@RequestParam("mailno")int mailno) {
+	public String delSendMail(@RequestParam("mailno")String mailno) {
 		service.delSendMail(mailno);
-		service.delFile(mailno);
 		return "redirect:/mySendMail.do";
 	}
 	
 	@RequestMapping("/delReceiveMail.do")
-	public String delReceiveMail(@RequestParam("mailno")int mailno) {
+	public String delReceiveMail(@RequestParam("mailno")String  mailno) {
 		service.delReceiveMail(mailno);
 		service.delFile(mailno);
 		return "redirect:/myReceiveMail.do";
 	}
 	@RequestMapping("/uptSendState.do")
-	public String uptSendState(@RequestParam("mailno")int mailno) {
+	public String uptSendState(@RequestParam("mailno")String mailno) {
 		service.uptSendState(mailno);
 		service.uptReceiveState(mailno);
 		return "redirect:/myReceiveMail.do";
@@ -102,11 +103,13 @@ public class Mail_Controller {
 		d.addAttribute("reMail", service.sendDetail(mailno));
 		return "WEB-INF\\suminView\\reSendMail.jsp";
 	}
+	
 	@RequestMapping("/replyMail.do")
 	public String replyMail(@RequestParam("mailno")int mailno,Model d) {
 		d.addAttribute("reMail", service.receiveDetail(mailno));
 		return "WEB-INF\\suminView\\replyMail.jsp";
 	}
 	
-
+	
+	
 }
