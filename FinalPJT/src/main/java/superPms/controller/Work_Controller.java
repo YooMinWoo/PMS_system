@@ -110,12 +110,14 @@ public class Work_Controller {
 	}
 	// 답글
 	@PostMapping("/workRepIns.do")
-	public String workRepIns(WorkRep ins, Model d) {
+	public String workRepIns(WorkRep ins, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		service.insWorkRep(ins);
 		return "redirect:/workGanttDetail.do?no="+ins.getWorkno();
 	}
 	@GetMapping("/workRepDel.do")
-	public String workRepDel(@RequestParam("no") int no, Model d) {
+	public String workRepDel(@RequestParam("no") int no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		service.delWorkRep(no);
 		d.addAttribute("msg","삭제완료");
 		return "redirect:/workGanttDetail.do";
@@ -141,5 +143,20 @@ public class Work_Controller {
 		service.approve(no);
 		d.addAttribute("msg","결재승인");
 		return "redirect:/workGanttDetail.do?no="+no;
+	}
+	// 결재함
+	// http://localhost:7080/FinalPJT/apprvList.do?prjno=41
+	@RequestMapping("/apprvList.do")
+	public String apprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
+		d.addAttribute("ganttInfo",service.getApprvList(sch));
+		return "WEB-INF\\jongeunView\\apprvList.jsp";
+	}
+	// http://localhost:7080/FinalPJT/reqApprvList.do?prjno=41
+	@RequestMapping("/reqApprvList.do")
+	public String reqApprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
+		d.addAttribute("ganttInfo",service.getReqApprvList(sch));
+		return "WEB-INF\\jongeunView\\reqApprvList.jsp";
 	}
 }
