@@ -99,6 +99,7 @@
 		FROM gantt g, project p 
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
+		AND g.text like '%'||#{text}||'%'
 	</select>
 	<select id="projectInfo" resultType="project" parameterType="int">
 		SELECT *

@@ -97,8 +97,8 @@ public class Work_Controller {
 		return "WEB-INF\\jongeunView\\workGanttList.jsp";
 	}
 	@GetMapping("/workGanttDetail.do")
-	public String workGanttDetail(@RequestParam("no") String no, Model d) {		
-		d.addAttribute("prj",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
+	public String workGanttDetail(@RequestParam("no") String no, Model d) {
+		d.addAttribute("projectInfo",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
 		if(service.ganttDetailExp(no).getParent()!=null) {
 			d.addAttribute("parent",service.ganttDetailExp(service.ganttDetailExp(no).getParent()));

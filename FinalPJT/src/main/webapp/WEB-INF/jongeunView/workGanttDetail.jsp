@@ -94,6 +94,25 @@ textarea:read-only{
 				$("#frm02").submit();
 			}
 		})
+		// 캘린더 저장
+		var id="${ganttDetail.id}"
+		var prjno="${ganttDetail.prjno}"
+		var projectName = "${projectInfo.subject}"
+		$("#callendarBtn").click(function(){
+			let writer="monsta@gmail.com" // 세션에 있는 아이디
+			let start="${ganttDetail.start_date}"
+			let end = "${ganttDetail.end_date}"
+			let textColor="#ffffff"
+			let backgroundColor="#ffc300"
+			let content = "${ganttDetail.description}"
+			let title=projectName+"> ${ganttDetail.text}"
+			
+			var qstr="start="+start+"&end="+end+"&writer="+writer+"&textColor="+textColor+
+				"&backgroundColor="+backgroundColor+"&allDay=1&content="+content+"&urllink="+"&title="+title
+			console.log(qstr)
+			callAjax("${path}/insertCalendar.do",qstr)		
+
+		})
 	});
 	var msg = "${msg}"
 	if(msg=="삭제완료"){
@@ -105,6 +124,21 @@ textarea:read-only{
 			location.href="${path}/workRepDel.do?no="+no;		
 			location.href="${path}/workGanttDetail.do?no="+workno;		
 		}
+	}
+	function callAjax(url,qstr){
+		 $.ajax({
+		    	url:url,
+		    	type:"post",
+		    	data:qstr,
+		    	dataType:"json",
+		    	success:function(data){
+		    		alert("완료 되었습니다.")
+		    		location.reload()
+		    	},
+		    	error:function(err){
+		    		console.log(err)
+		    	}
+		    })
 	}
 </script>
 </head>
@@ -148,6 +182,7 @@ textarea:read-only{
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
+				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
 				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
@@ -221,8 +256,8 @@ textarea:read-only{
                 <div class="mb-3" style="width:32%;">
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
                    <input type="text" name="prjname"
-                   class="form-control" id="basic-default-prj" value="${prj.subject}" disabled readonly />
-                   <input type="hidden" name="tlid" value="${prj.tlid}">  
+                   class="form-control" id="basic-default-prj" value="${projectInfo.subject}" disabled readonly />
+                   <input type="hidden" name="tlid" value="${projectInfo.tlid}">  
                    <input type="hidden" name="prjno" value="${ganttDetail.prjno}">
                  </div>
                  <div class="mb-3" style="width:32%;">
