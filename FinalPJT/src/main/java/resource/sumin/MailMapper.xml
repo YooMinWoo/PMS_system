@@ -18,6 +18,7 @@
 		insert into mailFile values(mail_seq.currval,#{fname},sysdate,'0','0')
 	</insert>
 	
+	
 	<select id="totCntSend" resultType="int" parameterType="mailsch">
 		SELECT count(*) FROM mail WHERE sender=#{sender}
 	</select>
