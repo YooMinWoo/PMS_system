@@ -114,11 +114,13 @@
             		</div>
             		<table class="table">
            	  <col width="10%">
-           	  <col width="45%">
-			  <col width="45%">
+           	  <col width="10%">
+           	  <col width="40%">
+			  <col width="40%">
                     <thead class="table-dark">
 	                      <tr>
 	                        <th>No</th>
+	                        <th>구분</th>
 	                        <th>파일명</th>
 	                        <th>업로드일자</th>
 	                      </tr>
@@ -127,8 +129,14 @@
                       <c:forEach var="dt" items="${driveList}">
 	                      	<tr>	                      	
 		                      	<td>${dt.cnt}</td>
+		                      	<c:if test="${!dt.fname.contains('.') }">
+		                      		<td>폴더</td>
+		                      	</c:if>
+		                      	<c:if test="${dt.fname.contains('.') }">
+		                      		<td>파일</td>
+		                      	</c:if>
 		                        <td>${dt.fname}</td>
-		                        <td>${dt.uptdte}</td>
+		                        <td>${dt.regdte}</td>
 	                        </tr>
                       	</c:forEach>
                     </tbody>

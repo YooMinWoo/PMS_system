@@ -108,7 +108,7 @@
 						    position: 'bottom'
 						},
 					 noData: {
-			        	    text: 'Loading...'
+			        	    text: '데이터가 없습니다'
 			        	  }	
 					}
 			var options2 = {
@@ -151,7 +151,7 @@
 			             }
 			        },
 		          	noData: {
-		        	    text: 'Loading...'
+		        	    text: '데이터가 없습니다'
 		        	}
 		        	  
 			  };

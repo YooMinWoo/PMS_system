@@ -5,7 +5,9 @@
 
 <mapper namespace="superPms.dao.Drive_Dao">
 	<select id="driveList" parameterType="drive" resultType="drive">
-		SELECT rownum cnt, f.* FROM files f
+		SELECT rownum cnt, fname, fno,
+		to_char(regdte,'yyyy-mm-dd') regdte, to_char(uptdte,'yyyy-mm-dd') uptdte, path
+	 	FROM files f
 		WHERE path = #{path}
 	</select>
 </mapper>

@@ -68,7 +68,7 @@ textarea:read-only{
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
 		$("#back").click(function(){
-			location.href="${path}/workList.do"
+			location.href="${path}/workGanttList.do?prjno="+$("[name=prjno]").val();
 		})
 		$("#upt").click(function(){
 			location.href="${path}/workUptFrm.do?no="+$("[name=workno]").val();	
@@ -103,7 +103,7 @@ textarea:read-only{
 	function delRep(no,workno){
 		if(confirm("삭제하시겠습니까?")){
 			location.href="${path}/workRepDel.do?no="+no;		
-			location.href="${path}/workDetail.do?no="+workno;		
+			location.href="${path}/workGanttDetail.do?no="+workno;		
 		}
 	}
 </script>
@@ -141,6 +141,8 @@ textarea:read-only{
              		</button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
+             		<button class="btn btn-primary" id="req">결재 요청</button>
+             		<button class="btn btn-primary" id="aprv">결재 승인</button>
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
@@ -155,15 +157,24 @@ textarea:read-only{
            <div class="demo-inline-spacing mt-1">
  			<form enctype="multipart/form-data" action="${path}/workIns.do" method="post">
                 <div class="divs">
-                <div class="mb-3" style="width:49%;">
+                <div class="mb-3" style="width:32%;">
                    <label class="form-label" for="basic-default-prj">프로젝트명</label>
-                   <input type="text" name="prjno"
-                   class="form-control" id="basic-default-prj" value="1" disabled readonly />
+                   <input type="text" name="prjname"
+                   class="form-control" id="basic-default-prj" value="${prj.subject}" disabled readonly />
+                   <input type="hidden" name="tlid" value="${prj.tlid}">  
+                   <input type="hidden" name="prjno" value="${ganttDetail.prjno}">
                  </div>
-                <div class="mb-3" style="width:49%;">
+                 <div class="mb-3" style="width:32%;">
+                  <label class="form-label" for="basic-default-subject">상위 업무</label>
+                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${parent.text}"
+                  disabled readonly/>
+                  <input type="hidden" name="ganttid" value="${parent.id}">
+                </div>
+                <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
                   <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${ganttDetail.text}"
                   disabled readonly/>
+                  <input type="hidden" name="ganttid" value="${ganttDetail.id}">
                 </div>
                 </div>
                 <div class="divs">
@@ -211,12 +222,11 @@ textarea:read-only{
               </form>
           </div>
           <!-- 답글 입력부분 -->
-          <!-- 
           <hr>
           	<div class="card-body">
           		<form id="frm02" method="post" action="${path}/workRepIns.do">
                		<input type="hidden" name="id" value="monsta@gmail.com">
-               		<input type="hidden" name="workno" value="${work.workno}">
+               		<input type="hidden" name="workno" value="${ganttDetail.id}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
                    <textarea class="form-control" name="cont" id="repContent"
@@ -226,9 +236,7 @@ textarea:read-only{
                 </form>
               </div>
               <hr>
-              -->
             <!-- 답글 출력부분 -->
-            <!--
           	<div class="card-body">
           	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
               <div class="repList">
@@ -244,7 +252,6 @@ textarea:read-only{
               <br>
              </c:forEach>
           </div>
-           -->
           <div class="tab-content px-0 mt-0">
 
           </div>

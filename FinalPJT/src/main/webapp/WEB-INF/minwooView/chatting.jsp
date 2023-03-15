@@ -73,6 +73,7 @@
 	var wsocket;
 	var members=[];
 	$(document).ready(function(){
+		$("#menu-item-chatting").addClass('active open');
 		<%-- 
 		
 		--%>
@@ -117,8 +118,6 @@
 				wsocket.close()
 				conUsers()
 				$("#chatMessageArea").text("")
-				$("#id").val("").focus()
-				$("#id").removeAttr("readOnly")
 				$("#msg").attr("readOnly","readOnly")
 			}
 			
@@ -145,7 +144,6 @@
 			})
 			if(isNotValid){
 				alert("접속한 동일한 아이디가 있습니다.")
-				$("#id").val("").focus()
 			}else{
 				conn()
 				$("#id").attr("readOnly","readOnly")

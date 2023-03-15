@@ -104,28 +104,49 @@ public class Notice_Service {
 		return fname;
 	}
 	
+	public void deleteFile(Notice f) {
+		File file = new File(f.getPath() + f.getFname());
+		if(file.exists()) { // 파일이 존재하면
+			file.delete(); // 파일 삭제	
+		}
+	}
+	
 	public void insertFN(Notice f) {
 		String fname = uploadFile(f.getReport());
 		f.setFname(fname);
 		f.setPath(upload);
-		if(fname!=null && !fname.equals("")) {
-			dao.insertFile(f);
-		}
+		
+//		if(fname!=null && !fname.equals("")) {
+//			dao.insertFile(f);
+//		}
+		dao.insertFile(f);
 		dao.insertNotice(f);
 	}
 	
 	public void uptNotice(Notice n) {
-		String fname = uploadFile(n.getReport());
-		n.setFname(fname);
 		n.setPath(upload);
-		if(fname!=null && !fname.equals("")) {
-			dao.insertFile(n);
+		String fname = n.getReport().getOriginalFilename();
+		if(n.getBfFname()!=fname && n.getBfFname()!="" && fname!="") {
+			n.setFname(n.getBfFname());
+			deleteFile(n);
+			
+			n.setFname(uploadFile(n.getReport()));
+			
+			dao.uptFile(n);
 		}
 		dao.uptNotice(n);
 	}
 	
 	public void delNotice(int[] nos) {
 		for(int no : nos) {
+			NoticeRepSch sch = new NoticeRepSch();
+			sch.setnoticeno(no);
+			if(dao.noticeDetail(sch).getFno()!=null) {
+				Notice nt = dao.schNoticeFile(dao.noticeDetail(sch).getFno());
+				deleteFile(nt);
+				dao.delNoticeFile(dao.noticeDetail(sch).getFno());
+			}
+			
 			dao.delNotice(no);
 			dao.delNoticeRep(no);
 		}

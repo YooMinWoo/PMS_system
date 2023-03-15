@@ -10,7 +10,7 @@ public class WorkRep {
 	private String uptdte;
 	private String id;
 	private int fno;
-	private int workno;
+	private String workno;
 	private String fname;
 	private MultipartFile report;
 	public int getNo() {
@@ -55,10 +55,11 @@ public class WorkRep {
 	public void setFno(int fno) {
 		this.fno = fno;
 	}
-	public int getWorkno() {
+	
+	public String getWorkno() {
 		return workno;
 	}
-	public void setWorkno(int workno) {
+	public void setWorkno(String workno) {
 		this.workno = workno;
 	}
 	public String getFname() {

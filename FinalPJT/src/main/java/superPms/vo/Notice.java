@@ -17,6 +17,7 @@ public class Notice {
 	private String deptid;
 	private String fname;
 	private String path;
+	private String bfFname;
 	private MultipartFile report;
 	public Notice() {
 		// TODO Auto-generated constructor stub
@@ -131,6 +132,14 @@ public class Notice {
 
 	public void setEname(String ename) {
 		this.ename = ename;
+	}
+
+	public String getBfFname() {
+		return bfFname;
+	}
+
+	public void setBfFname(String bfFname) {
+		this.bfFname = bfFname;
 	}
 	
 	

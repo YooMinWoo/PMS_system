@@ -220,8 +220,9 @@ CREATE TABLE workrep (
 	uptdte	date,
 	id	varchar2(50),
 	fno	varchar2(30),
-	workno	number
-);	
+	workno	varchar2(100)
+);
+
 CREATE SEQUENCE workrep_seq
 START WITH 1
 MINVALUE 1;
@@ -230,7 +231,7 @@ MINVALUE 1;
 ALTER TABLE workrep ADD CONSTRAINT FK_workrep_1 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 ALTER TABLE workrep ADD CONSTRAINT FK_workrep_2 FOREIGN KEY(workno)
-references work(workno) on delete CASCADE;
+references gantt(id) on delete CASCADE;
 ALTER TABLE workrep ADD CONSTRAINT FK_workrep_3 FOREIGN KEY(fno)
 references files(fno) on delete CASCADE;	
 	
@@ -250,14 +251,13 @@ references work(workno) on delete CASCADE;
 
 CREATE TABLE workMember (
 	id	varchar2(50),
-	workno	number,
-	div	char(1)
+	workno	varchar2(100)
 );
 
 ALTER TABLE workMember ADD CONSTRAINT FK_workMember_1 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 ALTER TABLE workMember ADD CONSTRAINT FK_workMember_2 FOREIGN KEY(workno)
-references work(workno) on delete CASCADE;
+references gantt(id) on delete CASCADE;
 
 CREATE TABLE risk (
 	riskno	number	PRIMARY KEY,

@@ -98,7 +98,9 @@ textarea:read-only{
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+console.log(${noticeDetail.report})
 	$(document).ready(function(){
+		$("#menu-item-notice").addClass('active open');
 		$(".offBtn").hide()
 		var authTF = ${emp.auth==0}
 		if(!authTF){ // 권한이 admin이 아니라면
@@ -133,7 +135,7 @@ textarea:read-only{
 		})
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
-				if("${noticeDetail.fno}"){
+				if("${noticeDetail.fname}"){
 					location.href="/FinalPJT/download.do?fname=${noticeDetail.fname}&path=${noticeDetail.path}"
 				}
 				else {
@@ -238,6 +240,9 @@ textarea:read-only{
                       	<input type="hidden" name="noticeno" value="${noticeDetail.noticeno }">
                       	<input type="hidden" name="path" value="${noticeDetail.path }">
                       	<input type="hidden" name="curPage" value="${noticeRepSch.curPage }">
+                      	<input type="hidden" name="fno" value="${noticeDetail.fno }">
+                      	<input type="hidden" name="bfFname" value="${noticeDetail.fname }">
+                      	<input type="hidden" name="bfPath" value="${noticeDetail.path }">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>
                           <input name="title" type="text" class="form-control" 
@@ -282,7 +287,7 @@ textarea:read-only{
 	                        <input class="form-control" type="text" id="formFile2" readonly
 	                        value="${not empty noticeDetail.fname?
 	                        	noticeDetail.fname
-	                        	:'등록된 파일이 없습니다.' }"/>
+	                        	:'등록된 파일이 없습니다' }"/>
                         </div>
                         <script>
                         </script>
@@ -291,7 +296,7 @@ textarea:read-only{
                         	<c:if test="${emp.auth == 0 }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
-	                        	<button type="button" class="btn btn-danger" id="fileUptBtn">파일 수정하기</button>
+	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정하기</button>
                         	</c:if>
                         	<button type="button" class="btn btn-primary" id="downloadBtn">파일 다운로드</button>
                         	<button type="button" class="btn btn-secondary" id="backBtn">조회화면 이동</button>
@@ -307,7 +312,7 @@ textarea:read-only{
 	                    	<label for="repContent" class="form-label">댓글 작성</label>
 	                    	<div class="repList2">
 		                        <textarea class="form-control" name="content" id="repContent" rows="3" style="height:50px;"></textarea>
-		                        <button type="button" class="btn btn-secondary" id="regRepBtn">작성</button>
+		                        <button type="button" class="btn btn-primary" id="regRepBtn">작성</button>
 	                        </div>
 	                        <hr>
 	                        <br><br>

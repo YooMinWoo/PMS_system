@@ -63,7 +63,7 @@
 		and id like '%'||#{id}||'%'	
 	</select>
 	<!-- 답글 -->
-	<select id="getWorkRepList" resultType="workrep" parameterType="int">
+	<select id="getWorkRepList" resultType="workrep" parameterType="string">
 		SELECT * FROM WORKREP
 		WHERE WORKNO = #{WORKNO}
 	</select>
@@ -100,7 +100,9 @@
 		AND p.prjno=#{prjno}
 	</select>
 	<select id="projectInfo" resultType="project" parameterType="int">
-		select p.*, ename from project p, emp e where prjno=#{prjno} and p.tlid=e.ID
+		SELECT *
+		from project p
+		where prjno=#{prjno}
 	</select>
 	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
 		SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,

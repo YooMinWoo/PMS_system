@@ -92,6 +92,11 @@ tbody tr{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		if("${emp}"==""){
+			alert("로그인 후 서비스 이용이 가능합니다. 로그인 페이지로 이동합니다.")
+			location.href="${path}/PMSLogin.do";
+		}
+		$("#menu-item-notice").addClass('active open');
 		if("${noticeSch.deptid}"!="") $("#cateId").text("${noticeSch.deptid}")
 	});
 </script>

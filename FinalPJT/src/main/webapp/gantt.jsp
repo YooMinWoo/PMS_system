@@ -110,7 +110,7 @@
 		gantt.init("gantt_here", new Date("${projectInfo.regdte}"), 
 				new Date("${projectInfo.deadline}"));
 		// 초기데이터 ajax 호출
-		gantt.load("/showGantt.do?prjno="+prjno)
+		gantt.load("${path}/showGantt.do?prjno="+prjno)
 		
 
 		//## 업무등록 이벤트
@@ -118,13 +118,13 @@
 		    var startDate = timeConvert(item.start_date)
 			var qstr="text="+item.text+"&start_date="+startDate+"&progress="+item.progress+"&owner="
 			+item.owner+"&parent="+item.parent+"&duration="+item.duration+"&prjno="+prjno+"&id="+item.id+"&description="+item.description    	
-		    callAjax("/insGantt.do",qstr)
+		    callAjax("${path}/insGantt.do",qstr)
 		  
 		});
 	    //## 업무삭제 이벤트
 		gantt.attachEvent("onAfterTaskDelete", function(id,item){
 		    var qstr="id="+id+"&parent="+item.parent
-		    callAjax("/delGantt.do",qstr)
+		    callAjax("${path}/delGantt.do",qstr)
 		});
 		// ## 업무 변경시 수정 메서드
 		gantt.attachEvent("onAfterTaskUpdate", function(id,item){
@@ -132,19 +132,19 @@
 		    var qstr="text="+item.text+"&start_date="+startDate+"&progress="
 		    +item.progress+"&owner="+item.owner+"&parent="+item.parent+
 		    "&duration="+item.duration+"&id="+item.id+"&description="+item.description
-		    callAjax("/uptGantt.do",qstr)
+		    callAjax("${path}/uptGantt.do",qstr)
 		});
 		
 		//## 링크 드래그했을 시 링크 생성 메서드
 		gantt.attachEvent("onLinkCreated", function(link){
 		    var qstr="id="+link.id+"&source="+link.source+"&target="+link.target+"&type="+link.type+"&prjno="+prjno
-		    callAjax("/insLink.do",qstr)
+		    callAjax("${path}/insLink.do",qstr)
 		    return true;
 		});
 		//## 링크 더블클릭시 링크 삭제 메서드
 		gantt.attachEvent("onLinkDblClick", function(id,e){
 		    var qstr="id="+id
-		    callAjax("/delLink.do",qstr)
+		    callAjax("${path}/delLink.do",qstr)
 		    return true;
 		});
 		

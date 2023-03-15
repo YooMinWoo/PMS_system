@@ -17,6 +17,7 @@ import superPms.service.SuperEmp_Service;
 import superPms.vo.DeptCode;
 import superPms.vo.PassMail;
 import superPms.vo.SuperEmpDept;
+import superPms.vo.SuperEmpDeptSch;
 
 @Controller
 public class SuperEmp_Controller {
@@ -26,9 +27,15 @@ public class SuperEmp_Controller {
 	// http://localhost:5080/FinalPJT/getEmpList.do
 	@RequestMapping("/getEmpList.do")
 	public String getEmpList(@ModelAttribute("sch") SuperEmpDept sch,Model d) {
-		d.addAttribute("elist", service.getEmpList(sch));
+		d.addAttribute("elist2", service.getEmpList(sch));
 		return "WEB-INF\\eunbeenView\\empManage.jsp";
 	}
+	@RequestMapping("/getEmpListPage.do")
+	public String getEmpListPage(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d) {
+		d.addAttribute("elist", service.getEmpListPage(sch));
+		return "WEB-INF\\eunbeenView\\empManage.jsp";
+	}
+	
 	// 아이디 중복체크 
 	// http://localhost:5080/FinalPJT/idChk.do?id=t711txt@gmail.com
 	@RequestMapping("/idChk.do")
@@ -55,7 +62,7 @@ public class SuperEmp_Controller {
 	public String deleteEmp(@RequestParam("id") String id, Model d) {
 		service.deleteEmp(id);
 		d.addAttribute("msg", "사원삭제 완료!");
-		return "WEB-INF\\eunbeenView\\empManage.jsp";
+		return "redirect:/getEmpListPage.do";
 	}
 	@GetMapping("/authSetting.do")
 	public String getAuthSetting(@RequestParam("id") String id, Model d) {
@@ -80,6 +87,7 @@ public class SuperEmp_Controller {
 	} 
 	// 로그인
 	// http://localhost:5080/FinalPJT/PMSLogin.do
+	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do
 	@RequestMapping("/PMSLogin.do")
 	public String login(SuperEmpDept e, HttpSession session, Model d) {
 		if(session.getAttribute("emp")!=null) {
@@ -135,6 +143,6 @@ public class SuperEmp_Controller {
 	@PostMapping("/mailSenderNewEmp.do")
 	public String mailSenderNewEmp(PassMail mail, Model d) {
 		d.addAttribute("msg",service.sendMailNewEmp(mail));
-		return "redirect:/getEmpList.do";
+		return "redirect:/getEmpListPage.do";
 	}
 }

@@ -21,7 +21,7 @@ public interface Work_Dao {
 	// 페이징
 	public int totCnt(WorkSch sch);
 	// 답글
-	public List<WorkRep> getWorkRepList(int no);
+	public List<WorkRep> getWorkRepList(String no);
 	public void insWorkRep(WorkRep ins);
 	public void delWorkRep(int no);
 	// gantt
