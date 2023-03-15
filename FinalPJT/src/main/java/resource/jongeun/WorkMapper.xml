@@ -106,6 +106,13 @@
 		from project p
 		where prjno=#{prjno}
 	</select>
+	<select id="personInfo" resultType="superempdept" parameterType="string">
+		SELECT DISTINCT e.* 
+		FROM GANTT g, PROJECTMEMBER p, EMP e 
+		WHERE g.OWNER = e.ENAME
+		AND e.ID = p.OWNER
+		AND g.id = #{id}
+	</select>
 	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
 		SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
 		g2.text AS parentText from gantt g1 LEFT join gantt g2 ON g1.PARENT =g2.ID where g1.prjno=#{prjno} AND g1.id=#{id}
@@ -142,6 +149,7 @@
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
 			AND g.state=1
+			AND g.apprv=0
 			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
@@ -153,6 +161,7 @@
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
 		AND g.state=1
+		AND g.apprv=0		
 		AND g.text like '%'||#{text}||'%'
 	</select>
 	<select id="getApprvList" resultType="gantt" parameterType="ganttsch">

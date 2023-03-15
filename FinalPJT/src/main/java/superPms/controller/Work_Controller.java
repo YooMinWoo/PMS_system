@@ -86,6 +86,8 @@ public class Work_Controller {
 	}
 	// gantt 연동
 	// http://localhost:7080/FinalPJT/PMSLogin.do
+	// monsta@gmail.com
+	// monbebe001
 	// t711txt@gmail.com
 	// 12345
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
@@ -99,13 +101,17 @@ public class Work_Controller {
 	public String workGanttDetail(@RequestParam("no") String no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("projectInfo",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
+		d.addAttribute("personInfo",service.personInfo(no));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
+		d.addAttribute("sessmem",mem);
 		if(service.ganttDetailExp(no).getParent()!=null) {
 			d.addAttribute("parent",service.ganttDetailExp(service.ganttDetailExp(no).getParent()));
 		}
 		if(service.getWorkRepList(no).size()>0) {
 			d.addAttribute("workrep",service.getWorkRepList(no));
 		}
+		System.out.println(mem.getId());
+		System.out.println(service.projectInfo(service.ganttDetailExp(no).getPrjno()).getTlid());
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
 	// 답글
