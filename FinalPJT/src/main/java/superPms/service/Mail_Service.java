@@ -184,7 +184,7 @@ public class Mail_Service {
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delSendMail(mailnoArray[i]);
 			dao.uptfileSState(mailnoArray[i]);
-			if(dao.getFileState(mailnoArray[i]).getSstate().equals("1")&&dao.getFileState(mailnoArray[i]).getRstate().equals("1")) {
+			if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
 				dao.delFile(mailnoArray[i]);
 			}
 		}
@@ -195,7 +195,8 @@ public class Mail_Service {
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delReceiveMail(mailnoArray[i]);
 			dao.uptfileRState(mailnoArray[i]);
-			if(dao.getFileState(mailnoArray[i]).getSstate().equals("1")&&dao.getFileState(mailnoArray[i]).getRstate().equals("1")) {
+			if(dao.getFileState(mailnoArray[i]).getSstate()==1
+					&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
 				dao.delFile(mailnoArray[i]);
 			}
 		}

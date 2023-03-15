@@ -6,19 +6,20 @@ public class MailFile {
 	private int mailFno;
 	private String fname;
 	private Date regdte;
-	private String rstate;
-	private String sstate;
+	private int rstate;
+	private int sstate;
 	
-	public String getRstate() {
+	
+	public int getRstate() {
 		return rstate;
 	}
-	public void setRstate(String rstate) {
+	public void setRstate(int rstate) {
 		this.rstate = rstate;
 	}
-	public String getSstate() {
+	public int getSstate() {
 		return sstate;
 	}
-	public void setSstate(String sstate) {
+	public void setSstate(int sstate) {
 		this.sstate = sstate;
 	}
 	public int getMailFno() {

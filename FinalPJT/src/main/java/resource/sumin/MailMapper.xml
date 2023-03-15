@@ -88,7 +88,7 @@
 		update mailfile set rstate='1' where mailfno=#{mailno}
 	</update>
 	<select id="getFileState" parameterType="string" resultType="mailfile">
-		select * from mailfile where mailfno=#{mailno} 
+		select rstate,sstate from mailfile where mailfno=#{mailno} 
 	</select>
 	<delete id="delReceiveMail" parameterType="string">
 		DELETE FROM receiver WHERE mailno=#{mailno}
