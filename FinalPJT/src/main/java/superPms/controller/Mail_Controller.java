@@ -16,7 +16,7 @@ import superPms.service.Mail_Service;
 import superPms.vo.Mail;
 import superPms.vo.MailSch;
 import superPms.vo.SuperEmpDept;
-
+   
 @Controller
 public class Mail_Controller {
 

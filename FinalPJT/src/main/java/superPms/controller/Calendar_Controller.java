@@ -19,7 +19,7 @@ public class Calendar_Controller {
 	@Autowired
 	private Calendar_Service service; 
 	// http://localhost:7080/FinalPJT/PMSLogin.do
-//	http://localhost:7080/FinalPJT/calList.do
+	//	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
 	public String calList(Model d, HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
@@ -28,7 +28,7 @@ public class Calendar_Controller {
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	
-//	http://localhost:7080/FinalPJT/calListAjax.do
+	//	http://localhost:7080/FinalPJT/calListAjax.do
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(HttpSession session,Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
