@@ -34,5 +34,9 @@ public interface Work_Dao {
 	public void reqApprove(String no);
 	public void rejApprove(String no);
 	public void approve(String no);
-
+	// 결재함
+	public List<Gantt> getApprvList(GanttSch sch);
+	public int totApprvCnt(GanttSch sch);
+	public List<Gantt> getReqApprvList(GanttSch sch);
+	public int totReqApprvCnt(GanttSch sch);
 }

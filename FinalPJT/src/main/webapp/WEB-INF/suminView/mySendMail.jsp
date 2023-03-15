@@ -77,9 +77,11 @@ a.hover{
 		      return;
 		    }
 			if(confirm("삭제하시겠습니까?")){
-				location.href="${path}/delSendMail.do?mailno="+chkArray
+				alert("선택하신 메일이 삭제되었습니다.")
+				location.href="${path}/delSendMail.do?mailno="+chkArrays
+				
 			}
-			alert("선택하신 메일이 삭제되었습니다.")
+			
 		})
 		$("#reSendBtn").click(function(){
 			var mailLeng = $("input[name=chk]:checked").length

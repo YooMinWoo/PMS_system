@@ -188,18 +188,22 @@ textarea:read-only{
              		</button>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
+             	<c:if test="${ganttDetail.state==0}">
              		<button class="btn btn-primary" id="req">결재 요청</button>
+             	</c:if>
+             	<c:if test="${ganttDetail.state==1}">
              		<button class="btn btn-primary" id="rej">결재 승인</button>
              		<button class="btn btn-danger" id="apprv">결재 반려</button>
+             	</c:if>
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
+				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
-				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
 				  </ul>
             	</div> 
            </div>
