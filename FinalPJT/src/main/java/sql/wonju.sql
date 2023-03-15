@@ -47,7 +47,7 @@ SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid
 FROM (SELECT * FROM PROJECT p WHERE p.deadline>=to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
 WHERE ppp.deptid=d.deptid;
 
-SELECT * FROM gantt;
+SELECT * FROM emp;
 SELECT * FROM projectmember;
 
 SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT FROM project p, PROJECTMEMBER m WHERE p.prjno=m.PRJNO 
@@ -66,7 +66,10 @@ SELECT * FROM PROJECt WHERE SUBSTR(DEADLINE,6,2)='02';
 	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023
 	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=4;
 
-
+-- 프로젝트 멤버별 업무 진행률
+SELECT owner, round(avg(PROGRESS)*100,1) AS avgs FROM gantt WHERE prjno=23 GROUP BY owner ORDER BY avgs DESC;
+-- 프로젝트 전체 업무 진행률
+SELECT round(avg(progress)*100,0) AS avgs FROM gantt WHERE prjno=23;
 -- openStatus 0이면 전체 공개 1이면 멤버공개
 INSERT INTO project values(pro_seq.nextval,sysdate,to_date('2023-03-30','yyyy-mm-dd'),'첫번째 프로젝트','admin1@gmail.com','10','0');
 INSERT INTO project values(pro_seq.nextval,'2023-02-01','2023-02-25','지난 프로젝트3','admin1@gmail.com','10','0');

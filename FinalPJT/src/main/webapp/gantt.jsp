@@ -29,15 +29,14 @@
 	$(document).ready(function(){
 		// 컨트롤러에서 모델데이터로 받은 prjno
 		var prjno = "${projectInfo.prjno}"
+		var sessId = "${sessionScope.emp.id}"
+		var pmId = "${projectInfo.tlid}"
+	
 		var members=[]
 		let url="${path}/memList.do?prjno="+prjno
 		fetch(url).then(function(response){
 			return response.json()
 		}).then(function(json){
-			let pmArr = {}
-			pmArr.key=json.pm.ename
-			pmArr.label=json.pm.ename
-			members.push(pmArr)
 			$.each(json.memList,function(index,mlist){
 				let memArr = {}
 				memArr.key=mlist.ename
@@ -147,10 +146,13 @@
 		    callAjax("${path}/delLink.do",qstr)
 		    return true;
 		});
+		// 권한 설정
+		if(sessId!=pmId){
+			ganttReadonly() //읽기전용
+		}
 		
 	})	
-		// 읽기전용으로 만들기
-		// ganttReadonly()
+		
 		function ganttReadonly() {
 				gantt.config.readonly = !gantt.config.readonly;
 				gantt.init("gantt_here");

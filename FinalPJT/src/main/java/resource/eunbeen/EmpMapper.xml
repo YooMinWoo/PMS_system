@@ -28,8 +28,14 @@
 	</select>
 	<select id="empTot" resultType="int" parameterType="superempdeptsch">
 		SELECT count(*) 
-		FROM emp
-		WHERE ename NOT LIKE '이회장'	
+		FROM emp e, dept d
+		WHERE 1=1
+		and e.deptid = d.deptid
+		and ename NOT LIKE '이회장'	
+		AND e.ename like '%'||#{sename}||'%'
+		and d.dname like '%'||#{dname}||'%'
+		AND e.job like '%'||#{job}||'%'
+		
 	</select>
 	<select id="idChk" resultType="superempdept" parameterType="String">
 		SELECT * 

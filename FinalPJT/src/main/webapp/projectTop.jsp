@@ -16,6 +16,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#invBtn, #uptBtn{
+display: none;
+}
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <script type="text/javascript">
@@ -39,6 +43,13 @@ $(document).ready(function(){
 		$("#subject").append(" (종료)")
 	}
 	
+	var sessId = "${sessionScope.emp.id}"
+	var pmId = "${projectInfo.tlid}"
+	if(sessId==pmId){
+		$("#invBtn").css('display','inline-block')
+		$("#uptBtn").css('display','inline-block')
+	}
+	
 	// 수정 화면으로 이동
 	$("#uptBtn").click(function(){
 		location.href="${path}/uptProject.do?prjno="+prjno
@@ -51,10 +62,8 @@ $(document).ready(function(){
 			console.log(response)
 			return response.json()
 		}).then(function(json){			
-			let pminfo = json.pm
 			let meminfo = json.memList
 			let listHTML = ""
-			listHTML+="<tr><td>"+pminfo.dname+"</td><td>"+pminfo.job+"</td><td>담당PM</td><td>"+pminfo.ename+"</td></tr>"
 			for(let i=0;i<meminfo.length;i++){
 				listHTML+="<tr><td>"+meminfo[i].dname+"</td><td>"+meminfo[i].job+"</td><td>"+
 				meminfo[i].part+"</td><td>"+meminfo[i].ename+"</td></tr>"
@@ -216,9 +225,9 @@ $(document).ready(function(){
            <h3 id="subject"class="fw-bold py-3 mt-4 pt-3">프로젝트 이름</h3>
            </div>
            <div class="col-4 py-3 mt-4 mb-4 d-flex justify-content-end">
-            <button type="button" id="memBtn" class="btn btn-sm btn-success" data-bs-toggle="modal"
+            <button type="button" id="memBtn" class="btn btn-sm btn-primary" data-bs-toggle="modal"
              data-bs-target="#memberModal">멤버확인</button>&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" 
+            <button type="button" id="invBtn" class="btn btn-sm btn-success" data-bs-toggle="modal" 
             data-bs-target="#inviteModal">멤버초대</button>&nbsp;&nbsp;&nbsp;
             <button type="button" id="uptBtn" class="btn btn-sm btn-secondary">설정</button>
            </div>

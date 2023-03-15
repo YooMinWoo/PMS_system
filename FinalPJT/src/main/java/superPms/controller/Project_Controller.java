@@ -2,6 +2,8 @@ package superPms.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Chart_Service;
 import superPms.service.Gantt_Service;
 import superPms.service.Project_Service;
 import superPms.vo.Gantt;
@@ -18,6 +21,7 @@ import superPms.vo.Project;
 import superPms.vo.ProjectMember;
 import superPms.vo.ProjectSch;
 import superPms.vo.SuperDept;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.SuperEmpDeptSch;
 
 @Controller
@@ -26,24 +30,27 @@ public class Project_Controller {
 	private Project_Service service;
 	@Autowired(required = false)
 	private Gantt_Service ganttService;
+	@Autowired(required = false)
+	private Chart_Service chartService;	
 	@ModelAttribute("deptCom")
 	public List<SuperDept> deptCom(){
 		return service.deptCom();
 	}
 	// 전체 프로젝트 검색
 	@RequestMapping("/allProject.do")
-	public String allProject(@ModelAttribute("sch") ProjectSch sch,Model d) {
+	public String allProject(@ModelAttribute("sch") ProjectSch sch,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		System.out.println(sch.getKeyword());
 		System.out.println(sch.getIsCon());
+		sch.setAuth(sObj.getAuth());
 		d.addAttribute("list",service.allProject(sch));
 		return "WEB-INF\\wonjuView\\allproject.jsp";
 	}
 	// 나의 프로젝트 검색
 	@RequestMapping("/myProject.do")
-	public String myProject(@ModelAttribute("sch") ProjectSch sch,Model d) {
-		String owner = "randlod@gmail.com"; //세션에 있는 로그인한 아이디를 owner에 넣기
-		sch.setOwner(owner);
-		System.out.println(sch.getCurPage());
+	public String myProject(@ModelAttribute("sch") ProjectSch sch,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		sch.setOwner(sObj.getId()); //세션에 있는 로그인한 아이디를 owner에 넣기
 		d.addAttribute("list",service.myProject(sch));
 		return "WEB-INF\\wonjuView\\myproject.jsp";
 	}
@@ -55,7 +62,8 @@ public class Project_Controller {
 	}
 	// 프로젝트 등록 화면
 	@GetMapping("/newProjectShow.do")
-	public String newProjectShow() {
+	public String newProjectShow(HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		return "WEB-INF\\wonjuView\\newproject.jsp";
 	}
 	// 프로젝트 등록 프로세스
@@ -71,18 +79,17 @@ public class Project_Controller {
 	
 	// 프로젝트 메인화면
 	@GetMapping("/projectMain.do")
-	public String projectMain(@RequestParam("prjno") int prjno,Gantt g,Model d) {
+	public String projectMain(@RequestParam("prjno") int prjno,Gantt g,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",ganttService.showGantt(g));
 		d.addAttribute("memList",service.memberList(prjno));
-		d.addAttribute("pm",service.getPm(prjno));
 		return "WEB-INF\\wonjuView\\project_main.jsp";
 	}
 	// 프로젝트 PM + 멤버정보
 	@RequestMapping("/memList.do")
 	public String memList(@RequestParam("prjno") int prjno,Model d) {
 		d.addAttribute("memList",service.memberList(prjno));
-		d.addAttribute("pm",service.getPm(prjno));
 		return "pageJsonReport";
 	}
 	

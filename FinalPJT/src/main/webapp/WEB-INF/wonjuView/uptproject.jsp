@@ -223,6 +223,7 @@ tbody td{
 		            <input class="form-control" type="text" value="${projectInfo.ename }" 
 		            id="html5-search-input" readonly="readonly">
 		          	<input type="hidden" name="tlid" value="${projectInfo.tlid}"><!-- 세션에 있는 pm 아이디 -->
+		          	<c:out value="${projectInfo.tlid}"></c:out>
 		          </div>
 		        </div>
 		         <div class="mb-3 row">

@@ -8,4 +8,6 @@ import superPms.vo.DonutChart;
 public interface Chart_Dao {
 	public List<BarChart> getBar(BarChart date);
 	public List<DonutChart> getDonut();
+	public List<BarChart> rateByMember(int prjno);
+	public BarChart totRate(int prjno);
 }

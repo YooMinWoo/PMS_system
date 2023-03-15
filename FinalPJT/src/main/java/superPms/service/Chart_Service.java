@@ -20,4 +20,10 @@ public class Chart_Service {
 	public List<DonutChart> getDonut(){
 		return dao.getDonut();
 	};
+	public List<BarChart> rateByMember(int prjno) {
+		return dao.rateByMember(prjno);
+	};
+	public BarChart totRate(int prjno) {
+		return dao.totRate(prjno);
+	};
 }

@@ -54,7 +54,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     
 <script type="text/javascript">
 /*
@@ -96,7 +96,7 @@
 	
 	})
 	
-		function optFun(cntsArr,dnameArr,avgsArr,subArr){
+	function optFun(cntsArr,dnameArr,avgsArr,subArr){
 			var options = {
 					  chart: {
 					    type: 'donut'
@@ -117,7 +117,7 @@
 			        }],
 			          chart: {  
 			          type: 'bar',
-			          //height: 500
+			          height: 300
 			        },
 			        plotOptions: {
 			          bar: {
@@ -270,7 +270,7 @@
 	              
 
 	           	</div>
-	         	  <div id="chart2" style="width: 100%;height: 100%;"></div>
+	         	  <div id="chart2"></div>
 
 	           </div>
 	           </div>

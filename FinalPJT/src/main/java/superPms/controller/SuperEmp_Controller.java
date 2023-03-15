@@ -115,8 +115,8 @@ public class SuperEmp_Controller {
 //		return "forward:/PMSLogin.do";
 //	}
 	@RequestMapping("/userGetEmpList.do")
-	public String userGetEmpList(@ModelAttribute("ch") SuperEmpDept ch, Model d) {
-		d.addAttribute("ulist", service.getEmpList(ch));
+	public String userGetEmpList(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d) {
+		d.addAttribute("elist", service.getEmpListPage(sch));
 		return "WEB-INF\\eunbeenView\\userOrganization.jsp";
 	}
 	@GetMapping("/myPage.do")
