@@ -44,23 +44,22 @@
 	
 	<!-- 공지사항 업데이트 처리 -->
 	<update id="uptNotice" parameterType="notice">
-		<if test= "fname != null and !fname.equals('')">
-			update notice
-			set
-				title=#{title},
-				content=#{content},
-				uptdte = sysdate,
-				fno=files_seq.currval
-			where noticeno=#{noticeno}
-		</if>
-		<if test= "fname == null or fname.equals('')">
-			update notice
-			set
-				title=#{title},
-				content=#{content},
-				uptdte = sysdate
-			where noticeno=#{noticeno}
-		</if>
+		update notice
+		set
+			title=#{title},
+			content=#{content},
+			uptdte = sysdate
+		where noticeno=#{noticeno}
+	</update>
+	
+	<!-- 파일 업데이트 처리 -->
+	<update id="uptFile" parameterType="notice">
+		update files
+		set
+			fname=#{fname},
+			uptdte = sysdate,
+			path=#{path}
+		where fno=#{fno}
 	</update>
 	
 	<!-- 조회수 +1 처리 -->
@@ -80,18 +79,10 @@
 	
 	<!-- 공지사항 등록, 파일 유무 확인 -->
 	<insert id="insertNotice" parameterType="notice">
-		<if test= "fname != null and !fname.equals('')">
-			insert into notice values(
-				notice_seq.nextval,0,sysdate,sysdate,#{title},#{content},0,#{writer},
-				files_seq.currval,#{deptid}
-			)
-		</if>
-		<if test= "fname == null or fname.equals('')">
-			insert into notice values(
-				notice_seq.nextval,0,sysdate,sysdate,#{title},#{content},0,#{writer},
-				'',#{deptid}
-			)
-		</if>
+		insert into notice values(
+			notice_seq.nextval,0,sysdate,sysdate,#{title},#{content},0,#{writer},
+			files_seq.currval,#{deptid}
+		)
 	</insert>
 	
 	<!-- 페이징 처리를 위한 전체 데이터 개수 가져오기 -->
@@ -113,6 +104,18 @@
 		delete from noticerep
 		where noticeno=#{no}
 	</delete>
+	
+	<!-- 파일 첨부된 공지사항의 경우 파일 삭제 -->
+	<delete id="delNoticeFile" parameterType="string">
+		delete from files
+		where fno=#{no}
+	</delete>
+	
+	<select id="schNoticeFile" parameterType="string" resultType="notice">
+		SELECT fname,path
+	 	FROM files f
+		WHERE fno = #{fno}
+	</select>
 	
 	<!-- 댓글 조회 -->
 	<select id="noticeRepList" parameterType="noticerepsch" resultType="noticerep">
