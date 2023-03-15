@@ -18,7 +18,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-<title>404 에러 페이지</title>
+<title>에러 페이지</title>
 <style>
 	td{text-align:center;}
 </style>
