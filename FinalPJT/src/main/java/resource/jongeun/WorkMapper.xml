@@ -89,6 +89,7 @@
 			FROM gantt g, project p 
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
+			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
 		ORDER BY START_date
@@ -98,11 +99,19 @@
 		FROM gantt g, project p 
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
+		AND g.text like '%'||#{text}||'%'
 	</select>
 	<select id="projectInfo" resultType="project" parameterType="int">
 		SELECT *
 		from project p
 		where prjno=#{prjno}
+	</select>
+	<select id="personInfo" resultType="superempdept" parameterType="string">
+		SELECT DISTINCT e.* 
+		FROM GANTT g, PROJECTMEMBER p, EMP e 
+		WHERE g.OWNER = e.ENAME
+		AND e.ID = p.OWNER
+		AND g.id = #{id}
 	</select>
 	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
 		SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
@@ -113,5 +122,66 @@
 		FROM GANTT g
 		WHERE id = #{id}
 	</select>
-	
+	<!-- 결재 -->
+	<update id="reqApprove" parameterType="string">
+		UPDATE GANTT
+		SET
+			state = 1
+		WHERE ID = #{id}
+	</update>
+	<update id="rejApprove" parameterType="string">
+		UPDATE GANTT
+		SET
+			state = 0
+		WHERE ID = #{id}
+	</update>
+	<update id="approve" parameterType="string">
+		UPDATE GANTT
+		SET
+			apprv = 1
+		WHERE ID = #{id}
+	</update>
+	<!-- 결재 리스트 -->
+	<select id="getReqApprvList" resultType="gantt" parameterType="ganttsch">
+		SELECT *
+		FROM (SELECT rownum cnt, g.* 
+			FROM gantt g, project p 
+			WHERE g.PRJNO =p.PRJNO
+			AND p.prjno=#{prjno}
+			AND g.state=1
+			AND g.apprv=0
+			AND g.text like '%'||#{text}||'%'
+			)
+		WHERE cnt BETWEEN #{start} and #{end}
+		ORDER BY START_date
+	</select>
+	<select id="totReqApprvCnt" resultType="int" parameterType="ganttsch">
+		SELECT count(*) 
+		FROM gantt g, project p 
+		WHERE g.PRJNO =p.PRJNO 
+		AND p.prjno=#{prjno}
+		AND g.state=1
+		AND g.apprv=0		
+		AND g.text like '%'||#{text}||'%'
+	</select>
+	<select id="getApprvList" resultType="gantt" parameterType="ganttsch">
+		SELECT *
+		FROM (SELECT rownum cnt, g.* 
+			FROM gantt g, project p 
+			WHERE g.PRJNO =p.PRJNO
+			AND p.prjno=#{prjno}
+			AND g.apprv=1
+			AND g.text like '%'||#{text}||'%'
+			)
+		WHERE cnt BETWEEN #{start} and #{end}
+		ORDER BY START_date
+	</select>
+	<select id="totApprvCnt" resultType="int" parameterType="ganttsch">
+		SELECT count(*) 
+		FROM gantt g, project p 
+		WHERE g.PRJNO =p.PRJNO 
+		AND p.prjno=#{prjno}
+		AND g.apprv=1
+		AND g.text like '%'||#{text}||'%'
+	</select>
 </mapper>

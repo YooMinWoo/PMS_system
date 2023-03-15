@@ -35,16 +35,7 @@ public class Mail_Service {
 		
 	}
 	public void insReceiver(Mail ins) {
-		dao.insReceiver(ins);
-		
-//		String fname = ins.getReport().getOriginalFilename();
-//		if(!fname.equals("")) {
-//			uploadFile(ins.getReport());
-//			MailFile f = new MailFile();
-//			f.setFname(fname);
-//			dao.insertUploadFile(f);
-//		}
-//		
+		dao.insReceiver(ins);		
 	}
 	
 	private void uploadFile(MultipartFile f){
@@ -53,7 +44,7 @@ public class Mail_Service {
 	    try{
 	       f.transferTo(fObj);
 	    }catch(Exception e){
-	          System.out.println("업로드예외:"+e.getMessage());
+	       System.out.println("업로드예외:"+e.getMessage());
 	    }         
 	}
 	  
@@ -188,40 +179,54 @@ public class Mail_Service {
 	}
 	public void delSendMail(String mailno) {
 		String[] mailnoArray = mailno.split(",");
+		String fname = "";
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delSendMail(mailnoArray[i]);
-			dao.uptfileSState(mailnoArray[i]);
-			if(dao.getFileState(mailnoArray[i]).getSstate().equals("1")&&dao.getFileState(mailnoArray[i]).getRstate().equals("1")) {
-				dao.delFile(mailnoArray[i]);
+			if(dao.getFname(mailnoArray[i])!=null) {
+				dao.uptfileSState(mailnoArray[i]);
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+dao.getFileState(mailnoArray[i]).getSstate());
+				if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
+					fname = dao.getFname(mailnoArray[i]);
+					dao.delFile(mailnoArray[i]);
+					System.out.println(fname);
+					File file = new File(upload + fname);
+					if(file.exists()) { // 파일이 존재하면
+						file.delete(); // 파일 삭제   
+					}
+				}
 			}
 		}
 	
 	}
 	public void delReceiveMail(String mailno) {
 		String[] mailnoArray = mailno.split(",");
+		String fname = "";
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delReceiveMail(mailnoArray[i]);
 			dao.uptfileRState(mailnoArray[i]);
-			if(dao.getFileState(mailnoArray[i]).getSstate().equals("1")&&dao.getFileState(mailnoArray[i]).getRstate().equals("1")) {
-				dao.delFile(mailnoArray[i]);
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+dao.getFileState(mailnoArray[i]).getSstate());
+			if(dao.getFname(mailnoArray[i])!=null) {
+				if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
+					fname = dao.getFname(mailnoArray[i]);
+					dao.delFile(mailnoArray[i]);
+					System.out.println(fname);
+					File file = new File(upload + fname);
+					if(file.exists()) { // 파일이 존재하면
+						file.delete(); // 파일 삭제   
+					}
+				}
 			}
 		}
 	}
 	public void delFile(String mailno) {
-		String[] mailnoArray = mailno.split(",");
 		String fname = "";
-		for(int i=0; i<mailnoArray.length; i++) {
-			fname = dao.getFname(mailnoArray[i]);
-			dao.delFile(mailnoArray[i]);
-			File file = new File(upload + fname);
-			System.out.println("파일명###########"+fname);
-			if(file.exists()) { // 파일이 존재하면
-				file.delete(); // 파일 삭제   
-			}
-		
+		fname = dao.getFname(mailno);
+		dao.delFile(mailno);
+		File file = new File(upload + fname);
+		System.out.println("파일명###########"+fname);
+		if(file.exists()) { // 파일이 존재하면
+			file.delete(); // 파일 삭제   
 		}
-		
-	
 	}
 	
 	

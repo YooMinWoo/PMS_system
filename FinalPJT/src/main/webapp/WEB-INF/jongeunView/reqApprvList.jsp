@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>업무</title>
+<title>결재함</title>
 
 <style>
 .card.mb-4{

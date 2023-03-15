@@ -102,7 +102,7 @@ public class SuperEmp_Controller {
 			d.addAttribute("msg", "로그인 성공");
 			// DB에 데이터가 있을 때, 세션 설정
 			session.setAttribute("emp", service.login(e));
-			return "WEB-INF\\wonjuView\\project_main.jsp";
+			return "WEB-INF\\wonjuView\\pmsMain.jsp";
 		}
 	}
 	
@@ -115,8 +115,8 @@ public class SuperEmp_Controller {
 //		return "forward:/PMSLogin.do";
 //	}
 	@RequestMapping("/userGetEmpList.do")
-	public String userGetEmpList(@ModelAttribute("ch") SuperEmpDept ch, Model d) {
-		d.addAttribute("ulist", service.getEmpList(ch));
+	public String userGetEmpList(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d) {
+		d.addAttribute("elist", service.getEmpListPage(sch));
 		return "WEB-INF\\eunbeenView\\userOrganization.jsp";
 	}
 	@GetMapping("/myPage.do")

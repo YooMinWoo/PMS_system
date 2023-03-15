@@ -7,16 +7,17 @@
 
 	<insert id="insSender" parameterType="mail">
 		INSERT INTO mail values(mail_seq.nextval,#{title},#{content},
-				#{sender},sysdate,0,#{receiver})
+				#{sender},sysdate,'0',#{receiver})
 	</insert>
 	
 	<insert id="insReceiver" parameterType="mail">
-		insert into receiver values(mail_seq.currval,#{receiver},#{title},#{content},sysdate,0,#{sender})
+		insert into receiver values(mail_seq.currval,#{receiver},#{title},#{content},sysdate,'0',#{sender})
 	</insert>
 	
 	<insert id="insertUploadFile" parameterType="mailfile">
-		insert into mailFile values(mail_seq.currval,#{fname},sysdate,0,0);
+		insert into mailFile values(mail_seq.currval,#{fname},sysdate,'0','0')
 	</insert>
+	
 	
 	<select id="totCntSend" resultType="int" parameterType="mailsch">
 		SELECT count(*) FROM mail WHERE sender=#{sender}
@@ -87,7 +88,7 @@
 		update mailfile set rstate='1' where mailfno=#{mailno}
 	</update>
 	<select id="getFileState" parameterType="string" resultType="mailfile">
-		select * from mailfile where mailfno=#{mailno} 
+		select rstate,sstate from mailfile where mailfno=#{mailno} 
 	</select>
 	<delete id="delReceiveMail" parameterType="string">
 		DELETE FROM receiver WHERE mailno=#{mailno}

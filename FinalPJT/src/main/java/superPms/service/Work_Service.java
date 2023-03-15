@@ -13,6 +13,7 @@ import superPms.dao.Work_Dao;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.Project;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -98,6 +99,7 @@ public class Work_Service {
 	}
 	// gantt
 	public List<Gantt> showGantt(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
 		sch.setCount(dao.totGanttCnt(sch));
 		if(sch.getCurPage()==0) {
 			sch.setCurPage(1);
@@ -126,6 +128,10 @@ public class Work_Service {
 		return dao.projectInfo(prjno);
 	}
 	
+	public SuperEmpDept personInfo(String no) {
+		return dao.personInfo(no);
+	}
+	
 	public Gantt ganttDetail(Gantt det) {
 		return dao.ganttDetail(det);
 	};
@@ -133,6 +139,65 @@ public class Work_Service {
 	public Gantt ganttDetailExp(String no) {
 		return dao.ganttDetailExp(no);
 	};
-	
-
+	// 결재
+	public void reqApprove(String no) {
+		dao.reqApprove(no);
+	}
+	public void rejApprove(String no) {
+		dao.rejApprove(no);
+	}	
+	public void approve(String no) {
+		dao.approve(no);
+	}
+	// 결재함
+	public List<Gantt> getApprvList(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
+		sch.setCount(dao.totApprvCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		return dao.getApprvList(sch);
+	}
+	public List<Gantt> getReqApprvList(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
+		sch.setCount(dao.totReqApprvCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		return dao.getReqApprvList(sch);
+	}
 }
