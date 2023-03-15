@@ -10,4 +10,6 @@ public interface Alert_Dao {
 	public int alertCount(String id);
 	
 	public void alertState(int no);
+	
+	public void alertDelete(int no);
 }

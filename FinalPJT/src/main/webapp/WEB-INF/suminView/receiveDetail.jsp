@@ -94,10 +94,13 @@
            
            <div class="card mb-4 pb-3">
 	           <div class="demo-inline-spacing">
+	           <!--  
 	            <button id="replyBtn" type="button" class="btn rounded-pill btn-primary">답장</button>
 	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
+	         	-->
 	         	</div>
 	         	<input type="hidden" name="mailno" value="${receiveDetail.mailno }"/>
+	         	<br><br>
 	           <h3 class="mb-0">${receiveDetail.title}</h3>
 	           <br>
 	           <div style="display: flex;

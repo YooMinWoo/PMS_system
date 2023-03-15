@@ -4,6 +4,7 @@ import java.util.List;
 
 import superPms.vo.Alert;
 import superPms.vo.Calendar;
+import superPms.vo.Project;
 
 public interface Calendar_Dao {
 	
@@ -19,5 +20,6 @@ public interface Calendar_Dao {
 	public int alertCount(String id);
 	public void alertState(int no);
 	
-	
+	public List<Project> getProSch(String id);
+	public void insCalPro(Calendar ins);
 }

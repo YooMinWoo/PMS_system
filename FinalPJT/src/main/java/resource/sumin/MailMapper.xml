@@ -89,7 +89,7 @@
 		DELETE FROM mailfile WHERE mailfno=#{mailno}
 	</delete>
 	
-	<select id="getFname" parameterType="string">
-		select * from mailfile where mailfno=#{mailno}
+	<select id="getFname" parameterType="string" resultType="string">
+		select fname from mailfile where mailfno=#{mailno}
 	</select>
 </mapper>

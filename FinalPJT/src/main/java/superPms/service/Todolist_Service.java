@@ -31,4 +31,9 @@ public class Todolist_Service {
 	public void uptTodo(Todolist upt) {
 		dao.uptTodo(upt);
 	}
+	
+	public List<Todolist> todoSchList(Todolist sch){
+		if(sch.getTodo()==null) sch.setTodo("");
+		return dao.todoSchList(sch);
+	}
 }

@@ -31,6 +31,8 @@ a.hover{
 
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
@@ -61,20 +63,34 @@ a.hover{
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+	
 	$(document).ready(function(){
 		
 		$("#delBtn").click(function(){
+			 var chkArray = new Array()
+		    $("input[name=chk]:checked").each(function() { 
+		      var mailnoVal = $(this).val(); 
+		      chkArray.push(mailnoVal);
+		    });
+		    if( chkArray.length < 1 ){
+		      alert("메일을 선택하세요");
+		      return;
+		    }
 			if(confirm("삭제하시겠습니까?")){
-				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-					if($("input[name=chk]:checkbox")[idx].checked==true){
-						var mailno = $("input[name=chk]:checkbox")[idx].value
-						location.href="${path}/delSendMail.do?mailno="+mailno
-					}
-				}
-				alert("선택하신 메일이 삭제되었습니다.")
+				location.href="${path}/delSendMail.do?mailno="+chkArray
 			}
+			alert("선택하신 메일이 삭제되었습니다.")
 		})
 		$("#reSendBtn").click(function(){
+			var mailLeng = $("input[name=chk]:checked").length
+			if(mailLeng>1){
+				alert("1개의 메일만 선택해주세요")
+				return
+			}
+			if(mailLeng<1){
+				alert("메일을 선택해주세요")
+				return
+			}
 			for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 				if($("input[name=chk]:checkbox")[idx].checked==true){
 					var mailno = $("input[name=chk]:checkbox")[idx].value
@@ -118,8 +134,9 @@ a.hover{
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">메일 > <small class="text-muted">보낸 메일함</small></h4>
-           
+           <div class="container">
            <div class="card mb-4 pb-3">
+     
 	           <div class="demo-inline-spacing">
 	           <button id="allChk" type="button" class="btn rounded-pill btn-info">전체 선택</button>
 	         	<button id="reSendBtn" type="button" class="btn rounded-pill btn-primary">전달</button>
@@ -139,7 +156,7 @@ a.hover{
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <c:forEach var="mail" items="${mySendMail}">
+                        <c:forEach var="mail" items="${mySendMail}">
                       <tr>
                         <td style="width:10px;"><i class="fab fa-angular fa-lg text-danger me-3"></i> 
                        	 <input type="checkbox" name="chk" value="${mail.mailno}"></td>
@@ -152,20 +169,20 @@ a.hover{
                   		</c:if>
                   		<td style="width:10px;">${mail.receiver }</td>
                   		
-                  		 <td id="${mail.mailno}">
+                  		 <td >
                   		<a style="color:#697a8d;" href="${path}/sendDetail.do?mailno=${mail.mailno}"> ${mail.title}</a> </td>
                         <td style="text-align:center;">
                          <fmt:formatDate pattern='yyyy-MM-dd' value="${mail.sendDte}"/> 
                         </td>
                       </tr>
                       </c:forEach>
+			    	 
                     </tbody>
                   </table>
                 </div>
                 
                  <nav aria-label="Page navigation" style="display: flex; justify-content: center;">
                           <ul class="pagination">
-                        
                             <li class="page-item prev">
                               <a class="page-link" href="javascript:goPage(${sch.startBlock-1});"
                                 ><i class="tf-icon bx bx-chevron-left"></i
@@ -185,7 +202,7 @@ a.hover{
                            
                           </ul>
                         </nav>
-                       
+               </div>        
          	</div>
          	  <!-- /card -->
             </div>

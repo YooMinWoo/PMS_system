@@ -122,20 +122,14 @@
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">메일 > <small class="text-muted"> 메일쓰기</small></h4>
-           
-          
-	          
-               
                   <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
                       <h5 class="mb-0">superMail</h5>
-                     
                     </div>
                     <div class="card-body">
                       <form class="form" enctype="multipart/form-data" action="${path }/sendMail.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-receiver">수신자</label>
-                          
 		                <input id="receiverChk" type="text" name="receiver" 
 		                class="form-control" id="basic-default-receiver"/>
                         </div>
@@ -150,13 +144,8 @@
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-content">내용</label>
                           <textarea
-                          	name="content"
-                            id="basic-default-content"
-                            class="form-control"
-                            placeholder="내용을 입력하세요"
-                            rows="10"
+                          	name="content" id="basic-default-content" class="form-control" placeholder="내용을 입력하세요" rows="10"
                           ></textarea>
-                          
                         </div>
                         <div class="mb-3">
 	                        <label for="formFile" class="form-label">첨부파일</label>

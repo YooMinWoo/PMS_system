@@ -16,4 +16,8 @@
 	<update id="alertState" parameterType="int">
 		UPDATE alert SET state='읽음' WHERE no=#{no}
 	</update>
+	
+	<delete id="alertDelete" parameterType="int">
+		DELETE FROM alert WHERE NO=#{no}
+	</delete>
 </mapper>

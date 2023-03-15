@@ -11,6 +11,7 @@ public class Mail {
 	private String content;
 	private String sender;
 	private Date sendDte;
+	private String sendDteS;
 	private Date receiveDte;
 	private String state;
 	private String receiver;
@@ -18,6 +19,12 @@ public class Mail {
 	private String fname;
 	
 	
+	public String getSendDteS() {
+		return sendDteS;
+	}
+	public void setSendDteS(String sendDteS) {
+		this.sendDteS = sendDteS;
+	}
 	public int getCnt() {
 		return cnt;
 	}

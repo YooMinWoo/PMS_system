@@ -1,6 +1,7 @@
 package superPms.vo;
 
 public class MailSch {
+		private String title;
 		private String sender;
 		private String receiver;
 		// 2. 페이징 처리 1단계
@@ -17,6 +18,12 @@ public class MailSch {
 		private int endBlock; // block 마지막번호
 		
 		
+		public String getTitle() {
+			return title;
+		}
+		public void setTitle(String title) {
+			this.title = title;
+		}
 		public String getSender() {
 			return sender;
 		}

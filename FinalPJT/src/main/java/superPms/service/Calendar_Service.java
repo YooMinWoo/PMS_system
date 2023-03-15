@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import superPms.dao.Calendar_Dao;
 import superPms.vo.Alert;
 import superPms.vo.Calendar;
+import superPms.vo.Project;
 
 @Service
 public class Calendar_Service {
@@ -38,6 +39,11 @@ public class Calendar_Service {
 	public void alertState(int no) {
 		dao.alertState(no);
 	}
-	
+	public List<Project> getProSch(String id){
+		return dao.getProSch(id);
+	}
+	public void insCalPro(Calendar ins) {
+		dao.insCalPro(ins);
+	}
 	
 }

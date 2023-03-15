@@ -18,7 +18,7 @@ public class Calendar_Controller {
 
 	@Autowired
 	private Calendar_Service service; 
-	
+	// http://localhost:7080/FinalPJT/PMSLogin.do
 //	http://localhost:7080/FinalPJT/calList.do
 	@GetMapping("/calList.do")
 	public String calList(Model d, HttpSession session) {
@@ -28,7 +28,7 @@ public class Calendar_Controller {
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	
-//	http://49.238.187.241:7080/FinalPJT/calListAjax.do
+//	http://localhost:7080/FinalPJT/calListAjax.do
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(HttpSession session,Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
@@ -60,5 +60,20 @@ public class Calendar_Controller {
 		service.alertState(no);
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
-
+	
+	@RequestMapping("/getProSch.do")
+	public String getProSch(HttpSession session,Model d) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("getProSch", service.getProSch(sObj.getId()));
+		return "WEB-INF\\suminView\\getProSch.jsp";
+	}
+	
+	@RequestMapping("/insCalPro.do")
+	public String insCalPro(Calendar ins,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		ins.setWriter(sObj.getId());
+		service.insCalPro(ins);
+		d.addAttribute("msg", "프로젝트 일정이 추가되었습니다.");
+		return "WEB-INF\\suminView\\getProSch.jsp";
+	}
 }

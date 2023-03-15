@@ -27,6 +27,8 @@
 }
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api" type="text/javascript"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
@@ -58,9 +60,32 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		var vm = new Vue({
+			el:".container",
+			data:{todo:"",todoList:[]},
+			methods:{
+				schKeyup:function(){
+					if(event.keyCode==13){
+						this.fetchList(); 
+					}
+				},
+				fetchList:function(){
+					this.todoList = [] 
+					var url="${path}/todoListAjax.do?todo="+this.todo
+					var vm = this; 
+					fetch(url).then(function(response){
+						return response.json()
+					}).then(function(json){
+						vm.todoList = json.todoList
+						console.log(json.todoList)
+					}).catch(function(err){
+						console.log(err)
+					})
+				}
+			}
+		});	
+		$("#search").click()
+
 		
 		$("#addBtn").click(function(){
 			$("h2").click()
@@ -79,10 +104,14 @@
 		})
 		
 		$("#comBtn").click(function(){
+			var todoLeng = $("input[name=chk]:checked").length
+			if(todoLeng<1){
+				alert("할 일을 선택해주세요")
+				return
+			}
 			if(confirm("완료처리하시겠습니까?")){
 				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 					if($("input[name=chk]:checkbox")[idx].checked==true){
-						//alert($("input[name=chk]:checkbox")[idx].value)
 						var tno = $("input[name=chk]:checkbox")[idx].value
 						stateAjax(tno)
 					}
@@ -92,10 +121,14 @@
 			
 		})
 		$("#delBtn").click(function(){
+			var todoLeng = $("input[name=chk]:checked").length
+			if(todoLeng<1){
+				alert("할 일을 선택해주세요")
+				return
+			}
 			if(confirm("삭제하시겠습니까?")){
 				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 					if($("input[name=chk]:checkbox")[idx].checked==true){
-						//alert($("input[name=chk]:checkbox")[idx].value)
 						var tno = $("input[name=chk]:checkbox")[idx].value
 						delAjax(tno)
 					}
@@ -104,9 +137,18 @@
 			}
 		})
 		$("#uptBtn").click(function(){
+			var todoLeng = $("input[name=chk]:checked").length
+			if(todoLeng<1){
+				alert("할 일을 선택해주세요")
+				return
+			}
+			if(todoLeng>1){
+				alert("1개만 선택해주세요")
+				return
+			}
 			for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 				if($("input[name=chk]:checkbox")[idx].checked==true){
-					//alert($("input[name=chk]:checkbox")[idx].value)
+					
 					var tno = $("input[name=chk]:checkbox")[idx].value
 					$("h2").click()
 					$("#regBtn").hide()
@@ -163,7 +205,6 @@
 			url:"${path}/delTodo.do?tno="+tno,
 			dataType:"json",
 			success:function(data){
-				//alert(data.msg)
 				location.reload()
 			},
 			error:function(err){
@@ -193,14 +234,23 @@
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">To do list</small></h4>
-           
+            <div class="container">
            <div class="card mb-4 pb-3">
+           <form id="frm01" class="form-inline"  method="post">
+           		<div class="demo-inline-spacing">
+			    <input v-model="todo" @keyup="schKeyup" class="form-control mr-sm-2" 
+			    	placeholder="제목입력" style="width:330px;"/>
+			   
+			    <button @click="fetchList" class="btn btn-primary" type="button" id="search">Search</button>
+			    </div>
+			</form>
 	           <div class="demo-inline-spacing">
 	         	<button id="addBtn" type="button" class="btn rounded-pill btn-primary">추가</button>
 	         	<button id="comBtn" type="button" class="btn rounded-pill btn-success">완료</button>
 	         	<button id="uptBtn" type="button" class="btn rounded-pill btn-info">수정</button>
 	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
 	         	</div>
+	         	
 	         	<div class="table-responsive text-nowrap">
                   <table class="table">
                     <thead>
@@ -212,24 +262,20 @@
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <c:forEach var="todo" items="${todoList}">
-                      <tr>
+                   <tr v-for="todo in todoList">
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
-                       	 <input type="checkbox" name="chk" value="${todo.tno}"></td>
-                        <td id="${todo.tno}">${todo.todo }</td>
-                  		<c:if test="${todo.state=='0'}">
-                  		 <td>미완료</td>
-                  		</c:if>
-                  		<c:if test="${todo.state=='1'}">
-                  		 <td>완료</td>
-                  		</c:if>
-                        <td>
-                          ${todo.regdte}
+                       	 <input type="checkbox" name="chk" :value="todo.tno"></td>
+                        <td :id="todo.tno">{{todo.todo}}</td>
+                  		 <td v-if="todo.state=='1'">완료</td>
+                         <td v-else>미완료</td>
+                        <td> 
+                          {{todo.regdte}}
                         </td>
                       </tr>
-                      </c:forEach>
+                     
                     </tbody>
                   </table>
+                </div>
                 </div>
          	</div>
          	  <!-- /card -->

@@ -63,29 +63,46 @@ a.hover{
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#readBtn").click(function(){
-			if(confirm("읽음 처리하시겠습니까?")){
-				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-					if($("input[name=chk]:checkbox")[idx].checked==true){
-						var mailno = $("input[name=chk]:checkbox")[idx].value
-						location.href="${path}/uptSendState.do?mailno="+mailno
-					}
-				}
-				alert("선택하신 메일이 읽음 처리되었습니다.")
+			 var chkArray = new Array()
+		    $("input[name=chk]:checked").each(function() { 
+		      var mailnoVal = $(this).val(); 
+		      chkArray.push(mailnoVal);
+		    });
+		    if( chkArray.length < 1 ){
+		      alert("메일을 선택하세요");
+		      return;
+		    }
+			if(confirm("읽음처리 하시겠습니까?")){
+				location.href="${path}/uptSendState.do?mailno="+chkArray
 			}
+			alert("선택하신 메일이 읽음처리 되었습니다.")
 		})
 		$("#delBtn").click(function(){
+			var chkArray = new Array()
+		    $("input[name=chk]:checked").each(function() { 
+		      var mailnoVal = $(this).val(); 
+		      chkArray.push(mailnoVal);
+		    });
+		    if( chkArray.length < 1 ){
+		      alert("메일을 선택하세요");
+		      return;
+		    }
 			if(confirm("삭제하시겠습니까?")){
-				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-					if($("input[name=chk]:checkbox")[idx].checked==true){
-						var mailno = $("input[name=chk]:checkbox")[idx].value
-						location.href="${path}/delReceiveMail.do?mailno="+mailno
-					}
-				}
-				alert("선택하신 메일이 삭제되었습니다.")
+				location.href="${path}/delReceiveMail.do?mailno="+chkArray
 			}
+			alert("선택하신 메일이 삭제되었습니다.")
 		})
 		
 		$("#replyBtn").click(function(){
+			var mailLeng = $("input[name=chk]:checked").length
+			if(mailLeng>1){
+				alert("1개의 메일만 선택해주세요")
+				return
+			}
+			if(mailLeng<1){
+				alert("메일을 선택해주세요")
+				return
+			}
 			for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 				if($("input[name=chk]:checkbox")[idx].checked==true){
 					var mailno = $("input[name=chk]:checkbox")[idx].value

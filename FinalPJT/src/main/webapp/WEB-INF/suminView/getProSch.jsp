@@ -58,19 +58,24 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#download").click(function(){
-			if(confirm($(this).val()+"을 다운로드 하시겠습니까?")){
-				location.href="${path}/downloadMail.do?fname="+$(this).val()
-			}
+		$("#goCal").click(function(){
+			location.href="${path}/calList.do"
 		})
-		
-		$("#reSendBtn").click(function(){
-			var mailno = $("[name=mailno]").val()
-			location.href="${path}/reSendMail.do?mailno="+mailno
-		})
-		
-
 	})
+	function addBtn(subject,regdte,deadline){
+		qtr = "title="+subject+"&start="+regdte+"&end="+deadline
+		location.href="${path}/insCalPro.do?"+qtr
+	}
+	var msg = "${msg}"
+	if(msg!=""){
+		alert(msg)
+		if(confirm("캘린더로 이동하시겠습니까?")){
+			location.href="${path}/calList.do"
+		}else{
+			location.href="${path}/getProSch.do"
+		}
+	}
+	
 </script>
 </head>
 
@@ -90,45 +95,87 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">보낸 메일함 > <small class="text-muted">보낸 메일함 상세</small></h4>
+           <h4 class="fw-bold py-3 mb-4">캘린더 > <small class="text-muted">프로젝트 일정 가져오기</small></h4>
            
            <div class="card mb-4 pb-3">
-           
 	           <div class="demo-inline-spacing">
-	           <!--  
-	           <button id="reSendBtn" type="button" class="btn rounded-pill btn-primary" style="display:hidden;">전달</button>
-	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger" style="display:hidden;">삭제</button>
-	         -->
+	         	<button id="goCal" type="button" class="btn rounded-pill btn-info">캘린더</button>
 	         	</div>
-	         	<input type="hidden" name="mailno" value="${sendDetail.mailno }"/>
-	         	<br><br>
-	           <h3 class="mb-0" name="title">${sendDetail.title}</h3>
-	           <br>
-	           <div style="display: flex; justify-content: flex-start; align-items: center;">
-                <h5 class="mb-0">보낸 사람</h5>&nbsp;&nbsp;
-                <h4 class="mb-0" style="background:#a6e3f6; border-radius:10px;" name="sender">${sendDetail.sender}</h4>
-               </div>  <br>
-               <div style="display: flex; justify-content: flex-start; align-items: center;">
-                <h5 class="mb-0">받는 사람</h5>&nbsp;&nbsp;
-                <h4 class="mb-0" style="background:#a6e3f6; border-radius:10px;" name="receiver">${sendDetail.receiver }</h4> 
-                </div> <br>
-               <h6 class="mb-0"><fmt:formatDate pattern='yyyy-MM-dd' value="${sendDetail.sendDte}"/></h6>  
-               <br>  <br>  
-                <div class="input-group">
-                   <input type="text" class="form-control" value="${sendDetail.fname}" name="fname"/>
-                   <button class="btn btn-outline-primary" type="button" id="download" value="${sendDetail.fname}">다운로드</button>
-                </div>
-              <div style="margin-top:80px;">
-               <h5 style="white-space:pre-wrap; line-height:30px;" name="content">${sendDetail.content }</h5>		
-         	  </div>
-                      
+	         	<div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th></th>
+                         <th>프로젝트명</th>
+                        <th>시작일</th>
+                        <th>마감일</th>
+                       	<th></th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <c:forEach var="pm" items="${getProSch}">
+                      <tr>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
+                       	
+                        <td>${pm.subject }</td>
+                        <td>${pm.regdte }</td>
+                        <td>${pm.deadline }</td>
+                        <td><button onclick="addBtn('${pm.subject }','${pm.regdte }','${pm.deadline }')" 
+                        type="button" class="btn rounded-pill btn-primary">추가</button></td>
+                      </tr>
+                      </c:forEach>
+                    </tbody>
+                  </table>
                 </div>
          	</div>
          	  <!-- /card -->
             </div>
             <!-- / Content -->
 			  <!-- Modal -->
-			
+			   <h2 data-bs-toggle="modal"
+                          data-bs-target="#modalCenter"></h2>
+                        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                               <form class="form">
+                              <div class="modal-body">
+                              <input type="hidden" value="" name="tno" id="tno">
+                                <div class="row">
+                                  <div class="col mb-3">
+                                    <label for="todoWithTitle" class="form-label">할 일</label>
+                                    <input	type="text" name="todo" id="todo" class="form-control" />
+                                  </div>
+                                </div>
+                                <div class="row g-2">
+                                  <div class="col mb-0">
+                                   
+                                    <input type="hidden"  name="id" id="id" class="form-control" value="${emp.id }"/>
+                                  </div>
+                                </div>
+                              </div>
+                              </form>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                  닫기
+                                </button>
+                                <button id="regBtn" type="button" class="btn btn-primary">등록</button>
+                                <button id="mUptBtn" type="button" class="btn btn-primary">수정</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+	
+
+           
           </div>
           <!-- Content wrapper -->
         </div>

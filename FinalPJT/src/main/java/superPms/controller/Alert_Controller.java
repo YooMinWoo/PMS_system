@@ -18,10 +18,11 @@ public class Alert_Controller {
    @Autowired
    private Alert_Service service; 
    // http://localhost:7080/FinalPJT/alert.do
+   // http://localhost:7080/FinalPJT/PMSLogin.do
    
    @GetMapping("/alert.do")  
    public String alertList(Model d,HttpSession session) {
-	  SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+      SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
       d.addAttribute("alertList", service.alertList(sObj.getId()));
       d.addAttribute("alertCount", service.alertCount(sObj.getId()));
       return "WEB-INF\\suminView\\alert.jsp";
@@ -30,12 +31,13 @@ public class Alert_Controller {
    @RequestMapping("/alertState.do")
    public String alertState(@RequestParam("no")int no) {
       service.alertState(no);
-      return "WEB-INF\\\\suminView\\\\alert.jsp";
+      return "WEB-INF\\suminView\\alert.jsp";
    }
-//   @RequestMapping("/alertList.do")
-//   public String alertAjax(@RequestParam("id")String id,Model d) {
-//      d.addAttribute("alertList", service.alertList(id));
-//      return "WEB-INF\\\\suminView\\\\alert.jsp";
-//   }
+
+   @RequestMapping("/alertDelete.do")
+   public String alertDelete(@RequestParam("no")int no) {
+	   service.alertDelete(no);
+	   return "rediret:/alert.do";
+   }
    
 }

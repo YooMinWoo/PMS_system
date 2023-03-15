@@ -23,4 +23,8 @@ public class Alert_Service {
 	public void alertState(int no) {
 		dao.alertState(no);
 	}
+	
+	public void alertDelete(int no) {
+		dao.alertDelete(no);
+	}
 }

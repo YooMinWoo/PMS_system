@@ -16,4 +16,5 @@ public interface Todolist_Dao {
 	
 	public void uptTodo(Todolist upt);
 	
+	public List<Todolist> todoSchList(Todolist sch);
 }

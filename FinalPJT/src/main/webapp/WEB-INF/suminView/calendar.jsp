@@ -149,6 +149,11 @@
  			
  		}
  	})		
+ 	
+ 	$("#getProSch").click(function(){
+ 		location.href="${path}/getProSch.do"
+ 		
+ 	})
      
   });
  
@@ -306,9 +311,11 @@
             <div class="container-xxl flex-grow-1 container-p-y">
  
            <h4 class="fw-bold py-3 mb-4">나의 업무 > <small class="text-muted">캘린더</small></h4>
-         
+        
            <div class="card mb-4 pb-3">
-           
+            <div class="demo-inline-spacing" style="display: flex; justify-content: flex-end;">
+	           <button id="getProSch" type="button" class="btn btn-primary">프로젝트 일정 가져오기</button>
+	       </div>
            	 <div id='calendar'></div>
          	</div>
          	  <!-- /card -->

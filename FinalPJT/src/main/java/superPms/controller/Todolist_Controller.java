@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class Todolist_Controller {
 	@Autowired
 	private Todolist_Service service;
 	// http://localhost:7080/FinalPJT/todoList.do
+	// http://localhost:7080/FinalPJT/PMSLogin.do
+
 //	@GetMapping("/todoList.do")
 //	public String todoList() {
 //		
@@ -28,11 +32,21 @@ public class Todolist_Controller {
 	public String todoAjax(Model d,HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("todoList",service.todoList(sObj.getId()));
-		return "WEB-INF\\\\suminView\\\\TodoList.jsp";
+		return "WEB-INF\\suminView\\TodoList.jsp";
+	}
+	
+	@RequestMapping("/todoListAjax.do")
+	public String todoSchList(Todolist sch,HttpSession session,Model d) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		sch.setId(sObj.getId());
+		d.addAttribute("todoList", service.todoSchList(sch));
+		return "pageJsonReport";
 	}
 	
 	@RequestMapping("/insTodo.do")
-	public String insTodo(Todolist ins,Model d) {
+	public String insTodo(Todolist ins,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		ins.setId(sObj.getId());
 		service.insTodo(ins);
 		d.addAttribute("msg", "등록이 완료되었습니다");
 		return "pageJsonReport";
@@ -53,9 +67,13 @@ public class Todolist_Controller {
 	}
 	
 	@RequestMapping("/uptTodo.do")
-	public String uptTodo(Todolist upt,Model d) {
+	public String uptTodo(Todolist upt,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		upt.setId(sObj.getId());
 		service.uptTodo(upt);
 		d.addAttribute("msg", "수정되었습니다.");
 		return "pageJsonReport";
 	}
+	
+	
 }

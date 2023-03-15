@@ -50,5 +50,15 @@
 		UPDATE alert SET state='읽음' WHERE no=#{no}
 	</update>
 	
+	<select id="getProSch" parameterType="string" resultType="project">
+		SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT 
+		FROM project p, PROJECTMEMBER m WHERE p.prjno=m.PRJNO AND owner=#{id} OR p.tlid=#{id}
+	</select>
 	
+	<insert id="insCalPro" parameterType="calendar">
+		INSERT INTO calendar values(cal_seq.nextval,#{title},
+			#{start},#{end},#{writer},
+			'white','orange',
+			0,null,null)
+	</insert>
 </mapper>
