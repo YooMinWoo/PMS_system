@@ -64,7 +64,6 @@ tr{text-align:left;}
 		// $("#").addClass('active open');	
 		// $("#").addClass('active');	
 		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-
   		$(".risklevel").each(function(index, item){
 			console.log($(item).val());
 			if($(item).val()=="긴급"){
@@ -110,7 +109,7 @@ tr{text-align:left;}
 			}
 		});	
 		$("#applyBtn").click(function(){
-			location.href = "${path}/project_riskForm.do";
+			location.href = "${path}/project_riskForm.do?prjno="+${param.prjno};
 		})
 	});
 	function goPage(cnt){
@@ -153,9 +152,12 @@ tr{text-align:left;}
                           <div class="input-group">
 							    <form id="frm01" class="d-flex"  method="post"> 			
 								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
-								</form> 
-							  <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+								    <input type="text" class="form-control rounded" placeholder="Search" 
+							  aria-label="Search" aria-describedby="search-addon" name="schKeyword"
+							  value="${param.schKeyword }" />
 							  <button type="button" class="btn btn-outline-primary">search</button>
+								</form> 
+
 						  </div>	
                             <div class="table-responsive">
                                 <table class="table">
@@ -180,7 +182,7 @@ tr{text-align:left;}
                                     			</td>
 												<td>
                                     				<input type="hidden" value="${risk.riskno }" />
-                                    				<input type="hidden" name="curPage" value="${sch.curPage}"/>
+                                    				<input type="hidden" name="prjno" value="${risk.prjno}"/>
                                     			</td>
                                     		</tr>
                                     	</c:forEach>
@@ -201,7 +203,7 @@ tr{text-align:left;}
 								</ul>
                                     <script>
                               		function goDetail(riskno){
-                              			location.href="${path}/project_riskDetail.do?riskno="+riskno
+                              			location.href="${path}/project_riskDetail.do?&riskno="+riskno+"&prjno="+${param.prjno}
                               		}
                                     </script>
                             </div>

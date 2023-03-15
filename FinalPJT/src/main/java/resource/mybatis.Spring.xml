@@ -27,7 +27,9 @@
       	
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
       	<typeAlias alias="risksch" type="superPms.vo.RiskSch"/>
-      	
+      	<typeAlias alias="solution" type="superPms.vo.Solution"/>
+      	<typeAlias alias="solutionsch" type="superPms.vo.SolutionSch"/>
+      	<typeAlias alias="strategy" type="superPms.vo.Strategy"/>
       	
       	<!-- 민우 -->	
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>
@@ -61,6 +63,7 @@
 		<mapper resource="resource/eunbeen/DeptMapper.xml"/>
 		<mapper resource="resource/eunbeen/EmpMapper.xml"/>
 		<mapper resource="resource/jungwoo/RiskMapper.xml"/>
+		<mapper resource="resource/jungwoo/SolutionMapper.xml"/>
 		<mapper resource="resource/jongeun/WorkMapper.xml"/>		
 		<mapper resource="resource/minwoo/NoticeMapper.xml"/>	
 		<mapper resource="resource/minwoo/DriveMapper.xml"/>	

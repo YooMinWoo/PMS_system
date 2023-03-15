@@ -21,7 +21,17 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-
+.sol-content{
+	background-color:#f5f5f9;
+	border-radius: 0.375rem;
+	padding-left:1%;
+	padding-top:1%;
+	padding-bottom:1%;
+	border: 1px solid #d9dee3;
+	align-items: center;
+	position: relative;
+	height:auto;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -60,19 +70,19 @@
 		$("#uptBtn").click(function(){			
 			if(confirm("수정 하시겠습니까?")){
 				$("option").attr("disabled", false)
-				$("#form1").attr("action","${path}/project_riskUpdate.do");
+				$("#form1").attr("action","${path}/project_riskUpdate.do?prjno="+${param.prjno});
 				$("#form1").submit();
 			}
 		})
 		$("#delBtn").click(function(){			
 			if(confirm("삭제 하시겠습니까?")){
 				$("option").attr("disabled", false)
-				$("#form1").attr("action","${path}/project_riskDelete.do");
+				$("#form1").attr("action","${path}/project_riskDelete.do?prjno="+${param.prjno});
 				$("#form1").submit();
 			}
 		})
 		$("#goMain").click(function(){
-			location.href="${path}/project_pagingRisk.do"			
+			location.href="${path}/project_pagingRisk.do?prjno="+${param.prjno}	
 		});
 		var ename="${emp.ename}"
 		console.log(ename)
@@ -197,12 +207,36 @@
 			<div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="mb-3">솔루션</h4>
+				        <h4 class="text-primary">솔루션</h4>
 				        <form method="post" id="form2" class="validation-form" novalidate>
 				          <div class="row">
-				            <div class="col-md-6 mb-3">
+				            <div class="table-responsive">
 				              <input type="hidden" value="${risk.riskno}">
-				            </div>
+				              <c:forEach var="sol" items="${sol}">
+   				                <div>
+				                	<span class="text-info">${sol.ename }</span><span>${sol.solregdate }</span>
+				                </div>
+				              <div class="sol-content">
+				                <input type="hidden" value="${sol.solno }">
+
+				                <span>${sol.solution_content }</span>      				       
+				                    
+				              </div>
+				              </c:forEach>
+  								<ul class="pagination  justify-content-end"> 
+									<li class="page-item"><a class="page-link" 
+										href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
+								
+									<c:forEach var="cnt" begin="${sch.startBlock}" 
+											end="${sch.endBlock}">
+								  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+								  		<a class="page-link" 
+								  			href="javascript:goPage(${cnt});">${cnt}</a></li>
+								  	</c:forEach>
+								  	<li class="page-item"><a class="page-link" 
+								  			href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
+								</ul>
+							</div>
 				          </div>  
 				          <div class="mb-3">
 				            <label for="subject">솔루션</label>
@@ -213,7 +247,20 @@
 				        </form>
 				      </div>
            		</div>
-         	</div> 
+         	</div>
+         	<div class="card mb-4 pb-3">
+           		<div class="card-body">
+           			<div class="input-form col-md-12 mx-auto">
+				        <h4 class="text-primary">대응전략</h4>
+				        <form method="post" id="form3" class="validation-form" novalidate>
+							
+								<span>${strategy.risk_strategy }</span>
+							
+				          
+				        </form>
+				      </div>
+           		</div>
+         	</div>
             </div>
             <!-- / Content -->
 

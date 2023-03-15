@@ -4,6 +4,7 @@ import java.util.List;
 
 import superPms.vo.Risk;
 import superPms.vo.RiskSch;
+import superPms.vo.Strategy;
 
 
 public interface Risk_Dao {
@@ -16,4 +17,5 @@ public interface Risk_Dao {
 	public void insertRisk(Risk ins);
 	public void updateRisk(Risk upt);
 	public void deleteRisk(Risk del);
+	public Strategy getStrategy(int strategyno);
 }

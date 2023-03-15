@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import superPms.dao.Risk_Dao;
 import superPms.vo.Risk;
 import superPms.vo.RiskSch;
+import superPms.vo.Strategy;
 
 @Service
 public class Risk_Service {
@@ -17,6 +18,7 @@ public class Risk_Service {
 		return dao.riskList(sch);
 	}
 	public List<Risk> pagingRisk(RiskSch sch){
+		if(sch.getSchKeyword()==null) sch.setSchKeyword("");
 		// 1. 총페이지 수
 				sch.setCount(dao.totCnt(sch));
 				// 2. 현재페이지 번호(클릭한)
@@ -76,5 +78,8 @@ public class Risk_Service {
 	}
 	public void deleteRisk(Risk del) {
 		dao.deleteRisk(del);
+	}
+	public Strategy getStrategy(int strategyno) {
+		return dao.getStrategy(strategyno);
 	}
 }
