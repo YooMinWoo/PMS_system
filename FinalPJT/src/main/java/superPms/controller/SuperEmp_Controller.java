@@ -102,7 +102,7 @@ public class SuperEmp_Controller {
 			d.addAttribute("msg", "로그인 성공");
 			// DB에 데이터가 있을 때, 세션 설정
 			session.setAttribute("emp", service.login(e));
-			return "WEB-INF\\wonjuView\\project_main.jsp";
+			return "WEB-INF\\wonjuView\\pmsMain.jsp";
 		}
 	}
 	
