@@ -77,7 +77,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
-		$("#menu-item-project-myproject").addClass('active');	
+
 		
 		var prjno="${projectInfo.prjno}"
 		$("#proMem").change(function(){
