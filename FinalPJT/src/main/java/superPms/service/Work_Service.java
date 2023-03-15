@@ -13,6 +13,7 @@ import superPms.dao.Work_Dao;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.Project;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -125,6 +126,10 @@ public class Work_Service {
 	
 	public Project projectInfo(int prjno) {
 		return dao.projectInfo(prjno);
+	}
+	
+	public SuperEmpDept personInfo(String no) {
+		return dao.personInfo(no);
 	}
 	
 	public Gantt ganttDetail(Gantt det) {

@@ -5,6 +5,7 @@ import java.util.List;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.Project;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
 import superPms.vo.WorkRep;
@@ -28,6 +29,7 @@ public interface Work_Dao {
 	public List<Gantt> showGantt(GanttSch sch);
 	public int totGanttCnt(GanttSch sch);
 	public Project projectInfo(int prjno);
+	public SuperEmpDept personInfo(String no);
 	public Gantt ganttDetail(Gantt det);
 	public Gantt ganttDetailExp(String no);
 	// 결재
