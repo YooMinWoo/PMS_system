@@ -23,10 +23,7 @@
 				location.href="${path}/PMSLogin.do";                  
 			})
 			
-		}
-		<%-- 
-		
-		--%>	
+		}	
 	});
 </script>
 </head>
