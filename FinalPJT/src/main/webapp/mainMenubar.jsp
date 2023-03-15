@@ -121,11 +121,7 @@
                     <div data-i18n="Without navbar">to do list</div>
                   </a>
                 </li>
-                <li class="menu-item" id="menu-item-mypage-myfold">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div data-i18n="Container">내 폴더</div>
-                  </a>
-                </li>
+               
               </ul>
             </li>
             <li class="menu-item" id="menu-item-mail">
@@ -187,12 +183,7 @@
             <!-- Extended components
       
              -->
-            <li class="menu-item" id="menu-item-drive">
-              <a href="*" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-archive"></i>
-                <div data-i18n="Extended UI">드라이브</div>
-              </a>
-            </li>
+           
             <li class="menu-item" id="menu-item-notice">
               <a href="${path }/goNotice.do" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
