@@ -26,4 +26,10 @@ public class Chart_Service {
 	public BarChart totRate(int prjno) {
 		return dao.totRate(prjno);
 	};
+	public List<BarChart> infoByMonth(int year){
+		return dao.infoByMonth(year);
+	};
+	public BarChart totAmount(int year) {
+		return dao.totAmount(year);
+	};
 }

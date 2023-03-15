@@ -37,6 +37,7 @@ public class Mail_Controller {
 	    d.addAttribute("alertCount", alert_service.alertCount(sObj.getId()));
 		return "WEB-INF\\suminView\\sendMail.jsp";
 	}
+	  
 	
 	@RequestMapping("/sendMail.do")
 	public String sendMail(Mail ins,Model d) {

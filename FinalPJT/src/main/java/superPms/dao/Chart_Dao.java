@@ -10,4 +10,7 @@ public interface Chart_Dao {
 	public List<DonutChart> getDonut();
 	public List<BarChart> rateByMember(int prjno);
 	public BarChart totRate(int prjno);
+	public List<BarChart> infoByMonth(int year);
+	public BarChart totAmount(int year);
+	
 }

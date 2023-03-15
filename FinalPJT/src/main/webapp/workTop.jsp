@@ -53,13 +53,13 @@ $(document).ready(function(){
            </div>
           </div>
         <div class="nav navbar-nav me-auto d-flex flex-row">
-          <a class="nav-item nav-link active" href="javascript:void(0)">진행상황</a>
+          <a class="nav-item nav-link active" href="${path}/projectMain.do?prjno=${projectInfo.prjno}">진행상황</a>
           <a class="nav-item nav-link" >|</a>
           <a class="nav-item nav-link" href="${path}/workGanttList.do?prjno=${projectInfo.prjno}">업무</a>
           <a class="nav-item nav-link">|</a>
           <a class="nav-item nav-link" href="${path}/apprvList.do?prjno=${projectInfo.prjno}">결재함</a>
           <a class="nav-item nav-link">|</a>
-          <a class="nav-item nav-link" href="javascript:void(0)">리스크 관리</a>
+          <a class="nav-item nav-link" href="${path}/project_pagingRisk.do?prjno=${projectInfo.prjno}">리스크 관리</a>
         </div>
 </body>
 </html>

@@ -137,5 +137,54 @@ set
 	riskstate = 'PM담당',
 	riskname = '수정이 잘 되는가 ?'
    where riskno = 47;
-   
+SELECT * FROM PROJECTMEMBER p;
+SELECT * FROM emp;
+SELECT * FROM risk
+WHERE PRJNO =41;
 SELECT * FROM PROJECT p ;
+SELECT * FROM GANTT g ;
+SELECT * FROM NOTICEREP n  ;
+SELECT * FROM SOLUTION s ;
+CREATE SEQUENCE sol_seq
+START WITH 1
+MINVALUE 1;
+INSERT INTO SOLUTION VALUES(sol_seq.nextval,41,'monsta@gmail.com','Avoidance','인원을 늘리던지 기간을 늘려보겠다',sysdate);
+ALTER TABLE SOLUTION ADD solregdate DATE;
+SELECT * FROM NOTICEREP n ;
+select *
+from
+    (select rownum cnt, A.*
+    from
+        (select *
+        from RISK 
+        where riskno>0
+        and prjno = 23
+        AND riskname like '%'||'은'||'%'
+        order by riskpriority
+        ) A
+    )
+where cnt between 1 and 5;
+SELECT * FROM NOTICEREP n ;	
+SELECT * FROM (
+		SELECT rownum cnt, S.* FROM (
+			SELECT solno, riskno, id, sol_strategy, solution_content, 
+						to_char(solregdate,'yyyy-mm-dd') solregdate
+			FROM SOLUTION sol, 
+			WHERE riskno=41
+			ORDER BY solregdate
+			) S
+		)
+		WHERE cnt BETWEEN 1 AND 5;
+SELECT * FROM SOLUTION s ;
+
+SELECT * FROM (
+			SELECT rownum cnt, s.* FROM (
+			SELECT solno, riskno, e.ename, sol_strategy, solution_content, 
+						to_char(solregdate,'yyyy-mm-dd') solregdate
+			FROM SOLUTION sol, EMP e
+			WHERE riskno=41
+			AND sol.ID =e.ID 
+			ORDER BY solregdate
+			) S
+			)
+		WHERE cnt BETWEEN 1 AND 5;

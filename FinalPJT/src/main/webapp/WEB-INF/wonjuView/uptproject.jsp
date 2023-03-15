@@ -223,7 +223,6 @@ tbody td{
 		            <input class="form-control" type="text" value="${projectInfo.ename }" 
 		            id="html5-search-input" readonly="readonly">
 		          	<input type="hidden" name="tlid" value="${projectInfo.tlid}"><!-- 세션에 있는 pm 아이디 -->
-		          	<c:out value="${projectInfo.tlid}"></c:out>
 		          </div>
 		        </div>
 		         <div class="mb-3 row">
@@ -244,6 +243,14 @@ tbody td{
 		          	 <div class="invalid-feedback" id="deadCk">
 					    프로젝트 종료 일자를 입력해주세요
 					  </div>
+		          </div>
+		        </div>
+		        <div class="mb-3 row">
+		          <label for="amount" class="col-md-2 col-form-label">수주 금액</label>
+		          <div class="col-md-10"> 
+		         	<fmt:formatNumber var="fmtAmount" value="${projectInfo.amount*1000000 }" type="currency"/>
+		            <input class="form-control" name="amount" type="text" value="${fmtAmount }" readonly="readonly">
+		            
 		          </div>
 		        </div>
 		        <div class="mb-3 row">

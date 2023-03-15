@@ -1,8 +1,7 @@
 package superPms.vo;
 
-public class RiskSch {
-	private String schKeyword;
-	
+public class SolutionSch {
+	private int riskno;
 	private int count;	// 전체 데이터 건ㄴ수
 	private int pageSize;	// 한 번 보여줄 페이지 크기
 	private int pageCount;	// 총페이지수 count/pageSize
@@ -14,15 +13,12 @@ public class RiskSch {
 	private int blockSize;	// 한번에 보여중 block의크기
 	private int startBlock;	// block 시작번호
 	private int endBlock;	// block 마지막번호
-	
-	private int prjno;
-	
-	public RiskSch() {
+	public SolutionSch() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public RiskSch(int count, int pageSize, int pageCount, int curPage, int start, int end, int blockSize,
+	public SolutionSch(int count, int pageSize, int pageCount, int curPage, int start, int end, int blockSize,
 			int startBlock, int endBlock) {
 		super();
 		this.count = count;
@@ -36,21 +32,12 @@ public class RiskSch {
 		this.endBlock = endBlock;
 	}
 
-	
-	public String getSchKeyword() {
-		return schKeyword;
+	public int getRiskno() {
+		return riskno;
 	}
 
-	public void setSchKeyword(String schKeyword) {
-		this.schKeyword = schKeyword;
-	}
-
-	public int getPrjno() {
-		return prjno;
-	}
-
-	public void setPrjno(int prjno) {
-		this.prjno = prjno;
+	public void setRiskno(int riskno) {
+		this.riskno = riskno;
 	}
 
 	public int getCount() {

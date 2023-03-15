@@ -76,9 +76,9 @@
 --bs-danger: #ff3e1d;
 --bs-light: #fcfdfd;
 --bs-dark: #233446;	
-*/
+*/ 
 	$(document).ready(function(){
-
+		$("#menu-item-home").addClass('active open');
 	      
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
@@ -96,10 +96,11 @@
 	
 	})
 	
-	function optFun(cntsArr,dnameArr,avgsArr,subArr){
-			var options = {
+	function optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr){
+			var deptOption = {
 					  chart: {
-					    type: 'donut'
+					    type: 'donut',
+					    height: 300
 					  },
 					  colors:['#696cff', '#8592a3', '#71dd37','#03c3ec','#007bff','#e83e8c','#696cff','#71dd37'],
 					  series: cntsArr,
@@ -111,7 +112,7 @@
 			        	    text: '데이터가 없습니다'
 			        	  }	
 					}
-			var options2 = {
+			var progOption = {
 		           series: [{
 		           	  data:avgsArr
 			        }],
@@ -155,17 +156,47 @@
 		        	}
 		        	  
 			  };
-			
-			console.log("#옵션#")
-			console.log(avgsArr)	
-			console.log("#options2#")
-			console.log(options2)
-			
-			var chart = new ApexCharts(document.querySelector("#chart"), options);
-			chart.render();				
-			var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
-			chart2.render();	
-			
+			 var comboOption = {
+			          series: [{
+			          name: '매출(백만원)',
+			          type: 'column',
+			          data: comboTotArr
+			        }, {
+			          name: '프로젝트 갯수',
+			          type: 'line',
+			          data: comboCntArr,
+			        }],
+			          chart: {
+			          height: 350,
+			          type: 'line',
+			        },
+			        colors:['#007bff', '#71dd37'], 
+			        stroke: {
+			          width: [0, 4]
+			        },
+			        dataLabels: {
+			          enabled: true,
+			          enabledOnSeries: [1]
+			        },
+			        yaxis: [{
+			            title: {
+			              text: '',
+			            },
+			          
+			          }, {
+			            opposite: true,
+			            title: {
+			              text: ''
+			            }
+			          }],
+			        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			        };
+			var deptChart = new ApexCharts(document.querySelector("#deptChart"), deptOption);
+			deptChart.render();				
+			var progChart = new ApexCharts(document.querySelector("#progChart"), progOption);
+			progChart.render();	
+			var comboChart = new ApexCharts(document.querySelector("#comboChart"), comboOption);
+	        comboChart.render();
 		}	
 		
 	
@@ -185,27 +216,19 @@
 	$("[name=year]").val(curYear).prop("selected", true); 
 	$("[name=month]").val(curMonth).prop("selected", true); 
 	
-
-	
-	
 		let url="${path}/chartShow.do?year="+curYear+"&month="+curMonth
 		fetch(url).then(function(response){
 			return response.json()
 		}).then(function(json){
 			console.log(json)
 		
-			var avgsArr=[]
-			var subArr=[]
-			var cntsArr=[]
-			var dnameArr=[]			
-			console.log("#####")
-			console.log(json.barC)
-			console.log(json.donutC)
-			console.log(json.barC.length)
+			var avgsArr=[]; var subArr=[];
+			var cntsArr=[]; var dnameArr=[];		
+			var comboTotArr=[]; var comboCntArr=[];
+			
 				
 			$.each(json.barC,function(index,b){
 				console.log("###추가##")
-				console.log(b)
 				avgsArr.push(b.avgs)
 				subArr.push([b.subject,"(~"+b.deadline+")"])
 			})	
@@ -213,8 +236,14 @@
 				cntsArr.push(d.cnts)
 				dnameArr.push(d.dname)
 			})	
+			$.each(json.infoByMonth,function(index,im){
+				comboTotArr.push(im.tot)
+				comboCntArr.push(im.cnt)
+			})	
 			
-			optFun(cntsArr,dnameArr,avgsArr,subArr)
+			optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr)
+			let totAmount = (json.totAmount.tot/100).toFixed(2)
+			$("#totAmount").append(totAmount+"억")
 
 		}).catch(function(err){
 			console.log(err)
@@ -247,8 +276,59 @@
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
+            
+            <div class="row">
+            <div class="col-lg-8 mb-4 order-0">
+            <!-- 뭐넣지 -->
+		    <div class="card">
+		      <div class="d-flex align-items-end row">
+		        <div class="col-sm-7">
+		          <div class="card-body">
+		            <h5 class="card-title text-primary">축하합니다! 🎉</h5>
+		            <p class="mb-4">You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in your profile.</p>
+		          </div>
+		        </div>
+		        <div class="col-sm-5 text-center text-sm-left">
+		          <div class="card-body pb-0 px-0 px-md-4">
+		            <img src="https://item.kakaocdn.net/do/039204d96618ee90c045a5ab348be979f604e7b0e6900f9ac53a43965300eb9a" height="140" alt="View Badge User">
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		  <!-- /뭐넣지 -->
+		  <div class="col-lg-4 col-md-4 order-1">
+		    <div class="row">
+		      <div class="col-lg-6 col-md-12 col-6 mb-4">
+		        <div class="card">
+		          <div class="card-body">
+		           
+		            <span class="fw-semibold d-block mb-1">Profit</span>
+		            <h3 class="card-title mb-2">$12,628</h3>
+		            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
+		          </div>
+		        </div>
+		      </div>
+		      <div class="col-lg-6 col-md-12 col-6 mb-4">
+		        <div class="card">
+		          <div class="card-body">
+		            <span>총 매출</span>
+		            <h3 class="card-title text-nowrap mb-1" id="totAmount"></h3>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+            
+ 			<div class="col-12 mb-4 order-2">
+	        <div class="card">
+	        	<h5 class="card-header m-0 me-2 pb-3">2023 프로젝트</h5>
+	           		<div id="comboChart"></div>
+	         	 </div>
+	        </div>
+	        </div>
  			<div class="row">
- 			<div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
+ 			<div class="col-12 col-lg-8 order-3 order-md-3 order-lg-2 mb-4">
 	           <div class="card">
 	           	<div class="row">
 	           	<div class="col-8">
@@ -270,19 +350,21 @@
 	              
 
 	           	</div>
-	         	  <div id="chart2"></div>
+	         	  <div id="progChart"></div>
 
 	           </div>
 	           </div>
           	
           	 
-          	 <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
+          	 <div class="col-12 col-lg-4 order-4 order-md-4">
 	          	  <div class="card">
 	          	  <h5 class="card-header m-0 me-2 pb-3">부서별 프로젝트</h5>
-	           		<div id="chart" style="width: 100%;height: 100%;"></div>
+	           		<div id="deptChart"></div>
 	         	 </div>
          	</div>
-         	  <!-- /card -->
+         	
+         	
+	        </div>
          	 
          	 
          	 </div>

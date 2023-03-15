@@ -96,7 +96,6 @@ textarea:read-only{
 		})
 		// 결재 요청
 		$("#req").click(function(){
-			console.log($("[name=ganttid]").val())
 			location.href="${path}/reqApprove.do?no="+$("[name=ganttid]").val();
 		})
 		// 결재 승인
@@ -191,10 +190,18 @@ textarea:read-only{
              	<c:if test="${ganttDetail.state==0}">
              		<button class="btn btn-primary" id="req">결재 요청</button>
              	</c:if>
-             	<c:if test="${ganttDetail.state==1}">
-             		<button class="btn btn-primary" id="rej">결재 승인</button>
-             		<button class="btn btn-danger" id="apprv">결재 반려</button>
-             	</c:if>
+             	<c:choose>
+             		<c:when test="${ganttDetail.apprv==1}">
+	             		<h4>결재완료</h4>
+             		</c:when>
+             		<c:when test="${sessmem.id eq projectInfo.tlid}">
+             			<button class="btn btn-primary" id="rej">결재 승인</button>
+             			<button class="btn btn-danger" id="apprv">결재 반려</button>
+             		</c:when>
+	             	<c:when test="${ganttDetail.state==1}">
+	             		<h4>결재진행중...</h4>
+	             	</c:when> 	
+             	</c:choose>
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
