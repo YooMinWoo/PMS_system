@@ -73,9 +73,10 @@ a.hover{
 		      return;
 		    }
 			if(confirm("읽음처리 하시겠습니까?")){
+				alert("선택하신 메일이 읽음처리 되었습니다.")
 				location.href="${path}/uptSendState.do?mailno="+chkArray
 			}
-			alert("선택하신 메일이 읽음처리 되었습니다.")
+			
 		})
 		$("#delBtn").click(function(){
 			var chkArray = new Array()
@@ -88,9 +89,10 @@ a.hover{
 		      return;
 		    }
 			if(confirm("삭제하시겠습니까?")){
+				alert("선택하신 메일이 삭제되었습니다.")
 				location.href="${path}/delReceiveMail.do?mailno="+chkArray
 			}
-			alert("선택하신 메일이 삭제되었습니다.")
+			
 		})
 		
 		$("#replyBtn").click(function(){

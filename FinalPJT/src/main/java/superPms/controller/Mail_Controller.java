@@ -2,7 +2,6 @@ package superPms.controller;
 
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Alert_Service;
 import superPms.service.Mail_Service;
 import superPms.vo.Mail;
 import superPms.vo.MailSch;
@@ -22,7 +22,8 @@ public class Mail_Controller {
 
 	@Autowired
 	private Mail_Service service;
-	
+	@Autowired
+	private Alert_Service alert_service;
 	@Value("${mail.upload}")
 	private String upload;
 	
@@ -30,7 +31,10 @@ public class Mail_Controller {
 	//http://localhost:7080/FinalPJT/sendMail.do
 	
 	@GetMapping("/sendMail.do")
-	public String sendMail() {
+	public String sendMail(HttpSession session,Model d) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
+	    d.addAttribute("alertCount", alert_service.alertCount(sObj.getId()));
 		return "WEB-INF\\suminView\\sendMail.jsp";
 	}
 	
@@ -39,6 +43,7 @@ public class Mail_Controller {
 		service.insSender(ins);
 		service.insReceiver(ins);
 		d.addAttribute("msg", "메일 전송이 완료되었습니다.");
+		
 		return "WEB-INF\\suminView\\completeMail.jsp";
 	}
 	
