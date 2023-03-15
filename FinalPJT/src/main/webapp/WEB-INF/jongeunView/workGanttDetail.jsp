@@ -64,9 +64,9 @@ textarea:read-only{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
+		$("#menu-item-project").addClass('active open');	
+		$("#menu-item-project-myproject").addClass('active');
+		
 		$("#back").click(function(){
 			location.href="${path}/workGanttList.do?prjno="+$("[name=prjno]").val();
 		})
@@ -131,7 +131,7 @@ textarea:read-only{
 			
             <div class="container-xxl flex-grow-1 container-p-y">
  
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무 상세</small></h4>
+           
            
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
@@ -150,10 +150,71 @@ textarea:read-only{
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
-				    <li><a class="dropdown-item" id="">담당자 추가</a></li>
+				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
 				  </ul>
             	</div> 
            </div>
+            <!-- 멤버 초대  모달창 -->
+		<div class="modal fade" id="inviteModal" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalScrollableTitle">추가 담당자 초대</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+          		<div class="my-4 row">
+              	<div class="col-6"> </div>
+              	<div class="col-6"> 
+              	 		<!-- 검색어 ajax로 넘기기 -->
+			         <div class="input-group">
+			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+			            <input type="hidden" name="curPage" value="${sch.curPage }">
+			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="부서 또는 사원명으로 검색">
+			          </div>
+			  	
+              	</div>
+              	</div>
+		        <div class="my-3 row">
+			      <div class="table-responsive text-nowrap">
+				    <table class="table table-striped" id="empTab">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="20%">
+				    <col width="40%">
+				      <thead>
+				        <tr>
+				          <th>부서명</th>
+				          <th>이름</th>
+				          <th>직책</th>
+				          <th>이메일</th>
+				        </tr>
+				      </thead>
+				      <tbody class="table-border-bottom-0">
+				      </tbody>
+				    </table>
+				  </div>
+			          <!-- Basic Pagination -->
+		          <nav id="pagination" aria-label="Page navigation">
+		            <ul class="pagination pagination-sm justify-content-end">
+		            </ul>
+		          </nav>
+              	</div>      
+		         <div class="my-3 row">
+		         	<div class="col-10"> </div>
+			         <div class="col-2 d-flex justify-content-end">
+			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>
+			         </div>
+		         </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="regBtn" type="button" class="btn btn-primary">저장</button>
+              </div>
+            </div>
+          </div>
+        </div>
+	<!-- /멤버 초대  모달창 -->
            <div class="demo-inline-spacing mt-1">
  			<form enctype="multipart/form-data" action="${path}/workIns.do" method="post">
                 <div class="divs">
@@ -178,21 +239,27 @@ textarea:read-only{
                 </div>
                 </div>
                 <div class="divs">
-                 <div class="mb-3" style="width:32%;">
+                 <div class="mb-3" style="width:24%;">
                    <label class="form-label" for="basic-default-id">담당자</label>
                    <input type="text" name="id"
                    class="form-control" id="basic-default-id" value="${ganttDetail.owner}" disabled readonly />
                  </div>
-                 <div class="mb-3" style="width:32%;">
+                 <div class="mb-3" style="width:24%;">
                   <label class="form-label">시작일자</label>
                   <input type="text" class="form-control" name="regdte" value="${ganttDetail.start_date}"
                   disabled readonly>
                   </div>
-                  <div class="mb-3" style="width:32%;">
+                  <div class="mb-3" style="width:24%;">
                   <label class="form-label">종료일자</label>
                   <input type="text" class="form-control" name="enddte" value="${ganttDetail.end_date }"
                   disabled readonly>        
-                </div>
+               	  </div>
+               	  <div class="mb-3" style="width:24%;">
+                  <label class="form-label">진행률</label>
+                  <input type="text" class="form-control" name="progress"
+                  value="<fmt:formatNumber value='${ganttDetail.progress }' type='percent'/>"
+                  disabled readonly>     
+               	  </div>
                 </div>
                 <div class="mb-3">
                   <label class="form-label" for="basic-default-cont">내용</label>

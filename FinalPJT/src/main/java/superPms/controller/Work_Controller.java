@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Project_Service;
 import superPms.service.Work_Service;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
@@ -19,7 +20,7 @@ import superPms.vo.WorkSch;
 @Controller
 public class Work_Controller {
 	@Autowired(required=false)
-	private Work_Service service; 
+	private Work_Service service;
 	
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do
@@ -85,6 +86,7 @@ public class Work_Controller {
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
 	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",service.showGantt(sch));
 		return "WEB-INF\\jongeunView\\workGanttList.jsp";
 	}

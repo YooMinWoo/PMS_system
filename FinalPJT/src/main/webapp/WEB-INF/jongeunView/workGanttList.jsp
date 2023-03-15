@@ -63,14 +63,9 @@ td{text-align:center;}
 	var msg = "${msg}"
 	console.log(msg)
 	$(document).ready(function(){
-		// $("#").addClass('active open');	
-		// $("#").addClass('active');	
-		// 메인 메뉴 아이디랑 하위 메뉴 아이디를 넣우세요.
-		$("#workIns").click(function(){
-			location.href="${path}/workInsFrm.do"
-		})
-		
-		//alert(msg)
+		$("#menu-item-project").addClass('active open');	
+		$("#menu-item-project-myproject").addClass('active');
+	
 	});
 	function goWork(no){
 		location.href="${path}/workGanttDetail.do?no="+no
@@ -103,10 +98,10 @@ td{text-align:center;}
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">업무</small></h4>
-           
+
            <div class="card mb-4 pb-3">
+           <jsp:include page="/workTop.jsp"></jsp:include>
+			<hr class="mx-0">
            <div class="demo-inline-spacing mt-5">
            <div class="row">
            <div class="col-3">
