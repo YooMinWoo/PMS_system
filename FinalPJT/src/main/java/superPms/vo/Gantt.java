@@ -18,8 +18,14 @@ public class Gantt {
 	private String parentText;
 	private String end_date;
 	
+	// 결재
+	private String state;
+	private String apprv;
+	
 	// 페이징
 	private int cnt;
+	
+
 
 	
 	
@@ -123,6 +129,18 @@ public class Gantt {
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getApprv() {
+		return apprv;
+	}
+	public void setApprv(String apprv) {
+		this.apprv = apprv;
 	}
 	
 	

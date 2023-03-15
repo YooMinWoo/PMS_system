@@ -144,5 +144,55 @@ public class Work_Service {
 	public void approve(String no) {
 		dao.approve(no);
 	}
-
+	// 결재함
+	public List<Gantt> getApprvList(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
+		sch.setCount(dao.totApprvCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		return dao.getApprvList(sch);
+	}
+	public List<Gantt> getReqApprvList(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
+		sch.setCount(dao.totReqApprvCnt(sch));
+		if(sch.getCurPage()==0) {
+			sch.setCurPage(1);
+		}
+		if(sch.getPageSize()==0) {
+			sch.setPageSize(7);
+		}
+		sch.setPageCount((int)Math.ceil(sch.getCount()/(double)sch.getPageSize()));
+		if(sch.getCurPage()>sch.getPageCount()) {
+			sch.setCurPage(sch.getPageCount());
+		}
+		sch.setEnd(sch.getCurPage()*sch.getPageSize());
+		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
+		sch.setBlockSize(5);
+		int blocknum = (int)Math.ceil(sch.getCurPage()/(double)sch.getBlockSize());
+		int endBlock = blocknum*sch.getBlockSize();
+		if(endBlock>sch.getPageCount()) {
+			endBlock = sch.getPageCount();
+		} 
+		sch.setEndBlock(endBlock);
+		sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
+		return dao.getReqApprvList(sch);
+	}
 }

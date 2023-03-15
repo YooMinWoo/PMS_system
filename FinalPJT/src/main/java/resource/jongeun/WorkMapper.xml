@@ -134,4 +134,45 @@
 			apprv = 1
 		WHERE ID = #{id}
 	</update>
+	<!-- 결재 리스트 -->
+	<select id="getReqApprvList" resultType="gantt" parameterType="ganttsch">
+		SELECT *
+		FROM (SELECT rownum cnt, g.* 
+			FROM gantt g, project p 
+			WHERE g.PRJNO =p.PRJNO
+			AND p.prjno=#{prjno}
+			AND g.state=1
+			AND g.text like '%'||#{text}||'%'
+			)
+		WHERE cnt BETWEEN #{start} and #{end}
+		ORDER BY START_date
+	</select>
+	<select id="totReqApprvCnt" resultType="int" parameterType="ganttsch">
+		SELECT count(*) 
+		FROM gantt g, project p 
+		WHERE g.PRJNO =p.PRJNO 
+		AND p.prjno=#{prjno}
+		AND g.state=1
+		AND g.text like '%'||#{text}||'%'
+	</select>
+	<select id="getApprvList" resultType="gantt" parameterType="ganttsch">
+		SELECT *
+		FROM (SELECT rownum cnt, g.* 
+			FROM gantt g, project p 
+			WHERE g.PRJNO =p.PRJNO
+			AND p.prjno=#{prjno}
+			AND g.apprv=1
+			AND g.text like '%'||#{text}||'%'
+			)
+		WHERE cnt BETWEEN #{start} and #{end}
+		ORDER BY START_date
+	</select>
+	<select id="totApprvCnt" resultType="int" parameterType="ganttsch">
+		SELECT count(*) 
+		FROM gantt g, project p 
+		WHERE g.PRJNO =p.PRJNO 
+		AND p.prjno=#{prjno}
+		AND g.apprv=1
+		AND g.text like '%'||#{text}||'%'
+	</select>
 </mapper>
