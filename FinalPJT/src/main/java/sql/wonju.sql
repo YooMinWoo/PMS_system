@@ -40,15 +40,48 @@ CREATE TABLE project (
 	WHERE m.PRJNO =p.PRJNO ;
 -- 프로젝트별 진행률	(23년 3월에 종료되는 프로젝트별 간트차트 업무 진행률)
 SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, project p
-WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023 AND TO_NUMBER(SUBSTR(p.deadline,6,2))=4
+WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023 --AND TO_NUMBER(SUBSTR(p.deadline,6,2))=4
+ORDER BY deadline desc
 ;
 -- 현재 진행중인 프로젝트의 카테고리별 갯수
 SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid 
 FROM (SELECT * FROM PROJECT p WHERE p.deadline>=to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
 WHERE ppp.deptid=d.deptid;
+-- 프로젝트
 
 SELECT * FROM emp;
-SELECT * FROM projectmember;
+SELECT * FROM project;
+SELECT * FROM gantt;
+-- 프로젝트별 투입된 인원표시
+SELECT prjno,count(owner) FROM PROJECTMEMBER GROUP BY prjno;
+-- 전체 pm의 숫자
+SELECT count(*) FROM emp WHERE AUTH =2;
+-- 현재 프로젝트 진행중인 pm 숫자
+SELECT count(DISTINCT tlid) FROM PROJECT p WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd'); 
+-- 현재 프로젝트 진행중인 직원 명(PM도 포함)
+SELECT count(DISTINCT m.OWNER)  FROM PROJECTmember m, project p 
+WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO ;
+-- 전체 직원수 (ceo 제외)
+SELECT count(*)-1 FROM emp;
+-- 개발자 숫자
+SELECT count(*) FROM emp e, dept d WHERE e.DEPTID =d.DEPTID and d.DNAME LIKE '%'||'개발'||'%';
+
+
+
+INSERT INTO PROJECTMEMBER VALUES(62,'himan@gmail.com','담당PM');
+	SELECT d.dname,e.job, m.part, e.ename, e.id FROM dept d, emp e, projectmember m
+	WHERE m.prjno=41 AND m.owner=e.id AND e.deptid=d.deptid
+	ORDER BY 
+	  CASE 
+	    WHEN m.part LIKE '담당PM' THEN 0 
+	    ELSE 1
+	  END,
+	  m.part ASC;
+SELECT rownum rm, d.DNAME,p.SUBJECT,p.tlid ,p.PRJNO,m.PART, c.cnt
+	FROM  PROJECT p, PROJECTMEMBER m, dept d,
+	(SELECT prjno,COUNT(*)+1 cnt FROM projectmember GROUP BY prjno) c
+	WHERE 1=1 AND p.PRJNO =m.PRJNO AND m.OWNER ='monsta@gmail.com' OR p.tlid='monsta@gmail.com'
+	AND d.DEPTID =p.DEPTID AND c.prjno=p.PRJNO;
 
 SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT FROM project p, PROJECTMEMBER m WHERE p.prjno=m.PRJNO 
 AND owner='admin1@gmail.com' OR p.tlid='admin1@gmail.com';

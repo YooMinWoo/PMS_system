@@ -95,7 +95,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item" id="menu-item-home">
-              <a href="*" class="menu-link"> <!-- 메인페이지로 이동하게 설정 -->
+              <a href="${path}/PMSMain.do" class="menu-link"> <!-- 메인페이지로 이동하게 설정 -->
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Home</div>
               </a>

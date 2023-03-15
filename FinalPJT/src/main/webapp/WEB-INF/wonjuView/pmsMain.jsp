@@ -78,7 +78,7 @@
 --bs-dark: #233446;	
 */
 	$(document).ready(function(){
-
+		$("#menu-item-home").addClass('active open');
 	      
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
