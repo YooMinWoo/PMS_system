@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Chart_Service;
 import superPms.vo.BarChart;
@@ -23,6 +24,14 @@ public class Chart_Controller {
 		System.out.println(date.getMonth());
 		d.addAttribute("barC",service.getBar(date));
 		d.addAttribute("donutC",service.getDonut());
+		return "pageJsonReport";
+	}
+	
+	@GetMapping("/projectChart.do")
+	public String projectChart(@RequestParam("prjno") int prjno,Model d) {
+		System.out.println(prjno);
+		d.addAttribute("memRate",service.rateByMember(prjno));
+		d.addAttribute("totRate",service.totRate(prjno));
 		return "pageJsonReport";
 	}
 }

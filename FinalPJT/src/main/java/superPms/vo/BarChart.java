@@ -6,6 +6,22 @@ public class BarChart {
 	private String deadline;
 	private int year;
 	private int month;
+	private String owner;
+	private int prjno;
+	
+	
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	public int getPrjno() {
+		return prjno;
+	}
+	public void setPrjno(int prjno) {
+		this.prjno = prjno;
+	}
 	public double getAvgs() {
 		return avgs;
 	}

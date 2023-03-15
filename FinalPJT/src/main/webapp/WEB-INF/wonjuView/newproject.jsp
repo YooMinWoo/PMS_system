@@ -64,7 +64,9 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-newproject").addClass('active');	
-		
+		console.log("세션에 있는 아이디")
+		console.log("${sessionScope.emp.id}")
+		var pmId = "${sessionScope.emp.id}"
 		// 초기에 멤버 출력되도록 멤버 리스트 empAjax(empqstr)
 		var empqstr ="keyword="+$("[name=keyword]").val()
 		empAjax(empqstr)
@@ -99,7 +101,7 @@ tbody td{
 			 $("#insProFrm").addClass('was-validated')
 			 $("#insPmFrm").addClass('was-validated')
 			// 멤버 초대는 append로 만들어져서 선택자로 접근이 안되서 반복문 돌려서 따로 qstr을 만들어줌
-			var ownersPartsQstr=""
+			var ownersPartsQstr="&owners="+pmId+"&parts=담당PM"
 			for(let i=0;i<inputlen/2;i++){
 				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()
 				+"&parts="+$("#plusMem").find("input#part").eq(i).val()
@@ -284,8 +286,8 @@ tbody td{
 		        <div class="mb-3 row">
 		          <label for="html5-search-input" class="col-md-2 col-form-label">담당PM</label>
 		          <div class="col-md-10">
-		            <input class="form-control" type="text" value="김관리" placeholder="" id="html5-search-input" readonly="readonly">
-		          	<input type="hidden" name="tlid" value="imadmin@gmail.com"><!-- 세션에 있는 pm 아이디 -->
+		            <input class="form-control" type="text" value="${sessionScope.emp.ename}" placeholder="" id="html5-search-input" readonly="readonly">
+		          	<input type="hidden" name="tlid" value="${sessionScope.emp.id}"><!-- 세션에 있는 pm 아이디 -->
 		          </div>
 		        </div>
 		         <div class="mb-3 row">

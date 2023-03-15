@@ -29,7 +29,6 @@ public interface Project_Dao {
 	public List<SuperEmpDept> empInfoList(SuperEmpDeptSch sch);
 	
 	public List<ProjectMemberList> memberList(int prjno);
-	public ProjectMemberList getPm(int prjno);
 	public void uptProInfo(Project upt);
 	public void delProject(int prjno);
 	public void delProjectMember(ProjectMember del);

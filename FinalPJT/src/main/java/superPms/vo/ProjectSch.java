@@ -4,6 +4,7 @@ public class ProjectSch {
 	private String keyword;
 	private String isCon;
 	private String owner;
+	private int auth;
 	
 	private int count; // 전체 데이터 건수
 	private int pageSize; // 한 페이지에 보여줄 데이터 건수
@@ -15,6 +16,13 @@ public class ProjectSch {
 	private int blockSize; // 한 번에 보여줄 block의 크기
 	private int startBlock; // block 시작 번호
 	private int endBlock; // block 마지막 번호
+	
+	public int getAuth() {
+		return auth;
+	}
+	public void setAuth(int auth) {
+		this.auth = auth;
+	}
 	public String getKeyword() {
 		return keyword;
 	}

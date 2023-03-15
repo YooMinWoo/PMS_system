@@ -63,9 +63,7 @@ public class Project_Service {
 	public List<ProjectMemberList> memberList(int prjno) {
 		return dao.memberList(prjno);
 	};
-	public ProjectMemberList getPm(int prjno) {
-		return dao.getPm(prjno);
-	};
+
 	public void uptProInfo(Project upt) {
 		dao.uptProInfo(upt);
 	};

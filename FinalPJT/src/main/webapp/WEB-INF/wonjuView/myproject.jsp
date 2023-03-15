@@ -28,7 +28,9 @@ tbody td:nth-child(2){
 tbody td{
 	text-align: center;
 }
-
+#newBtn{
+	display: none;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -65,6 +67,12 @@ tbody td{
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
 		
+
+		// 권한이 PM인 사람
+		var auth = parseInt("${sessionScope.emp.auth}")
+		if(auth===2){
+			$("#newBtn").css('display','inline-block');
+		}
 		
 		$("[name=keyword]").keyup(function(){
 			if(event.keyCode==13){
@@ -108,6 +116,9 @@ tbody td{
 				console.log(err)
 			})
 		}
+	}
+	function upt(prjno){
+		location.href="${path}/uptProject.do?prjno="+prjno
 	}
 </script>
 </head>
@@ -168,10 +179,10 @@ tbody td{
           <!--  프로젝트table -->
 			  <table class="table card-table table-hover" style="overflow: hidden;">
 			  <col width="13%">
-			  <col width="35%">
-			  <col width="10%">
-			  <col width="15%">
-			  <col width="27%">
+			  <col width="40%">
+			  <col width="17%">
+			  <col width="17%">
+			  <col width="13%">
 			    <thead>
 			      <tr>
 			        <th>카테고리</th>
@@ -186,9 +197,12 @@ tbody td{
 			      <tr ondblclick="goProjectMain(${myp.prjno})">
 			      <td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
-			       <button id="outBtn" onclick="out('${myp.prjno}','randlod@gmail.com','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
-			       <!--  세션에 로그인한 아이디로 바꾸기 -->
+			       <c:if test="${myp.tlid != sessionScope.emp.id }">
+			       <button id="outBtn" onclick="out('${myp.prjno}','${sessionScope.emp.id}','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
+				   </c:if>
+				   <c:if test="${myp.tlid == sessionScope.emp.id }">
 			       <button id="uptBtn" onclick="upt('${myp.prjno}')" type="button" class="btn btn-sm btn-primary">설정</button>
+			       </c:if>
 			       </td>
 			       </tr>
 			      </c:forEach>
