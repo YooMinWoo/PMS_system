@@ -25,4 +25,14 @@
 	<select id="totRate" parameterType="int" resultType="bar">
 	SELECT round(avg(progress)*100,0) AS avgs FROM gantt WHERE prjno=#{prjno}
 	</select>
+	
+	<select id="infoByMonth" parameterType="int" resultType="bar">
+	SELECT d.MONTH,p.tot,p.cnt FROM (SELECT TO_NUMBER(substr(deadline,6,2)) AS months ,sum(amount) AS tot,count(prjno) AS cnt 
+	FROM PROJECT WHERE TO_NUMBER(substr(deadline,0,4))=#{year}
+	GROUP BY TO_NUMBER(substr(deadline,6,2))) p, (SELECT ROWNUM month FROM DUAL CONNECT BY 12>=LEVEL) d
+	WHERE d.month =p.months(+) ORDER BY d.month
+	</select>
+	<select id="totAmount" parameterType="int" resultType="bar">
+	SELECT sum(amount) AS tot FROM PROJECT WHERE TO_NUMBER(substr(deadline,0,4))=#{year}
+	</select>
 </mapper>

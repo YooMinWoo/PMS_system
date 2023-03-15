@@ -24,6 +24,8 @@ public class Chart_Controller {
 		System.out.println(date.getMonth());
 		d.addAttribute("barC",service.getBar(date));
 		d.addAttribute("donutC",service.getDonut());
+		d.addAttribute("infoByMonth",service.infoByMonth(date.getYear()));
+		d.addAttribute("totAmount",service.totAmount(date.getYear()));
 		return "pageJsonReport";
 	}
 	

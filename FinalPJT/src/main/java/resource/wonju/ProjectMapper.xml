@@ -9,7 +9,7 @@
 		select pro_seq.nextval from dual
 	</selectKey>
 	INSERT INTO project values(#{prjno},#{regdte},#{deadline},
-	#{subject},#{tlid},#{deptid},#{openStatus})
+	#{subject},#{tlid},#{deptid},#{openStatus},#{amount})
 	</insert>
 	<insert id="insProMem" parameterType="projectMember">
 	insert into projectMember values(pro_seq.currval,#{owner},#{part})
