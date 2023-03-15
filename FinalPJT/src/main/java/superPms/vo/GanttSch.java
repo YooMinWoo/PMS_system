@@ -1,6 +1,8 @@
 package superPms.vo;
 
 public class GanttSch {
+	// 검색
+	private String text;
 	// 프로젝트
 	private int prjno;
 	// 페이징
@@ -13,6 +15,13 @@ public class GanttSch {
 	private int blockSize;
 	private int startBlock;
 	private int endBlock;
+	
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
 	public int getPrjno() {
 		return prjno;
 	}

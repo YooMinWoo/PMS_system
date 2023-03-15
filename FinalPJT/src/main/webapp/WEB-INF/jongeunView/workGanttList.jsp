@@ -110,13 +110,9 @@ td{text-align:center;}
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
           <form class="d-flex" id="allFrm" method="post">
-           		<select>
-	            	<option value="0">제목</option>
-	            	<option value="1">작성자</option>
-	            </select>
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="subject" value="" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="text" name="text" value="${sch.text}" class="form-control" placeholder="업무명을 입력하세요">
 	          </div>
 	          <input type="hidden" name="curPage" value="${sch.curPage}"/>
 	       </form>

@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import superPms.service.Project_Service;
 import superPms.service.Work_Service;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
+import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
@@ -21,6 +24,9 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
+	// 세션
+	//private HttpSession session;
+	//private SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 	
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do

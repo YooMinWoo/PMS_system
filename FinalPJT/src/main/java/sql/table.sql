@@ -307,3 +307,5 @@ CREATE TABLE gantt(
 	foreign key(prjno) references project(prjno)
     on delete CASCADE
 );
+ALTER TABLE GANTT ADD state char(1);
+ALTER TABLE GANTT ADD apprv char(1);

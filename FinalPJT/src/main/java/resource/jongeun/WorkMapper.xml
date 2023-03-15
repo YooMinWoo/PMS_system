@@ -89,6 +89,7 @@
 			FROM gantt g, project p 
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
+			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
 		ORDER BY START_date

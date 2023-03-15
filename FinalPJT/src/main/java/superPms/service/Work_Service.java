@@ -98,6 +98,7 @@ public class Work_Service {
 	}
 	// gantt
 	public List<Gantt> showGantt(GanttSch sch){
+		if(sch.getText()== null) sch.setText("");
 		sch.setCount(dao.totGanttCnt(sch));
 		if(sch.getCurPage()==0) {
 			sch.setCurPage(1);
