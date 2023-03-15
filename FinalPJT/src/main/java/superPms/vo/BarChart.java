@@ -8,8 +8,22 @@ public class BarChart {
 	private int month;
 	private String owner;
 	private int prjno;
+	private int tot;
+	private int cnt;
+
 	
-	
+	public int getTot() {
+		return tot;
+	}
+	public void setTot(int tot) {
+		this.tot = tot;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public String getOwner() {
 		return owner;
 	}

@@ -8,6 +8,7 @@ public class Project {
 	private String tlid;
 	private String deptid;
 	private String openStatus;
+	private int amount;
 	
 	private String ename;
 	private String dname;
@@ -16,7 +17,13 @@ public class Project {
 
 	private int rm; // rownum
 	
-
+	
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	public int getRm() {
 		return rm;
 	}

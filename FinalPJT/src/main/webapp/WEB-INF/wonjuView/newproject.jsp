@@ -77,6 +77,16 @@ tbody td{
 				empAjax(empqstr)
 			}
 		})
+		// 수주금액 입력
+		$("#amountT").keyup(function(){
+			if(isNaN($(this).val())) {
+			    $(this).val("")
+			}else {
+				$(this).val($(this).val().replace(/(\d)(?=(?:\d{3})+(?!\d))/g,"$1,"));
+				$("[name=amount]").val($(this).val().replace(/[^\d]+/g,""))
+				
+			}    
+		})
 		
 		// 등록 버튼
 		$("#regBtn").click(function(){	
@@ -106,7 +116,7 @@ tbody td{
 				ownersPartsQstr+="&owners="+$("#plusMem").find("input#owner").eq(i).val()
 				+"&parts="+$("#plusMem").find("input#part").eq(i).val()
 			}
-			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!=''&& validCnt==0
+			if($("[name=deptid]").val()!=null && $("[name=subject]").val()!=''&& validCnt==0 && $("[name=amount]").val()!=''
 				&& $("[name=deadline]").val()!='' && regdte<deadline && $("[name=regdte]").val()!=''){
 				// 유효성을 다 통과하면 qstr만들어서 ajax
 				var regdteVal=$("[name=regdte]").val()
@@ -115,11 +125,10 @@ tbody td{
 				var deadlineVal=$("[name=deadline]").val()
 				var openStatusVal=$("[name=openStatus]").val()
 				var tlidVal=$("[name=tlid]").val()
+				var amount=Number($("[name=amount]").val())
 				
 				var qstr = "tlid="+tlidVal+"&deptid="+deptidVal+"&regdte="+regdteVal+"&subject="+subjectVal+"&deadline="
-				+deadlineVal+"&openStatus="+openStatusVal+ownersPartsQstr
-				
-				console.log(qstr)
+				+deadlineVal+"&openStatus="+openStatusVal+"&amount="+amount+ownersPartsQstr
 				insAjax(qstr)
 			}else if(regdte<deadline){
 				$("#deadCk").hide()
@@ -305,6 +314,16 @@ tbody td{
 		            <input class="form-control validCk" name="deadline" type="date" value="" id="endDate" required="required">
 		          	 <div class="invalid-feedback" id="deadCk">
 					    프로젝트 종료 일자를 입력해주세요
+					  </div>
+		          </div>
+		        </div>
+		        <div class="mb-3 row">
+		          <label for="amount" class="col-md-2 col-form-label">수주 금액</label>
+		          <div class="col-md-10"> 
+		            <input class="form-control" id="amountT" type="text" value="" placeholder="백만원" required="required">
+		            <input type="hidden" name="amount">
+		         	 <div class="invalid-feedback" id="regCk">
+					    수주 금액을 입력해주세요
 					  </div>
 		          </div>
 		        </div>
