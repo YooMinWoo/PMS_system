@@ -170,7 +170,13 @@
 			FROM gantt g, project p 
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
+			<if test='isApprv!=null and isApprv.equals("n")'>
+			AND g.state=1
+			AND g.apprv=0
+			</if>
+			<if test='isApprv!=null and isApprv.equals("y")'>
 			AND g.apprv=1
+			</if>
 			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
@@ -181,7 +187,13 @@
 		FROM gantt g, project p 
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
-		AND g.apprv=1
+		<if test='isApprv!=null and isApprv.equals("y")'>
+			AND g.apprv=1
+		</if>
+		<if test='isApprv!=null and isApprv.equals("n")'>
+			AND g.state=1
+			AND g.apprv=0
+		</if>
 		AND g.text like '%'||#{text}||'%'
 	</select>
 </mapper>

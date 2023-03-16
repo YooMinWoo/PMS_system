@@ -152,6 +152,7 @@ public class Work_Service {
 	// 결재함
 	public List<Gantt> getApprvList(GanttSch sch){
 		if(sch.getText()== null) sch.setText("");
+		if(sch.getIsApprv()==null) sch.setIsApprv("n");
 		sch.setCount(dao.totApprvCnt(sch));
 		if(sch.getCurPage()==0) {
 			sch.setCurPage(1);

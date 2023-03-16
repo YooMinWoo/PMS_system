@@ -67,8 +67,11 @@ textarea:read-only{
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
 		
-		$("#back").click(function(){
+		$("#toList").click(function(){
 			location.href="${path}/workGanttList.do?prjno="+$("[name=prjno]").val();
+		})
+		$("#toApprv").click(function(){
+			location.href="${path}/apprvList.do?prjno="+$("[name=prjno]").val();
 		})
 		$("#upt").click(function(){
 			location.href="${path}/workUptFrm.do?no="+$("[name=workno]").val();	
@@ -124,6 +127,24 @@ textarea:read-only{
 			console.log(qstr)
 			callAjax("${path}/insertCalendar.do",qstr)		
 
+		})
+		// 추가 담당자 초대
+		$("#memBtn").click(function(){
+			let url="${path}/memList.do?prjno="+prjno
+			fetch(url).then(function(response){
+				console.log(response)
+				return response.json()
+			}).then(function(json){			
+				let meminfo = json.memList
+				let listHTML = ""
+				for(let i=0;i<meminfo.length;i++){
+					listHTML+="<tr><td><input type='checkbox'></td><td>"+meminfo[i].dname+"</td><td>"+meminfo[i].job+"</td><td>"+
+					meminfo[i].part+"</td><td>"+meminfo[i].ename+"</td></tr>"
+				}
+				$("#memberListTab tbody").html(listHTML)	
+			}).catch(function(err){
+				console.log(err)
+			})
 		})
 	});
 	var msg = "${msg}"
@@ -182,36 +203,47 @@ textarea:read-only{
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
             	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" class="btn" id="back">
-             			<i class="bi bi-arrow-left"></i>
+             		<button type="button" class="btn" id="toList">
+             			<i class="bi bi-list-ul" title="업무리스트로 이동"></i>
              		</button>
+             		<c:if test="${sessmem.id eq projectInfo.tlid}">
+             		<button type="button" class="btn" id="toApprv">
+             			<i class="bi bi-pencil-square" title="결재함으로 이동"></i>
+             		</button>
+             		</c:if>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-             	<c:if test="${ganttDetail.state==0}">
+             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
              		<button class="btn btn-primary" id="req">결재 요청</button>
              	</c:if>
-             	<c:choose>
-             		<c:when test="${ganttDetail.apprv==1}">
-	             		<h4>결재완료</h4>
-             		</c:when>
-             		<c:when test="${sessmem.id eq projectInfo.tlid}">
-             			<button class="btn btn-primary" id="rej">결재 승인</button>
-             			<button class="btn btn-danger" id="apprv">결재 반려</button>
-             		</c:when>
-	             	<c:when test="${ganttDetail.state==1}">
-	             		<h4>결재진행중...</h4>
-	             	</c:when> 	
-             	</c:choose>
+             	<c:if test="${ganttDetail.state==1}"> 
+             		<c:choose>
+	             		<c:when test="${ganttDetail.apprv==1}">
+		             		<span>결재완료</span>
+	             		</c:when>
+	             		<c:when test="${sessmem.id eq projectInfo.tlid}">
+	             			<button class="btn btn-primary" id="rej">결재 승인</button>
+	             			<button class="btn btn-danger" id="apprv">결재 반려</button>
+	             		</c:when>
+		             	<c:otherwise>
+		             		<span>결재진행중...</span>
+		             	</c:otherwise> 	
+	             	</c:choose>
+             	</c:if>
+             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
-				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
+				    <li><a class="dropdown-item" id="memBtn" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
+				    <!-- 
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
+				     -->
 				  </ul>
+				  </c:if>
             	</div> 
            </div>
             <!-- 멤버 초대  모달창 -->
@@ -237,17 +269,18 @@ textarea:read-only{
               	</div>
 		        <div class="my-3 row">
 			      <div class="table-responsive text-nowrap">
-				    <table class="table table-striped" id="empTab">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="40%">
+				    <table class="table table-striped" id="memberListTab">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
 				      <thead>
 				        <tr>
+				          <th><input type="checkbox"></th>
 				          <th>부서명</th>
-				          <th>이름</th>
 				          <th>직책</th>
-				          <th>이메일</th>
+				          <th>담당파트</th>
+				          <th>이름</th>
 				        </tr>
 				      </thead>
 				      <tbody class="table-border-bottom-0">
@@ -303,6 +336,7 @@ textarea:read-only{
                    <label class="form-label" for="basic-default-id">담당자</label>
                    <input type="text" name="id"
                    class="form-control" id="basic-default-id" value="${ganttDetail.owner}" disabled readonly />
+                   <input type="hidden" name="owner" value="${personInfo.id}"> 
                  </div>
                  <div class="mb-3" style="width:24%;">
                   <label class="form-label">시작일자</label>
@@ -350,9 +384,10 @@ textarea:read-only{
           </div>
           <!-- 답글 입력부분 -->
           <hr>
+          <c:if test="${ganttDetail.state!=1}">
           	<div class="card-body">
           		<form id="frm02" method="post" action="${path}/workRepIns.do">
-               		<input type="hidden" name="id" value="monsta@gmail.com">
+               		<input type="hidden" name="id" value="${sessmem.id}">
                		<input type="hidden" name="workno" value="${ganttDetail.id}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
@@ -363,6 +398,7 @@ textarea:read-only{
                 </form>
               </div>
               <hr>
+          </c:if>
             <!-- 답글 출력부분 -->
           	<div class="card-body">
           	 <c:forEach var="rep" items="${workrep}" varStatus="status">	

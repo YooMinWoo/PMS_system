@@ -3,6 +3,7 @@ package superPms.vo;
 public class GanttSch {
 	// 검색
 	private String text;
+	private String isApprv;
 	// 프로젝트
 	private int prjno;
 	// 페이징
@@ -81,6 +82,12 @@ public class GanttSch {
 	}
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
+	}
+	public String getIsApprv() {
+		return isApprv;
+	}
+	public void setIsApprv(String isApprv) {
+		this.isApprv = isApprv;
 	}
 	
 }

@@ -115,6 +115,9 @@ public class Work_Controller {
 		System.out.println(service.projectInfo(service.ganttDetailExp(no).getPrjno()).getTlid());
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
+	// 추가 담당자
+
+	
 	// 답글
 	@PostMapping("/workRepIns.do")
 	public String workRepIns(WorkRep ins, Model d, HttpSession session) {
