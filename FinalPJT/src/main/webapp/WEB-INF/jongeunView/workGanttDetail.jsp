@@ -129,8 +129,11 @@ textarea:read-only{
 
 		})
 		// 추가 담당자 초대
+		var id1="${projectInfo.tlid}"
+		var id2="${personInfo.id}"
 		$("#memBtn").click(function(){
-			let url="${path}/memList.do?prjno="+prjno
+			let url="${path}/prjMemList.do?prjno="+prjno+"&id1="+id1+"&id2="+id2
+			console.log(url)
 			fetch(url).then(function(response){
 				console.log(response)
 				return response.json()
@@ -257,14 +260,7 @@ textarea:read-only{
               <div class="modal-body">
           		<div class="my-4 row">
               	<div class="col-6"> </div>
-              	<div class="col-6"> 
-              	 		<!-- 검색어 ajax로 넘기기 -->
-			         <div class="input-group">
-			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-			            <input type="hidden" name="curPage" value="${sch.curPage }">
-			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="부서 또는 사원명으로 검색">
-			          </div>
-			  	
+              	<div class="col-6"> 	
               	</div>
               	</div>
 		        <div class="my-3 row">
@@ -321,7 +317,7 @@ textarea:read-only{
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">상위 업무</label>
                   <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${parent.text}"
-                  disabled readonly/>
+                  disabled readonly>
                   <input type="hidden" name="parentid" value="${parent.id}">
                 </div>
                 <div class="mb-3" style="width:32%;">
@@ -386,13 +382,17 @@ textarea:read-only{
           <hr>
           <c:if test="${ganttDetail.state!=1}">
           	<div class="card-body">
-          		<form id="frm02" method="post" action="${path}/workRepIns.do">
+          		<form id="frm02" method="post" action="${path}/workRepIns.do" enctype="multipart/form-data">
                		<input type="hidden" name="id" value="${sessmem.id}">
                		<input type="hidden" name="workno" value="${ganttDetail.id}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
-                   <textarea class="form-control" name="cont" id="repContent"
+                <textarea class="form-control" name="cont" id="repContent"
                    	rows="3" style="height:50px;"></textarea>
+                <div class="mb-3">
+                 <label for="formFile" class="custom-file-label">파일첨부</label>
+                 <input type="file" name="report" class="form-control" id="formFile" />
+                </div>
                    <button type="button" class="btn btn-secondary" id="regRep">등록</button>
                 </div>
                 </form>

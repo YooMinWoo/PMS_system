@@ -5,6 +5,13 @@ public class WorkMember {
 	private String workno;
 	private String id1;
 	private String id2;
+	private int prjno;
+
+	public WorkMember(int prjno, String id1, String id2) {
+		this.prjno = prjno;
+		this.id1 = id1;
+		this.id2 = id2;
+	}
 	public String getId() {
 		return id;
 	}
@@ -29,5 +36,11 @@ public class WorkMember {
 	public void setId2(String id2) {
 		this.id2 = id2;
 	}
-	
+	public int getPrjno() {
+		return prjno;
+	}
+	public void setPrjno(int prjno) {
+		this.prjno = prjno;
+	}
+
 }

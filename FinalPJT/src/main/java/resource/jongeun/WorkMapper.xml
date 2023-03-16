@@ -68,14 +68,12 @@
 		WHERE WORKNO = #{WORKNO}
 	</select>
 	<insert id="insWorkRep" parameterType="workrep">
-		<if test= "fname != null and !fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
-				#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
-		</if>
-		<if test= "fname == null or fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
-				#{cont},sysdate,sysdate,#{id},null,#{workno})
-		</if>
+		INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+			#{cont},sysdate,sysdate,#{id},null,#{workno})
+	</insert>
+	<insert id="insWorkRepFile" parameterType="workrep">
+		INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+			#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
 	</insert>
 	<delete id="delWorkRep" parameterType="int">
 		delete
@@ -121,6 +119,20 @@
 		SELECT g.*, to_char(to_date(g.START_DATE,'yyyy-mm-dd') + g.duration,'yyyy-mm-dd') AS end_date
 		FROM GANTT g
 		WHERE id = #{id}
+	</select>
+	<select id="fileInfo" parameterType="int" resultType="workfile">
+		SELECT f.*
+		FROM WORKREP w, FILES f
+		WHERE f.FNO = #{FNO}
+	</select>
+	<!-- 멤버추가 -->
+	<select id="prjMemList" parameterType="workmem" resultType="pmList">
+		SELECT distinct d.dname,e.job, m.part, e.ename, e.id
+		FROM dept d, emp e, projectmember m
+		WHERE m.PRJNO = #{prjno}
+		AND m.owner=e.id
+		AND e.deptid=d.deptid
+		AND m.OWNER NOT IN (#{id1}, #{id2})
 	</select>
 	<!-- 결재 -->
 	<update id="reqApprove" parameterType="string">
