@@ -20,6 +20,7 @@
 .card.mb-4{
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
+	padding-bottom: 5rem !important;
 }
 .nav-item.nav-link{
 	padding-right: 1rem !important;
@@ -27,11 +28,11 @@
 #gantt{
 	height: 600px;
 }
+/*
 #ganttTab thead{
 	background-color: #3db9d3;
 	text-align: center;
-	font-weight: bolder;
-}
+	font-weight: bolder;}
 #ganttTab th{color:white !important;}
 #ganttTab tbody td:first-child {
 	text-align: left !important;
@@ -39,6 +40,8 @@
 #ganttTab tbody td{
 	text-align: center;
 }
+*/
+
 
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
@@ -80,10 +83,10 @@
 
 		
 		var prjno="${projectInfo.prjno}"
-		$("#proMem").change(function(){
-			console.log($("#proMem").val())
-			location.href="${path}/projectMain.do?prjno="+prjno+"&owner="+$("#proMem").val()
-		})
+	//	$("#proMem").change(function(){
+	//		console.log($("#proMem").val())
+	//		location.href="${path}/projectMain.do?prjno="+prjno+"&owner="+$("#proMem").val()
+	//	})
 
 
 	})
@@ -222,7 +225,7 @@
 			<div class="col my-3"><span><strong>담당 업무 등록</strong></span></div>
 		    <jsp:include page="/gantt.jsp"></jsp:include>
 		   </div>
-		   
+		   <%-- 
 		    <div class="row my-3 px-sm-3 mt-5">
 		    <div class="col-10 my-3"><span><strong>담당 업무 확인</strong></span></div>
 		    <div class="col-2 my-3">
@@ -270,6 +273,7 @@
 		    </table>
 		    
 		    </div>
+		    --%>
        	   </div>
        	    <!-- /card -->
             </div>

@@ -79,7 +79,9 @@
 */ 
 	$(document).ready(function(){
 		$("#menu-item-home").addClass('active open');
-	      
+		var sessId = "${sessionScope.emp.ename}"
+		$("#bannerEname").text(sessId+"님")
+		
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
 			var year = $(this).val()
@@ -90,10 +92,7 @@
 			var year = $("[name=year]").val()
 			var month = $(this).val()
 			getData(year,month)
-
 		})
-
-	
 	})
 	
 	function optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr,pmArr,empArr,priorArr){
@@ -246,7 +245,6 @@
 	
 	if(curYear=='')  curYear=parseInt(new Date().toISOString().split("T")[0].split("-")[0])
 	if(curMonth=='') curMonth= curMonth = parseInt(new Date().toISOString().split("T")[0].split("-")[1])
-	console.log(typeof curYear)
 	
 	$("[name=year]").val(curYear).prop("selected", true); 
 	$("[name=month]").val(curMonth).prop("selected", true); 
@@ -255,10 +253,6 @@
 		fetch(url).then(function(response){
 			return response.json()
 		}).then(function(json){
-			console.log(json)
-			console.log(json.infoPm)
-			console.log(json.infoEmp)
-		
 			var avgsArr=[]; var subArr=[];
 			var cntsArr=[]; var dnameArr=[];		
 			var comboTotArr=[]; var comboCntArr=[];
@@ -279,10 +273,10 @@
 			$.each(json.infoRisk,function(index,r){
 				priorArr.push(r.cnt)
 			})
-			console.log(json.infoEmp[0].cnt) // 전체pm
-			console.log(json.infoEmp[1].cnt) // 비가용pm
-			console.log(json.infoPm[0].cnt)  // 전체직원
-			console.log(json.infoPm[1].cnt)  // 프로젝트참여중 인원
+			//console.log(json.infoEmp[0].cnt) // 전체pm
+			//console.log(json.infoEmp[1].cnt) // 비가용pm
+			//console.log(json.infoPm[0].cnt)  // 전체직원
+			//console.log(json.infoPm[1].cnt)  // 프로젝트참여중 인원
 			
 			var pmArr=[json.infoPm[0].cnt-json.infoPm[1].cnt,json.infoPm[1].cnt]; 
 			var empArr=[json.infoEmp[0].cnt-json.infoEmp[1].cnt,json.infoEmp[1].cnt];
@@ -326,8 +320,8 @@
 		        <div class="col-sm-7">
 		          <div class="card-body">
 		            <h5 class="card-title text-primary fw-bold">Welcome back, super🎉</h5>
-		            <p class="mb-2">안녕하세요 <span class="fw-bold">홍길동님</span> 오늘도 좋은 하루 되세요!</p>
-		            <a href="javascript:;" class="btn btn-sm btn-outline-primary">오늘의 할일</a>
+		            <p class="mb-2">안녕하세요 <span class="fw-bold" id="bannerEname">홍길동님</span> 오늘도 좋은 하루 되세요!</p>
+		            <a href="${path }/todoList.do" class="btn btn-sm btn-outline-primary">오늘의 할일</a>
 		          </div>
 		        </div>
 		        <div class="col-sm-5 text-center text-sm-left">
