@@ -268,7 +268,6 @@
         <!-- Menu -->
 	<jsp:include page="/mainMenubar.jsp"></jsp:include>
         <!-- / Menu -->
-
         <!-- Layout container -->
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
