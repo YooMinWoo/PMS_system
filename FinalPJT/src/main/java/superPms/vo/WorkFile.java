@@ -3,10 +3,24 @@ package superPms.vo;
 import java.util.Date;
 
 public class WorkFile {
+	private int no;
+	private int fno;
 	private String fname;
 	private Date regdte;
 	private Date uptdte;
 	private String path;
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
+	public int getFno() {
+		return fno;
+	}
+	public void setFno(int fno) {
+		this.fno = fno;
+	}
 	public String getFname() {
 		return fname;
 	}

@@ -4,6 +4,7 @@ public class WorkSch {
 	// 검색
 	private String subject;
 	private String id;
+	private String isApprv;
 	// 페이징
 	private int count;
 	private int pageSize;
@@ -102,4 +103,13 @@ public class WorkSch {
 	public void setEndBlock(int endBlock) {
 		this.endBlock = endBlock;
 	}
+
+	public String getIsApprv() {
+		return isApprv;
+	}
+
+	public void setIsApprv(String isApprv) {
+		this.isApprv = isApprv;
+	}
+	
 }

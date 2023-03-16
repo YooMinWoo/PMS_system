@@ -9,7 +9,8 @@
 	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 
 	project p
 	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=#{year} 
-	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=#{month}
+	<!-- AND TO_NUMBER(SUBSTR(p.deadline,6,2))=#{month} -->
+	ORDER BY deadline desc
 	</select>
 	
 	<select id="getDonut" resultType="donut">
@@ -32,7 +33,25 @@
 	GROUP BY TO_NUMBER(substr(deadline,6,2))) p, (SELECT ROWNUM month FROM DUAL CONNECT BY 12>=LEVEL) d
 	WHERE d.month =p.months(+) ORDER BY d.month
 	</select>
+	
 	<select id="totAmount" parameterType="int" resultType="bar">
 	SELECT sum(amount) AS tot FROM PROJECT WHERE TO_NUMBER(substr(deadline,0,4))=#{year}
+	</select>
+	
+	<select id="infoPm" resultType="bar">
+	SELECT 'totPM' AS subject, count(*) AS cnt FROM emp WHERE AUTH = 2
+	UNION ALL
+	SELECT 'proPM' AS subject, count(DISTINCT tlid) AS cnt FROM PROJECT p WHERE p.DEADLINE >= TO_CHAR(sysdate,'yyyy-mm-dd')
+	</select>
+	
+	<select id="infoEmp" resultType="bar">
+	SELECT 'totEmp' AS subject, count(*)-1 AS cnt FROM emp
+	UNION ALL 
+	SELECT 'proEmp' AS subject, count(DISTINCT m.OWNER) AS cnt  FROM PROJECTmember m, project p 
+	WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO
+	</select>
+	
+	<select id="infoRisk" resultType="bar">
+	SELECT count(*) AS cnt FROM risk WHERE RISKSTATE!='해결' GROUP BY RISKPRIORITY ORDER BY RISKPRIORITY
 	</select>
 </mapper>

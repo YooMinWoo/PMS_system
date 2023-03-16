@@ -13,9 +13,11 @@ import superPms.dao.Work_Dao;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.Project;
+import superPms.vo.ProjectMemberList;
 import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
+import superPms.vo.WorkMember;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
@@ -92,7 +94,23 @@ public class Work_Service {
 		return dao.getWorkRepList(no);
 	}
 	public void insWorkRep(WorkRep ins) {
-		dao.insWorkRep(ins);
+		String fname = ins.getReport().getOriginalFilename();
+		if(fname!=null && !fname.equals("")){
+			uploadFile(ins.getReport());
+			WorkFile f = new WorkFile();
+			f.setFname(fname);
+			f.setPath(upload);
+			dao.insFile(f);
+			dao.insWorkRepFile(ins);
+		}else {
+			dao.insWorkRep(ins);
+		}
+	}
+	public List<WorkFile> getFileList(String fno) {
+		return dao.getFileList(fno);
+	}
+	public WorkFile fileInfo(int fno) {
+		return dao.fileInfo(fno);
 	}
 	public void delWorkRep(int no) {
 		dao.delWorkRep(no);
@@ -139,6 +157,10 @@ public class Work_Service {
 	public Gantt ganttDetailExp(String no) {
 		return dao.ganttDetailExp(no);
 	};
+	// 멤버추가
+	public List<ProjectMemberList> prjMemList(WorkMember sch){
+		return dao.prjMemList(sch);
+	}
 	// 결재
 	public void reqApprove(String no) {
 		dao.reqApprove(no);
@@ -152,6 +174,7 @@ public class Work_Service {
 	// 결재함
 	public List<Gantt> getApprvList(GanttSch sch){
 		if(sch.getText()== null) sch.setText("");
+		if(sch.getIsApprv()==null) sch.setIsApprv("n");
 		sch.setCount(dao.totApprvCnt(sch));
 		if(sch.getCurPage()==0) {
 			sch.setCurPage(1);

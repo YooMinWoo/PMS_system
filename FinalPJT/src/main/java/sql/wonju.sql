@@ -47,25 +47,53 @@ ORDER BY deadline desc
 SELECT ppp.*, d.dname FROM (SELECT count(*) AS cnts, pp.deptid 
 FROM (SELECT * FROM PROJECT p WHERE p.deadline>=to_char(sysdate,'yyyy-mm-dd')) pp GROUP BY pp.deptid) ppp, dept d
 WHERE ppp.deptid=d.deptid;
+
+SELECT * FROM CALENDAR;
 -- 프로젝트
 
 SELECT * FROM emp;
 SELECT * FROM project;
 SELECT * FROM gantt;
 -- 프로젝트별 투입된 인원표시
-SELECT prjno,count(owner) FROM PROJECTMEMBER GROUP BY prjno;
+SELECT prjno,count(owner) AS cnt FROM PROJECTMEMBER GROUP BY prjno;
 -- 전체 pm의 숫자
-SELECT count(*) FROM emp WHERE AUTH =2;
+SELECT count(*) AS cnt FROM emp WHERE AUTH =2;
 -- 현재 프로젝트 진행중인 pm 숫자
-SELECT count(DISTINCT tlid) FROM PROJECT p WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd'); 
+SELECT count(DISTINCT tlid) AS cnt FROM PROJECT p WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd'); 
+
+SELECT 'totPM' AS subject, count(*) AS cnt FROM emp WHERE AUTH = 2
+UNION ALL
+SELECT 'proPM' AS subject, count(DISTINCT tlid) AS cnt FROM PROJECT p WHERE p.DEADLINE >= TO_CHAR(sysdate,'yyyy-mm-dd');
+
+SELECT 'totEmp' AS subject, count(*)-1 AS cnt FROM emp
+UNION ALL 
+SELECT 'proEmp' AS subject, count(DISTINCT m.OWNER) AS cnt  FROM PROJECTmember m, project p 
+WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO;
+
+SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline
+	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 
+	project p
+	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=2023 ORDER BY deadline desc ;
+
 -- 현재 프로젝트 진행중인 직원 명(PM도 포함)
-SELECT count(DISTINCT m.OWNER)  FROM PROJECTmember m, project p 
+SELECT count(DISTINCT m.OWNER) AS cnt  FROM PROJECTmember m, project p 
 WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO ;
 -- 전체 직원수 (ceo 제외)
-SELECT count(*)-1 FROM emp;
+SELECT count(*)-1 AS cnt FROM emp;
 -- 개발자 숫자
-SELECT count(*) FROM emp e, dept d WHERE e.DEPTID =d.DEPTID and d.DNAME LIKE '%'||'개발'||'%';
+SELECT count(*) AS cnt FROM emp e, dept d WHERE e.DEPTID =d.DEPTID and d.DNAME LIKE '%'||'개발'||'%';
 
+-- 올해 매출(단위 백만원)
+SELECT sum(amount) AS tot FROM PROJECT WHERE TO_NUMBER(substr(deadline,0,4))=2023;
+
+-- 월별 매출(단위 백만원)+ 진행중인 프로젝트 갯수
+SELECT d.MONTH,p.tot,p.cnt FROM (SELECT TO_NUMBER(substr(deadline,6,2)) AS months ,sum(amount) AS tot,count(prjno) AS cnt 
+FROM PROJECT WHERE TO_NUMBER(substr(deadline,0,4))=2023
+GROUP BY TO_NUMBER(substr(deadline,6,2))) p, (SELECT ROWNUM month FROM DUAL CONNECT BY LEVEL <= 12) d
+WHERE d.month =p.months(+) ORDER BY d.month;
+
+SELECT * FROM risk WHERE RISKSTATE !='해결';
+SELECT count(*) AS cnt FROM risk WHERE RISKSTATE!='해결' GROUP BY RISKPRIORITY ORDER BY RISKPRIORITY; 
 
 
 INSERT INTO PROJECTMEMBER VALUES(62,'himan@gmail.com','담당PM');

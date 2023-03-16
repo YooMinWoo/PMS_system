@@ -32,4 +32,14 @@ public class Chart_Service {
 	public BarChart totAmount(int year) {
 		return dao.totAmount(year);
 	};
+	public List<BarChart> infoEmp(){
+		return dao.infoEmp();
+	};
+	public List<BarChart> infoPm(){
+		return dao.infoPm();
+	};
+	public List<BarChart> infoRisk(){
+		return dao.infoRisk();
+	};
+
 }

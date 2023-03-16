@@ -3,6 +3,7 @@ package superPms.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
+import superPms.vo.WorkMember;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
@@ -24,6 +26,8 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
+	@Value("${user.upload}")
+	private String upload;
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
 	// http://49.238.187.241:7080/FinalPJT/worklist.do
 	// http://localhost:7080/FinalPJT/worklist.do
@@ -110,11 +114,19 @@ public class Work_Controller {
 		}
 		if(service.getWorkRepList(no).size()>0) {
 			d.addAttribute("workrep",service.getWorkRepList(no));
+			d.addAttribute("fileInfo",service.getFileList(no));
 		}
-		System.out.println(mem.getId());
-		System.out.println(service.projectInfo(service.ganttDetailExp(no).getPrjno()).getTlid());
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
+	// 추가 담당자
+	@RequestMapping("/prjMemList.do")
+	public String prjMemList(@RequestParam("prjno") int prjno,
+			@RequestParam("id1") String id1, @RequestParam("id2") String id2, Model d) {
+		WorkMember wm = new WorkMember(prjno, id1, id2);
+		d.addAttribute("memList",service.prjMemList(wm));
+		return "pageJsonReport";
+	}
+	
 	// 답글
 	@PostMapping("/workRepIns.do")
 	public String workRepIns(WorkRep ins, Model d, HttpSession session) {
@@ -128,6 +140,12 @@ public class Work_Controller {
 		service.delWorkRep(no);
 		d.addAttribute("msg","삭제완료");
 		return "redirect:/workGanttDetail.do";
+	}
+	@GetMapping("/downWorkFile.do")
+	public String downWorkFile(@RequestParam("fno")int fno,Model d) {
+		d.addAttribute("downloadFile", service.fileInfo(fno).getFname());
+		d.addAttribute("path", upload);
+		return "downloadViewer";
 	}
 	// 결재
 	@GetMapping("/reqApprove.do")

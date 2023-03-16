@@ -20,9 +20,10 @@
       	<!-- 종은 -->
       	<typeAlias alias="work" type="superPms.vo.Work"/>
       	<typeAlias alias="worksch" type="superPms.vo.WorkSch"/>
-      	<typeAlias alias="workFile" type="superPms.vo.WorkFile"/>
+      	<typeAlias alias="workfile" type="superPms.vo.WorkFile"/>
       	<typeAlias alias="workrep" type="superPms.vo.WorkRep"/>
       	<typeAlias alias="ganttsch" type="superPms.vo.GanttSch"/>
+      	<typeAlias alias="workmem" type="superPms.vo.WorkMember"/>
       	<!-- /종은 -->
       	
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>
