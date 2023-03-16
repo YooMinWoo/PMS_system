@@ -293,7 +293,7 @@ console.log(${noticeDetail.report})
                         </script>
                         
                         <div class="btns">
-                        	<c:if test="${emp.auth == 0 }">
+                        	<c:if test="${emp.id == noticeDetail.id }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정하기</button>

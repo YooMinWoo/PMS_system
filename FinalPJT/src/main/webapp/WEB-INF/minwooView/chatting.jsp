@@ -113,7 +113,7 @@
 			console.log("종료")
 			if($("#id").val()!="")
 			if(confirm("접속을 종료하시겠습니까?")){
-				wsocket.send( $("#id").val()+":연결을 종료하였습니다." )
+				// wsocket.send( $("#id").val()+":연결을 종료하였습니다." )
 				// 핸들러 클래스의 afterConnectionClosed 메서드 호출
 				wsocket.close()
 				conUsers()
@@ -250,8 +250,6 @@
 				members = data.group
 				var add=""
 				$(data.group).each(function(idx,group ){
-					console.log(idx)
-					console.log(group)
 					add+="<button class='btn btn-outline-primary'  class='btn btn-success' >"+group+"</button>"
 				})
 				$(".group").html(add)
