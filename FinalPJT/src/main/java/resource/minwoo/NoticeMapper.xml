@@ -35,7 +35,8 @@
 			n.deptid,
 			fname,
 			path,
-			e.ename
+			e.ename,
+			e.id
 		FROM (SELECT * FROM notice ORDER BY UPTDTE DESC) n, files f, emp e
 		where n.fno=f.fno(+)
 		and n.writer = e.id
@@ -48,7 +49,8 @@
 		set
 			title=#{title},
 			content=#{content},
-			uptdte = sysdate
+			uptdte = sysdate,
+			deptid = #{deptid}
 		where noticeno=#{noticeno}
 	</update>
 	

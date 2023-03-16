@@ -65,6 +65,23 @@ td{text-align:center;}
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
+		if($("[name=isApprv]").val()=="y"){
+			$("#finish").addClass('active');
+		}else{
+			$("#wait").addClass('active');
+		}
+		$("#wait").click(function(){
+			$("[name=isApprv]").val("n")
+			$("[name=text]").val("")
+			$("[name=text]").val("")
+			$("#allFrm").submit()	
+		})
+		$("#finish").click(function(){
+			$("[name=isApprv]").val("y")
+			$("[name=text]").val("")
+			$("[name=text]").val("")
+			$("#allFrm").submit()
+		})
 	
 	});
 	function goWork(no){
@@ -74,6 +91,7 @@ td{text-align:center;}
 		$("[name=curPage]").val(cnt);
 		$("form").submit()
 	}
+	
 </script>
 </head>
 
@@ -105,16 +123,22 @@ td{text-align:center;}
            <div class="demo-inline-spacing mt-5">
            <div class="row">
            <div class="col-3">
+           <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" id="wait" class="btn btn-outline-secondary">결재대기</button>
+                <button type="button" id="finish" class="btn btn-outline-secondary">결재완료</button>
+            </div>
           </div>
           <div class="col-5"> </div>
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
-          <form class="d-flex" id="allFrm" method="post">
+          <form class="d-flex" id="allFrm" action="${path}/apprvList.do" method="post">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="text" name="text" value="${sch.text}" class="form-control" placeholder="업무명을 입력하세요">
 	          </div>
 	          <input type="hidden" name="curPage" value="${sch.curPage}"/>
+	          <input type="hidden" name="isApprv" value="${sch.isApprv}">
+	          <input type="hidden" name="prjno" value="${sch.prjno}">
 	       </form>
 	       <!-- /form 끝 -->
           </div>

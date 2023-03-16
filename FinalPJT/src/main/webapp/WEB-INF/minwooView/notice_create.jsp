@@ -68,6 +68,7 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		$("#menu-item-notice").addClass('active open');
 		$("#clBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
@@ -89,8 +90,8 @@
 					$("[name=content]").focus()
 					return
 				}
-				if($("[name=content]").val().length>500){
-					alert("500자 이하로 입력하세요!")
+				if($("[name=content]").val().length>1200){
+					alert("1200자 이하로 입력하세요!")
 					$("[name=content]").focus()
 					return
 				}

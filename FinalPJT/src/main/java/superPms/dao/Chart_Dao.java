@@ -12,5 +12,7 @@ public interface Chart_Dao {
 	public BarChart totRate(int prjno);
 	public List<BarChart> infoByMonth(int year);
 	public BarChart totAmount(int year);
-	
+	public List<BarChart> infoEmp();
+	public List<BarChart> infoPm();
+	public List<BarChart> infoRisk();
 }

@@ -55,12 +55,20 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
+
 	$(document).ready(function(){
-		console.log($("[name=risklevel]").val())
 		$("#insertBtn").click(function(){			
 			if(confirm("등록하시겠습니까?")){
-				$("form").attr("action","${path}/project_insertRisk.do");
-				$("form").submit();
+				if($("#riskname").val()=="" || $("#risklevel").val()=="" ||
+						$("#riskpriority").val()==""){
+						if($("#riskname").val()=="" )alert("리스크 이름을 입력해주세요")
+						if($("#risklevel").val()=="" )alert("리스크 심각도를 선택해주세요")
+						if($("#riskpriority").val()=="" )alert("리스크 우선순위를 선택해주세요")
+				}else{
+					$("form").attr("action","${path}/project_insertRisk.do");
+					$("form").submit();
+				}
+
 			}
 		})
 		$("#goMain").click(function(){
@@ -97,7 +105,6 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-			
             <div class="container-xxl flex-grow-1 container-p-y">
            <h4 class="fw-bold py-3 mb-4"><spring:message code="project"/> > <small class="text-muted"><spring:message code="riskmanage"/></small></h4>
 		  	<select class="form-control" id="selLan">
@@ -153,16 +160,9 @@
 					            	<option value="해결"><spring:message code="solve"/></option>
 					            </select>
 				            </div>
-				          </div> 
-				        
-<%-- 				          <div class="mb-3">
-				            <label for="content">내용</label>
-				            <textarea name="content"  class="form-control  ckValid" id="content" placeholder="내용 입력" required rows="5" >${board.content}</textarea>
-				            <div class="invalid-feedback">
-				              내용를 입력해주세요.
-				            </div>
-				          </div>  --%>     
-				          <input type="text" value="${myp.prjno}">
+				          </div>    
+  				          <input type="hidden" id="prjno"  name="prjno" value="${param.prjno}">
+							<input type="hidden" id="id"  name="id" value="${emp.id}">
 				          <div class="mb-4"></div>
 				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button"><spring:message code="regist"/></button>
 				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button"><spring:message code="main"/></button>

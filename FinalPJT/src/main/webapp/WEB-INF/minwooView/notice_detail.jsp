@@ -40,6 +40,9 @@ input:read-only{
 textarea:read-only{
 	background:white !important;
 }
+select:disabled{
+	background:white !important;
+}
 .repList2{
 	display: flex;
 }
@@ -98,14 +101,15 @@ textarea:read-only{
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
-console.log(${noticeDetail.report})
 	$(document).ready(function(){
+		$("#deptid").val("${noticeDetail.deptid}").prop("selected", true);
 		$("#menu-item-notice").addClass('active open');
 		$(".offBtn").hide()
-		var authTF = ${emp.auth==0}
-		if(!authTF){ // 권한이 admin이 아니라면
+		var authTF = ${emp.id == noticeDetail.writer}
+		if(!authTF){ // 작성자가 아니라면
 			$("#frm01 input").attr("readonly","readonly")
 			$("#frm01 textarea").attr("readonly","readonly")
+			$("#frm01 select").attr("disabled","disabled")
 		}
 		$("#reps").attr("readonly","readonly")
 		$("#backBtn").click(function(){
@@ -114,6 +118,25 @@ console.log(${noticeDetail.report})
 			}
 		})
 		$("#uptBtn").click(function(){
+			if($("[name=title]").val()==""){
+				alert("제목을 입력하세요.")
+				$("[name=title]").focus()
+				return
+			}
+			if($("[name=deptid]").val()=="X"){
+				alert("카테고리를 선택해주세요.")
+				return
+			}
+			if($("[name=content]").val()==""){
+				alert("내용을 입력하세요.")
+				$("[name=content]").focus()
+				return
+			}
+			if($("[name=content]").val().length>1200){
+				alert("1200자 이하로 입력하세요!")
+				$("[name=content]").focus()
+				return
+			}
 			if(confirm("수정하시겠습니까?")){
 				$("#frm01").attr({
 					action:"/FinalPJT/uptNotice.do",
@@ -132,6 +155,9 @@ console.log(${noticeDetail.report})
 			if(confirm("파일을 수정하시겠습니까?")){
 				$("#formFile").click()
 			}
+		})
+		$("#fileDelBtn").click(function(){
+			
 		})
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
@@ -249,13 +275,23 @@ console.log(${noticeDetail.report})
                           	id="basic-default-title" value="${noticeDetail.title}"/>
                         </div>
                         <div class="divs">
-	                        <div class="mb-3" style="width:45%">
+	                        <div class="mb-3" style="width:30%">
 	                          <label class="form-label" for="basic-default-writer">작성자</label>
 	                          <input type="hidden" name="writer" value="${emp.id }">
 	                          <input type="text"
 	                          class="form-control" id="basic-default-writer" value="${noticeDetail.ename }" readonly />
 	                        </div>
-	                        <div class="mb-3" style="width:45%">
+	                        <div class="mb-3" style="width:30%;">
+		                        <label for="deptid" class="form-label">카테고리 선택</label>
+		                        <select name="deptid" id="deptid" class="form-select">
+		                          <option value="X">카테고리 선택</option>
+		                          <option>사내공지</option>
+		                          <c:forEach var="dept" items="${depts }">
+			                      		<option>${dept.val }</option>
+			                      	</c:forEach>
+		                        </select>
+		                      </div>
+	                        <div class="mb-3" style="width:30%">
 	                          <label class="form-label" for="basic-default-cnt">조회수</label>
 	                          <input type="text" name="cnt"
 	                          class="form-control" id="basic-default-cnt" value="${noticeDetail.viewcnt }" readonly />
@@ -293,10 +329,10 @@ console.log(${noticeDetail.report})
                         </script>
                         
                         <div class="btns">
-                        	<c:if test="${emp.auth == 0 }">
+                        	<c:if test="${emp.id == noticeDetail.writer }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
-	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정하기</button>
+	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정</button>
                         	</c:if>
                         	<button type="button" class="btn btn-primary" id="downloadBtn">파일 다운로드</button>
                         	<button type="button" class="btn btn-secondary" id="backBtn">조회화면 이동</button>

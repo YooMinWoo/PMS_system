@@ -22,9 +22,9 @@ public class Alert_Controller {
    
    @GetMapping("/alert.do")  
    public String alertList(Model d,HttpSession session) {
-      //SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-      d.addAttribute("alertList", service.alertList("monsta@gmail.com"));
-      d.addAttribute("alertCount", service.alertCount("monsta@gmail.com"));
+      SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+      d.addAttribute("alertList", service.alertList(sObj.getId()));
+      d.addAttribute("alertCount", service.alertCount(sObj.getId()));
       return "WEB-INF\\suminView\\alert.jsp";
    }
    

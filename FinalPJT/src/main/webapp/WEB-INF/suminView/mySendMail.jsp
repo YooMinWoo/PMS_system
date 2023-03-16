@@ -78,7 +78,7 @@ a.hover{
 		    }
 			if(confirm("삭제하시겠습니까?")){
 				alert("선택하신 메일이 삭제되었습니다.")
-				location.href="${path}/delSendMail.do?mailno="+chkArrays
+				location.href="${path}/delSendMail.do?mailno="+chkArray
 				
 			}
 			

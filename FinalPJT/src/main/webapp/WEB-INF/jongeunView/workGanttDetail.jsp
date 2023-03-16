@@ -67,8 +67,11 @@ textarea:read-only{
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
 		
-		$("#back").click(function(){
+		$("#toList").click(function(){
 			location.href="${path}/workGanttList.do?prjno="+$("[name=prjno]").val();
+		})
+		$("#toApprv").click(function(){
+			location.href="${path}/apprvList.do?prjno="+$("[name=prjno]").val();
 		})
 		$("#upt").click(function(){
 			location.href="${path}/workUptFrm.do?no="+$("[name=workno]").val();	
@@ -78,9 +81,16 @@ textarea:read-only{
 				location.href="${path}/workDel.do?no="+$("[name=workno]").val();
 			}
 		})
+		$("#goUpper").click(function(){
+			if($(this).val()==""){
+				alert("등록된 상위 업무가 없습니다.")	
+			}else{
+				location.href="${path}/workGanttDetail.do?no="+$(this).val()
+			}
+		})
 		$("#downFile").click(function(){
-	  		if(confirm($(this).val()+"을 다운로드하시겠습니까?")){
-	  			location.href="${path}/download.do?fname="+$(this).val()
+	  		if(confirm("다운로드하시겠습니까?")){
+	  			location.href="${path}/downWorkFile.do?fno="+$(this).val()
 	  		}
 	  		
 	  	})
@@ -124,6 +134,27 @@ textarea:read-only{
 			console.log(qstr)
 			callAjax("${path}/insertCalendar.do",qstr)		
 
+		})
+		// 추가 담당자 초대
+		var id1="${projectInfo.tlid}"
+		var id2="${personInfo.id}"
+		$("#memBtn").click(function(){
+			let url="${path}/prjMemList.do?prjno="+prjno+"&id1="+id1+"&id2="+id2
+			console.log(url)
+			fetch(url).then(function(response){
+				console.log(response)
+				return response.json()
+			}).then(function(json){			
+				let meminfo = json.memList
+				let listHTML = ""
+				for(let i=0;i<meminfo.length;i++){
+					listHTML+="<tr><td><input type='checkbox'></td><td>"+meminfo[i].dname+"</td><td>"+meminfo[i].job+"</td><td>"+
+					meminfo[i].part+"</td><td>"+meminfo[i].ename+"</td></tr>"
+				}
+				$("#memberListTab tbody").html(listHTML)	
+			}).catch(function(err){
+				console.log(err)
+			})
 		})
 	});
 	var msg = "${msg}"
@@ -182,36 +213,47 @@ textarea:read-only{
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
             	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" class="btn" id="back">
-             			<i class="bi bi-arrow-left"></i>
+             		<button type="button" class="btn" id="toList">
+             			<i class="bi bi-list-ul" title="업무리스트로 이동"></i>
              		</button>
+             		<c:if test="${sessmem.id eq projectInfo.tlid}">
+             		<button type="button" class="btn" id="toApprv">
+             			<i class="bi bi-pencil-square" title="결재함으로 이동"></i>
+             		</button>
+             		</c:if>
              	</div>
              	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-             	<c:if test="${ganttDetail.state==0}">
+             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
              		<button class="btn btn-primary" id="req">결재 요청</button>
              	</c:if>
-             	<c:choose>
-             		<c:when test="${ganttDetail.apprv==1}">
-	             		<h4>결재완료</h4>
-             		</c:when>
-             		<c:when test="${sessmem.id eq projectInfo.tlid}">
-             			<button class="btn btn-primary" id="rej">결재 승인</button>
-             			<button class="btn btn-danger" id="apprv">결재 반려</button>
-             		</c:when>
-	             	<c:when test="${ganttDetail.state==1}">
-	             		<h4>결재진행중...</h4>
-	             	</c:when> 	
-             	</c:choose>
+             	<c:if test="${ganttDetail.state==1}"> 
+             		<c:choose>
+	             		<c:when test="${ganttDetail.apprv==1}">
+		             		<span>결재완료</span>
+	             		</c:when>
+	             		<c:when test="${sessmem.id eq projectInfo.tlid}">
+	             			<button class="btn btn-primary" id="rej">결재 승인</button>
+	             			<button class="btn btn-danger" id="apprv">결재 반려</button>
+	             		</c:when>
+		             	<c:otherwise>
+		             		<span>결재진행중...</span>
+		             	</c:otherwise> 	
+	             	</c:choose>
+             	</c:if>
+             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
-				    <li><a class="dropdown-item" id="" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
+				    <li><a class="dropdown-item" id="memBtn" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
+				    <!-- 
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
+				     -->
 				  </ul>
+				  </c:if>
             	</div> 
            </div>
             <!-- 멤버 초대  모달창 -->
@@ -225,29 +267,23 @@ textarea:read-only{
               <div class="modal-body">
           		<div class="my-4 row">
               	<div class="col-6"> </div>
-              	<div class="col-6"> 
-              	 		<!-- 검색어 ajax로 넘기기 -->
-			         <div class="input-group">
-			            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-			            <input type="hidden" name="curPage" value="${sch.curPage }">
-			            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="부서 또는 사원명으로 검색">
-			          </div>
-			  	
+              	<div class="col-6"> 	
               	</div>
               	</div>
 		        <div class="my-3 row">
 			      <div class="table-responsive text-nowrap">
-				    <table class="table table-striped" id="empTab">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="20%">
-				    <col width="40%">
+				    <table class="table table-striped" id="memberListTab">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
+				    <col width="25%">
 				      <thead>
 				        <tr>
+				          <th><input type="checkbox"></th>
 				          <th>부서명</th>
-				          <th>이름</th>
 				          <th>직책</th>
-				          <th>이메일</th>
+				          <th>담당파트</th>
+				          <th>이름</th>
 				        </tr>
 				      </thead>
 				      <tbody class="table-border-bottom-0">
@@ -287,9 +323,14 @@ textarea:read-only{
                  </div>
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">상위 업무</label>
-                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${parent.text}"
-                  disabled readonly/>
-                  <input type="hidden" name="parentid" value="${parent.id}">
+                  <div class="input-group mb-3">
+					<input type="text" name="subject" class="form-control" id="basic-default-subject" value="${parent.text}" disabled readonly>
+					<div class="input-group-prepend">
+						<button class="btn btn-outline-secondary" type="button" id="goUpper" value="${parent.id}">
+							<i class="bi bi-arrow-up-right"></i>
+    					</button>
+   					</div>
+					</div> 
                 </div>
                 <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
@@ -303,6 +344,7 @@ textarea:read-only{
                    <label class="form-label" for="basic-default-id">담당자</label>
                    <input type="text" name="id"
                    class="form-control" id="basic-default-id" value="${ganttDetail.owner}" disabled readonly />
+                   <input type="hidden" name="owner" value="${personInfo.id}"> 
                  </div>
                  <div class="mb-3" style="width:24%;">
                   <label class="form-label">시작일자</label>
@@ -350,19 +392,25 @@ textarea:read-only{
           </div>
           <!-- 답글 입력부분 -->
           <hr>
+          <c:if test="${ganttDetail.state!=1}">
           	<div class="card-body">
-          		<form id="frm02" method="post" action="${path}/workRepIns.do">
-               		<input type="hidden" name="id" value="monsta@gmail.com">
+          		<form id="frm02" method="post" action="${path}/workRepIns.do" enctype="multipart/form-data">
+               		<input type="hidden" name="id" value="${sessmem.id}">
                		<input type="hidden" name="workno" value="${ganttDetail.id}">
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
-                   <textarea class="form-control" name="cont" id="repContent"
-                   	rows="3" style="height:50px;"></textarea>
+                <textarea class="form-control" name="cont" id="repContent"
+                   	rows="3" style="height:100px;"></textarea>
+                <div class="mb-3">
+                 <label for="formFile" class="custom-file-label">파일첨부</label>
+                 <input type="file" name="report" class="form-control" id="formFile" />
+                </div>
                    <button type="button" class="btn btn-secondary" id="regRep">등록</button>
                 </div>
                 </form>
               </div>
               <hr>
+          </c:if>
             <!-- 답글 출력부분 -->
           	<div class="card-body">
           	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
@@ -373,8 +421,18 @@ textarea:read-only{
                 	onclick="delRep(${rep.no},${rep.workno})">
                 	<i class="bi bi-x"></i></button>     
                 <textarea id="reps" class="form-control" 
-                	rows="3" style="height:50px;" disabled readonly>${rep.cont}
+                	rows="3" style="height:80px;" disabled readonly>${rep.cont}
                 </textarea>
+                <c:if test="${fileInfo[status.index].fname != null}">
+                 <div class="input-group mb-3">
+    				<div class="input-group-prepend">
+    					<button class="btn btn-outline-secondary" type="button" id="downFile" value="${fileInfo[status.index].fno}">
+    						<i class="bi bi-download"></i>
+    					</button>
+    				</div>
+    				<input type="text" class="form-control" value="${fileInfo[status.index].fname}" aria-describedby="basic-addon1" disabled readonly>
+  				</div>  
+                </c:if>
               </div>
               <br>
              </c:forEach>

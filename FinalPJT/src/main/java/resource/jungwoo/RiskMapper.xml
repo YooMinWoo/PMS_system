@@ -12,6 +12,8 @@
 			parameterType="risksch">
 			select count(*)
 			from risk 
+			where prjno=#{prjno}
+			and riskname like '%'||#{schKeyword}||'%'
 	</select>
 	<select id="pagingRisk" resultType="risk" parameterType="risksch">
 			select *
@@ -20,7 +22,9 @@
 			    from
 			        (select *
 			        from RISK 
-			        where riskno>0
+			        where 1=1
+			        and prjno = #{prjno}
+			        AND riskname like '%'||#{schKeyword}||'%'
 			        order by riskpriority
 			        ) A
 			    )
@@ -51,5 +55,10 @@
   	<delete id="deleteRisk" parameterType="risk">
 			DELETE FROM RISK
 			WHERE RISKNO =#{riskno}
-  	</delete>	
+  	</delete>
+    <select id="getStrategy" resultType="strategy" parameterType="strategy">
+			SELECT s.risk_STRATEGY FROM risk r, strategy s
+			WHERE r.RISKNO  = s.riskNO
+			AND s.riskno=#{riskno}
+  	</select>
 </mapper>

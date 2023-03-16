@@ -73,13 +73,15 @@
 --bs-success: #71dd37;
 --bs-info: #03c3ec;
 --bs-warning: #ffab00;
---bs-danger: #ff3e1d;
+--bs-danger: #ff3e1d; #71dd37
 --bs-light: #fcfdfd;
 --bs-dark: #233446;	
 */ 
 	$(document).ready(function(){
 		$("#menu-item-home").addClass('active open');
-	      
+		var sessId = "${sessionScope.emp.ename}"
+		$("#bannerEname").text(sessId+"님")
+		
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
 			var year = $(this).val()
@@ -90,13 +92,10 @@
 			var year = $("[name=year]").val()
 			var month = $(this).val()
 			getData(year,month)
-
 		})
-
-	
 	})
 	
-	function optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr){
+	function optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr,pmArr,empArr,priorArr){
 			var deptOption = {
 					  chart: {
 					    type: 'donut',
@@ -106,12 +105,12 @@
 					  series: cntsArr,
 					  labels: dnameArr,
 					  legend: {
-						    position: 'bottom'
-						},
+						  position: 'bottom'
+					 },
 					 noData: {
-			        	    text: '데이터가 없습니다'
-			        	  }	
-					}
+			        	  text: '데이터가 없습니다'
+			        }
+			}
 			var progOption = {
 		           series: [{
 		           	  data:avgsArr
@@ -191,27 +190,61 @@
 			          }],
 			        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			        };
+			 var pmOptions = {
+					  chart: {
+						    type: 'pie',
+						    height: 200
+						  },
+						  series: pmArr,
+						  labels: ['가용pm','비가용pm'],
+						  legend: {
+						    position: 'bottom',
+						  },
+						  colors: ['#6610f2','#8592a3']	 
+			 }
+			 var empOptions = {
+					  chart: {
+						    type: 'pie',
+						    height: 200
+						  },
+						  series: empArr,
+						  labels: ['비참여직원','참여직원'],
+						  legend: {
+						    position: 'bottom',
+						  },
+						  colors: ['#696cff','#8592a3']
+			 }
+				var liskOption = {
+					  chart: {
+					    type: 'donut',
+					    height: 300
+					  },
+					  colors:['#ff3e1d', '#ffab00', '#71dd37'],
+					  series: priorArr,
+					  labels: ['1순위','2순위','3순위'],
+					  legend: {
+						  position: 'bottom'
+					 }
+			}			 
 			var deptChart = new ApexCharts(document.querySelector("#deptChart"), deptOption);
 			deptChart.render();				
 			var progChart = new ApexCharts(document.querySelector("#progChart"), progOption);
 			progChart.render();	
 			var comboChart = new ApexCharts(document.querySelector("#comboChart"), comboOption);
 	        comboChart.render();
+	        var pmChart = new ApexCharts(document.querySelector("#pmChart"), pmOptions);
+	        pmChart.render();
+	        var empChart = new ApexCharts(document.querySelector("#empChart"), empOptions);
+	        empChart.render();	 
+	        var liskChart = new ApexCharts(document.querySelector("#liskChart"), liskOption);
+	        liskChart.render();	
 		}	
 		
 	
-  
-	
-	
-	
-	
-	
-
 	function getData(curYear,curMonth){
 	
 	if(curYear=='')  curYear=parseInt(new Date().toISOString().split("T")[0].split("-")[0])
 	if(curMonth=='') curMonth= curMonth = parseInt(new Date().toISOString().split("T")[0].split("-")[1])
-	console.log(typeof curYear)
 	
 	$("[name=year]").val(curYear).prop("selected", true); 
 	$("[name=month]").val(curMonth).prop("selected", true); 
@@ -220,15 +253,12 @@
 		fetch(url).then(function(response){
 			return response.json()
 		}).then(function(json){
-			console.log(json)
-		
 			var avgsArr=[]; var subArr=[];
 			var cntsArr=[]; var dnameArr=[];		
 			var comboTotArr=[]; var comboCntArr=[];
-			
-				
+			var priorArr=[];
+	
 			$.each(json.barC,function(index,b){
-				console.log("###추가##")
 				avgsArr.push(b.avgs)
 				subArr.push([b.subject,"(~"+b.deadline+")"])
 			})	
@@ -239,11 +269,21 @@
 			$.each(json.infoByMonth,function(index,im){
 				comboTotArr.push(im.tot)
 				comboCntArr.push(im.cnt)
-			})	
+			})
+			$.each(json.infoRisk,function(index,r){
+				priorArr.push(r.cnt)
+			})
+			//console.log(json.infoEmp[0].cnt) // 전체pm
+			//console.log(json.infoEmp[1].cnt) // 비가용pm
+			//console.log(json.infoPm[0].cnt)  // 전체직원
+			//console.log(json.infoPm[1].cnt)  // 프로젝트참여중 인원
 			
-			optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr)
+			var pmArr=[json.infoPm[0].cnt-json.infoPm[1].cnt,json.infoPm[1].cnt]; 
+			var empArr=[json.infoEmp[0].cnt-json.infoEmp[1].cnt,json.infoEmp[1].cnt];
+			
+			optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr,pmArr,empArr,priorArr)
 			let totAmount = (json.totAmount.tot/100).toFixed(2)
-			$("#totAmount").append(totAmount+"억")
+			$("#totAmount").text(totAmount+"억")
 
 		}).catch(function(err){
 			console.log(err)
@@ -266,10 +306,6 @@
         <!-- Layout container -->
         <div class="layout-page">
         <jsp:include page="/mainTop.jsp"></jsp:include>
-		  
-         
-
-
 
           <!-- Content wrapper -->
           <div class="content-wrapper">
@@ -278,40 +314,45 @@
             <div class="container-xxl flex-grow-1 container-p-y">
             
             <div class="row">
-            <div class="col-lg-8 mb-4 order-0">
-            <!-- 뭐넣지 -->
+            <div class="col-lg-6 mb-4 order-0">
 		    <div class="card">
 		      <div class="d-flex align-items-end row">
 		        <div class="col-sm-7">
 		          <div class="card-body">
-		            <h5 class="card-title text-primary">축하합니다! 🎉</h5>
-		            <p class="mb-4">You have done <span class="fw-bold">72%</span> more sales today. Check your new badge in your profile.</p>
+		            <h5 class="card-title text-primary fw-bold">Welcome back, super🎉</h5>
+		            <p class="mb-2">안녕하세요 <span class="fw-bold" id="bannerEname">홍길동님</span> 오늘도 좋은 하루 되세요!</p>
+		            <a href="${path }/todoList.do" class="btn btn-sm btn-outline-primary">오늘의 할일</a>
 		          </div>
 		        </div>
 		        <div class="col-sm-5 text-center text-sm-left">
 		          <div class="card-body pb-0 px-0 px-md-4">
-		            <img src="https://item.kakaocdn.net/do/039204d96618ee90c045a5ab348be979f604e7b0e6900f9ac53a43965300eb9a" height="140" alt="View Badge User">
+		            <img src="${path }/resources/sneat-1.0.0/assets/img/illustrations/man-with-laptop-light.png" height="140" alt="View Badge User">
 		          </div>
 		        </div>
 		      </div>
 		    </div>
 		  </div>
-		  <!-- /뭐넣지 -->
-		  <div class="col-lg-4 col-md-4 order-1">
+		
+		  <div class="col-lg-6 col-md-12 order-1">
 		    <div class="row">
-		      <div class="col-lg-6 col-md-12 col-6 mb-4">
+		      <div class="col-lg-9 col-md-8 col-12 mb-4">
 		        <div class="card">
-		          <div class="card-body">
-		           
-		            <span class="fw-semibold d-block mb-1">Profit</span>
-		            <h3 class="card-title mb-2">$12,628</h3>
-		            <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small>
-		          </div>
+			        <div class="row row-bordered g-0">
+			        	<div class="col-6">
+				         <div id="pmChart"></div>
+				         </div>
+				         <div class="col-6">
+				         <div id="empChart"></div> 
+				          </div>
+			         </div>
 		        </div>
 		      </div>
-		      <div class="col-lg-6 col-md-12 col-6 mb-4">
+		      <div class="col-lg-3 col-md-4 col-12 mb-4">
 		        <div class="card">
-		          <div class="card-body">
+		          <div class="card-title pt-3 px-3">
+		          <span class="badge bg-label-warning rounded-pill">Year 2023</span>
+		          </div>
+		          <div class="card-body pt-1">
 		            <span>총 매출</span>
 		            <h3 class="card-title text-nowrap mb-1" id="totAmount"></h3>
 		          </div>
@@ -347,23 +388,24 @@
 			            </c:forEach>
 			          </select>
 	             </div>	              
-	              
 
 	           	</div>
 	         	  <div id="progChart"></div>
-
 	           </div>
 	           </div>
-          	
-          	 
+       	 
           	 <div class="col-12 col-lg-4 order-4 order-md-4">
-	          	  <div class="card">
-	          	  <h5 class="card-header m-0 me-2 pb-3">부서별 프로젝트</h5>
+	          	  <div class="card mb-4">
+	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">부서별 프로젝트</h5>
 	           		<div id="deptChart"></div>
 	         	 </div>
+	         	 
+	         	 <div class="card mb-4">
+	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">리스크 관리</h5>
+	           		<div id="liskChart"></div>
+	         	 </div>
          	</div>
-         	
-         	
+   	
 	        </div>
          	 
          	 
@@ -379,7 +421,7 @@
         </div>
         <!-- / Layout page -->
       </div>
-      </div>
+    
 
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>

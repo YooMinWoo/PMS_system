@@ -43,6 +43,7 @@ public class Notice_Controller {
 	@RequestMapping("/goNoticeDetail.do")
 	public String goNoticeDetail(NoticeRepSch sch, Model d) {
 		service.plusCnt(sch);
+		d.addAttribute("depts",service2.getParentDeptComb());
 		d.addAttribute("noticeDetail",service.noticeDetail(sch));
 		d.addAttribute("noticeRep",service.noticeRepList(sch));
 		return "WEB-INF\\minwooView\\notice_detail.jsp";

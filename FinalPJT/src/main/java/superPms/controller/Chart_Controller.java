@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Chart_Service;
 import superPms.vo.BarChart;
+import superPms.vo.SuperEmpDept;
 
 @Controller
 public class Chart_Controller {
@@ -15,7 +18,8 @@ public class Chart_Controller {
 	private Chart_Service service;
 	
 	@GetMapping("/PMSMain.do")
-	public String PMSMain() {
+	public String PMSMain(HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		return "WEB-INF\\wonjuView\\pmsMain.jsp";
 	}
 	@GetMapping("/chartShow.do")
@@ -26,6 +30,9 @@ public class Chart_Controller {
 		d.addAttribute("donutC",service.getDonut());
 		d.addAttribute("infoByMonth",service.infoByMonth(date.getYear()));
 		d.addAttribute("totAmount",service.totAmount(date.getYear()));
+		d.addAttribute("infoPm",service.infoPm());
+		d.addAttribute("infoEmp",service.infoEmp());
+		d.addAttribute("infoRisk",service.infoRisk());
 		return "pageJsonReport";
 	}
 	

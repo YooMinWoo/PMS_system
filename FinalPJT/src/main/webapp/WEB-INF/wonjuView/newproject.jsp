@@ -64,8 +64,7 @@ tbody td{
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-newproject").addClass('active');	
-		console.log("세션에 있는 아이디")
-		console.log("${sessionScope.emp.id}")
+
 		var pmId = "${sessionScope.emp.id}"
 		// 초기에 멤버 출력되도록 멤버 리스트 empAjax(empqstr)
 		var empqstr ="keyword="+$("[name=keyword]").val()

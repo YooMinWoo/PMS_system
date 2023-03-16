@@ -66,16 +66,27 @@
 	<select id="getWorkRepList" resultType="workrep" parameterType="string">
 		SELECT * FROM WORKREP
 		WHERE WORKNO = #{WORKNO}
+		ORDER BY no
+	</select>
+	<select id="getFileList" parameterType="string" resultType="workfile">
+		SELECT w.NO, f.*
+		FROM WORKREP w, FILES f
+		WHERE w.FNO = f.FNO(+)
+		AND w.WORKNO = #{WORKNO}
+		ORDER BY NO
+	</select>
+	<select id="fileInfo" parameterType="int" resultType="workfile">
+		SELECT *
+		FROM FILES f
+		WHERE FNO = #{FNO}
 	</select>
 	<insert id="insWorkRep" parameterType="workrep">
-		<if test= "fname != null and !fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
-				#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
-		</if>
-		<if test= "fname == null or fname.equals('')">
-			INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
-				#{cont},sysdate,sysdate,#{id},null,#{workno})
-		</if>
+		INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+			#{cont},sysdate,sysdate,#{id},null,#{workno})
+	</insert>
+	<insert id="insWorkRepFile" parameterType="workrep">
+		INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
+			#{cont},sysdate,sysdate,#{id},files_seq.currval,#{workno})
 	</insert>
 	<delete id="delWorkRep" parameterType="int">
 		delete
@@ -121,6 +132,15 @@
 		SELECT g.*, to_char(to_date(g.START_DATE,'yyyy-mm-dd') + g.duration,'yyyy-mm-dd') AS end_date
 		FROM GANTT g
 		WHERE id = #{id}
+	</select>
+	<!-- 멤버추가 -->
+	<select id="prjMemList" parameterType="workmem" resultType="pmList">
+		SELECT distinct d.dname,e.job, m.part, e.ename, e.id
+		FROM dept d, emp e, projectmember m
+		WHERE m.PRJNO = #{prjno}
+		AND m.owner=e.id
+		AND e.deptid=d.deptid
+		AND m.OWNER NOT IN (#{id1}, #{id2})
 	</select>
 	<!-- 결재 -->
 	<update id="reqApprove" parameterType="string">
@@ -170,7 +190,13 @@
 			FROM gantt g, project p 
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
+			<if test='isApprv!=null and isApprv.equals("n")'>
+			AND g.state=1
+			AND g.apprv=0
+			</if>
+			<if test='isApprv!=null and isApprv.equals("y")'>
 			AND g.apprv=1
+			</if>
 			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
@@ -181,7 +207,13 @@
 		FROM gantt g, project p 
 		WHERE g.PRJNO =p.PRJNO 
 		AND p.prjno=#{prjno}
-		AND g.apprv=1
+		<if test='isApprv!=null and isApprv.equals("y")'>
+			AND g.apprv=1
+		</if>
+		<if test='isApprv!=null and isApprv.equals("n")'>
+			AND g.state=1
+			AND g.apprv=0
+		</if>
 		AND g.text like '%'||#{text}||'%'
 	</select>
 </mapper>
