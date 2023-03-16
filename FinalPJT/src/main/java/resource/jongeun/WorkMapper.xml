@@ -66,6 +66,19 @@
 	<select id="getWorkRepList" resultType="workrep" parameterType="string">
 		SELECT * FROM WORKREP
 		WHERE WORKNO = #{WORKNO}
+		ORDER BY no
+	</select>
+	<select id="getFileList" parameterType="string" resultType="workfile">
+		SELECT w.NO, f.*
+		FROM WORKREP w, FILES f
+		WHERE w.FNO = f.FNO(+)
+		AND w.WORKNO = #{WORKNO}
+		ORDER BY NO
+	</select>
+	<select id="fileInfo" parameterType="int" resultType="workfile">
+		SELECT *
+		FROM FILES f
+		WHERE FNO = #{FNO}
 	</select>
 	<insert id="insWorkRep" parameterType="workrep">
 		INSERT INTO WORKREP VALUES (workrep_seq.nextVal,null,
@@ -119,11 +132,6 @@
 		SELECT g.*, to_char(to_date(g.START_DATE,'yyyy-mm-dd') + g.duration,'yyyy-mm-dd') AS end_date
 		FROM GANTT g
 		WHERE id = #{id}
-	</select>
-	<select id="fileInfo" parameterType="int" resultType="workfile">
-		SELECT f.*
-		FROM WORKREP w, FILES f
-		WHERE f.FNO = #{FNO}
 	</select>
 	<!-- 멤버추가 -->
 	<select id="prjMemList" parameterType="workmem" resultType="pmList">

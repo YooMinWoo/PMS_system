@@ -114,9 +114,8 @@ public class Work_Controller {
 		}
 		if(service.getWorkRepList(no).size()>0) {
 			d.addAttribute("workrep",service.getWorkRepList(no));
+			d.addAttribute("fileInfo",service.getFileList(no));
 		}
-		System.out.println(mem.getId());
-		System.out.println(service.projectInfo(service.ganttDetailExp(no).getPrjno()).getTlid());
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
 	// 추가 담당자
@@ -142,9 +141,9 @@ public class Work_Controller {
 		d.addAttribute("msg","삭제완료");
 		return "redirect:/workGanttDetail.do";
 	}
-	@GetMapping("/downloadWorkFile.do")
-	public String download(@RequestParam("fno")int fno,Model d) {
-		//d.addAttribute("downloadFile", fname);
+	@GetMapping("/downWorkFile.do")
+	public String downWorkFile(@RequestParam("fno")int fno,Model d) {
+		d.addAttribute("downloadFile", service.fileInfo(fno).getFname());
 		d.addAttribute("path", upload);
 		return "downloadViewer";
 	}

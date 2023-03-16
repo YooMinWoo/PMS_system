@@ -35,6 +35,8 @@ public interface Work_Dao {
 	public SuperEmpDept personInfo(String no);
 	public Gantt ganttDetail(Gantt det);
 	public Gantt ganttDetailExp(String no);
+	public List<WorkFile> getFileList(String no);
+	public WorkFile fileInfo(int fno);
 	// 멤버추가
 	public List<ProjectMemberList> prjMemList(WorkMember sch);
 	// 결재

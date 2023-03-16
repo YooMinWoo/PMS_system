@@ -106,6 +106,12 @@ public class Work_Service {
 			dao.insWorkRep(ins);
 		}
 	}
+	public List<WorkFile> getFileList(String fno) {
+		return dao.getFileList(fno);
+	}
+	public WorkFile fileInfo(int fno) {
+		return dao.fileInfo(fno);
+	}
 	public void delWorkRep(int no) {
 		dao.delWorkRep(no);
 	}

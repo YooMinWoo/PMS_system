@@ -81,9 +81,16 @@ textarea:read-only{
 				location.href="${path}/workDel.do?no="+$("[name=workno]").val();
 			}
 		})
+		$("#goUpper").click(function(){
+			if($(this).val()==""){
+				alert("등록된 상위 업무가 없습니다.")	
+			}else{
+				location.href="${path}/workGanttDetail.do?no="+$(this).val()
+			}
+		})
 		$("#downFile").click(function(){
-	  		if(confirm($(this).val()+"을 다운로드하시겠습니까?")){
-	  			location.href="${path}/download.do?fname="+$(this).val()
+	  		if(confirm("다운로드하시겠습니까?")){
+	  			location.href="${path}/downWorkFile.do?fno="+$(this).val()
 	  		}
 	  		
 	  	})
@@ -316,9 +323,14 @@ textarea:read-only{
                  </div>
                  <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">상위 업무</label>
-                  <input name="subject" type="text" class="form-control" id="basic-default-subject" value="${parent.text}"
-                  disabled readonly>
-                  <input type="hidden" name="parentid" value="${parent.id}">
+                  <div class="input-group mb-3">
+					<input type="text" name="subject" class="form-control" id="basic-default-subject" value="${parent.text}" disabled readonly>
+					<div class="input-group-prepend">
+						<button class="btn btn-outline-secondary" type="button" id="goUpper" value="${parent.id}">
+							<i class="bi bi-arrow-up-right"></i>
+    					</button>
+   					</div>
+					</div> 
                 </div>
                 <div class="mb-3" style="width:32%;">
                   <label class="form-label" for="basic-default-subject">업무명</label>
@@ -388,7 +400,7 @@ textarea:read-only{
               	<label for="repContent" class="form-label">답글 작성</label>
               	<div class="repList2">
                 <textarea class="form-control" name="cont" id="repContent"
-                   	rows="3" style="height:50px;"></textarea>
+                   	rows="3" style="height:100px;"></textarea>
                 <div class="mb-3">
                  <label for="formFile" class="custom-file-label">파일첨부</label>
                  <input type="file" name="report" class="form-control" id="formFile" />
@@ -409,8 +421,18 @@ textarea:read-only{
                 	onclick="delRep(${rep.no},${rep.workno})">
                 	<i class="bi bi-x"></i></button>     
                 <textarea id="reps" class="form-control" 
-                	rows="3" style="height:50px;" disabled readonly>${rep.cont}
+                	rows="3" style="height:80px;" disabled readonly>${rep.cont}
                 </textarea>
+                <c:if test="${fileInfo[status.index].fname != null}">
+                 <div class="input-group mb-3">
+    				<div class="input-group-prepend">
+    					<button class="btn btn-outline-secondary" type="button" id="downFile" value="${fileInfo[status.index].fno}">
+    						<i class="bi bi-download"></i>
+    					</button>
+    				</div>
+    				<input type="text" class="form-control" value="${fileInfo[status.index].fname}" aria-describedby="basic-addon1" disabled readonly>
+  				</div>  
+                </c:if>
               </div>
               <br>
              </c:forEach>
