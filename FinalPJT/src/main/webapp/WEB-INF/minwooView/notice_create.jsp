@@ -68,6 +68,7 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
 		$("#menu-item-notice").addClass('active open');
 		$("#clBtn").click(function(){
 			if(confirm("조회 화면으로 이동하시겠습니까?")){
