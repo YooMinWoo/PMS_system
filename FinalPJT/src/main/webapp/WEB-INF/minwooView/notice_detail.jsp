@@ -118,6 +118,25 @@ select:disabled{
 			}
 		})
 		$("#uptBtn").click(function(){
+			if($("[name=title]").val()==""){
+				alert("제목을 입력하세요.")
+				$("[name=title]").focus()
+				return
+			}
+			if($("[name=deptid]").val()=="X"){
+				alert("카테고리를 선택해주세요.")
+				return
+			}
+			if($("[name=content]").val()==""){
+				alert("내용을 입력하세요.")
+				$("[name=content]").focus()
+				return
+			}
+			if($("[name=content]").val().length>1200){
+				alert("1200자 이하로 입력하세요!")
+				$("[name=content]").focus()
+				return
+			}
 			if(confirm("수정하시겠습니까?")){
 				$("#frm01").attr({
 					action:"/FinalPJT/uptNotice.do",

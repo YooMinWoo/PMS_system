@@ -90,8 +90,8 @@
 					$("[name=content]").focus()
 					return
 				}
-				if($("[name=content]").val().length>500){
-					alert("500자 이하로 입력하세요!")
+				if($("[name=content]").val().length>1200){
+					alert("1200자 이하로 입력하세요!")
 					$("[name=content]").focus()
 					return
 				}
