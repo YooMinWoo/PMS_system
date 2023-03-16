@@ -98,7 +98,6 @@ textarea:read-only{
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
-console.log(${noticeDetail.report})
 	$(document).ready(function(){
 		$("#menu-item-notice").addClass('active open');
 		$(".offBtn").hide()
@@ -293,7 +292,7 @@ console.log(${noticeDetail.report})
                         </script>
                         
                         <div class="btns">
-                        	<c:if test="${emp.id == noticeDetail.id }">
+                        	<c:if test="${emp.id == noticeDetail.writer }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정하기</button>
