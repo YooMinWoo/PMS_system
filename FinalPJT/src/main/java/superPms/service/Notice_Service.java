@@ -39,7 +39,7 @@ public class Notice_Service {
 		}
 		
 		// 한 페이지에 보일 데이터 개수 설정
-		sch.setPageSize(3);
+		sch.setPageSize(5);
 		
 		// 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
 		sch.setPageCount(
@@ -59,7 +59,7 @@ public class Notice_Service {
 		sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
 		
 		// 블럭 크기 지정( 한 번에 보여줄 block의 크기 )
-		sch.setBlockSize(3);
+		sch.setBlockSize(5);
 		
 		
 		
@@ -160,7 +160,7 @@ public class Notice_Service {
 			sch.setCurPage(1);
 		}
 		// 한 페이지에 보일 데이터 개수 설정
-		sch.setPageSize(3);
+		sch.setPageSize(10);
 		// 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
 		sch.setPageCount(
 			(int)Math.ceil(
