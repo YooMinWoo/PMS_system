@@ -39,7 +39,7 @@ public class Notice_Service {
 		}
 		
 		// 한 페이지에 보일 데이터 개수 설정
-		sch.setPageSize(5);
+		sch.setPageSize(10);
 		
 		// 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
 		sch.setPageCount(
