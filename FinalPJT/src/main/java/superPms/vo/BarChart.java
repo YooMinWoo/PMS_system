@@ -10,7 +10,6 @@ public class BarChart {
 	private int prjno;
 	private int tot;
 	private int cnt;
-
 	
 	public int getTot() {
 		return tot;
