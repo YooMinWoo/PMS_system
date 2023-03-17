@@ -144,10 +144,11 @@ tbody td{
            <!--  프로젝트table -->
 			  <table class="table card-table table-hover" style="overflow: hidden;">
 			  <col width="13%">
-			  <col width="40%">
-			  <col width="17%">
-			  <col width="17%">
+			  <col width="30%">
+			  <col width="15%">
+			  <col width="15%">
 			  <col width="13%">
+			  <col width="14%">
 			    <thead>
 			      <tr>
 			        <th>카테고리</th>
@@ -155,13 +156,17 @@ tbody td{
 			        <th>시작일자</th>
 			        <th>종료일자</th>
 			        <th>PM</th>
+			        <th> </th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="allp" items="${list}">
-			      <tr ondblclick="goProjectMain(${allp.prjno})">
+			      <tr>
 			      <td>${allp.dname }</td><td>${allp.subject }</td><td>${allp.regdte }</td>
-			      <td>${allp.deadline }</td><td>${allp.ename }</td></tr>
+			      <td>${allp.deadline }</td><td>${allp.ename }</td>
+			      <td><button id="entBtn" onclick="goProjectMain(${allp.prjno})" type="button" class="btn btn-sm btn-primary">
+			      이동</button></td>
+			      </tr>
 			      </c:forEach>
 			    </tbody>
 			  </table>
