@@ -217,4 +217,9 @@
 		</if>
 		AND g.text like '%'||#{text}||'%'
 	</select>
+	<update id="progress" parameterType="gantt">
+		UPDATE gantt 
+			SET progress=#{progress},
+		WHERE id=#{id}
+	</update>
 </mapper>
