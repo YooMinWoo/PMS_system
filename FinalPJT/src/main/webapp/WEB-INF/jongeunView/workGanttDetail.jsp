@@ -422,7 +422,7 @@ textarea:read-only{
               	<input type="hidden" name="no" value="${rep.no }">
               	<input type="hidden" name="writer" value="${rep.id }">
                 <label class="form-label">${rep.ename } (${rep.regdte })</label>
-                <c:if test="${ganttDetail.state==1}">
+                <c:if test="${ganttDetail.state!=1}">
                 <button type="button" class="btn" id="delRep"
                 	onclick="delRep(${rep.no},${rep.workno},'${rep.id}')">
                 	<i class="bi bi-x"></i></button>     

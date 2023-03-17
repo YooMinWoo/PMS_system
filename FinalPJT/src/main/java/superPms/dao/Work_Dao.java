@@ -37,6 +37,8 @@ public interface Work_Dao {
 	public Gantt ganttDetailExp(String no);
 	public List<WorkFile> getFileList(String no);
 	public WorkFile fileInfo(int fno);
+	// 진행률 수정
+	public void progress(Gantt upt);
 	// 멤버추가
 	public List<ProjectMemberList> prjMemList(WorkMember sch);
 	// 결재

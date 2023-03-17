@@ -157,6 +157,10 @@ public class Work_Service {
 	public Gantt ganttDetailExp(String no) {
 		return dao.ganttDetailExp(no);
 	};
+	// 진행률 수정
+	public void progress(Gantt upt) {
+		dao.progress(upt);
+	}
 	// 멤버추가
 	public List<ProjectMemberList> prjMemList(WorkMember sch){
 		return dao.prjMemList(sch);
