@@ -58,7 +58,7 @@ td{text-align:center;}
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="${path }/resources/sneatㄴ-1.0.0/assets/js/config.js"></script>
+    <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	var msg = "${msg}"
 	console.log(msg)
