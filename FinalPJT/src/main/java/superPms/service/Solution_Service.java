@@ -59,4 +59,13 @@ public class Solution_Service {
         sch.setStartBlock((blocknum-1)*sch.getBlockSize()+1);
 		return dao.pagingSol(sch);
 	}
+	public void insertSol(Solution ins) {
+		dao.insertSol(ins);
+	}
+	public void updateSol(Solution upt) {
+		dao.updateSol(upt);
+	}
+	public void deleteSol(Solution del) {
+		dao.deleteSol(del);
+	}
 }

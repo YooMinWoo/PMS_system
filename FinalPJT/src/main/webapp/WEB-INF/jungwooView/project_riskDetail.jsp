@@ -32,6 +32,18 @@
 	position: relative;
 	height:auto;
 }
+.sol-content-header{
+	display: flex;
+	justify-content: space-between;
+}
+.sol_content_contain{
+	display: flex;
+	gap:1%;
+}
+#insertBtn{
+	font-size: 12px;
+	width: 80px
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -107,8 +119,34 @@
 				alert("pm과 담당자만 가능")
 			}
 		})
-		
+		if($("[name=riskmoniter]").val()!=""){
+			console.log($("[name=riskstate]").val())
+			
+		}
+		$("[name=riskmoniter]").keyup(function(e){
+			if(e.keyCode == 13){
+				$("[name=riskstate]").val("PM확인")
+			}
+		})
+		$("#insertBtn").click(function(){
+			if($("[name=riskstate]").val()!="PM확인"){
+				$("[name=riskstate]").val("처리중")
+				$("#form2").attr("action","${path}/insertSol.do");
+				
+			}else{
+				$("#form2").attr("action","${path}/insertSol.do?prjno="+${param.prjno});
+			}
+			$("#form2").submit();
+		})
+		console.log($("#risk_strategy").val())
+		if($("#risk_strategy").val()!=undefined){
+			$("#applyBtn").css("display", "none")
+		}
 	});
+	function goPage(cnt){
+		$("[name=curPage]").val(cnt);
+		$("#form3").submit()
+	}	
 </script>
 </head>
 
@@ -207,23 +245,25 @@
 			<div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="text-primary">솔루션</h4>
-				        <form method="post" id="form2" class="validation-form" novalidate>
+				        <h4 class="text-primary">방안제시</h4>
 				          <div class="row">
 				            <div class="table-responsive">
+				            <form id="form3" class="d-flex"  method="post"> 			
+								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+								</form> 
 				              <input type="hidden" value="${risk.riskno}">
 				              <c:forEach var="sol" items="${sol}">
-   				                <div>
-				                	<span class="text-info">${sol.ename }</span><span>${sol.solregdate }</span>
+   				                <div class="sol-content-header">
+				                	<span class="text-info">${sol.ename }</span>
+				                	<span>${sol.solregdate }</span>
 				                </div>
 				              <div class="sol-content">
 				                <input type="hidden" value="${sol.solno }">
-
 				                <span>${sol.solution_content }</span>      				       
-				                    
 				              </div>
 				              </c:forEach>
-  								<ul class="pagination  justify-content-end"> 
+				              <c:if test="${not empty sol }">
+				              <ul class="pagination  justify-content-end"> 
 									<li class="page-item"><a class="page-link" 
 										href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
 								
@@ -236,29 +276,48 @@
 								  	<li class="page-item"><a class="page-link" 
 								  			href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
 								</ul>
+				              </c:if>
+				              
+  								
 							</div>
 				          </div>  
 				          <div class="mb-3">
-				            <label for="subject">솔루션</label>
-				            <input name="" value="" type="text" class="form-control  ckValid" id="" placeholder="솔루션 입력" required>
+				          	<form method="post" id="form2" class="validation-form" novalidate>
+				            	<label for="solution_content">의견</label>
+				            	<input type="hidden" name="id" value="${emp.id }">
+				            	<input type="hidden" name="riskno" value="${param.riskno }">
+				            	<div class="sol_content_contain">
+				            		<input name="solution_content" type="text" class="form-control  ckValid" 
+				            			id="solution_content" placeholder="의견을 제시해주세요" required>
+				            		<button id="insertBtn" class="btn btn-primary btn-lg btn-block" type="button">등록</button>
+				            	</div>
+				            	
+						   	</form>
 						  </div>
 				          <div class="mb-4"></div>
 				          
-				        </form>
+				         
 				      </div>
            		</div>
          	</div>
          	<div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="text-primary">대응전략</h4>
-				        <form method="post" id="form3" class="validation-form" novalidate>
-							
-								<span>${strategy.risk_strategy }</span>
-							
-				          
-				        </form>
-				      </div>
+				        <h4 class="text-primary ">대응전략</h4>
+				        <div style="display:flex; justify-content: flex-end;">
+				        	<input id="applyBtn" type="button" class="btn btn-primary" value="등록">
+				        </div>
+				        <c:if test="${not empty strategy }">
+				        <div style="display:flex; justify-content: space-between;">
+				        		<input type="button" id="risk_strategy" value="${strategy.risk_strategy }" class="btn btn-outline-primary">
+				        		<input type="hidden" id="strategyno" name="strategyno" value="${strategy.strategyno}">
+				        	</div>
+				        </c:if>
+
+				        	
+				        	
+							<br/><span>자세히 보기</span>
+				    </div>
            		</div>
          	</div>
             </div>
@@ -298,6 +357,14 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script type="text/javascript">
+    $("#applyBtn").click(function(){
+		location.href = "${path}/strategyForm.do?riskno="+${param.riskno}+"&prjno="+${param.prjno};
+	})
+	$("#risk_strategy").click(function(){
+		location.href="${path}/pagingCare.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}+"&strategyno="+${strategy.strategyno};
+	})
+    </script>
   </body>
 </body>
 </html>

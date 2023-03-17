@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.LocaleResolver;
 
 import superPms.service.Risk_Service;
 import superPms.service.Solution_Service;
+import superPms.vo.NoticeRep;
 import superPms.vo.Risk;
 import superPms.vo.RiskSch;
+import superPms.vo.Solution;
 import superPms.vo.SolutionSch;
 import superPms.vo.Strategy;
+import superPms.vo.Strategycare;
+import superPms.vo.StrategycareSch;
 
 
 @Controller
@@ -55,12 +60,13 @@ public class Risk_Controller {
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
 	}
 
-	@GetMapping("/project_riskDetail.do")		// 리스크 상세페이지
+	@RequestMapping("/project_riskDetail.do")		// 리스크 상세페이지
 	public String getRisk(@RequestParam("riskno")
-	int riskno,@ModelAttribute("sch")SolutionSch sch,  Model d) {
+	int riskno,@ModelAttribute("sch")SolutionSch sch, Solution ins, Model d) {
 		service.getRisk(riskno);
-		service2.pagingSol(sch);
+		service2.pagingSol(sch);	// 대처방안 페이징처리
 		service.getStrategy(riskno);
+		
 		d.addAttribute("risk",service.getRisk(riskno));
 		d.addAttribute("sol",service2.pagingSol(sch));
 		d.addAttribute("strategy",service.getStrategy(riskno));
@@ -89,5 +95,42 @@ public class Risk_Controller {
 	public String deleteRisk(Risk del, Model d){
 		service.deleteRisk(del);
 		return "redirect:project_pagingRisk.do?prjno="+del.getPrjno();
+	}
+	@PostMapping("/insertSol.do")				// 방안 등록
+	public String insertSol(Solution ins, @RequestParam("prjno")int prjno) {
+		service2.insertSol(ins);
+		return "redirect://project_riskDetail.do?riskno="+ins.getRiskno()+"&prjno="+prjno;
+	}
+	@RequestMapping("/strategyForm.do")		// 대응전략 등록폼 페이지
+	public String insertStgForm(){
+		return "WEB-INF\\jungwooView\\strategyForm.jsp";
+	}
+	@RequestMapping("/insertStrategy.do")		// 대응전략 등록
+	public String insertStrategy(Strategy ins,Risk upt,
+			@RequestParam(value="prjno", required = false) Integer prjno){
+		if (ins.getRisk_strategy()!="") {
+			System.out.println("111111확인좀해주라 @#@@@@@@@@@@@@@@@@#@#@#@@##@##@#@");
+			service.insertStrategy(ins);
+			System.out.println("222222확인좀해주라 @#@@@@@@@@@@@@@@@@#@#@#@@##@##@#@");
+			service.updateRisk2(upt);
+		}
+		return "redirect://project_riskDetail.do?riskno="+ins.getRiskno()+"&prjno="+prjno;
+	}
+	@RequestMapping("/pagingCare.do")
+	public String pagingCare(@ModelAttribute("sch") StrategycareSch sch, Model d
+			,@RequestParam("riskno")int riskno) {
+		service.getStrategy(riskno);
+		d.addAttribute("care", service.pagingCare(sch));
+		d.addAttribute("strategy",service.getStrategy(riskno));
+		System.out.println("333555555555334444444400"+riskno);
+		return "WEB-INF\\jungwooView\\strategyDetail.jsp";
+	}
+	@PostMapping("/insertCare.do")				// 대응전략 후처리 등록
+	public String insertCare(Strategycare ins, @RequestParam("prjno")int prjno,
+			@RequestParam("riskno")int riskno, @RequestParam("strategyno")int strategyno) {
+		System.out.println("33355555555533"+riskno);
+		service.insertCare(ins);
+		
+		return "redirect://pagingCare.do?riskno="+riskno+"&prjno="+prjno+"&strategyno="+strategyno;
 	}
 }

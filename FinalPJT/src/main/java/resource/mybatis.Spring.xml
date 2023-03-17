@@ -31,6 +31,8 @@
       	<typeAlias alias="solution" type="superPms.vo.Solution"/>
       	<typeAlias alias="solutionsch" type="superPms.vo.SolutionSch"/>
       	<typeAlias alias="strategy" type="superPms.vo.Strategy"/>
+      	<typeAlias alias="strategycare" type="superPms.vo.Strategycare"/>
+      	<typeAlias alias="strategycaresch" type="superPms.vo.StrategycareSch"/>
       	
       	<!-- 민우 -->	
       	<typeAlias alias="notice" type="superPms.vo.Notice"/>

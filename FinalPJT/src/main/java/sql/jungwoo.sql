@@ -140,18 +140,19 @@ set
 SELECT * FROM PROJECTMEMBER p;
 SELECT * FROM emp;
 SELECT * FROM risk
-WHERE PRJNO =41;
+WHERE PRJNO =23;
 SELECT * FROM PROJECT p ;
 SELECT * FROM GANTT g ;
 SELECT * FROM NOTICEREP n  ;
 SELECT * FROM SOLUTION s ;
-CREATE SEQUENCE sol_seq
+CREATE SEQUENCE strategy_seq
 START WITH 1
 MINVALUE 1;
 INSERT INTO SOLUTION VALUES(sol_seq.nextval,41,'monsta@gmail.com','Avoidance','인원을 늘리던지 기간을 늘려보겠다',sysdate);
 ALTER TABLE SOLUTION ADD solregdate DATE;
 SELECT * FROM NOTICEREP n ;
-select *
+select * FROM emp;
+SELECT * FROM PROJECTMEMBER p ;
 from
     (select rownum cnt, A.*
     from
@@ -176,15 +177,77 @@ SELECT * FROM (
 		)
 		WHERE cnt BETWEEN 1 AND 5;
 SELECT * FROM SOLUTION s ;
-
+ALTER TABLE SOLUTION DROP COLUMN sol_strategy;
+SELECT * FROM RISK r ;
 SELECT * FROM (
 			SELECT rownum cnt, s.* FROM (
 			SELECT solno, riskno, e.ename, sol_strategy, solution_content, 
 						to_char(solregdate,'yyyy-mm-dd') solregdate
 			FROM SOLUTION sol, EMP e
-			WHERE riskno=41
+			WHERE riskno=
 			AND sol.ID =e.ID 
 			ORDER BY solregdate
 			) S
 			)
 		WHERE cnt BETWEEN 1 AND 5;
+select *
+from
+    (select rownum cnt, A.*
+    from
+        (select *
+        from RISK 
+        where riskno>0
+        and prjno = 23
+        AND riskname like '%'||''||'%'
+        order by riskpriority
+        ) A
+    )
+where cnt between 1 and 10;
+SELECT * FROM RISK;
+ALTER TABLE risk DROP COLUMN strategyno;
+WHERE RISKNO =41;
+SELECT s.risk_STRATEGY  FROM risk r, strategy s
+WHERE r.RISKNO  = s.riskNO
+AND s.riskno=41;
+SELECT * FROM PROJECT p  ;
+SELECT e.ENAME, e.ID , e.PASS  FROM PROJECTMEMBER p, emp e WHERE PRJNO =82
+AND p.OWNER =e.ID;
+
+			SELECT solno, riskno, e.ename, solution_content, 
+						to_char(solregdate,'YYYY-MM-DD HH24:MI:SS') solregdate
+			FROM SOLUTION sol, EMP e
+			WHERE riskno=41
+			AND sol.ID =e.ID 
+			ORDER BY solregdate;
+SELECT * FROM (
+			SELECT rownum cnt, s.* FROM (
+			SELECT solno, riskno, e.ename, solution_content, 
+						to_char(solregdate,'YYYY-MM-DD HH24:MI:SS') solregdate
+			FROM SOLUTION sol, EMP e
+			WHERE riskno=44
+			AND sol.ID =e.ID 
+			ORDER BY solregdate
+			) S
+			)
+		WHERE cnt BETWEEN 1 AND 5;
+	SELECT * FROM STRATEGY s  ;
+INSERT INTO STRATEGY VALUES (strategy_seq.nextval, 44, 'ACCEPTANCE');
+	SELECT * FROM STRATEGYCARE s ;
+INSERT INTO STRATEGYCARE VALUES (care_seq.nextval,1,'지금 순조로히 처리중입니다.','monsta@gmail.com',sysdate);
+update risk
+		set
+			riskstate = '처리중'
+	   where riskno = 53;
+SELECT * FROM STRATEGYCARE s ;
+SELECT * FROM (
+			SELECT rownum cnt, C.* FROM (
+			SELECT careno, strategyno, care_content,e.ENAME,
+						to_char(caredate,'YYYY-MM-DD HH24:MI:SS') caredate
+			FROM STRATEGYCARE s , EMP e
+			WHERE strategyno=1
+			AND s.ID  =e.ID 
+			ORDER BY caredate
+			) C
+			)
+		WHERE cnt BETWEEN 1 AND 5;
+SELECT * FROM STRATEGYCARE s ;
