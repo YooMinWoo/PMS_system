@@ -149,10 +149,20 @@ tbody td{
 				"담당자이메일</label><input class='form-control' type='text' name='owner'"+
 				"placeholder='담당자 이메일입력' id='owner'></div>")
 		})
+		// input 삭제
+		$("#minusBtn").click(function(){
+			let childLen = $("#plusMem").children().length
+			if(childLen>2){
+				$("#plusMem").children().last().remove();
+				$("#plusMem").children().last().remove();
+			}else{
+				alert("기본 입력창은 삭제할 수 없습니다")
+			}
+		})
 
 		// 이전 페이지로 이동
 		$("#canBtn").click(function(){	
-			//location.href="" // 내 프로젝트 페이지로 이동
+			location.href="${path}/myProject.do" 
 		})
 
 	});
@@ -168,7 +178,7 @@ tbody td{
 				console.log(data.prjno)
 				if(data.msg=='등록성공'){
 					if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
-						location.href="/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
+						location.href="${path}/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
 					}else{
 						location.reload()
 					}
@@ -411,7 +421,8 @@ tbody td{
 		         <div class="my-3 row">
 		         	<div class="col-10"> </div>
 			         <div class="col-2 d-flex justify-content-end">
-			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>
+			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>&nbsp;&nbsp;
+			         <button id="minusBtn" type="button" class="btn btn-sm btn-danger">제거</button>
 			         </div>
 		         </div>
 		        <div class="card-footer">

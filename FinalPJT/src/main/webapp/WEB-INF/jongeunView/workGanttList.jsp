@@ -58,7 +58,7 @@ td{text-align:center;}
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="${path }/resources/sneatㄴ-1.0.0/assets/js/config.js"></script>
+    <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	var msg = "${msg}"
 	console.log(msg)
@@ -163,6 +163,7 @@ td{text-align:center;}
         </div>
           <div class="d-flex justify-content-center">
           <!-- Basic Pagination --> 
+          <c:if test="${sch.startBlock>0 }">
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
@@ -182,6 +183,7 @@ td{text-align:center;}
               </li>
             </ul>
           </nav>
+          </c:if>
           <!--/ Basic Pagination -->
          
    		 </div>   

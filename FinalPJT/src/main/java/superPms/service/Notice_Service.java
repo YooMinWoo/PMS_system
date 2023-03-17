@@ -106,8 +106,10 @@ public class Notice_Service {
 	
 	public void deleteFile(Notice f) {
 		File file = new File(f.getPath() + f.getFname());
-		if(file.exists()) { // 파일이 존재하면
-			file.delete(); // 파일 삭제	
+		if(dao.filesCnt(f.getFname())==1) {
+			if(file.exists()) { // 파일이 존재하면
+				file.delete(); // 파일 삭제	
+			}
 		}
 	}
 	
@@ -129,12 +131,10 @@ public class Notice_Service {
 		if(n.getBfFname()!=fname && n.getBfFname()!="" && fname!="") {
 			n.setFname(n.getBfFname());
 			deleteFile(n);
-			
 			n.setFname(uploadFile(n.getReport()));
 			
 			dao.uptFile(n);
 		}
-		System.out.println(n.getDeptid());
 		dao.uptNotice(n);
 	}
 	

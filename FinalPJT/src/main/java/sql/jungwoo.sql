@@ -230,7 +230,7 @@ SELECT * FROM (
 			) S
 			)
 		WHERE cnt BETWEEN 1 AND 5;
-	SELECT * FROM STRATEGY s  ;
+	SELECT * FROM SOLUTION s   ;
 INSERT INTO STRATEGY VALUES (strategy_seq.nextval, 44, 'ACCEPTANCE');
 	SELECT * FROM STRATEGYCARE s ;
 INSERT INTO STRATEGYCARE VALUES (care_seq.nextval,1,'지금 순조로히 처리중입니다.','monsta@gmail.com',sysdate);

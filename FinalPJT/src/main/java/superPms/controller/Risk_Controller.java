@@ -79,10 +79,10 @@ public class Risk_Controller {
 		localeResolver.setLocale(request, response, new Locale(lang));
 		return "WEB-INF\\jungwooView\\project_riskForm.jsp";
 	}
-	@PostMapping("/project_insertRisk.do")		// 리스크 등록
-	public String insertRisk(Risk ins){
+	@RequestMapping("/project_insertRisk.do")		// 리스크 등록
+	public String insertRisk(Risk ins, @RequestParam("prjno")Integer prjno){
 		service.insertRisk(ins);
-		return "redirect:project_pagingRisk.do?prjno="+ins.getPrjno();
+		return "redirect:project_pagingRisk.do?prjno="+prjno;
 	}	
 	
 	@PostMapping("/project_riskUpdate.do")		// 리스크 수정
@@ -113,6 +113,8 @@ public class Risk_Controller {
 			service.insertStrategy(ins);
 			System.out.println("222222확인좀해주라 @#@@@@@@@@@@@@@@@@#@#@#@@##@##@#@");
 			service.updateRisk2(upt);
+		}else {
+			service.insertStrategy(ins);
 		}
 		return "redirect://project_riskDetail.do?riskno="+ins.getRiskno()+"&prjno="+prjno;
 	}

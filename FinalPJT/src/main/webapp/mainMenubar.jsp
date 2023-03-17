@@ -22,6 +22,9 @@
 			alert("로그인 후 서비스 이용이 가능합니다.\n로그인 페이지로 이동합니다.")
 			location.href="${path}/PMSLogin.do";
 		}
+		if("${emp.auth}"!='2'){
+			$("#menu-item-project-newproject").css('display','none')
+		}
 	});
 </script>
 </head>

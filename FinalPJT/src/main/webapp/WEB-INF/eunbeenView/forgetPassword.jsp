@@ -53,6 +53,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 	<script src="${path }/resources/a00_com/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 	td{text-align:center;}
 </style>
@@ -63,6 +64,24 @@
 			alert(msg)
 		}
 	});
+	function idChk(){
+		console.log("버튼누름")
+		$.ajax({
+			url : "${path}/idChk.do",
+		    type : "post",
+		    data : "id="+$("#id").val(),
+		    dataType:"json",
+		    success : function(data){
+		    	if(data.idCheck != null){
+					alert("비밀번호가 전송되었습니다.");
+					$("#frm01").submit();
+		        }else if(data.idCheck == null){
+		            alert("없는 이메일 계정입니다.");
+		 		}
+		    }
+		})
+		   
+	}
 </script>
 </head>
 
@@ -152,7 +171,7 @@
                   />
                 </div>
                 <br>
-                <button class="btn btn-primary d-grid w-100">임시 비밀번호 발급</button>
+                <button onclick="idChk()" type="button" class="btn btn-primary d-grid w-100">임시 비밀번호 발급</button>
               </form>
               <div class="text-center">
                 <a href="${path }/PMSLogin.do" class="d-flex align-items-center justify-content-center">

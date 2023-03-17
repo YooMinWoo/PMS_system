@@ -84,7 +84,17 @@ $(document).ready(function(){
 		"담당자이메일</label><input class='form-control' type='text' name='owner'"+
 		"placeholder='담당자 이메일입력' id='owner'></div>")
 	})
-	
+	// input 삭제
+	$("#minusBtn").click(function(){
+		let childLen = $("#plusMem").children().length
+		if(childLen>2){
+			$("#plusMem").children().last().remove();
+			$("#plusMem").children().last().remove();
+		}else{
+			alert("기본 입력창은 삭제할 수 없습니다")
+		}
+	})
+
 	// 새로 등록할 멤버가 이미 등록된 멤버인지 확인하기 위해 기존 멤버 아이디를 배열로 가져오기
 	var memlist=[]
 	let url="${path}/memList.do?prjno="+prjno
@@ -305,7 +315,8 @@ $(document).ready(function(){
 		         <div class="my-3 row">
 		         	<div class="col-10"> </div>
 			         <div class="col-2 d-flex justify-content-end">
-			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>
+			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>&nbsp;&nbsp;
+			         <button id="minusBtn" type="button" class="btn btn-sm btn-danger">제거</button>
 			         </div>
 		         </div>
               </div>
