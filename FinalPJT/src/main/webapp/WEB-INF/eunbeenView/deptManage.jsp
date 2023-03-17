@@ -240,7 +240,7 @@
                <form id="frm02" class="form" action="${path}/insertDept.do" method="post">
                  <div class="row">
                       <div class="col mb-3">
-                       <label for="nameWithTitle" class="form-label">부서명</label>
+                       <label for="nameWithTitle" class="form-label">부서명 (부서이름만 입력)</label>
                        <div class="idChk">
                         <input
                           type="text"
