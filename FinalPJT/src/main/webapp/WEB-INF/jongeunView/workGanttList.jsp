@@ -136,7 +136,7 @@ td{text-align:center;}
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 		        <c:forEach var="g" items="${ganttInfo }">
-		        <tr ondblclick="goWork(${g.id})">
+		        <tr onclick="goWork(${g.id})">
 		        <td>${g.cnt }</td>
 		        <td>${g.text }</td><td>${g.owner }</td>
 		        <td>${g.start_date }</td>

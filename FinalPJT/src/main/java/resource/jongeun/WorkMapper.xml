@@ -64,8 +64,10 @@
 	</select>
 	<!-- 답글 -->
 	<select id="getWorkRepList" resultType="workrep" parameterType="string">
-		SELECT * FROM WORKREP
+		SELECT w.*, e.ENAME 
+		FROM WORKREP w, EMP e 
 		WHERE WORKNO = #{WORKNO}
+		AND w.id = e.id
 		ORDER BY no
 	</select>
 	<select id="getFileList" parameterType="string" resultType="workfile">

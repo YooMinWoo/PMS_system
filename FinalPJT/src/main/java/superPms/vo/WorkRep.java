@@ -13,6 +13,7 @@ public class WorkRep {
 	private String workno;
 	private String fname;
 	private MultipartFile report;
+	private String ename;
 	public int getNo() {
 		return no;
 	}
@@ -73,6 +74,12 @@ public class WorkRep {
 	}
 	public void setReport(MultipartFile report) {
 		this.report = report;
+	}
+	public String getEname() {
+		return ename;
+	}
+	public void setEname(String ename) {
+		this.ename = ename;
 	}
 	
 }
