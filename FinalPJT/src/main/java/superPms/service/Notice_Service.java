@@ -129,7 +129,6 @@ public class Notice_Service {
 		if(n.getBfFname()!=fname && n.getBfFname()!="" && fname!="") {
 			n.setFname(n.getBfFname());
 			deleteFile(n);
-			
 			n.setFname(uploadFile(n.getReport()));
 			
 			dao.uptFile(n);
