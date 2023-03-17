@@ -34,7 +34,7 @@ public class Mail_Controller {
 	//http://localhost:7080/FinalPJT/sendMail.do
 	
 	@GetMapping("/sendMail.do")
-	public String sendMail(HttpSession session,Model d) {
+	public String sendMail(HttpSession session,Model d) {   
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 	   // d.addAttribute("alertCount", alert_service.alertCount(sObj.getId()));
