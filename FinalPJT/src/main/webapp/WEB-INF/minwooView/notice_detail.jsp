@@ -123,6 +123,11 @@ select:disabled{
 				$("[name=title]").focus()
 				return
 			}
+			if($("[name=title]").val().length>150){
+				alert("제목은 150자 이하로 입력해주세요")
+				$("[name=title]").focus()
+				return
+			}
 			if($("[name=deptid]").val()=="X"){
 				alert("카테고리를 선택해주세요.")
 				return
@@ -155,9 +160,6 @@ select:disabled{
 			if(confirm("파일을 수정하시겠습니까?")){
 				$("#formFile").click()
 			}
-		})
-		$("#fileDelBtn").click(function(){
-			
 		})
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){

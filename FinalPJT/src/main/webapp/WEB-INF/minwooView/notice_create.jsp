@@ -81,6 +81,11 @@
 					$("[name=title]").focus()
 					return
 				}
+				if($("[name=title]").val().length>150){
+					alert("제목은 150자 이하로 입력해주세요")
+					$("[name=title]").focus()
+					return
+				}
 				if($("[name=deptid]").val()=="X"){
 					alert("카테고리를 선택해주세요.")
 					return

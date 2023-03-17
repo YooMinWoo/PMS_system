@@ -134,7 +134,6 @@ public class Notice_Service {
 			
 			dao.uptFile(n);
 		}
-		System.out.println(n.getDeptid());
 		dao.uptNotice(n);
 	}
 	
