@@ -7,13 +7,14 @@
 	<select id="totCnt" resultType="int" 
 			parameterType="solutionsch">
 			select count(*)
-			from solution 
+			from solution
+			where riskno=#{riskno}
 	</select>
 	<select id="pagingSol" resultType="solution" parameterType="solutionsch">
 		SELECT * FROM (
 			SELECT rownum cnt, s.* FROM (
 			SELECT solno, riskno, e.ename, solution_content, 
-						to_char(solregdate,'yyyy-mm-dd') solregdate
+						to_char(solregdate,'YYYY-MM-DD HH24:MI:SS') solregdate
 			FROM SOLUTION sol, EMP e
 			WHERE riskno=#{riskno}
 			AND sol.ID =e.ID 
@@ -22,5 +23,11 @@
 			)
 		WHERE cnt BETWEEN #{start} AND #{end}
 	</select>
-	
+  	<insert id="insertSol" parameterType="solution">
+		INSERT INTO SOLUTION VALUES
+		(sol_seq.nextval, 
+		#{riskno},#{id}, 
+		#{solution_content}, 
+		sysdate)
+  	</insert>
 </mapper>

@@ -187,6 +187,7 @@ td{text-align:center;}
         </div>
           <div class="d-flex justify-content-center">
           <!-- Basic Pagination --> 
+          <c:if test="${sch.startBlock>0 }">
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
@@ -206,6 +207,7 @@ td{text-align:center;}
               </li>
             </ul>
           </nav>
+          </c:if>
           <!--/ Basic Pagination -->
          
    		 </div>   

@@ -57,8 +57,44 @@
 			WHERE RISKNO =#{riskno}
   	</delete>
     <select id="getStrategy" resultType="strategy" parameterType="strategy">
-			SELECT s.risk_STRATEGY FROM risk r, strategy s
+			SELECT * FROM risk r, strategy s
 			WHERE r.RISKNO  = s.riskNO
 			AND s.riskno=#{riskno}
   	</select>
+  	<insert id="insertStrategy" parameterType="strategy">
+  			INSERT INTO STRATEGY VALUES (strategy_seq.nextval, #{riskno}, #{risk_strategy})
+  	</insert>
+  	<update id="updateRisk2" parameterType="risk">
+		update risk
+		set
+			riskstate = '처리중'
+	   where riskno = #{riskno}			
+	</update>
+	<select id="pagingCare" resultType="strategycare" parameterType="strategycaresch">
+		SELECT * FROM (
+			SELECT rownum cnt, C.* FROM (
+			SELECT careno, strategyno, care_content,e.ENAME,
+						to_char(caredate,'YYYY-MM-DD HH24:MI:SS') caredate
+			FROM STRATEGYCARE s , EMP e
+			WHERE strategyno=#{strategyno}
+			AND s.ID  =e.ID 
+			ORDER BY caredate
+			) C
+			)
+		WHERE cnt BETWEEN #{start} AND #{end}
+	</select>
+	<select id="totCntCare" resultType="int" 
+			parameterType="strategycaresch">
+			select count(*)
+			from strategy
+			where strategyno=#{strategyno}
+	</select>
+	<insert id="insertCare" parameterType="strategycare">
+		INSERT INTO strategycare VALUES
+		(care_seq.nextval, 
+		#{strategyno}, 
+		#{care_content},
+		#{id}, 
+		sysdate)
+  	</insert>
 </mapper>

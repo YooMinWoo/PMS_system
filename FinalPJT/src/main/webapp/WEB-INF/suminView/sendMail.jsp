@@ -59,7 +59,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		  
-			   
+		$("#menu-item-mail").addClass('active open');	
+		$("#menu-item-sendMail").addClass('active');
 	      $("#readAll").click(function(){
 	    	  $("input[name=chk]").prop("checked", true)
 	    	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){

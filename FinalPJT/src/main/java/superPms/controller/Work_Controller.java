@@ -91,10 +91,6 @@ public class Work_Controller {
 	// gantt 연동
 	// http://localhost:7080/FinalPJT/PMSLogin.do
 	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do
-	// monsta@gmail.com
-	// monbebe001
-	// t711txt@gmail.com
-	// 12345
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
 	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {

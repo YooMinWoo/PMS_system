@@ -121,7 +121,7 @@ textarea:read-only{
 		var prjno="${ganttDetail.prjno}"
 		var projectName = "${projectInfo.subject}"
 		$("#callendarBtn").click(function(){
-			let writer="monsta@gmail.com" // 세션에 있는 아이디
+			let writer="${sessmem.id}" // 세션에 있는 아이디
 			let start="${ganttDetail.start_date}"
 			let end = "${ganttDetail.end_date}"
 			let textColor="#ffffff"
@@ -162,10 +162,14 @@ textarea:read-only{
 		alert(msg+" 이전화면으로 이동합니다.");
 		location.href = "${path}/workList.do";
 	}
-	function delRep(no,workno){
-		if(confirm("삭제하시겠습니까?")){
-			location.href="${path}/workRepDel.do?no="+no;		
-			location.href="${path}/workGanttDetail.do?no="+workno;		
+	function delRep(no,workno,id){
+		if(id=="${sessmem.id}"){
+			if(confirm("삭제하시겠습니까?")){
+				location.href="${path}/workRepDel.do?no="+no;		
+				location.href="${path}/workGanttDetail.do?no="+workno;		
+			}
+		}else{
+			alert("작성자만 가능합니다.")
 		}
 	}
 	function callAjax(url,qstr){
@@ -416,10 +420,13 @@ textarea:read-only{
           	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
               <div class="repList">
               	<input type="hidden" name="no" value="${rep.no }">
-                <label class="form-label">${rep.id } (${rep.regdte })</label>
-                <button type="button" class="btn" id="delRep" 
-                	onclick="delRep(${rep.no},${rep.workno})">
+              	<input type="hidden" name="writer" value="${rep.id }">
+                <label class="form-label">${rep.ename } (${rep.regdte })</label>
+                <c:if test="${ganttDetail.state==1}">
+                <button type="button" class="btn" id="delRep"
+                	onclick="delRep(${rep.no},${rep.workno},'${rep.id}')">
                 	<i class="bi bi-x"></i></button>     
+                </c:if>
                 <textarea id="reps" class="form-control" 
                 	rows="3" style="height:80px;" disabled readonly>${rep.cont}
                 </textarea>

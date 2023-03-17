@@ -118,19 +118,22 @@ tbody td{
 			 }
 		})
 		// 삭제 버튼
-		$("#delBtn").click(function(){
-			let url="${path}/delProject.do?prjno="+prjno
-			fetch(url,{method:'POST'}).then(function(response){
-				return response.json()
-			}).then(function(json){
-				console.log(json.msg)
-				if(json.msg=='삭제완료'){
-					alert("프로젝트 삭제되었습니다")
-					location.href="${path}/allProject.do"
-				}
-			}).catch(function(err){
-				console.log(err)
-			})		
+		$("#delBtn").click(function(){		
+			if(confirm("프로젝트를 삭제하시겠습니까?")){
+				let url="${path}/delProject.do?prjno="+prjno
+				fetch(url,{method:'POST'}).then(function(response){
+					return response.json()
+				}).then(function(json){
+					console.log(json.msg)
+					if(json.msg=='삭제완료'){
+						alert("프로젝트 삭제되었습니다")
+						location.href="${path}/allProject.do"
+					}
+				}).catch(function(err){
+					console.log(err)
+				})		
+			}
+			
 		})
 		// 취소 버튼
 		$("#clsBtn").click(function(){

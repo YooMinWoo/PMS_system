@@ -25,4 +25,5 @@ public interface Notice_Dao {
 	public void deleteNoticeRep(NoticeRep sch);
 	public void updateNoticeRep(NoticeRep sch);
 	public int totRepCnt(NoticeRepSch sch);
+	public int filesCnt(String fname);
 }

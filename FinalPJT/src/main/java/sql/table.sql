@@ -292,6 +292,23 @@ references risk(riskno) on delete CASCADE;
 ALTER TABLE solution ADD CONSTRAINT FK_solution_2 FOREIGN KEY(id)
 references emp(id) on delete CASCADE;
 
+CREATE TABLE strategycare(
+	careno NUMBER PRIMARY KEY,
+	STRATEGYNO NUMBER,
+	care_content varchar2(2000),
+	id varchar2(50),
+	caredate DATE
+); 
+
+CREATE SEQUENCE care_seq
+START WITH 1
+MINVALUE 1;
+
+ALTER TABLE strategycare ADD CONSTRAINT FK_strategycare_1 FOREIGN KEY(STRATEGYNO)
+references STRATEGY(STRATEGYNO) on delete CASCADE;
+ALTER TABLE strategycare ADD CONSTRAINT FK_strategycare_2 FOREIGN KEY(id)
+references emp(id) on delete CASCADE;
+
 DROP TABLE gantt;
 CREATE TABLE gantt(
 	id varchar2(100) PRIMARY KEY,

@@ -38,6 +38,13 @@ public class Mail_Service {
 		dao.insReceiver(ins);		
 	}
 	
+	public void reMail(Mail ins,MailFile f) {
+		dao.insSender(ins);
+		dao.insReceiver(ins);
+		dao.insertUploadFile(f);
+	}
+	
+	
 	private void uploadFile(MultipartFile f){
 	    String fname = f.getOriginalFilename();
 	    File fObj = new File(upload+fname);
@@ -59,7 +66,7 @@ public class Mail_Service {
         // 3. 한페이지에 보일 데이터 갯수
         //   - 초기화면 현재 페이지 번호 0 ==> default설정
         if(sch.getPageSize()==0) {
-           sch.setPageSize(15);
+           sch.setPageSize(10);
         }
         // 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
         //    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지
@@ -121,7 +128,7 @@ public class Mail_Service {
         // 3. 한페이지에 보일 데이터 갯수
         //   - 초기화면 현재 페이지 번호 0 ==> default설정
         if(sch.getPageSize()==0) {
-           sch.setPageSize(15);
+           sch.setPageSize(10);
         }
         // 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
         //    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지

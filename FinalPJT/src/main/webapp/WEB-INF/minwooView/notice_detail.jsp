@@ -123,6 +123,11 @@ select:disabled{
 				$("[name=title]").focus()
 				return
 			}
+			if($("[name=title]").val().length>150){
+				alert("제목은 150자 이하로 입력해주세요")
+				$("[name=title]").focus()
+				return
+			}
 			if($("[name=deptid]").val()=="X"){
 				alert("카테고리를 선택해주세요.")
 				return
@@ -156,9 +161,6 @@ select:disabled{
 				$("#formFile").click()
 			}
 		})
-		$("#fileDelBtn").click(function(){
-			
-		})
 		$("#downloadBtn").click(function(){
 			if(confirm("다운로드 하시겠습니까?")){
 				if("${noticeDetail.fname}"){
@@ -178,7 +180,7 @@ select:disabled{
 			}
 		})
 		$("#regRepBtn").click(function(){
-			if($("#repContent").length>150){
+			if($("#repContent").val().length>150){
 				alert("150자 이하로 입력해주세요")
 				$("#repContent").focus()
 				return
@@ -369,7 +371,7 @@ select:disabled{
 			                        <textarea name="content" id="reps" class="form-control" rows="3" style="height:50px;" 
 			                        readonly>${rep.content } </textarea>
 			                        <input type="hidden" id="beforeUpt${rep.repno }" value="${rep.content }">
-			                        <c:if test="${emp.id == rep.writer }">
+			                        <c:if test="${emp.id == rep.writer || emp.auth == 0}">
 			                        	<div class="demo-inline-spacing">
 					                        <div class="btn-group">
 					                          <button

@@ -57,23 +57,12 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		$("#insertBtn").click(function(){			
-			if(confirm("등록하시겠습니까?")){
-				if($("#riskname").val()=="" || $("#risklevel").val()=="" ||
-						$("#riskpriority").val()==""){
-						if($("#riskname").val()=="" )alert("리스크 이름을 입력해주세요")
-						if($("#risklevel").val()=="" )alert("리스크 심각도를 선택해주세요")
-						if($("#riskpriority").val()=="" )alert("리스크 우선순위를 선택해주세요")
-				}else{
-					$("form").attr("action","${path}/project_insertRisk.do");
-					$("form").submit();
-				}
-
-			}
-		})
-		$("#goMain").click(function(){
-			location.href="${path}/project_pagingRisk.do?prjno="+${param.prjno}	
+		
+		
+		$("#goBack").click(function(){
+			location.href="${path}/project_riskDetail.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}	
 		});
+		
 		$("#selLan").val("${param.lang}")
 		$("#selLan").change(function(){
 			if($(this).val()!=""){
@@ -106,66 +95,74 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-           <h4 class="fw-bold py-3 mb-4"><spring:message code="project"/> > <small class="text-muted"><spring:message code="riskmanage"/></small></h4>
-		  	<select class="form-control" id="selLan">
-		  		<option value=""><spring:message code="chlang"/></option>
-		  		<option value="ko"><spring:message code="ko"/></option>
-		  		<option value="en"><spring:message code="en"/></option>
-		  	</select>
+           <h4 class="fw-bold py-3 mb-4">프로젝트 관리 > <small class="text-muted">리스크 관리</small></h4>
            <div class="card mb-4 pb-3">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
-				        <h4 class="text-primary"><spring:message code="riskregistration"/></h4>
+				        <h4 class="text-primary">대응전략 등록</h4>
+				        
 				        <form method="get" class="validation-form" novalidate> 
-				        <input type="hidden" name="lang" value=""/>
-				          <div class="mb-3">
-				            <label for="riskname"><spring:message code="riskname"/></label>
-				            <input name="riskname"
-				            type="text" class="form-control  ckValid" 
-				            id="riskname" placeholder="<spring:message code="writetitle"/>" required>
-						  </div>
+						  <input type="hidden" class="form-control  ckValid" id="riskno" name="riskno" value="${param.riskno }">
+						  <input type="hidden" class="form-control  ckValid" id="prjno" name="prjno" value="${param.prjno }">
 				          <div class="row">      
 					          <div class="col-md-6 mb-3">
-					            <label for="risklevel"><spring:message code="risklevel"/></label>
-					            <select class="form-control" name="risklevel" id="risklevel" required>
-					            	<option value="" selected><spring:message code="choption"/></option>
-					            	<option value="긴급"><spring:message code="emergency"/></option>
-					            	<option value="보통"><spring:message code="common"/></option>
-					            	<option value="낮음"><spring:message code="low"/></option>
-					            </select>
+					            <input class="form-check-input form-control ckValid" type="radio" value="AVOIDANCE" name="risk_strategy" id="AVOIDANCE" >
+								  <label class="form-check-label" for="AVOIDANCE">
+								    AVOIDANCE
+								  </label>
 					          </div> 
 					          <div class="col-md-6 mb-3">
-					            <label for="riskpriority"><spring:message code="riskpriority"/></label>
-					            <select class="form-control" name="riskpriority" id="riskpriority" required>
-					            	<option value="" selected><spring:message code="choption"/></option>
-					            	<option value="1">1</option>
-					            	<option value="2">2</option>
-					            	<option value="3">3</option>
-					            </select>
+					            <input class="form-check-input form-control ckValid" type="radio" value="TRANSFERENCE" name="risk_strategy" id="TRANSFERENCE">
+								  <label class="form-check-label" for="TRANSFERENCE">
+								    TRANSFERENCE
+								  </label>
 					          </div> 	          
-				          </div> 
-				          <div class="row">
-				            <div class="col-md-6 mb-3">
-				              <label for="riskmoniter" ><spring:message code="riskmoniter"/> </label>
-				              <input type="text" name="riskmoniter"  class="form-control"
-				              id="riskmoniter" placeholder="<spring:message code="writemoniter"/>">
-				            </div>
-				            <div class="col-md-6 mb-3">
-				              <label for="riskstate" ><spring:message code="riskstate"/></label>
-					            <select class="form-control" name="riskstate" id="riskstate" required>
-					            	<option value="" selected><spring:message code="choption"/></option>
-					            	<option value="발생" selected><spring:message code="generation"/></option>
-					            	<option value="PM확인"><spring:message code="checkpm"/></option>
-					            	<option value="처리중"><spring:message code="progress"/></option>
-					            	<option value="해결"><spring:message code="solve"/></option>
-					            </select>
-				            </div>
-				          </div>    
-  				          <input type="hidden" id="prjno"  name="prjno" value="${param.prjno}">
-							<input type="hidden" id="id"  name="id" value="${emp.id}">
+				          </div>     
+				          <div class="row">      
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="MITIGATION" name="risk_strategy" id="MITIGATION">
+								  <label class="form-check-label" for="MITIGATION">
+								    MITIGATION
+								  </label>
+					          </div> 
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="ACCEPTANCE" name="risk_strategy" id="ACCEPTANCE">
+								  <label class="form-check-label" for="ACCEPTANCE">
+								    ACCEPTANCE
+								  </label>
+					          </div> 	          
+				          </div>     
+				          <div class="row">      
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="EXPLOIT" name="risk_strategy" id="EXPLOIT">
+								  <label class="form-check-label" for="EXPLOIT">
+								    EXPLOIT
+								  </label>
+					          </div> 
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="SHARE" name="risk_strategy" id="SHARE">
+								  <label class="form-check-label" for="SHARE">
+								    SHARE
+								  </label>
+					          </div> 	          
+				          </div>     
+				          <div class="row">      
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="ENHANCE" name="risk_strategy" id="ENHANCE">
+								  <label class="form-check-label" for="ENHANCE">
+								    ENHANCE
+								  </label>
+					          </div> 
+					          <div class="col-md-6 mb-3">
+					            <input class="form-check-input form-control ckValid" type="radio" value="ACCEPT" name="risk_strategy" id="ACCEPT">
+								  <label class="form-check-label" for="ACCEPT">
+								    ACCEPT
+								  </label>
+					          </div> 	          
+				          </div>     
 				          <div class="mb-4"></div>
-				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button"><spring:message code="regist"/></button>
-				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button"><spring:message code="main"/></button>
+				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button">등록</button>
+				          <button id="goBack" class="btn btn-info   btn-lg btn-block" type="button">이전</button>
 				        </form>
 				      </div>
            		</div>
@@ -208,6 +205,15 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script type="text/javascript">
+    $("#insertBtn").click(function(){			
+		if(confirm("등록하시겠습니까?")){
+			$("form").attr("action","${path}/insertStrategy.do");
+			$("form").submit();
+		}
+	})
+    </script>
   </body>
 </body>
+</html>
 </html>

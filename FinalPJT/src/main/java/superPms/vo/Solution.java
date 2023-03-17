@@ -5,6 +5,7 @@ public class Solution {
 	private int solno;
 	private int riskno;
 	private String ename;
+	private String id;
 	private String solution_content;
 	private String solregdate;
 	public Solution() {
@@ -53,6 +54,14 @@ public class Solution {
 
 	public void setRiskno(int riskno) {
 		this.riskno = riskno;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getEname() {

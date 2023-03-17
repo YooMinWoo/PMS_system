@@ -294,7 +294,8 @@ tbody tr{
 					function category(msg){
 						$("#cateId").text($(msg).text())
 						$("[name=deptid]").val($(msg).text())
-						
+						$("[name=curPage]").val(0)
+						$("#frm01").submit()
 					}
 					
 					

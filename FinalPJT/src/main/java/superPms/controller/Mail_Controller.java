@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import superPms.service.Alert_Service;
 import superPms.service.Mail_Service;
 import superPms.vo.Mail;
+import superPms.vo.MailFile;
 import superPms.vo.MailSch;
 import superPms.vo.SuperEmpDept;
    
@@ -24,7 +25,7 @@ public class Mail_Controller {
 	private Mail_Service service;
 	@Autowired
 	private Alert_Service alert_service;
-	@Value("${mail.upload}")
+	@Value("${mail.upload}") 
 	private String upload;
 	
 	// http://localhost:7080/FinalPJT/PMSLogin.do
@@ -55,7 +56,14 @@ public class Mail_Controller {
 		d.addAttribute("mySendMail", service.mySendMail(sch));
 		return "WEB-INF\\suminView\\mySendMail.jsp";
 	}
-	
+	// 전달,답장 메일 보내기
+	@RequestMapping("/reMail.do")
+	public String reMail(Mail ins,MailFile f,Model d) {
+		service.reMail(ins,f);
+		d.addAttribute("msg", "메일 전송이 완료되었습니다.");
+		
+		return "WEB-INF\\suminView\\completeMail.jsp";
+	}
 	@RequestMapping("/sendDetail.do")
 	public String sendDetail(@RequestParam("mailno")int mailno,Model d) {
 		d.addAttribute("sendDetail", service.sendDetail(mailno));
@@ -106,6 +114,7 @@ public class Mail_Controller {
 	@RequestMapping("/reSendMail.do")
 	public String reSendMail(@RequestParam("mailno")int mailno,Model d) {
 		d.addAttribute("reMail", service.sendDetail(mailno));
+		d.addAttribute("fname", service.getMailFile(mailno));
 		return "WEB-INF\\suminView\\reSendMail.jsp";
 	}
 	

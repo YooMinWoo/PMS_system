@@ -179,10 +179,10 @@ tbody td{
           <!--  프로젝트table -->
 			  <table class="table card-table table-hover" style="overflow: hidden;">
 			  <col width="13%">
-			  <col width="40%">
+			  <col width="30%">
 			  <col width="17%">
 			  <col width="17%">
-			  <col width="13%">
+			  <col width="23%">
 			    <thead>
 			      <tr>
 			        <th>카테고리</th>
@@ -190,18 +190,21 @@ tbody td{
 			        <th>멤버수</th>
 			        <th>담당 파트</th>
 			        <th>관리</th>
+			        <th> </th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 			      <c:forEach var="myp" items="${list}">
-			      <tr ondblclick="goProjectMain(${myp.prjno})">
+			      <tr>
 			      <td>${myp.dname }</td><td>${myp.subject }</td><td>${myp.cnt }</td><td>${myp.part }</td>
 			       <td>
+			       <button id="entBtn" onclick="goProjectMain(${myp.prjno})" type="button" class="btn btn-sm btn-primary">
+			      이동</button>
 			       <c:if test="${myp.tlid != sessionScope.emp.id }">
-			       <button id="outBtn" onclick="out('${myp.prjno}','${sessionScope.emp.id}','${myp.subject }')" type="button" class="btn btn-sm btn-secondary">나가기</button>
+			       <button id="outBtn" onclick="out('${myp.prjno}','${sessionScope.emp.id}','${myp.subject }')" type="button" class="btn btn-sm btn-warning">나가기</button>
 				   </c:if>
 				   <c:if test="${myp.tlid == sessionScope.emp.id }">
-			       <button id="uptBtn" onclick="upt('${myp.prjno}')" type="button" class="btn btn-sm btn-primary">설정</button>
+			       <button id="uptBtn" onclick="upt('${myp.prjno}')" type="button" class="btn btn-sm btn-secondary">설정</button>
 			       </c:if>
 			       </td>
 			       </tr>
