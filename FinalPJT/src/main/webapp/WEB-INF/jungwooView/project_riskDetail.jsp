@@ -129,13 +129,7 @@
 			}
 		})
 		$("#insertBtn").click(function(){
-			if($("[name=riskstate]").val()!="PM확인"){
-				$("[name=riskstate]").val("처리중")
-				$("#form2").attr("action","${path}/insertSol.do");
-				
-			}else{
-				$("#form2").attr("action","${path}/insertSol.do?prjno="+${param.prjno});
-			}
+			$("#form2").attr("action","${path}/insertSol.do?prjno="+${param.prjno}+"&riskno="+${param.riskno});
 			$("#form2").submit();
 		})
 		console.log($("#risk_strategy").val())
@@ -220,17 +214,17 @@
 				              <label for="riskmoniter" >모니터링 </label>
 				              <input type="text" name="riskmoniter"  class="form-control" 
 				              		value="${risk.riskmoniter }" id="riskmoniter" >
-				              <div class="invalid-feedback">
-				                입력해주세요.
-				              </div>
 				            </div>
 				            <div class="col-md-6 mb-3">
-				              <label for="riskstate" >리스크상태</label>
-				              <input type="text" name="riskstate"  class="form-control" 
-				              		value="${risk.riskstate }" id="riskstate" >
-				              <div class="invalid-feedback">
-				                입력해주세요.
-				              </div>
+				              <label for="riskstate" >리스크 상태</label>
+					            <select class="form-control" name="riskstate" id="riskstate" required>
+					            	<option value="발생" selected disabled value="${risk.riskstate }">${risk.riskstate }</option>
+					            	<option disabled="disabled">--------------------------------------------------------------------------------------</option>
+					            	<option value="발생">발생</option>
+					            	<option value="PM확인">PM확인</option>
+					            	<option value="처리중">처리중</option>
+					            	<option value="해결">해결</option>
+					            </select>
 				            </div>
 				          </div> 
 				          <div class="mb-4"></div>
@@ -285,7 +279,6 @@
 				          	<form method="post" id="form2" class="validation-form" novalidate>
 				            	<label for="solution_content">의견</label>
 				            	<input type="hidden" name="id" value="${emp.id }">
-				            	<input type="hidden" name="riskno" value="${param.riskno }">
 				            	<div class="sol_content_contain">
 				            		<input name="solution_content" type="text" class="form-control  ckValid" 
 				            			id="solution_content" placeholder="의견을 제시해주세요" required>

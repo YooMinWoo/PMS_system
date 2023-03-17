@@ -371,7 +371,7 @@ select:disabled{
 			                        <textarea name="content" id="reps" class="form-control" rows="3" style="height:50px;" 
 			                        readonly>${rep.content } </textarea>
 			                        <input type="hidden" id="beforeUpt${rep.repno }" value="${rep.content }">
-			                        <c:if test="${emp.id == rep.writer }">
+			                        <c:if test="${emp.id == rep.writer || emp.auth == 0}">
 			                        	<div class="demo-inline-spacing">
 					                        <div class="btn-group">
 					                          <button
