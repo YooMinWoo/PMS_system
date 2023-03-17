@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Alert_Service;
 import superPms.service.Chart_Service;
 import superPms.vo.BarChart;
 import superPms.vo.SuperEmpDept;
@@ -16,10 +17,14 @@ import superPms.vo.SuperEmpDept;
 public class Chart_Controller {
 	@Autowired(required = false)
 	private Chart_Service service;
+	@Autowired
+	private Alert_Service alert_service;
+	
 	
 	@GetMapping("/PMSMain.do")
-	public String PMSMain(HttpSession session) {
+	public String PMSMain(HttpSession session, Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\wonjuView\\pmsMain.jsp";
 	}
 	@GetMapping("/chartShow.do")

@@ -79,6 +79,9 @@ tbody td{
 				$("#myFrm").submit()
 			}
 		})
+		$("#schBtn").click(function(){
+			$("#myFrm").submit()
+		})		
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
 			$("[name=keyword]").val("")
@@ -167,6 +170,7 @@ tbody td{
 	            <input type="hidden" name="isCon" value="${sch.isCon }">
 	            <input type="hidden" name="curPage" value="${sch.curPage }">
 	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="프로젝트명으로 검색">
+	            <button class="btn btn-outline-primary" type="button" id="schBtn">검색</button>	            
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->

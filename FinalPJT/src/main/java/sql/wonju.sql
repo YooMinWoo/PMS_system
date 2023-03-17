@@ -292,7 +292,7 @@ DELETE FROM projectmember WHERE prjno=66 AND owner='emp7@gmail.com';
 
 SELECT * FROM dept WHERE PARENTDEPT IS null;
 SELECT * FROM CALENDAR;
-SELECT * FROM PROJECT;
+SELECT * FROM PROJECT WHERE lower(subject) LIKE '%'||lower('d')||'%';
 SELECT d.dname, e.job, e.ename FROM dept777 d, emp777 e, project p
 WHERE p.PRJNO =51 AND e.id=p.TLID AND e.DEPTID =d.DEPTID ;
 SELECT d.dname,e.job, m.part, e.ename FROM dept777 d, emp777 e, projectmember m

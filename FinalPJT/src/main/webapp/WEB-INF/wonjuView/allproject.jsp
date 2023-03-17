@@ -69,6 +69,10 @@ tbody td{
 				$("#allFrm").submit()
 			}
 		})
+		$("#schBtn").click(function(){
+			$("#allFrm").submit()
+		})
+		
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
 			$("[name=keyword]").val("")
@@ -134,7 +138,8 @@ tbody td{
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
 	            <input type="hidden" name="isCon" value="${sch.isCon }">
 	            <input type="hidden" name="curPage" value="${sch.curPage }">
-	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="검색어를 입력하세요">
+	            <input type="text" name="keyword" value="${sch.keyword }" class="form-control" placeholder="프로젝트명 또는 pm명으로 검색">
+	            <button class="btn btn-outline-primary" type="button" id="schBtn">검색</button>
 	          </div>
 	       </form>
 	       <!-- /form 끝 -->

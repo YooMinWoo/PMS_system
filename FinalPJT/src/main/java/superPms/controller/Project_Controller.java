@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Alert_Service;
 import superPms.service.Chart_Service;
 import superPms.service.Gantt_Service;
 import superPms.service.Project_Service;
@@ -32,6 +33,8 @@ public class Project_Controller {
 	private Gantt_Service ganttService;
 	@Autowired(required = false)
 	private Chart_Service chartService;	
+	@Autowired
+	private Alert_Service alert_service;
 	@ModelAttribute("deptCom")
 	public List<SuperDept> deptCom(){
 		return service.deptCom();
@@ -40,9 +43,8 @@ public class Project_Controller {
 	@RequestMapping("/allProject.do")
 	public String allProject(@ModelAttribute("sch") ProjectSch sch,Model d,HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-		System.out.println(sch.getKeyword());
-		System.out.println(sch.getIsCon());
 		sch.setAuth(sObj.getAuth());
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("list",service.allProject(sch));
 		return "WEB-INF\\wonjuView\\allproject.jsp";
 	}
@@ -50,7 +52,8 @@ public class Project_Controller {
 	@RequestMapping("/myProject.do")
 	public String myProject(@ModelAttribute("sch") ProjectSch sch,Model d,HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-		sch.setOwner(sObj.getId()); //세션에 있는 로그인한 아이디를 owner에 넣기
+		sch.setOwner(sObj.getId());
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("list",service.myProject(sch));
 		return "WEB-INF\\wonjuView\\myproject.jsp";
 	}
@@ -62,8 +65,9 @@ public class Project_Controller {
 	}
 	// 프로젝트 등록 화면
 	@GetMapping("/newProjectShow.do")
-	public String newProjectShow(HttpSession session) {
+	public String newProjectShow(HttpSession session, Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\wonjuView\\newproject.jsp";
 	}
 	// 프로젝트 등록 프로세스
@@ -84,6 +88,7 @@ public class Project_Controller {
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",ganttService.showGantt(g));
 		d.addAttribute("memList",service.memberList(prjno));
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\wonjuView\\project_main.jsp";
 	}
 	// 프로젝트 PM + 멤버정보
@@ -103,9 +108,11 @@ public class Project_Controller {
 	}
 	// 프로젝트 수정화면 초기호출
 	@GetMapping("/uptProject.do")
-	public String uptProject(@RequestParam("prjno") int prjno,Model d) {
+	public String uptProject(@RequestParam("prjno") int prjno,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttDate",ganttService.getMinMaxDate(prjno));
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\wonjuView\\uptproject.jsp";
 	}
 	// 프로젝트 수정 프로세스
