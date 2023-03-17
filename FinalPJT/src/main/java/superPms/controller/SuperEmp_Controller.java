@@ -83,7 +83,7 @@ public class SuperEmp_Controller {
 		service.uptEmp(upt);
 		// 수정된 이후에 데이터를 로딩 처리
 		d.addAttribute("authSet", service.getAuthSetting(upt.getId()));
-		return "WEB-INF\\eunbeenView\\authSetting.jsp";
+		return "redirect:/getEmpListPage.do";
 	} 
 	// 로그인
 	// http://localhost:5080/FinalPJT/PMSLogin.do
