@@ -180,7 +180,7 @@ select:disabled{
 			}
 		})
 		$("#regRepBtn").click(function(){
-			if($("#repContent").length>150){
+			if($("#repContent").val().length>150){
 				alert("150자 이하로 입력해주세요")
 				$("#repContent").focus()
 				return
