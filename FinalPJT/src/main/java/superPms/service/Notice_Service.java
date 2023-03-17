@@ -106,8 +106,10 @@ public class Notice_Service {
 	
 	public void deleteFile(Notice f) {
 		File file = new File(f.getPath() + f.getFname());
-		if(file.exists()) { // 파일이 존재하면
-			file.delete(); // 파일 삭제	
+		if(dao.filesCnt(f.getFname())==1) {
+			if(file.exists()) { // 파일이 존재하면
+				file.delete(); // 파일 삭제	
+			}
 		}
 	}
 	
