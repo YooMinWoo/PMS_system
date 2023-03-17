@@ -124,6 +124,15 @@ public class Mail_Controller {
 		return "WEB-INF\\suminView\\replyMail.jsp";
 	}
 	
-	
+	@RequestMapping("/receiverChkAjax.do")
+	public String receiverChkAjax(@RequestParam("receiver")String receiver,Model d) {
+		if(service.receiverChk(receiver)!=null) {
+			d.addAttribute("msg", "수신자 확인이 완료되었습니다.");
+		}else {
+			d.addAttribute("msg", "없는 수신자입니다.");
+		}
+		
+		return "pageJsonReport";
+	}
 	
 }

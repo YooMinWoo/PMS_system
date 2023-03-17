@@ -114,6 +114,12 @@ public class Work_Controller {
 		}
 		return "WEB-INF\\jongeunView\\workGanttDetail.jsp";
 	}
+	// 진행률 수정
+	@PostMapping("/progress.do")
+	public String progress(@ModelAttribute("upt") Gantt upt, HttpSession session) {
+		service.progress(upt);
+		return "redirect:/workGanttDetail.do?no="+upt.getId();
+	}
 	// 추가 담당자
 	@RequestMapping("/prjMemList.do")
 	public String prjMemList(@RequestParam("prjno") int prjno,

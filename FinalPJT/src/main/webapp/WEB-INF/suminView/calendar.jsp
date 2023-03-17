@@ -147,10 +147,14 @@
     	 }
      })
      $("[name=urllink]").dblclick(function(){
- 		if(confirm("페이지 이동하시겠습니까?")){
- 			window.open($(this).val())
- 			
- 		}
+    	 var urlLeng = $("[name=urllink]").val().length
+    	if(urlLeng>0){
+    		if(confirm("페이지 이동하시겠습니까?")){
+     			window.open($(this).val())
+     			
+     		}
+    	}
+ 		
  	})		
  	
  	$("#getProSch").click(function(){
@@ -354,12 +358,12 @@
                                 <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="startWithTitle" class="form-label">시작일</label>
-                                    <input type="text" id="start" class="form-control"/>
+                                    <input type="text" id="start" class="form-control" readOnly/>
                                     <input type="hidden" name="start" class="form-control"/>
                                   </div>
                                   <div class="col mb-0">
                                     <label for="endWithTitle" class="form-label">종료일</label>
-                                    <input type="text" id="end" class="form-control"/>
+                                    <input type="text" id="end" class="form-control" readOnly/>
                                     <input type="hidden" name="end" class="form-control"/>
                                   </div>
                                 </div>

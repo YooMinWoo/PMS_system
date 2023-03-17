@@ -101,4 +101,8 @@
 	<select id="getFname" parameterType="string" resultType="string">
 		select fname from mailfile where mailfno=#{mailno}
 	</select>
+	
+	<select id="receiverChk" parameterType="string" resultType="superempdept">
+		SELECT * FROM emp WHERE id=#{receiver}
+	</select>
 </mapper>
