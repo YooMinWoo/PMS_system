@@ -109,7 +109,7 @@
 	
 	<select id="filesCnt" parameterType="string" resultType="int">
 		SELECT count(*) FROM files
-		WHERE fname LIKE #{fname}||'.%'
+		WHERE fname = #{fname}
 	</select>
 	
 	<!-- 파일 첨부된 공지사항의 경우 파일 삭제 -->
