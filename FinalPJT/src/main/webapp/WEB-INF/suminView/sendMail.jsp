@@ -72,8 +72,13 @@
 	    	  location.reload()
 	      })
 	  
-			   
-			   
+	    var reChk = false
+	    $("#receiverChk").click(function(){
+	    	var receiver = $("[name=receiver]").val()
+	    	chkAjax(receiver)
+	    
+	    })
+			 
 		$("#sendBtn").click(function(){
 			let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
 			var receiver = $("[name=receiver]").val()
@@ -83,6 +88,9 @@
 				return
 			}	
 			
+			if(!reChk){
+				return
+			}
 			if($("[name=receiver]").val()==""){
 				alert("수신자를 입력하세요")
 				$("[name=receiver]").focus()
@@ -112,6 +120,21 @@
 			$("form").submit()
 		})
 		
+		function chkAjax(receiver){
+	      	$.ajax({
+	      		type:"post",
+	      		url:"${path}/receiverChkAjax.do?receiver="+receiver,
+	      		dataType:"json",
+	      		success:function(data){
+	      			alert(data.msg)
+	      			reChk = true
+	      			
+	      		},
+	      		error:function(err){
+	      			console.log(err)
+	      		}
+	      	})
+	      }
 		
 	});
 	
@@ -124,6 +147,7 @@
 	   location.reload()   
     }
 
+    
 </script>
 </head>
 
@@ -195,7 +219,7 @@
                <!-- /alert -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1"> 
-                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">홍길동</span>
+                <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">${emp.ename }</span>
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                    <div class="avatar avatar-online">
                       <svg>
@@ -240,8 +264,11 @@
                       <form class="form" enctype="multipart/form-data" action="${path }/sendMail.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-receiver">수신자</label>
-		                <input id="receiverChk" type="text" name="receiver" 
+                         <div style="display: flex; gap:10px;">
+		                <input  type="text" name="receiver" 
 		                class="form-control" id="basic-default-receiver"/>
+		                <button id="receiverChk" type="button" class="btn btn-primary" style="width:18%">수신자 확인</button>
+		                </div>
                         </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>

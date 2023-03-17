@@ -12,6 +12,7 @@ import superPms.dao.Mail_Dao;
 import superPms.vo.Mail;
 import superPms.vo.MailFile;
 import superPms.vo.MailSch;
+import superPms.vo.SuperEmpDept;
 
 
 @Service
@@ -236,7 +237,9 @@ public class Mail_Service {
 		}
 	}
 	
-	
+	public SuperEmpDept receiverChk(String receiver) {
+		return dao.receiverChk(receiver);
+	}
 	 
 	
 }

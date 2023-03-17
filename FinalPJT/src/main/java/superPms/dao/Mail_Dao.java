@@ -48,4 +48,6 @@ public interface Mail_Dao {
 	
 	public MailFile getFileState(String mailno);
 	
+	public SuperEmpDept receiverChk(String receiver);
+	
 }
