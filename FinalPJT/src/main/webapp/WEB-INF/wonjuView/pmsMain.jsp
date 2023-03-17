@@ -196,7 +196,7 @@
 						    height: 200
 						  },
 						  series: pmArr,
-						  labels: ['가용pm','비가용pm'],
+						  labels: ['대기pm','투입pm'],
 						  legend: {
 						    position: 'bottom',
 						  },
@@ -208,7 +208,7 @@
 						    height: 200
 						  },
 						  series: empArr,
-						  labels: ['비참여직원','참여직원'],
+						  labels: ['대기개발자','투입개발자'],
 						  legend: {
 						    position: 'bottom',
 						  },

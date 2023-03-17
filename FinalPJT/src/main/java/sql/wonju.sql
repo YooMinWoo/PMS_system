@@ -52,10 +52,19 @@ SELECT * FROM CALENDAR;
 -- 프로젝트
 
 SELECT * FROM emp;
+SELECT ename, id, dname FROM emp e, dept d WHERE e.DEPTID =d.DEPTID AND d.DNAME LIKE '%'||'개발'||'%';
 SELECT * FROM project;
+SELECT DISTINCT OWNER, ename FROM PROJECTMEMBER m, emp e WHERE e.id=m.OWNER;
 SELECT * FROM gantt;
 -- 프로젝트별 투입된 인원표시
 SELECT prjno,count(owner) AS cnt FROM PROJECTMEMBER GROUP BY prjno;
+-- 개발자 전체 인원(pm제외)
+SELECT count(id) AS cnt FROM emp e, dept d 
+WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%';
+-- 현재 프로젝트에 참여중인 개발자 인원수(pm제외)
+SELECT count(DISTINCT id) AS cnt FROM emp e, dept d, PROJECT p, PROJECTMEMBER m 
+WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%'
+AND p.PRJNO =m.PRJNO AND m.OWNER =e.ID AND p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd');
 -- 전체 pm의 숫자
 SELECT count(*) AS cnt FROM emp WHERE AUTH =2;
 -- 현재 프로젝트 진행중인 pm 숫자
@@ -65,10 +74,12 @@ SELECT 'totPM' AS subject, count(*) AS cnt FROM emp WHERE AUTH = 2
 UNION ALL
 SELECT 'proPM' AS subject, count(DISTINCT tlid) AS cnt FROM PROJECT p WHERE p.DEADLINE >= TO_CHAR(sysdate,'yyyy-mm-dd');
 
-SELECT 'totEmp' AS subject, count(*)-1 AS cnt FROM emp
+SELECT 'totEmp' AS subject, count(id) AS cnt FROM emp e, dept d 
+WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%'
 UNION ALL 
-SELECT 'proEmp' AS subject, count(DISTINCT m.OWNER) AS cnt  FROM PROJECTmember m, project p 
-WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO;
+SELECT 'proEmp' AS subject, count(DISTINCT id) AS cnt FROM emp e, dept d, PROJECT p, PROJECTMEMBER m 
+WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%'
+AND p.PRJNO =m.PRJNO AND m.OWNER =e.ID AND p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd');
 
 SELECT DISTINCT a.avgs,p.subject, substr(p.deadline,6,5) AS deadline
 	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 

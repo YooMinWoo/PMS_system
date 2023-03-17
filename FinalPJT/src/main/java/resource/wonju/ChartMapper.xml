@@ -45,10 +45,12 @@
 	</select>
 	
 	<select id="infoEmp" resultType="bar">
-	SELECT 'totEmp' AS subject, count(*)-1 AS cnt FROM emp
+	SELECT 'totEmp' AS subject, count(id) AS cnt FROM emp e, dept d 
+	WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%'
 	UNION ALL 
-	SELECT 'proEmp' AS subject, count(DISTINCT m.OWNER) AS cnt  FROM PROJECTmember m, project p 
-	WHERE p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd') AND p.PRJNO =m.PRJNO
+	SELECT 'proEmp' AS subject, count(DISTINCT id) AS cnt FROM emp e, dept d, PROJECT p, PROJECTMEMBER m 
+	WHERE NOT e.AUTH IN 2 and d.DEPTID =e.DEPTID AND d.DNAME LIKE '%'||'개발'||'%'
+	AND p.PRJNO =m.PRJNO AND m.OWNER =e.ID AND p.DEADLINE >=TO_CHAR(sysdate,'yyyy-mm-dd')
 	</select>
 	
 	<select id="infoRisk" resultType="bar">
