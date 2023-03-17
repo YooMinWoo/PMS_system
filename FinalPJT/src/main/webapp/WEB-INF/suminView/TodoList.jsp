@@ -60,6 +60,9 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#menu-item-mypage").addClass('active open');	
+		$("#menu-item-mypage-todolist").addClass('active');
+		
 		var vm = new Vue({
 			el:".container",
 			data:{todo:"",todoList:[]},

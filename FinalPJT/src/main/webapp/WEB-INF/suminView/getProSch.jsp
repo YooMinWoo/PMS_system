@@ -120,7 +120,7 @@
                         <td>${pm.subject }</td>
                         <td>${pm.regdte }</td>
                         <td>${pm.deadline }</td>
-                        <td><button onclick="addBtn('${pm.subject }','${pm.regdte }','${pm.deadline }')" 
+                        <td><button onclick="addBtn('${pm.subject }','${pm.regdte }','${pm.deadline}')" 
                         type="button" class="btn rounded-pill btn-primary">추가</button></td>
                       </tr>
                       </c:forEach>
