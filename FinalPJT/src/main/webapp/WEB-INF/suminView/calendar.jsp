@@ -120,6 +120,9 @@
 
     calendar.render();
     
+    $("#menu-item-mypage").addClass('active open');	
+	$("#menu-item-mypage-calendar").addClass('active');
+	
     $("#allDay").change(function(){
    		$("[name=allDay]").val($(this).val()=='true'?1:0)
    	})
@@ -351,12 +354,12 @@
                                 <div class="row g-2">
                                   <div class="col mb-0">
                                     <label for="startWithTitle" class="form-label">시작일</label>
-                                    <input type="text" id="start" class="form-control" readOnly/>
+                                    <input type="text" id="start" class="form-control"/>
                                     <input type="hidden" name="start" class="form-control"/>
                                   </div>
                                   <div class="col mb-0">
                                     <label for="endWithTitle" class="form-label">종료일</label>
-                                    <input type="text" id="end" class="form-control" readOnly/>
+                                    <input type="text" id="end" class="form-control"/>
                                     <input type="hidden" name="end" class="form-control"/>
                                   </div>
                                 </div>

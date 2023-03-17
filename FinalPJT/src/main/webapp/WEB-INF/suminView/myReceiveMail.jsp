@@ -62,6 +62,10 @@ a.hover{
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		
+		$("#menu-item-mail").addClass('active open');	
+		$("#menu-item-mailbox").addClass('active');
+		
 		$("#readBtn").click(function(){
 			 var chkArray = new Array()
 		    $("input[name=chk]:checked").each(function() { 

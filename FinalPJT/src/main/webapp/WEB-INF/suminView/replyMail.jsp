@@ -59,6 +59,14 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#sendBtn").click(function(){
+			let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
+			var receiver = $("[name=receiver]").val()
+			var result = regex.test(receiver)
+			if(result==false){
+				alert("수신자의 이메일 형식을 올바르게 입력하세요")
+				return
+			}	
+			
 			if($("[name=receiver]").val()==""){
 				alert("수신자를 입력하세요")
 				$("[name=receiver]").focus()
@@ -74,9 +82,20 @@
 				$("[name=content]").focus()
 				return
 			}
+			var titleLeng =  $("[name=title]").val().length
+			var contentLeng =  $("[name=content]").val().length
+			if(titleLeng>30){
+				alert("제목은 30자 이내로 입력하세요")
+				return
+			}
+			if(contentLeng>1000){
+				alert("내용은 1000자 이내로 입력하세요")
+				return 
+			}
 			
 			$("form").submit()
 		})
+		
 		
 		
 		
@@ -115,7 +134,7 @@
                      
                     </div>
                     <div class="card-body">
-                      <form class="form" enctype="multipart/form-data" action="${path }/sendMail.do" method="post">
+                      <form class="form" enctype="multipart/form-data" action="${path }/reMail.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-receiver">수신자</label>
                           <input type="text" name="receiver" class="form-control" id="basic-default-receiver"
@@ -151,7 +170,7 @@
                         </div>
                         <div class="mb-3">
 	                        <label for="formFile" class="form-label">첨부파일</label>
-	                        <input class="form-control" type="file" id="formFile" name="report" value="${reMail.fname }"/>
+	                        <input class="form-control" type="text" id="formFile" name="fname" value="${reMail.fname }"/>
 	                      </div>
                       </form>
                     </div>

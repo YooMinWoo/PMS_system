@@ -59,7 +59,7 @@
 	</select>
 	
 	<select id="getMailFile" parameterType="int" resultType="string">
-		SELECT fname FROM MAILFILE where mailfno=#{mailfno}
+		SELECT fname FROM MAILFILE where mailfno=#{mailno}
 	</select>
 	
 	

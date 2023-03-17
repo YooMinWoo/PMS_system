@@ -65,6 +65,8 @@ a.hover{
 <script type="text/javascript">
 	
 	$(document).ready(function(){
+		$("#menu-item-mail").addClass('active open');	
+		$("#menu-item-sentMailbox").addClass('active');
 		
 		$("#delBtn").click(function(){
 			 var chkArray = new Array()
