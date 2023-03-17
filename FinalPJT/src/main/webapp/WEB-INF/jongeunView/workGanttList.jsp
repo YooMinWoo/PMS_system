@@ -136,7 +136,7 @@ td{text-align:center;}
 			    </thead>
 			    <tbody class="table-border-bottom-0">
 		        <c:forEach var="g" items="${ganttInfo }">
-		        <tr onclick="goWork(${g.id})">
+		        <tr ondblclick="goWork(${g.id})">
 		        <td>${g.cnt }</td>
 		        <td>${g.text }</td><td>${g.owner }</td>
 		        <td>${g.start_date }</td>
@@ -163,6 +163,7 @@ td{text-align:center;}
         </div>
           <div class="d-flex justify-content-center">
           <!-- Basic Pagination --> 
+          <c:if test="${sch.startBlock>0 }">
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
@@ -182,6 +183,7 @@ td{text-align:center;}
               </li>
             </ul>
           </nav>
+          </c:if>
           <!--/ Basic Pagination -->
          
    		 </div>   

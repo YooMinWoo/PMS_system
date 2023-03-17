@@ -97,13 +97,12 @@
 	<select id="showGantt" resultType="gantt" parameterType="ganttsch">
 		SELECT *
 		FROM (SELECT rownum cnt, g.* 
-			FROM gantt g, project p 
-			WHERE g.PRJNO =p.PRJNO
+			FROM (SELECT * FROM gantt ORDER BY START_date) g, project p 
+			WHERE g.PRJNO = p.PRJNO
 			AND p.prjno=#{prjno}
 			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
-		ORDER BY START_date
 	</select>
 	<select id="totGanttCnt" resultType="int" parameterType="ganttsch">
 		SELECT count(*) 
