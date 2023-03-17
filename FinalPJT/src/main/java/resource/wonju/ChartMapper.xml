@@ -9,7 +9,7 @@
 	FROM (SELECT ROUND(Avg(PROGRESS)*100,1) AS avgs ,prjno FROM gantt GROUP BY prjno) a, 
 	project p
 	WHERE a.prjno=p.prjno AND TO_NUMBER(substr(p.DEADLINE,0,4))=#{year} 
-	<!-- AND TO_NUMBER(SUBSTR(p.deadline,6,2))=#{month} -->
+	AND TO_NUMBER(SUBSTR(p.deadline,6,2))=#{month}
 	ORDER BY deadline desc
 	</select>
 	

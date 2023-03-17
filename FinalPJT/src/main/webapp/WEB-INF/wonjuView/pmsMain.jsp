@@ -193,7 +193,7 @@
 			 var pmOptions = {
 					  chart: {
 						    type: 'pie',
-						    height: 200
+						    height: 170
 						  },
 						  series: pmArr,
 						  labels: ['대기pm','투입pm'],
@@ -205,7 +205,7 @@
 			 var empOptions = {
 					  chart: {
 						    type: 'pie',
-						    height: 200
+						    height: 170
 						  },
 						  series: empArr,
 						  labels: ['대기개발자','투입개발자'],
@@ -334,14 +334,16 @@
 		  </div>
 		
 		  <div class="col-lg-6 col-md-12 order-1">
-		    <div class="row">
+		    <div class="row"> 
 		      <div class="col-lg-9 col-md-8 col-12 mb-4">
 		        <div class="card">
 			        <div class="row row-bordered g-0">
 			        	<div class="col-6">
+			        	 <p class="pt-1 px-2 m-0">PM 현황</p>
 				         <div id="pmChart"></div>
 				         </div>
 				         <div class="col-6">
+				         <p class="pt-1 px-2 m-0">개발자 현황</p>
 				         <div id="empChart"></div> 
 				          </div>
 			         </div>
@@ -373,9 +375,9 @@
 	           <div class="card">
 	           	<div class="row">
 	           	<div class="col-8">
-	           		<h5 class="card-header m-0 me-2 pb-3">프로젝트 진행률</h5>
+	           		<h5 class="card-header m-0 me-2 pb-3">이번달 프로젝트 진행률</h5>
 	           	</div>
-	           	
+	           	<!--  
 	           	<div class="col-4 d-flex justify-content-center">
 			           <select id="year" name="year" class="form-select form-select-sm align-self-center">
 			            <c:forEach begin="2022" end="2023" var="years">
@@ -388,7 +390,7 @@
 			            </c:forEach>
 			          </select>
 	             </div>	              
-
+				-->
 	           	</div>
 	         	  <div id="progChart"></div>
 	           </div>
@@ -396,12 +398,12 @@
        	 
           	 <div class="col-12 col-lg-4 order-4 order-md-4">
 	          	  <div class="card mb-4">
-	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">부서별 프로젝트</h5>
+	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">진행중 프로젝트</h5>
 	           		<div id="deptChart"></div>
 	         	 </div>
 	         	 
 	         	 <div class="card mb-4">
-	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">리스크 관리</h5>
+	          	  <h5 class="card-header m-0 me-2 pb-3 mb-4">발생된 리스크</h5>
 	           		<div id="liskChart"></div>
 	         	 </div>
          	</div>
