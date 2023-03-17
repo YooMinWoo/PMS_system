@@ -6,15 +6,21 @@
 <mapper namespace="superPms.dao.Alert_Dao">
 
 	<select id="alertList" parameterType="string" resultType="alert">
-		select * from alert where id=#{id} AND state='읽지않음'
+		SELECT a.*, b.cnt
+		FROM ALERT a, (SELECT count(*) cnt
+		   FROM ALERT
+		WHERE id = #{id}
+		AND state='0') b
+		WHERE id = #{id}
+		AND state='0'
 	</select>
 	
 	<select id="alertCount" parameterType="string" resultType="int">
-		SELECT count(no) alertCount FROM alert WHERE id=#{id} AND state='읽지않음'
+		SELECT count(no) alertCount FROM alert WHERE id=#{id} AND state='0'
 	</select>
 	
 	<update id="alertState" parameterType="int">
-		UPDATE alert SET state='읽음' WHERE no=#{no}
+		UPDATE alert SET state='1' WHERE no=#{no}
 	</update>
 	
 	<delete id="alertDelete" parameterType="int">

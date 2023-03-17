@@ -117,10 +117,14 @@ a.hover{
 			}
 		})
 		
-		$("#allChk").click(function(){
-		
+		var cnt = 0 
+		$("#allChk").click(function(){	
 			$("input[name=chk]").prop("checked", true)
-		})
+			cnt++
+			if(cnt%2==0){
+				$("input[name=chk]").prop("checked", false)
+			}
+		})  
 		
 	})
 	function goPage(cnt){

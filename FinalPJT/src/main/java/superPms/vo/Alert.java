@@ -8,13 +8,14 @@ public class Alert {
 	private String id;
 	private String state;
 	private String style;
-	private int alertCount;
+	private int cnt;
 	
-	public int getAlertCount() {
-		return alertCount;
+	
+	public int getCnt() {
+		return cnt;
 	}
-	public void setAlertCount(int alertCount) {
-		this.alertCount = alertCount;
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	public String getStyle() {
 		return style;

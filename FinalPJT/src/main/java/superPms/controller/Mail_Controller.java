@@ -29,13 +29,15 @@ public class Mail_Controller {
 	private String upload;
 	
 	// http://localhost:7080/FinalPJT/PMSLogin.do
+	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do
+	
 	//http://localhost:7080/FinalPJT/sendMail.do
 	
 	@GetMapping("/sendMail.do")
 	public String sendMail(HttpSession session,Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
-	    d.addAttribute("alertCount", alert_service.alertCount(sObj.getId()));
+	   // d.addAttribute("alertCount", alert_service.alertCount(sObj.getId()));
 		return "WEB-INF\\suminView\\sendMail.jsp";
 	}
 	  

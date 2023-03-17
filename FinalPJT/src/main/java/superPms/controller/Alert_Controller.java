@@ -24,7 +24,7 @@ public class Alert_Controller {
    public String alertList(Model d,HttpSession session) {
       SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
       d.addAttribute("alertList", service.alertList(sObj.getId()));
-      d.addAttribute("alertCount", service.alertCount(sObj.getId()));
+     // d.addAttribute("alertCount", service.alertCount(sObj.getId()));
       return "WEB-INF\\suminView\\alert.jsp";
    }
    
