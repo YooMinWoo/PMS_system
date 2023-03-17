@@ -98,9 +98,9 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                  <i class="bx bx-bell bx-md"></i>
-                 <c:if test="${alertCount>0 }">
+                 <c:if test="${alertList[0].cnt>0 }">
                 <span class="badge badge-center rounded-pill bg-danger"
-                   style="margin-left: -17px;">${alertCount }</span>
+                   style="margin-left: -17px;">${alertList[0].cnt}</span>
                    </c:if>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
