@@ -109,7 +109,7 @@ a.hover{
 			if(cnt%2==0){
 				$("input[name=chk]").prop("checked", false)
 			}
-		})
+		})  
 		
 	})
 	function goPage(cnt){
