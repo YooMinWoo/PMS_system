@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import superPms.service.Project_Service;
+import superPms.service.Alert_Service;
 import superPms.service.Work_Service;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
@@ -26,6 +26,8 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
+	@Autowired
+	private Alert_Service alert_service;
 	@Value("${user.upload}")
 	private String upload;
 	// http://49.238.187.241:7080/FinalPJT/projectSample.jsp
@@ -93,7 +95,9 @@ public class Work_Controller {
 	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
-	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",service.showGantt(sch));
 		return "WEB-INF\\jongeunView\\workGanttList.jsp";
@@ -101,6 +105,7 @@ public class Work_Controller {
 	@GetMapping("/workGanttDetail.do")
 	public String workGanttDetail(@RequestParam("no") String no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
 		d.addAttribute("personInfo",service.personInfo(no));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
@@ -133,12 +138,14 @@ public class Work_Controller {
 	@PostMapping("/workRepIns.do")
 	public String workRepIns(WorkRep ins, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		service.insWorkRep(ins);
 		return "redirect:/workGanttDetail.do?no="+ins.getWorkno();
 	}
 	@GetMapping("/workRepDel.do")
 	public String workRepDel(@RequestParam("no") int no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		service.delWorkRep(no);
 		d.addAttribute("msg","삭제완료");
 		return "redirect:/workGanttDetail.do";
@@ -153,6 +160,7 @@ public class Work_Controller {
 	@GetMapping("/reqApprove.do")
 	public String reqApprove(@RequestParam("no") String no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		service.reqApprove(no);
 		d.addAttribute("msg","결재요청");
 		return "redirect:/workGanttDetail.do?no="+no;
@@ -160,6 +168,7 @@ public class Work_Controller {
 	@GetMapping("/rejApprove.do")
 	public String rejApprove(@RequestParam("no") String no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		service.rejApprove(no);
 		d.addAttribute("msg","결재반려");
 		return "redirect:/workGanttDetail.do?no="+no;
@@ -167,6 +176,7 @@ public class Work_Controller {
 	@GetMapping("/approve.do")
 	public String approve(@RequestParam("no") String no, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		service.approve(no);
 		d.addAttribute("msg","결재승인");
 		return "redirect:/workGanttDetail.do?no="+no;
@@ -174,14 +184,18 @@ public class Work_Controller {
 	// 결재함
 	// http://localhost:7080/FinalPJT/apprvList.do?prjno=41
 	@RequestMapping("/apprvList.do")
-	public String apprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+	public String apprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",service.getApprvList(sch));
 		return "WEB-INF\\jongeunView\\apprvList.jsp";
 	}
 	// http://localhost:7080/FinalPJT/reqApprvList.do?prjno=41
 	@RequestMapping("/reqApprvList.do")
-	public String reqApprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d) {
+	public String reqApprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
 		d.addAttribute("ganttInfo",service.getReqApprvList(sch));
 		return "WEB-INF\\jongeunView\\reqApprvList.jsp";
