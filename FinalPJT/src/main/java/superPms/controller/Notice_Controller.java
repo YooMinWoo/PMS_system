@@ -1,5 +1,7 @@
 package superPms.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,18 +10,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Alert_Service;
 import superPms.service.Notice_Service;
 import superPms.service.SuperDept_Service;
 import superPms.vo.Notice;
 import superPms.vo.NoticeRep;
 import superPms.vo.NoticeRepSch;
 import superPms.vo.NoticeSch;
+import superPms.vo.SuperEmpDept;
 
 @Controller
 public class Notice_Controller {
 	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do	==> 서버컴 실행
 //	http://localhost:2030/FinalPJT/goNotice.do		==> user
 	// http://localhost:2030/FinalPJT/PMSLogin.do	==> login
+	@Autowired
+	private Alert_Service alert_service;
+	
 	@Autowired(required = false)
 	private Notice_Service service;
 	
@@ -27,33 +34,32 @@ public class Notice_Controller {
 	private SuperDept_Service service2;
 	
 	@RequestMapping("/goNotice.do")
-	public String goNotice(NoticeSch sch, Model d) {
+	public String goNotice(NoticeSch sch, Model d, HttpSession session) {
 		d.addAttribute("depts",service2.getParentDeptComb());
 		d.addAttribute("noticeList",service.noticeList(sch));
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\minwooView\\notice.jsp";
 	}
 	
 //	http://localhost:2030/FinalPJT/goCreateNotice.do
 	@RequestMapping("/goCreateNotice.do")
-	public String goCreateNotice(Model d) {
+	public String goCreateNotice(Model d, HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("depts",service2.getParentDeptComb());
 		return "WEB-INF\\minwooView\\notice_create.jsp";
 	}
 	
 	@RequestMapping("/goNoticeDetail.do")
-	public String goNoticeDetail(NoticeRepSch sch, Model d) {
+	public String goNoticeDetail(NoticeRepSch sch, Model d,HttpSession session) {
 		service.plusCnt(sch);
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("depts",service2.getParentDeptComb());
 		d.addAttribute("noticeDetail",service.noticeDetail(sch));
 		d.addAttribute("noticeRep",service.noticeRepList(sch));
 		return "WEB-INF\\minwooView\\notice_detail.jsp";
-	}
-	
-	
-//	http://localhost:2030/FinalPJT/goModal.do		==> modal창
-	@RequestMapping("/goModal.do")
-	public String goModal() {
-		return "WEB-INF\\minwooView\\modal.jsp";
 	}
 	
 	@PostMapping("/insertFN.do")
