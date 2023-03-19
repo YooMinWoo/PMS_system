@@ -114,10 +114,20 @@ cellChkVal = false;
 	         }
 	         
 	      });
+		$("#reset").click(function(){
+			$("[name=ename]").val("")
+			$("[name=id]").val("")
+			$("[name=pass]").val("")
+			$("[name=cell]").val("")
+			$("[name=deptid]").val("")
+			$("[name=id]").attr("readonly", false);
+			$("[name=cell]").attr("readonly", false);
+			idChkVal = false;
+			cellChkVal = false
+		})
 	 
 		
 	});
-	
 	function goAuthSetting(id){
 		location.href="${path}/authSetting.do?id="+id
 	}	
@@ -187,7 +197,7 @@ cellChkVal = false;
 	  }
 	function goPage(cnt){
 	      $("[name=curPage]").val(cnt);
-	      $("#frm03").submit()
+	      $("#frm01").submit()
 	   }
 </script>
 </head>
@@ -215,7 +225,8 @@ cellChkVal = false;
            <div class="card mb-4 pb-3"><br>
            <div class="row">
 			<div class="col" style="border-left:none;border-right:none;">
-			<form id="frm01" method="post">
+			<form id="frm01" method="get">
+			    <input type="hidden" name="curPage" value="${sch.curPage}"/>
 				<div style="margin-top:15px;" class="row text-center">
 					<div class="col">
 						<span style="font-size:18px;font-weight:bold;">사원명 </span>
@@ -245,9 +256,7 @@ cellChkVal = false;
 			</div>
 	</div>
            	<div style="font-size:20px;font-weight:bold;" class="table-responsive text-nowrap">
-           	<form id="frm03">
-                <input type="hidden" name="curPage" value="${sch.curPage}"/>
-             </form>
+
                 <br>
                   <table class="table">
                     <thead>
@@ -316,6 +325,7 @@ cellChkVal = false;
 	               <div class="modal-header">
 	                 <h5 class="modal-title" id="exampleModalLabel3">계정생성 > <small class="text-muted">새로운 사원의 정보 입력</small></h5>
 	                 <button
+	                 	id="reset"
 	                     type="button"
 	                     class="btn-close"
 	                     data-bs-dismiss="modal"

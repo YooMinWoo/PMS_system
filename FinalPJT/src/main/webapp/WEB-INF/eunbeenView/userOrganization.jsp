@@ -63,7 +63,7 @@
 	});
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
-	    $("#frm03").submit()
+	    $("#frm01").submit()
 	}
 </script>
 </head>
@@ -92,6 +92,7 @@
            <div class="row">
 			<div class="col" style="border-left:none;border-right:none;">
 			<form style="margin-left:150px;" id="frm01" method="post" class="row g-3">
+			    <input type="hidden" name="curPage" value="${sch.curPage}"/>
 				<div class="col-auto">
 				    <label style="margin-left:120px;font-size:18px;font-weight:bold">사원명</label>
 					<input style="width:300px;" name="sename" value="${sch.sename}" type="text" class="form-control" placeholder="사원명 입력">
@@ -108,9 +109,6 @@
 			</div>
 	</div>
            	<div style="font-size:20px;font-weight:bold;" class="table-responsive text-nowrap">
-           	<form id="frm03">
-                <input type="hidden" name="curPage" value="${sch.curPage}"/>
-             </form>
                 <br>
                   <table class="table">
                     <thead>
