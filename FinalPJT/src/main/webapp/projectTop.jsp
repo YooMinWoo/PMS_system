@@ -202,7 +202,7 @@ $(document).ready(function(){
 				 pagination.empty(); // ajax 시작시 초기화
 				 pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
 						  + (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
-				  for (var i = 1; i <= data.sch.endBlock; i++) {
+				  for (var i = data.sch.startBlock; i <= data.sch.endBlock; i++) {
 				    var pageLi = $('<li class="page-item"></li>');
 				    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
 				    if (i === data.sch.curPage) {

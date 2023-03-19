@@ -215,7 +215,7 @@ tbody td{
 				  pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
 						    	+ (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
 				  // 페이지 번호를 생성하는 반복문
-				  for (var i = 1; i <= data.sch.endBlock; i++) {
+				  for (var i = data.sch.startBlock; i <= data.sch.endBlock; i++) {
 				    var pageLi = $('<li class="page-item"></li>');
 				    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
 				    if (i === data.sch.curPage) {
