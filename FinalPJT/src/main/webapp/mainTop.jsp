@@ -16,6 +16,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+	$(document).ready(function(){
+		$("svg").removeAttr('onclick')
+	}
+	
 	function goMyPage(id){
 		location.href="${path}/myPage.do?id="+id
 	}
@@ -30,6 +34,7 @@
 			}
   	  location.reload()
     })
+    
 	function alertState(no){
 	      location.href="${path}/alertState.do?no="+no
 	      location.reload()
@@ -104,10 +109,11 @@
                <!-- /alert -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1"> 
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">${emp.ename }</span>
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  
                    <div class="avatar avatar-online">
-                      <svg>
+                      <svg viewBox="0 0 40 40">
                  <circle cx="20" cy="20" r="20" fill="#0054a6" />
                </svg>
                    </div>
