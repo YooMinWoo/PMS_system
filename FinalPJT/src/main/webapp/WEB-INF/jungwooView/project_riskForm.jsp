@@ -22,7 +22,9 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-
+.nav-item.nav-link{
+	padding-right: 1rem !important;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -106,13 +108,17 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
+           
            <h4 class="fw-bold py-3 mb-4"><spring:message code="project"/> > <small class="text-muted"><spring:message code="riskmanage"/></small></h4>
+		  	
 		  	<select class="form-control" id="selLan">
 		  		<option value=""><spring:message code="chlang"/></option>
 		  		<option value="ko"><spring:message code="ko"/></option>
 		  		<option value="en"><spring:message code="en"/></option>
 		  	</select>
            <div class="card mb-4 pb-3">
+           <jsp:include page="/projectTop.jsp"></jsp:include>
+			<hr class="mx-0">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
 				        <h4 class="text-primary"><spring:message code="riskregistration"/></h4>

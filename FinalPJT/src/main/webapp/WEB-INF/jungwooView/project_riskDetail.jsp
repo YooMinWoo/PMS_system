@@ -44,6 +44,10 @@
 	font-size: 12px;
 	width: 80px
 }
+.nav-item.nav-link{
+	padding-right: 1rem !important;
+}
+
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -79,7 +83,7 @@
 
 	$(document).ready(function(){
 		console.log($("[name=risklevel]").val())
-		$("#uptBtn").click(function(){			
+		$("#uptBtn2").click(function(){			
 			if(confirm("수정 하시겠습니까?")){
 				$("option").attr("disabled", false)
 				$("#form1").attr("action","${path}/project_riskUpdate.do?prjno="+${param.prjno});
@@ -162,10 +166,11 @@
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           <h4 class="fw-bold py-3 mb-4">프로젝트 > <small class="text-muted">리스크 관리</small></h4>
+
            
            <div class="card mb-4 pb-3">
+           <jsp:include page="/projectTop.jsp"></jsp:include>
+			<hr class="mx-0">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
 				        <h4 class="text-primary">리스크 상세</h4>
@@ -228,7 +233,7 @@
 				            </div>
 				          </div> 
 				          <div class="mb-4"></div>
-				          <button id="uptBtn" class="btn btn-warning btn-lg btn-block" type="button">리스크 수정</button>
+				          <button id="uptBtn2" class="btn btn-warning btn-lg btn-block" type="button">리스크 수정</button>
 				          <button id="delBtn" class="btn btn-danger   btn-lg btn-block" type="button">리스크 삭제</button>
 				          <button id="goMain" class="btn btn-info   btn-lg btn-block" type="button">조회 화면</button>
 				        </form>
@@ -243,7 +248,7 @@
 				          <div class="row">
 				            <div class="table-responsive">
 				            <form id="form3" class="d-flex"  method="post"> 			
-								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+								    <input type="hidden" name="curPage" value="${sch2.curPage}"/>
 								</form> 
 				              <input type="hidden" value="${risk.riskno}">
 				              <c:forEach var="sol" items="${sol}">
@@ -259,16 +264,16 @@
 				              <c:if test="${not empty sol }">
 				              <ul class="pagination  justify-content-end"> 
 									<li class="page-item"><a class="page-link" 
-										href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
+										href="javascript:goPage(${sch2.startBlock-1});">Previous</a></li>
 								
-									<c:forEach var="cnt" begin="${sch.startBlock}" 
-											end="${sch.endBlock}">
-								  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+									<c:forEach var="cnt" begin="${sch2.startBlock}" 
+											end="${sch2.endBlock}">
+								  		<li class="page-item ${sch2.curPage==cnt?'active':''}">
 								  		<a class="page-link" 
 								  			href="javascript:goPage(${cnt});">${cnt}</a></li>
 								  	</c:forEach>
 								  	<li class="page-item"><a class="page-link" 
-								  			href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
+								  			href="javascript:goPage(${sch2.endBlock+1});">Next</a></li>
 								</ul>
 				              </c:if>
 				              
@@ -303,7 +308,7 @@
 				        <c:if test="${not empty strategy }">
 				        <div style="display:flex; justify-content: space-between;">
 				        		<input type="button" id="risk_strategy" value="${strategy.risk_strategy }" class="btn btn-outline-primary">
-				        		<input type="hidden" id="strategyno" name="strategyno" value="${strategy.strategyno}">
+				        		
 				        	</div>
 				        </c:if>
 
@@ -352,10 +357,10 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script type="text/javascript">
     $("#applyBtn").click(function(){
-		location.href = "${path}/strategyForm.do?riskno="+${param.riskno}+"&prjno="+${param.prjno};
+		location.href = "${path}/strategyForm.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}
 	})
 	$("#risk_strategy").click(function(){
-		location.href="${path}/pagingCare.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}+"&strategyno="+${strategy.strategyno};
+		location.href="${path}/pagingCare.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}+"&strategyno="+${strategy.strategyno}
 	})
     </script>
   </body>

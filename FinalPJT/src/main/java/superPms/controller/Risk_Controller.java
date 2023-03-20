@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.LocaleResolver;
 
+import superPms.service.Project_Service;
 import superPms.service.Risk_Service;
 import superPms.service.Solution_Service;
 import superPms.vo.NoticeRep;
@@ -36,6 +37,8 @@ public class Risk_Controller {
 	private LocaleResolver localeResolver;
 	@Autowired(required=false)
 	private Solution_Service service2;
+	@Autowired(required = false)
+	private Project_Service service3;
 	
 	// http://localhost:7080/FinalPJT/project_riskList.do
 	// http://49.238.187.241:7080/FinalPJT/project_riskList.do
@@ -49,7 +52,7 @@ public class Risk_Controller {
 	@RequestMapping("/project_pagingRisk.do")
 	public String pagingRisk(@ModelAttribute("sch") RiskSch sch,
 			@RequestParam(value="prjno", required = false) Integer prjno ,Model d) {
-		
+		d.addAttribute("projectInfo",service3.projectInfo(prjno)); 
 		d.addAttribute("list", service.pagingRisk(sch));
 		
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
@@ -62,13 +65,15 @@ public class Risk_Controller {
 
 	@RequestMapping("/project_riskDetail.do")		// 리스크 상세페이지
 	public String getRisk(@RequestParam("riskno")
-	int riskno,@ModelAttribute("sch")SolutionSch sch, Solution ins, Model d) {
+	int riskno,@ModelAttribute("sch2")SolutionSch sch2, Solution ins, Model d
+	,@RequestParam("prjno")int prjno) {
+		d.addAttribute("projectInfo",service3.projectInfo(prjno));
 		service.getRisk(riskno);
-		service2.pagingSol(sch);	// 대처방안 페이징처리
+		service2.pagingSol(sch2);	// 대처방안 페이징처리
 		service.getStrategy(riskno);
 		
 		d.addAttribute("risk",service.getRisk(riskno));
-		d.addAttribute("sol",service2.pagingSol(sch));
+		d.addAttribute("sol",service2.pagingSol(sch2));
 		d.addAttribute("strategy",service.getStrategy(riskno));
 		return "WEB-INF\\jungwooView\\project_riskDetail.jsp";
 	}

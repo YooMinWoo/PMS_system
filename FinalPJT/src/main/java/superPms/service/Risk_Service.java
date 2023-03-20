@@ -138,5 +138,6 @@ public class Risk_Service {
 	}
 	public void insertCare(Strategycare ins) {
 		dao.insertCare(ins);
+		
 	}
 }
