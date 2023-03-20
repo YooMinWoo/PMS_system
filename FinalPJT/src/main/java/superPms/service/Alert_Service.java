@@ -19,8 +19,13 @@ public class Alert_Service {
 			return dao.alertList(id);
 	}
 	
-	public void alertState(int no) {
-		dao.alertState(no);
+	public void alertState(String no) {
+		String[] alertArray = no.split(",");
+		
+		for(int i=0; i<alertArray.length; i++) {
+			dao.alertState(alertArray[i]);
+		}
+		
 	}
 	
 	public void alertDelete(int no) {

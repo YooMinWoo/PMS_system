@@ -28,12 +28,11 @@ public class Alert_Controller {
    public String alertList(Model d,HttpSession session) {
       SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
      d.addAttribute("alertList", service.alertList(sObj.getId()));
-     
       return "WEB-INF\\suminView\\alert.jsp";
    }
    
    @RequestMapping("/alertState.do")
-   public String alertState(@RequestParam("no")int no) {
+   public String alertState(@RequestParam("no")String no) {
       service.alertState(no);
       return "rediret:/alert.do";
    }

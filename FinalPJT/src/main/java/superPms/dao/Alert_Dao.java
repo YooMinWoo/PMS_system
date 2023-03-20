@@ -9,7 +9,7 @@ public interface Alert_Dao {
 	public List<Alert> alertList(String id);
 	public int alertCount(String id);
 	
-	public void alertState(int no);
+	public void alertState(String no);
 	
 	public void alertDelete(int no);
 }

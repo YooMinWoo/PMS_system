@@ -22,14 +22,16 @@
 	
 	$(document).ready(function(){
 		$("#readAll").click(function(){
-		 	  $("input[name=chk]").prop("checked", true)
-		 	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-					if($("input[name=chk]:checkbox")[idx].checked==true){
-						var alertno = $("input[name=chk]:checkbox")[idx].value
-						location.href="${path}/alertState.do?no="+alertno	
-					}
+		 	 $("input[name=chk]").prop("checked", true)
+		 	 var chkArray = new Array()
+			    $("input[name=chk]:checked").each(function() { 
+			      var alertnoVal = $(this).val(); 
+			      chkArray.push(alertnoVal);
+			    });
+				if(confirm("모두 읽음 처리하시겠습니까?")){
+					alert("모든 알림이 읽음처리되었습니다.")
+					location.href="${path}/alertState.do?no="+chkArray
 				}
-		 	  location.reload()
 		   })
 	 });
 	function alertState(no){
