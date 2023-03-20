@@ -177,11 +177,13 @@ tbody td{
 				console.log(data.msg)
 				console.log(data.prjno)
 				if(data.msg=='등록성공'){
-					if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
-						location.href="${path}/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
-					}else{
-						location.reload()
-					}
+					alert("새로운 프로젝트로 이동합니다")
+					location.href="${path}/projectMain.do?prjno="+data.prjno;
+				//	if(confirm("새로운 프로젝트로 이동하시겠습니까?")){
+					//	location.href="${path}/projectMain.do?prjno="+data.prjno; // 만들어진 페이지로 이동 주소?prjno=prjno
+					//}else{
+						//location.reload()
+					//}
 				}
 			},
 			error:function(err){

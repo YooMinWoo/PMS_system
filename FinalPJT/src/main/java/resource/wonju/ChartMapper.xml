@@ -21,7 +21,8 @@
 	</select>
 
 	<select id="rateByMember" parameterType="int" resultType="bar">
-	SELECT owner, round(avg(PROGRESS)*100,1) AS avgs FROM gantt WHERE prjno=#{prjno} GROUP BY owner ORDER BY avgs DESC
+	SELECT owner, round(avg(PROGRESS)*100,1) AS avgs FROM gantt 
+	WHERE prjno=#{prjno} GROUP BY owner ORDER BY avgs DESC
 	</select>
 	<select id="totRate" parameterType="int" resultType="bar">
 	SELECT round(avg(progress)*100,0) AS avgs FROM gantt WHERE prjno=#{prjno}

@@ -200,18 +200,18 @@ $(document).ready(function(){
 
 				 var pagination = $('#pagination ul.pagination');
 				 pagination.empty(); // ajax 시작시 초기화
-				 pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPage(' 
+				 pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPagePT(' 
 						  + (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
 				  for (var i = data.sch.startBlock; i <= data.sch.endBlock; i++) {
 				    var pageLi = $('<li class="page-item"></li>');
-				    var pageLink = $('<a class="page-link" href="javascript:goPage('+ i +');">' + i + '</a>');
+				    var pageLink = $('<a class="page-link" href="javascript:goPagePT('+ i +');">' + i + '</a>');
 				    if (i === data.sch.curPage) {
 				      pageLi.addClass('active');
 				    }
 				    pageLi.append(pageLink);
 				    pagination.append(pageLi);
 				  }
-				  pagination.append($('<li class="page-item next"></li><a class="page-link" href="javascript:goPage(' 
+				  pagination.append($('<li class="page-item next"></li><a class="page-link" href="javascript:goPagePT(' 
 					+ (data.sch.endBlock + 1) + ');"><i class="tf-icon bx bx-chevron-right"></i></a>'));
 
 				
@@ -221,7 +221,7 @@ $(document).ready(function(){
 			}
 	   })
    }
-  function goPage(cnt){
+  function goPagePT(cnt){
 		$("[name=curPage]").val(cnt);
 		empqstr ="keyword="+$("[name=keyword]").val()+"&curPage="+$("[name=curPage]").val()
 		empAjax(empqstr)
