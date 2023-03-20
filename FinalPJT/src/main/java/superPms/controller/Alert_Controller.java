@@ -34,13 +34,13 @@ public class Alert_Controller {
    @RequestMapping("/alertState.do")
    public String alertState(@RequestParam("no")String no) {
       service.alertState(no);
-      return "rediret:/alert.do";
+      return "redirect:/alert.do";
    }
 
    @RequestMapping("/alertDelete.do")
    public String alertDelete(@RequestParam("no")int no) {
 	   service.alertDelete(no);
-	   return "rediret:/alert.do";
+	   return "redirect:/alert.do";
    }
    
 }
