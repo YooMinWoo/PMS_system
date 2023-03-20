@@ -63,11 +63,12 @@ td{text-align:center;}
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
-	var msg = "${msg}"
-	console.log(msg)
 	$(document).ready(function(){
 		$("#menu-item-project").addClass('active open');	
 		$("#menu-item-project-myproject").addClass('active');
+		if("${msg}"!=""){
+			alert("${msg}")
+		}
 	
 	});
 	function goWork(no){

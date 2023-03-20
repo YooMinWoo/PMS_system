@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Alert_Service;
+import superPms.service.Gantt_Service;
 import superPms.service.Work_Service;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
 import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
-import superPms.vo.WorkMember;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
@@ -26,6 +26,8 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
+	@Autowired
+	private Gantt_Service gantt_service;
 	@Autowired
 	private Alert_Service alert_service;
 	@Value("${user.upload}")
@@ -79,12 +81,6 @@ public class Work_Controller {
 		d.addAttribute("msg","수정완료");
 		return "WEB-INF\\jongeunView\\workUpt.jsp";
 	}
-	@GetMapping("/workDel.do")
-	public String workDel(@RequestParam("no") int no, Model d) {
-		service.delWork(no);
-		d.addAttribute("msg","삭제완료");
-		return "WEB-INF\\jongeunView\\workDetail.jsp";
-	}
 	@GetMapping("/workFileDownload.do")
 	public String workFileDownload(@RequestParam("fname") String fname, Model d) {
 		d.addAttribute("downloadFile", fname);
@@ -125,14 +121,16 @@ public class Work_Controller {
 		service.progress(upt);
 		return "redirect:/workGanttDetail.do?no="+upt.getId();
 	}
-	// 추가 담당자
-	@RequestMapping("/prjMemList.do")
-	public String prjMemList(@RequestParam("prjno") int prjno,
-			@RequestParam("id1") String id1, @RequestParam("id2") String id2, Model d) {
-		WorkMember wm = new WorkMember(prjno, id1, id2);
-		d.addAttribute("memList",service.prjMemList(wm));
-		return "pageJsonReport";
+	// 삭제
+	@GetMapping("/workDel.do")
+	public String workDel(@RequestParam("no") String no, Model d, HttpSession session) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		int prjno = service.ganttDetailExp(no).getPrjno();
+		gantt_service.delGantt(no);
+		d.addAttribute("msg","삭제완료");
+		return "redirect:/workGanttList.do?prjno="+prjno;
 	}
+	// 수정
 	
 	// 답글
 	@PostMapping("/workRepIns.do")

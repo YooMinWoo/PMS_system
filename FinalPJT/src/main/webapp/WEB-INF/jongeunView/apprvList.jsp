@@ -194,17 +194,17 @@ td{text-align:center;}
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:goPage(${asch.startBlock-1});">
+                <a class="page-link" href="javascript:goPageList(${asch.startBlock-1});">
                 	<i class="tf-icon bx bx-chevron-left"></i>
                 </a>
               </li>
               <c:forEach var="cnt" begin="${asch.startBlock}" end="${asch.endBlock}">
              	 <li class="page-item ${asch.curPage==cnt?'active':''}">
-    				<a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
+    				<a class="page-link" href="javascript:goPageList(${cnt});">${cnt}</a>
     			</li>
               </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:goPage(${asch.endBlock+1});">
+                <a class="page-link" href="javascript:goPageList(${asch.endBlock+1});">
                 	<i class="tf-icon bx bx-chevron-right"></i>
                 </a>
               </li>
