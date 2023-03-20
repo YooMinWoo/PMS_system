@@ -16,22 +16,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-	
 	function goMyPage(id){
 		location.href="${path}/myPage.do?id="+id
 	}
 	
-	$("#readAll").click(function(){
-  	  $("input[name=chk]").prop("checked", true)
-  	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-				if($("input[name=chk]:checkbox")[idx].checked==true){
-					var alertno = $("input[name=chk]:checkbox")[idx].value
-					location.href="${path}/alertState.do?no="+alertno
+	$(document).ready(function(){
+		$("#readAll").click(function(){
+		 	  $("input[name=chk]").prop("checked", true)
+		 	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+					if($("input[name=chk]:checkbox")[idx].checked==true){
+						var alertno = $("input[name=chk]:checkbox")[idx].value
+						location.href="${path}/alertState.do?no="+alertno	
+					}
 				}
-			}
-  	  location.reload()
-    })
-    
+		 	  location.reload()
+		   })
+	 });
 	function alertState(no){
 	      location.href="${path}/alertState.do?no="+no
 	      location.reload()
@@ -64,15 +64,15 @@
                       <div class="dropdown-divider"></div>
                     </li>  
                      <li>
-                     <span class="dropdown-item" >
+                     <span class="dropdown-item" >  
                        <span class="align-middle">알림</span>
                      </span>
                      </li>
                      
-                    <li>
+                    <li>s
                      <div class="card-body" >
-                     <c:if test="${alertCount==0 }">
-                     	<span style="display: flex; justify-content: center; width: 330px;">알림 없음</span>
+                     <c:if test="${empty alertList}">
+                     	<span style="display:flex; justify-content:center; width:330px;">알림 없음</span>
                      </c:if>
                         <c:forEach var="alert" items="${alertList }"> 
                        <div class="bs-toast toast fade show bg-${alert.style }" 
@@ -81,7 +81,7 @@
                            <input type="checkbox" name="chk" style="display:none;" value="${alert.no }">
                              <i class="bx bx-bell me-2"></i>
                              <div class="me-auto fw-semibold">${alert.title }</div>
-                             <small>
+                           
                              <c:if test="${alert.state=='0' }">
                               <small>읽지 않음</small>
                              </c:if>
@@ -106,18 +106,17 @@
                <!-- /alert -->
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown mx-1"> 
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <span style="position:absolute; top:20px;left:4px; z-index: 3;font-size: 0.6rem;color:white;">${emp.ename }</span>
-                  
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                    <div class="avatar avatar-online">
-                      <svg viewBox="0 0 40 40">
+                      <svg>
                  <circle cx="20" cy="20" r="20" fill="#0054a6" />
                </svg>
                    </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a class="dropdown-item" onclick="goMyPage('${emp.id}')">
+                      <a class="dropdown-item" href="goMyPage('${emp.id }')">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>

@@ -27,8 +27,7 @@ public class Alert_Controller {
    @GetMapping("/alert.do")  
    public String alertList(Model d,HttpSession session) {
       SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-     
-    	  d.addAttribute("alertList", service.alertList(sObj.getId()));
+     d.addAttribute("alertList", service.alertList(sObj.getId()));
      
       return "WEB-INF\\suminView\\alert.jsp";
    }
@@ -36,7 +35,7 @@ public class Alert_Controller {
    @RequestMapping("/alertState.do")
    public String alertState(@RequestParam("no")int no) {
       service.alertState(no);
-      return "WEB-INF\\suminView\\alert.jsp";
+      return "rediret:/alert.do";
    }
 
    @RequestMapping("/alertDelete.do")
