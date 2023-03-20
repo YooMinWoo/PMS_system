@@ -68,7 +68,7 @@
 						if($("#risklevel").val()=="" )alert("리스크 심각도를 선택해주세요")
 						if($("#riskpriority").val()=="" )alert("리스크 우선순위를 선택해주세요")
 				}else{
-					$("form").attr("action","${path}/project_insertRisk.do");
+					$("form").attr("action","${path}/project_insertRisk.do?prjno="+${param.prjno}	);
 					$("form").submit();
 				}
 

@@ -86,9 +86,9 @@ public class Risk_Controller {
 		return "WEB-INF\\jungwooView\\project_riskForm.jsp";
 	}
 	@RequestMapping("/project_insertRisk.do")		// 리스크 등록
-	public String insertRisk(Risk ins, @RequestParam("prjno")Integer prjno, Model d){
+	public String insertRisk(Risk ins, @RequestParam("prjno")int prjno, Model d){	
 		service.insertRisk(ins);
-		return "redirect:project_pagingRisk.do?prjno="+prjno;
+		return "redirect:project_pagingRisk.do?prjno="+ins.getPrjno();
 	}	
 	
 	@PostMapping("/project_riskUpdate.do")		// 리스크 수정
