@@ -152,7 +152,17 @@ td{text-align:center;}
 				<!-- 변경한 날짜형 데이터를 원하는 패턴으로 format 하여 출력 -->
 				<fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd" />
 		        </td>
-		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
+             		<c:choose>
+	             		<c:when test="${g.apprv==1}">
+	             			<td>결재완료</td>
+	             		</c:when>
+	             		<c:when test="${g.state==1}">
+		             		<td>결재중</td>
+	             		</c:when>
+		             	<c:otherwise>
+		             		<td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
+		             	</c:otherwise> 	
+	             	</c:choose>
 		        </tr>
 		        </c:forEach>
 		      </tbody>

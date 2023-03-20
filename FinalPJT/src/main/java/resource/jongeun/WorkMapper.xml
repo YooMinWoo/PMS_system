@@ -99,7 +99,7 @@
 	<select id="showGantt" resultType="gantt" parameterType="ganttsch">
 		SELECT *
 		FROM (SELECT rownum cnt, g.* 
-			FROM (SELECT * FROM gantt ORDER BY START_date) g, project p 
+			FROM (SELECT * FROM gantt ORDER BY START_date desc) g, project p 
 			WHERE g.PRJNO = p.PRJNO
 			AND p.prjno=#{prjno}
 			AND g.text like '%'||#{text}||'%'
@@ -219,7 +219,7 @@
 	</select>
 	<update id="progress" parameterType="gantt">
 		UPDATE gantt 
-			SET progress=#{progress},
+			SET progress=#{progress}
 		WHERE id=#{id}
 	</update>
 </mapper>

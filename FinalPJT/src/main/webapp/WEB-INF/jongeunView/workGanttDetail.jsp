@@ -104,9 +104,19 @@ textarea:read-only{
 				$("#frm02").submit();
 			}
 		})
+	  	$("#uptProcess").click(function(){
+	  		if(confirm("진행률을 저장하시겠습니까?")){
+	  			$("[name=progress]").val($("[name=progress]").val()/100);
+	  			$("#frmModal").submit();
+	  		}
+		})
 		// 결재 요청
 		$("#req").click(function(){
-			location.href="${path}/reqApprove.do?no="+$("[name=ganttid]").val();
+			if($("[name=prog]").val()=="100%"){
+				location.href="${path}/reqApprove.do?no="+$("[name=ganttid]").val();	
+			}else{
+				alert("진행률이 100%가 아닙니다.")
+			}
 		})
 		// 결재 승인
 		$("#apprv").click(function(){
@@ -134,27 +144,6 @@ textarea:read-only{
 			console.log(qstr)
 			callAjax("${path}/insertCalendar.do",qstr)		
 
-		})
-		// 추가 담당자 초대
-		var id1="${projectInfo.tlid}"
-		var id2="${personInfo.id}"
-		$("#memBtn").click(function(){
-			let url="${path}/prjMemList.do?prjno="+prjno+"&id1="+id1+"&id2="+id2
-			console.log(url)
-			fetch(url).then(function(response){
-				console.log(response)
-				return response.json()
-			}).then(function(json){			
-				let meminfo = json.memList
-				let listHTML = ""
-				for(let i=0;i<meminfo.length;i++){
-					listHTML+="<tr><td><input type='checkbox'></td><td>"+meminfo[i].dname+"</td><td>"+meminfo[i].job+"</td><td>"+
-					meminfo[i].part+"</td><td>"+meminfo[i].ename+"</td></tr>"
-				}
-				$("#memberListTab tbody").html(listHTML)	
-			}).catch(function(err){
-				console.log(err)
-			})
 		})
 	});
 	var msg = "${msg}"
@@ -250,7 +239,6 @@ textarea:read-only{
             		</button>
             		<ul class="dropdown-menu">
 				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
-				    <li><a class="dropdown-item" id="memBtn" data-bs-toggle="modal" data-bs-target="#inviteModal">추가 담당자 초대</a></li>
 				    <!-- 
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
@@ -258,61 +246,7 @@ textarea:read-only{
 				  </ul>
             	</div> 
            </div>
-            <!-- 멤버 초대  모달창 -->
-		<div class="modal fade" id="inviteModal" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="modalScrollableTitle">추가 담당자 초대</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-          		<div class="my-4 row">
-              	<div class="col-6"> </div>
-              	<div class="col-6"> 	
-              	</div>
-              	</div>
-		        <div class="my-3 row">
-			      <div class="table-responsive text-nowrap">
-				    <table class="table table-striped" id="memberListTab">
-				    <col width="25%">
-				    <col width="25%">
-				    <col width="25%">
-				    <col width="25%">
-				      <thead>
-				        <tr>
-				          <th><input type="checkbox"></th>
-				          <th>부서명</th>
-				          <th>직책</th>
-				          <th>담당파트</th>
-				          <th>이름</th>
-				        </tr>
-				      </thead>
-				      <tbody class="table-border-bottom-0">
-				      </tbody>
-				    </table>
-				  </div>
-			          <!-- Basic Pagination -->
-		          <nav id="pagination" aria-label="Page navigation">
-		            <ul class="pagination pagination-sm justify-content-end">
-		            </ul>
-		          </nav>
-              	</div>      
-		         <div class="my-3 row">
-		         	<div class="col-10"> </div>
-			         <div class="col-2 d-flex justify-content-end">
-			         <button id="plusBtn" type="button" class="btn btn-sm btn-info">추가</button>
-			         </div>
-		         </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-                <button id="regBtn" type="button" class="btn btn-primary">저장</button>
-              </div>
-            </div>
-          </div>
-        </div>
-	<!-- /멤버 초대  모달창 -->
+
            <div class="demo-inline-spacing mt-1">
  			<form enctype="multipart/form-data" action="${path}/workIns.do" method="post">
                 <div class="divs">
@@ -360,9 +294,20 @@ textarea:read-only{
                	  </div>
                	  <div class="mb-3" style="width:24%;">
                   <label class="form-label">진행률</label>
-                  <input type="text" class="form-control" name="progress"
+                  <div class="input-group mb-3">
+                  <input type="text" class="form-control" name="prog"
                   value="<fmt:formatNumber value='${ganttDetail.progress }' type='percent'/>"
-                  disabled readonly>     
+                  disabled readonly>
+                  <c:if test="${ganttDetail.state==0}">
+                  <c:if test="${sessmem.id eq personInfo.id || sessmem.id eq projectInfo.tlid}">
+                  <div class="input-group-prepend">
+						<button class="btn btn-outline-secondary" type="button" id="" value="" data-bs-toggle="modal" data-bs-target="#inviteModal">
+							수정
+    					</button>
+   					</div>
+   				</c:if> 
+   				</c:if>    
+               	  </div>
                	  </div>
                 </div>
                 <div class="mb-3">
@@ -392,6 +337,29 @@ textarea:read-only{
 				-->	
               </form>
           </div>
+      <!-- 진행률 수정 -->
+		<div class="modal fade" id="inviteModal" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalScrollableTitle">진행률 수정</h5>
+                 <span>% 빼고 숫자만 입력해 주세요</span>
+              </div>
+              <div class="modal-body">
+              <form action="${path}/progress.do" method="post" id="frmModal">
+              	<input type="text" class="form-control" name="progress"
+                  value="<fmt:formatNumber value='${ganttDetail.progress*100}' pattern="0"/>" >
+                <input type="hidden" name="id" value="${ganttDetail.id}">     
+              </form>
+              </div>        
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="uptProcess" type="button" class="btn btn-primary">저장</button>
+              </div>
+            </div>
+          </div>
+        </div>
+	<!-- /진행률 수정-->
           <!-- 답글 입력부분 -->
           <hr>
           <c:if test="${ganttDetail.state!=1}">
