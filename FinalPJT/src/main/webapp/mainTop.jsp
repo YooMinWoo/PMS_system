@@ -30,9 +30,21 @@
 			    });
 				if(confirm("모두 읽음 처리하시겠습니까?")){
 					alert("모든 알림이 읽음처리되었습니다.")
-					location.href="${path}/alertState.do?no="+chkArray
+					$.ajax({
+						type:"post",
+						url:"${path}/alertState.do?no="+chkArray,
+						success:function(){
+							location.reload()
+						},
+						error:function(err){
+							console.log(err)
+						}
+					})
+					
 				}
 		   })
+		   
+		   
 	 });
 	function alertState(no){
 	      location.href="${path}/alertState.do?no="+no

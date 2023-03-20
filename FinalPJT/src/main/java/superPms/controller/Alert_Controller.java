@@ -34,7 +34,7 @@ public class Alert_Controller {
    @RequestMapping("/alertState.do")
    public String alertState(@RequestParam("no")String no) {
       service.alertState(no);
-      return "redirect:/alert.do";
+      return "pageJsonReport";
    }
 
    @RequestMapping("/alertDelete.do")
