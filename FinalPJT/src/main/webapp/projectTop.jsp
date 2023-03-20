@@ -226,6 +226,15 @@ $(document).ready(function(){
 		empqstr ="keyword="+$("[name=keyword]").val()+"&curPage="+$("[name=curPage]").val()
 		empAjax(empqstr)
 	}
+  // 결재함 이동 권한처리
+  function goApprv(prjno){
+		if("${emp.id}"!="${projectInfo.tlid}"){
+			alert("프로젝트 리더만 이용이 가능합니다.")
+		}else{
+			location.href="${path}/apprvList.do?prjno="+prjno;
+		}
+	}
+
 </script>
 </head>
 
@@ -248,7 +257,7 @@ $(document).ready(function(){
           <a class="nav-item nav-link" >|</a>
           <a class="nav-item nav-link" href="${path}/workGanttList.do?prjno=${projectInfo.prjno}">업무</a>
           <a class="nav-item nav-link">|</a>
-          <a class="nav-item nav-link" href="${path}/apprvList.do?prjno=${projectInfo.prjno}">결재함</a>
+          <a class="nav-item nav-link" onclick="goApprv(${projectInfo.prjno})">결재함</a>
           <a class="nav-item nav-link">|</a>
           <a class="nav-item nav-link" href="${path}/project_pagingRisk.do?prjno=${projectInfo.prjno}">리스크 관리</a>
         </div>

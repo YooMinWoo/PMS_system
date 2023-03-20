@@ -28,6 +28,9 @@ td{text-align:center;}
 	justify-content: flex-end;
 	gap:20px;
 }
+.nav-item.nav-link{
+	padding-right: 1rem !important;
+}
 </style>
 <script src="${path }/resources/a00_com/jquery.min.js"></script>
 <link rel="icon" type="image/x-icon" href="${path }/resources/sneat-1.0.0/assets/img/favicon/favicon.ico" />
@@ -100,7 +103,7 @@ td{text-align:center;}
             <div class="container-xxl flex-grow-1 container-p-y">
 
            <div class="card mb-4 pb-3">
-           <jsp:include page="/workTop.jsp"></jsp:include>
+           <jsp:include page="/projectTop.jsp"></jsp:include>
 			<hr class="mx-0">
            <div class="demo-inline-spacing mt-5">
            <div class="row">
@@ -112,9 +115,9 @@ td{text-align:center;}
           <form class="d-flex" id="allFrm" method="post">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="text" value="${sch.text}" class="form-control" placeholder="업무명을 입력하세요">
+	            <input type="text" name="text" value="${gsch.text}" class="form-control" placeholder="업무명을 입력하세요">
 	          </div>
-	          <input type="hidden" name="curPage" value="${sch.curPage}"/>
+	          <input type="hidden" name="curPage" value="${gsch.curPage}"/>
 	       </form>
 	       <!-- /form 끝 -->
           </div>
@@ -173,21 +176,21 @@ td{text-align:center;}
         </div>
           <div class="d-flex justify-content-center">
           <!-- Basic Pagination --> 
-          <c:if test="${sch.startBlock>0 }">
+          <c:if test="${gsch.startBlock>0 }">
           <nav id="pagination" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item prev">
-                <a class="page-link" href="javascript:goPage(${sch.startBlock-1});">
+                <a class="page-link" href="javascript:goPage(${gsch.startBlock-1});">
                 	<i class="tf-icon bx bx-chevron-left"></i>
                 </a>
               </li>
-              <c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
-             	 <li class="page-item ${sch.curPage==cnt?'active':''}">
+              <c:forEach var="cnt" begin="${gsch.startBlock}" end="${gsch.endBlock}">
+             	 <li class="page-item ${gsch.curPage==cnt?'active':''}">
     				<a class="page-link" href="javascript:goPage(${cnt});">${cnt}</a>
     			</li>
               </c:forEach>
               <li class="page-item next">
-                <a class="page-link" href="javascript:goPage(${sch.endBlock+1});">
+                <a class="page-link" href="javascript:goPage(${gsch.endBlock+1});">
                 	<i class="tf-icon bx bx-chevron-right"></i>
                 </a>
               </li>

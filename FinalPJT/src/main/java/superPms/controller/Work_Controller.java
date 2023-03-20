@@ -95,11 +95,11 @@ public class Work_Controller {
 	// http://49.238.187.241:7080/FinalPJT/PMSLogin.do
 	// http://localhost:7080/FinalPJT/workGanttList.do?prjno=41
 	@RequestMapping("/workGanttList.do")
-	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d, HttpSession session) {
+	public String workGanttList(@RequestParam("prjno") int prjno, @ModelAttribute("gsch") GanttSch gsch, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
-		d.addAttribute("ganttInfo",service.showGantt(sch));
+		d.addAttribute("ganttInfo",service.showGantt(gsch));
 		return "WEB-INF\\jongeunView\\workGanttList.jsp";
 	}
 	@GetMapping("/workGanttDetail.do")
@@ -184,11 +184,11 @@ public class Work_Controller {
 	// 결재함
 	// http://localhost:7080/FinalPJT/apprvList.do?prjno=41
 	@RequestMapping("/apprvList.do")
-	public String apprvList(@RequestParam("prjno") int prjno, @ModelAttribute("sch") GanttSch sch, Model d, HttpSession session) {
+	public String apprvList(@RequestParam("prjno") int prjno, @ModelAttribute("asch") GanttSch asch, Model d, HttpSession session) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(prjno)); 
-		d.addAttribute("ganttInfo",service.getApprvList(sch));
+		d.addAttribute("ganttInfo",service.getApprvList(asch));
 		return "WEB-INF\\jongeunView\\apprvList.jsp";
 	}
 	// http://localhost:7080/FinalPJT/reqApprvList.do?prjno=41
