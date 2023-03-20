@@ -198,7 +198,7 @@ $(document).ready(function(){
 				})
 				$("#empTab tbody").html(addHTML)
 
-				 var pagination = $('#pagination ul.pagination');
+				 var pagination = $('#paginationPT ul.pagination');
 				 pagination.empty(); // ajax 시작시 초기화
 				 pagination.append($('<li class="page-item prev"></li><a class="page-link" href="javascript:goPagePT(' 
 						  + (data.sch.startBlock - 1) + ');"><i class="tf-icon bx bx-chevron-left"></i></a>'));
@@ -304,7 +304,7 @@ $(document).ready(function(){
 				    </table>
 				  </div>
 			          <!-- Basic Pagination -->
-		          <nav id="pagination" aria-label="Page navigation">
+		          <nav id="paginationPT" aria-label="Page navigation">
 		            <ul class="pagination pagination-sm justify-content-end">
 		            </ul>
 		          </nav>
