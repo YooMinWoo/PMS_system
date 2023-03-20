@@ -16,9 +16,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("svg").removeAttr('onclick')
-	}
 	
 	function goMyPage(id){
 		location.href="${path}/myPage.do?id="+id
