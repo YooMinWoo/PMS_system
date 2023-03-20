@@ -68,6 +68,11 @@ a.hover{
 		$("#menu-item-mail").addClass('active open');	
 		$("#menu-item-sentMailbox").addClass('active');
 		
+		$("#search").click()
+			
+		
+		
+		
 		$("#delBtn").click(function(){
 			 var chkArray = new Array()
 		    $("input[name=chk]:checked").each(function() { 
@@ -111,6 +116,8 @@ a.hover{
 			}
 		})  
 		
+		
+		
 	})
 	function goPage(cnt){
 		$("[name=curPage]").val(cnt);
@@ -140,6 +147,14 @@ a.hover{
            <h4 class="fw-bold py-3 mb-4">메일 > <small class="text-muted">보낸 메일함</small></h4>
            <div class="container">
            <div class="card mb-4 pb-3">
+           <form id="frm01" class="form-inline" action="${path }/mySendMail.do" method="post">
+           		<div class="demo-inline-spacing">
+			    <input  class="form-control mr-sm-2"   
+			    	placeholder="제목입력" style="width:330px;" name="title"/>
+			    	<input type="hidden" name="curPage" value="${sch.curPage}"/>
+			     <button  class="btn btn-primary" type="submit">Search</button>
+			    </div>
+			</form>
      
 	           <div class="demo-inline-spacing">
 	           <button id="allChk" type="button" class="btn rounded-pill btn-info">전체 선택</button>

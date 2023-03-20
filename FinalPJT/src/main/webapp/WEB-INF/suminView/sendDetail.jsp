@@ -95,10 +95,12 @@
            <div class="card mb-4 pb-3">
            
 	           <div class="demo-inline-spacing">
-	           <!--  
-	           <button id="reSendBtn" type="button" class="btn rounded-pill btn-primary" style="display:hidden;">전달</button>
+	            
+	           <button id="reSendBtn" type="button" class="btn rounded-pill btn-primary" >전달</button>
+	         	<!-- 
 	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger" style="display:hidden;">삭제</button>
-	         -->
+	         	 -->
+	        
 	         	</div>
 	         	<input type="hidden" name="mailno" value="${sendDetail.mailno }"/>
 	         	<br><br>

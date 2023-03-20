@@ -1,5 +1,8 @@
 package superPms.controller;
 
+import java.util.List;
+
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +75,21 @@ public class Calendar_Controller {
 	public String insCalPro(Calendar ins,Model d,HttpSession session) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		ins.setWriter(sObj.getId());
-		service.insCalPro(ins);
-		d.addAttribute("msg", "프로젝트 일정이 추가되었습니다.");
+		List<Calendar> list = service.getTitle(ins.getWriter());
+		
+		boolean isChecked = false;
+		for(Calendar data : list) {
+			if(ins.getTitle().equals(data.getTitle())) {
+				isChecked = true;
+			}
+		}
+		if(!isChecked) {
+			service.insCalPro(ins);
+			d.addAttribute("msg", "프로젝트 일정이 추가되었습니다.");
+		}else {
+			d.addAttribute("msg", "이미 추가된 프로젝트입니다.");
+		}
+		
 		return "WEB-INF\\suminView\\getProSch.jsp";
 	}
 }

@@ -50,9 +50,16 @@ public class Mail_Controller {
 		
 		return "WEB-INF\\suminView\\completeMail.jsp";
 	}
-	
-	@GetMapping("/mySendMail.do")
+
+	@RequestMapping("/mySendMail.do")
 	public String mySendMail(Model d,HttpSession session, @ModelAttribute("sch") MailSch sch) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		sch.setSender(sObj.getId());
+		d.addAttribute("mySendMail", service.mySendMail(sch));
+		return "WEB-INF\\suminView\\mySendMail.jsp";
+	}
+	@RequestMapping("/sendSch.do")
+	public String sendSch(Model d,HttpSession session, @ModelAttribute("sch") MailSch sch) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		sch.setSender(sObj.getId());
 		d.addAttribute("mySendMail", service.mySendMail(sch));
@@ -79,7 +86,7 @@ public class Mail_Controller {
 		return "downloadViewer";
 	}
 	
-	@GetMapping("/myReceiveMail.do")
+	@RequestMapping("/myReceiveMail.do")
 	public String myReceiveMail(HttpSession session,Model d,@ModelAttribute("sch") MailSch sch) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		sch.setReceiver(sObj.getId());
@@ -130,8 +137,10 @@ public class Mail_Controller {
 	public String receiverChkAjax(@RequestParam("receiver")String receiver,Model d) {
 		if(service.receiverChk(receiver)!=null) {
 			d.addAttribute("msg", "수신자 확인이 완료되었습니다.");
+			d.addAttribute("result", "0");
 		}else {
 			d.addAttribute("msg", "없는 수신자입니다.");
+			d.addAttribute("result", "1");
 		}
 		
 		return "pageJsonReport";

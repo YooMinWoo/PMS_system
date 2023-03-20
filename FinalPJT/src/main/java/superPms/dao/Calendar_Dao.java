@@ -21,5 +21,7 @@ public interface Calendar_Dao {
 	public void alertState(int no);
 	
 	public List<Project> getProSch(String id);
+	
 	public void insCalPro(Calendar ins);
+	public List<Calendar> getTitle(String writer);
 }

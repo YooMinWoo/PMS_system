@@ -66,6 +66,7 @@
 		qtr = "title="+subject+"&start="+regdte+"&end="+deadline
 		location.href="${path}/insCalPro.do?"+qtr
 	}
+	
 	var msg = "${msg}"
 	if(msg!=""){
 		alert(msg)
@@ -74,7 +75,11 @@
 		}else{
 			location.href="${path}/getProSch.do"
 		}
+		
+		
 	}
+
+	
 	
 </script>
 </head>

@@ -119,7 +119,7 @@
                      
                     <li>
                      <div class="card-body" >
-                     <c:if test="${alertCount==0 }">
+                     <c:if test="${alertList[0].cnt==0 }">
                      	<span style="display: flex; justify-content: center; width: 330px;">알림 없음</span>
                      </c:if>
                         <c:forEach var="alert" items="${alertList }"> 

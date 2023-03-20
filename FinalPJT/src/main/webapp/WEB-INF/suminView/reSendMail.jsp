@@ -58,6 +58,13 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		 var reChk = false
+		    $("#receiverChk").click(function(){
+		    	var receiver = $("[name=receiver]").val()
+		    	chkAjax(receiver)
+		    
+		    })
+		
 		$("#sendBtn").click(function(){
 			let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
 			var receiver = $("[name=receiver]").val()
@@ -66,7 +73,10 @@
 				alert("수신자의 이메일 형식을 올바르게 입력하세요")
 				return
 			}	
-			
+			if(!reChk){
+				alert("수신자 확인은 필수입니다.")
+				return
+			}
 			if($("[name=receiver]").val()==""){
 				alert("수신자를 입력하세요")
 				$("[name=receiver]").focus()
@@ -97,7 +107,24 @@
 		})
 		
 		
-		
+		function chkAjax(receiver){
+		      	$.ajax({
+		      		type:"post",
+		      		url:"${path}/receiverChkAjax.do?receiver="+receiver,
+		      		dataType:"json",
+		      		success:function(data){
+		      			alert(data.msg)
+		      			if(data.result=='0'){
+		      				reChk = true
+		      				$("[name=receiver]").attr("readOnly",true)
+		      			}
+		      			
+		      		},
+		      		error:function(err){
+		      			console.log(err)
+		      		}
+		      	})
+		      }
 		
 	});
 	
@@ -136,8 +163,11 @@
                       <form class="form" enctype="multipart/form-data" action="${path }/reMail.do" method="post">
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-receiver">수신자</label>
-                          <input type="text" name="receiver" class="form-control" id="basic-default-receiver"
-                           />
+                          <div style="display: flex; gap:10px;">
+                          <input type="text" name="receiver" class="form-control" id="basic-default-receiver"/>
+                           
+                            <button id="receiverChk" type="button" class="btn btn-primary" style="width:18%">수신자 확인</button>
+                       	</div>
                         </div>
                         <div class="mb-3">
                           <label class="form-label" for="basic-default-title">제목</label>

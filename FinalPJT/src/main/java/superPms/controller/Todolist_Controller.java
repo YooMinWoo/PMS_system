@@ -52,10 +52,16 @@ public class Todolist_Controller {
 		return "pageJsonReport";
 	}
 	
-	@RequestMapping("/uptStateTodo.do")
-	public String uptStateTodo(@RequestParam("tno")String tno,Model d) {
-		service.uptStateTodo(tno);
+	@RequestMapping("/uptcomStateTodo.do")
+	public String uptcomStateTodo(@RequestParam("tno")String tno,Model d) {
+		service.uptcomStateTodo(tno);
 		d.addAttribute("msg", "완료처리 되었습니다.");
+		return "pageJsonReport";
+	}
+	@RequestMapping("/uptincomStateTodo.do")
+	public String uptincomStateTodo(@RequestParam("tno")String tno,Model d) {
+		service.uptincomStateTodo(tno);
+		d.addAttribute("msg", "미완료처리 되었습니다.");
 		return "pageJsonReport";
 	}
 	

@@ -13,8 +13,11 @@
 		select * from todolist where id=#{id}
 	</select>
 	
-	<update id="uptStateTodo" parameterType="string">
+	<update id="uptcomStateTodo" parameterType="string">
 		UPDATE todolist SET state='1' WHERE tno=#{tno}
+	</update>
+	<update id="uptincomStateTodo" parameterType="string">
+		UPDATE todolist SET state='0' WHERE tno=#{tno}
 	</update>
 	
 	<delete id="delTodo" parameterType="string">

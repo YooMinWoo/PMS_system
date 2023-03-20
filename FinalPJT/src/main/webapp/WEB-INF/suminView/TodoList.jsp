@@ -116,10 +116,27 @@
 				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
 					if($("input[name=chk]:checkbox")[idx].checked==true){
 						var tno = $("input[name=chk]:checkbox")[idx].value
-						stateAjax(tno)
+						comStateAjax(tno)
 					}
 				}
 				alert("완료처리가 되었습니다.")
+			}
+			
+		})
+		$("#incomBtn").click(function(){
+			var todoLeng = $("input[name=chk]:checked").length
+			if(todoLeng<1){
+				alert("할 일을 선택해주세요")
+				return
+			}
+			if(confirm("미완료처리하시겠습니까?")){
+				for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+					if($("input[name=chk]:checkbox")[idx].checked==true){
+						var tno = $("input[name=chk]:checkbox")[idx].value
+						incomStateAjax(tno)
+					}
+				}
+				alert("미완료처리가 되었습니다.")
 			}
 			
 		})
@@ -188,13 +205,25 @@
 			}
 		})
 	}
-	function stateAjax(tno){
+	function comStateAjax(tno){
 		$.ajax({
 			type:"post",
-			url:"${path}/uptStateTodo.do?tno="+tno,
+			url:"${path}/uptcomStateTodo.do?tno="+tno,
 			dataType:"json",
 			success:function(data){
-				//alert(data.msg)
+				location.reload()
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}
+	function incomStateAjax(tno){
+		$.ajax({
+			type:"post",
+			url:"${path}/uptincomStateTodo.do?tno="+tno,
+			dataType:"json",
+			success:function(data){
 				location.reload()
 			},
 			error:function(err){
@@ -243,13 +272,14 @@
            		<div class="demo-inline-spacing">
 			    <input v-model="todo" @keyup="schKeyup" class="form-control mr-sm-2" 
 			    	placeholder="제목입력" style="width:330px;"/>
-			   
-			    <button @click="fetchList" class="btn btn-primary" type="button" id="search">Search</button>
+			    <button @click="fetchList" class="btn btn-primary"
+			        type="button" id="search">Search</button>
 			    </div>
 			</form>
 	           <div class="demo-inline-spacing">
 	         	<button id="addBtn" type="button" class="btn rounded-pill btn-primary">추가</button>
 	         	<button id="comBtn" type="button" class="btn rounded-pill btn-success">완료</button>
+	         	<button id="incomBtn" type="button" class="btn rounded-pill btn-success">미완료</button>
 	         	<button id="uptBtn" type="button" class="btn rounded-pill btn-info">수정</button>
 	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
 	         	</div>

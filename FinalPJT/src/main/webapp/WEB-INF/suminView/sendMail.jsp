@@ -61,16 +61,7 @@
 		  
 		$("#menu-item-mail").addClass('active open');	
 		$("#menu-item-sendMail").addClass('active');
-	      $("#readAll").click(function(){
-	    	  $("input[name=chk]").prop("checked", true)
-	    	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
-					if($("input[name=chk]:checkbox")[idx].checked==true){
-						var alertno = $("input[name=chk]:checkbox")[idx].value
-						location.href="${path}/alertState.do?no="+alertno
-					}
-				}
-	    	  location.reload()
-	      })
+	    
 	  
 	    var reChk = false
 	    $("#receiverChk").click(function(){
@@ -89,6 +80,7 @@
 			}	
 			
 			if(!reChk){
+				alert("수신자 확인은 필수입니다.")
 				return
 			}
 			if($("[name=receiver]").val()==""){
@@ -118,7 +110,7 @@
 			}
 			
 			$("form").submit()
-		})
+		})  
 		
 		function chkAjax(receiver){
 	      	$.ajax({
@@ -127,8 +119,10 @@
 	      		dataType:"json",
 	      		success:function(data){
 	      			alert(data.msg)
-	      			reChk = true
-	      			
+	      			if(data.result=='0'){
+	      				reChk = true
+	      				$("[name=receiver]").attr("readOnly",true)
+	      			}
 	      		},
 	      		error:function(err){
 	      			console.log(err)

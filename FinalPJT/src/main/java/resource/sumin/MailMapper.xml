@@ -20,7 +20,7 @@
 	
 	
 	<select id="totCntSend" resultType="int" parameterType="mailsch">
-		SELECT count(*) FROM mail WHERE sender=#{sender}
+		SELECT count(*) FROM mail WHERE sender=#{sender} AND title LIKE '%'||#{title}||'%'
 	</select>
 	<select id="mySendMail" parameterType="mailsch" resultType="mail">
 		SELECT * 
@@ -31,11 +31,12 @@
 	         FROM mail
 	         where 1=1
 	         and sender=#{sender}
+	         AND title LIKE '%'||#{title}||'%'
 	         ORDER BY senddte DESC) m )
 	      WHERE cnt BETWEEN #{start} AND #{end}
 	</select>
 	<select id="totCntReceive" resultType="int" parameterType="mailsch">
-		SELECT count(*) FROM receiver WHERE receiver=#{receiver}
+		SELECT count(*) FROM receiver WHERE receiver=#{receiver} AND title LIKE '%'||#{title}||'%'
 	</select>
 	<select id="myReceiveMail" parameterType="mailsch" resultType="mail">
 		SELECT * 
@@ -46,6 +47,7 @@
 	         FROM receiver
 	         where 1=1
 	         and receiver=#{receiver}
+	         AND title LIKE '%'||#{title}||'%'
 	         ORDER BY receivedte DESC) m )
 	      WHERE cnt BETWEEN #{start} AND #{end}
 	</select>

@@ -20,11 +20,21 @@
 		location.href="${path}/myPage.do?id="+id
 	}
 	
+	$("#readAll").click(function(){
+  	  $("input[name=chk]").prop("checked", true)
+  	  for(var idx=0; idx<$("input[name=chk]:checkbox").length; idx++){
+				if($("input[name=chk]:checkbox")[idx].checked==true){
+					var alertno = $("input[name=chk]:checkbox")[idx].value
+					location.href="${path}/alertState.do?no="+alertno
+				}
+			}
+  	  location.reload()
+    })
 	function alertState(no){
 	      location.href="${path}/alertState.do?no="+no
 	      location.reload()
 	   }
-  function alertDelete(no){
+    function alertDelete(no){
 	   location.href="${path}/alertDelete.do?no="+no
 	   location.reload()   
   }

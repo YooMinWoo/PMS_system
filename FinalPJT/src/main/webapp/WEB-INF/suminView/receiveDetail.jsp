@@ -69,7 +69,7 @@
 			location.href="${path}/replyMail.do?mailno="+mailno
 		})
 		
-	
+		
 	})
 </script>
 </head>
@@ -94,10 +94,11 @@
            
            <div class="card mb-4 pb-3">
 	           <div class="demo-inline-spacing">
-	           <!--  
+	            
 	            <button id="replyBtn" type="button" class="btn rounded-pill btn-primary">답장</button>
+	            <!-- 
 	         	<button id="delBtn" type="button" class="btn rounded-pill btn-danger">삭제</button>
-	         	-->
+	         	 -->
 	         	</div>
 	         	<input type="hidden" name="mailno" value="${receiveDetail.mailno }"/>
 	         	<br><br>
@@ -120,8 +121,11 @@
                <h6 class="mb-0"><fmt:formatDate pattern='yyyy-MM-dd' value="${receiveDetail.receiveDte}"/></h6>  
                <br>  <br>  
                 <div class="input-group">
-                   <input type="text" class="form-control" value="${receiveDetail.fname}"/>
-                   <button class="btn btn-outline-primary" type="button" id="download" value="${receiveDetail.fname}">다운로드</button>
+                <c:if test="${receiveDetail.fname!=null}">
+                   <input type="text" class="form-control" value="${receiveDetail.fname}" readOnly/>
+                   <button class="btn btn-outline-primary" 
+                   type="button" id="download" value="${receiveDetail.fname}">다운로드</button>
+                </c:if>
                 </div>
               <div style="margin-top:80px;">
                <h5 style="white-space:pre-wrap; line-height:30px;">${receiveDetail.content }</h5>		

@@ -1,5 +1,6 @@
 package superPms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,9 @@ public class Calendar_Service {
 	public void insCalPro(Calendar ins) {
 		dao.insCalPro(ins);
 	}
+	public List<Calendar> getTitle(String writer){
+		return dao.getTitle(writer);
+	}
+	
 	
 }

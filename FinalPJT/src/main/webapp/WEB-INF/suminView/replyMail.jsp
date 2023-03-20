@@ -58,6 +58,7 @@
     <script src="${path }/resources/sneat-1.0.0/assets/js/config.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		  
 		$("#sendBtn").click(function(){
 			let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}')
 			var receiver = $("[name=receiver]").val()
@@ -95,8 +96,6 @@
 			
 			$("form").submit()
 		})
-		
-		
 		
 		
 		

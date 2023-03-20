@@ -20,8 +20,11 @@ public class Todolist_Service {
 		return dao.todoList(id);
 	}
 	
-	public void uptStateTodo(String tno) {
-		dao.uptStateTodo(tno);
+	public void uptcomStateTodo(String tno) {
+		dao.uptcomStateTodo(tno);
+	}
+	public void uptincomStateTodo(String tno) {
+		dao.uptincomStateTodo(tno);
 	}
 	
 	public void delTodo(String tno) {

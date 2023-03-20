@@ -51,7 +51,7 @@
 	</update>
 	
 	<select id="getProSch" parameterType="string" resultType="project">
-		SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT 
+		SELECT DISTINCT p.REGDTE,p.DEADLINE,p.SUBJECT,p.prjno
 		FROM project p, PROJECTMEMBER m WHERE p.prjno=m.PRJNO AND owner=#{id} OR p.tlid=#{id}
 	</select>
 	
@@ -61,4 +61,8 @@
 			'white','orange',
 			0,null,null)
 	</insert>
+	<select id="getTitle" parameterType="string" resultType="calendar">
+		select title from calendar where writer = #{writer}
+	</select>
+	
 </mapper>

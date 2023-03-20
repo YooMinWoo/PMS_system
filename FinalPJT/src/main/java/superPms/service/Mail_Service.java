@@ -57,7 +57,7 @@ public class Mail_Service {
 	}
 	  
 	public List<Mail> mySendMail(MailSch sch){
-		
+		if(sch.getTitle()==null) sch.setTitle("");
 		  // 1. 총페이지 수
         sch.setCount(dao.totCntSend(sch));
         // 2. 현재페이지 번호(클릭한)
@@ -120,6 +120,7 @@ public class Mail_Service {
 	}
 	
 	public List<Mail> myReceiveMail(MailSch sch){
+		if(sch.getTitle()==null) sch.setTitle("");
 		  // 1. 총페이지 수
         sch.setCount(dao.totCntReceive(sch));
         // 2. 현재페이지 번호(클릭한)
@@ -192,7 +193,7 @@ public class Mail_Service {
 			dao.delSendMail(mailnoArray[i]);
 			if(dao.getFname(mailnoArray[i])!=null) {
 				dao.uptfileSState(mailnoArray[i]);
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+dao.getFileState(mailnoArray[i]).getSstate());
+				
 				if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
 					fname = dao.getFname(mailnoArray[i]);
 					dao.delFile(mailnoArray[i]);
@@ -212,7 +213,7 @@ public class Mail_Service {
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delReceiveMail(mailnoArray[i]);
 			dao.uptfileRState(mailnoArray[i]);
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+dao.getFileState(mailnoArray[i]).getSstate());
+		
 			if(dao.getFname(mailnoArray[i])!=null) {
 				if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
 					fname = dao.getFname(mailnoArray[i]);
@@ -231,7 +232,6 @@ public class Mail_Service {
 		fname = dao.getFname(mailno);
 		dao.delFile(mailno);
 		File file = new File(upload + fname);
-		System.out.println("파일명###########"+fname);
 		if(file.exists()) { // 파일이 존재하면
 			file.delete(); // 파일 삭제   
 		}

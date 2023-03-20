@@ -67,15 +67,25 @@ a.hover{
 		$("#menu-item-mailbox").addClass('active');
 		
 		$("#readBtn").click(function(){
-			 var chkArray = new Array()
+			var chkArray = new Array()
 		    $("input[name=chk]:checked").each(function() { 
 		      var mailnoVal = $(this).val(); 
-		      chkArray.push(mailnoVal);
+		      var stateVal = $("[name="+mailnoVal+"]").val()
+		      var str = stateVal.split(",")
+		      
+		      if(str[1]==mailnoVal&&str[0]=='1'){
+		    	  alert("이미 읽음처리된 메일이 있습니다.")
+		    	  return false
+		      }else{
+		    	  chkArray.push(mailnoVal);
+		      }
+		      
 		    });
-		    if( chkArray.length < 1 ){
-		      alert("메일을 선택하세요");
-		      return;
-		    }
+			
+			if( chkArray.length < 1 ){
+			      alert("메일을 선택하세요");
+			      return;
+			}
 			if(confirm("읽음처리 하시겠습니까?")){
 				alert("선택하신 메일이 읽음처리 되었습니다.")
 				location.href="${path}/uptSendState.do?mailno="+chkArray
@@ -155,6 +165,15 @@ a.hover{
            <h4 class="fw-bold py-3 mb-4">메일 > <small class="text-muted">받은 메일함</small></h4>
            
            <div class="card mb-4 pb-3">
+           <form id="frm01" class="form-inline" action="${path }/myReceiveMail.do" method="post">
+           		<div class="demo-inline-spacing">
+			    <input  class="form-control mr-sm-2"   
+			    	placeholder="제목입력" style="width:330px;" name="title"/>
+			    	<input type="hidden" name="curPage" value="${sch.curPage}"/>
+			   
+			     <button  class="btn btn-primary" type="submit">Search</button>
+			    </div>
+			</form>
 	           <div class="demo-inline-spacing">
 	           <button id="allChk" type="button" class="btn rounded-pill btn-info">전체 선택</button>
 	         	<button id="readBtn" type="button" class="btn rounded-pill btn-primary">읽음</button>
@@ -163,7 +182,7 @@ a.hover{
 	         	</div>
 	         	<div class="table-responsive text-nowrap">
 	         	<input type="hidden" name="curPage" value="${sch.curPage}"/>
-                  <table class="table">
+                  <table class="table" id="mailTable">
                   	
                     <thead>
                       <tr>
@@ -176,15 +195,18 @@ a.hover{
                     </thead>
                     <tbody class="table-border-bottom-0">
                     <c:forEach var="mail" items="${myReceiveMail}">
+                    	
                       <tr>
                         <td style="width:10px;"><i class="fab fa-angular fa-lg text-danger me-3"></i> 
                        	 <input type="checkbox" name="chk" value="${mail.mailno}"></td>
                        
                   		<c:if test="${mail.state=='0'}">
                   		 <td style="width:10px;">읽지않음</td>
+                  		<input type="hidden" name="${mail.mailno}" value="${mail.state},${mail.mailno}"/>
                   		</c:if>
                   		<c:if test="${mail.state=='1'}">
                   		 <td style="width:10px;">읽음</td>
+                  		 <input type="hidden" name="${mail.mailno}" value="${mail.state},${mail.mailno}"/>
                   		</c:if>
                   		<td style="width:10px;">${mail.sender }</td>
                   		

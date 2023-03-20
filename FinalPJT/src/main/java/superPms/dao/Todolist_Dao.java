@@ -10,7 +10,8 @@ public interface Todolist_Dao {
 	
 	public List<Todolist> todoList(String id);
 	
-	public void uptStateTodo(String tno);
+	public void uptcomStateTodo(String tno);
+	public void uptincomStateTodo(String tno);
 	
 	public void delTodo(String tno);
 	
