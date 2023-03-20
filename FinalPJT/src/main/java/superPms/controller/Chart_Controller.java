@@ -29,8 +29,6 @@ public class Chart_Controller {
 	}
 	@GetMapping("/chartShow.do")
 	public String chartShow(BarChart date,Model d) {
-		System.out.println(date.getYear());
-		System.out.println(date.getMonth());
 		d.addAttribute("barC",service.getBar(date));
 		d.addAttribute("donutC",service.getDonut());
 		d.addAttribute("infoByMonth",service.infoByMonth(date.getYear()));

@@ -81,7 +81,7 @@
 		$("#menu-item-home").addClass('active open');
 		var sessId = "${sessionScope.emp.ename}"
 		$("#bannerEname").text(sessId+"님")
-		
+		/*
 		$("[name=year]").change(function(){
 			var month = $("[name=month]").val()
 			var year = $(this).val()
@@ -93,6 +93,7 @@
 			var month = $(this).val()
 			getData(year,month)
 		})
+		*/
 	})
 	
 	function optFun(cntsArr,dnameArr,avgsArr,subArr,comboTotArr,comboCntArr,pmArr,empArr,priorArr){
@@ -245,9 +246,9 @@
 	
 	if(curYear=='')  curYear=parseInt(new Date().toISOString().split("T")[0].split("-")[0])
 	if(curMonth=='') curMonth= curMonth = parseInt(new Date().toISOString().split("T")[0].split("-")[1])
-	
-	$("[name=year]").val(curYear).prop("selected", true); 
-	$("[name=month]").val(curMonth).prop("selected", true); 
+	$("#monthByProg").text(curMonth+"월 프로젝트 진행률")
+	//$("[name=year]").val(curYear).prop("selected", true); 
+	//$("[name=month]").val(curMonth).prop("selected", true); 
 	
 		let url="${path}/chartShow.do?year="+curYear+"&month="+curMonth
 		fetch(url).then(function(response){
@@ -375,7 +376,7 @@
 	           <div class="card">
 	           	<div class="row">
 	           	<div class="col-8">
-	           		<h5 class="card-header m-0 me-2 pb-3">이번달 프로젝트 진행률</h5>
+	           		<h5 class="card-header m-0 me-2 pb-3" id="monthByProg">이번달 프로젝트 진행률</h5>
 	           	</div>
 	           	<!--  
 	           	<div class="col-4 d-flex justify-content-center">

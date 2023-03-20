@@ -81,7 +81,12 @@ tbody td{
 		})
 		$("#schBtn").click(function(){
 			$("#myFrm").submit()
-		})		
+		})
+		if($("[name=isCon]").val()=="Y"){
+	         $("#now-pro").addClass('active');
+	      }else{
+	         $("#fin-pro").addClass('active');
+	      }
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
 			$("[name=keyword]").val("")

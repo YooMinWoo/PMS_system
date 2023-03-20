@@ -72,6 +72,11 @@ tbody td{
 		$("#schBtn").click(function(){
 			$("#allFrm").submit()
 		})
+		if($("[name=isCon]").val()=="Y"){
+	         $("#now-pro").addClass('active');
+	      }else{
+	         $("#fin-pro").addClass('active');
+	      }
 		
 		$("#now-pro").click(function(){
 			$("[name=isCon]").val("Y")
@@ -80,7 +85,7 @@ tbody td{
 		})
 		$("#fin-pro").click(function(){
 			$("[name=isCon]").val("N")
-			$("[name=keyword]").val("")
+			$("[name=keyword]").val("")		
 			$("#allFrm").submit()
 		})
 
