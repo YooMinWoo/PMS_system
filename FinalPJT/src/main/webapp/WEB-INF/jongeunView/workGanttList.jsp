@@ -69,6 +69,11 @@ td{text-align:center;}
 		if("${msg}"!=""){
 			alert("${msg}")
 		}
+		$("#proMem").change(function(){
+			console.log($("#proMem").val())
+			$("[name=curPage]").val($("#proMem").val())
+			$("form").submit()
+		})
 	
 	});
 	function goWork(no){
@@ -108,8 +113,7 @@ td{text-align:center;}
 			<hr class="mx-0">
            <div class="demo-inline-spacing mt-5">
            <div class="row">
-           <div class="col-3">
-          </div>
+           <div class="col-3"></div>
           <div class="col-5"> </div>
           <div class="col-4">
             <!-- 검색어 입력하는 곳 -->
@@ -119,6 +123,7 @@ td{text-align:center;}
 	            <input type="text" name="text" value="${gsch.text}" class="form-control" placeholder="업무명을 입력하세요">
 	          </div>
 	          <input type="hidden" name="curPage" value="${gsch.curPage}"/>
+	          <input type="hidden" name="owner" value="${gsch.owner}"/>
 	       </form>
 	       <!-- /form 끝 -->
           </div>

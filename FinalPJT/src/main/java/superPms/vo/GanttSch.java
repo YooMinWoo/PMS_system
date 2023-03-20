@@ -4,6 +4,7 @@ public class GanttSch {
 	// 검색
 	private String text;
 	private String isApprv;
+	private String owner;
 	// 프로젝트
 	private int prjno;
 	// 페이징
@@ -89,5 +90,11 @@ public class GanttSch {
 	public void setIsApprv(String isApprv) {
 		this.isApprv = isApprv;
 	}
-	
+	public String getOwner() {
+		return owner;
+	}
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
 }

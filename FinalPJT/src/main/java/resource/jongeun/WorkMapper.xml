@@ -102,8 +102,7 @@
 			FROM (SELECT * FROM gantt ORDER BY START_date desc) g, project p 
 			WHERE g.PRJNO = p.PRJNO
 			AND p.prjno=#{prjno}
-			AND g.text like '%'||#{text}||'%'
-			)
+			AND g.text like '%'||#{text}||'%')
 		WHERE cnt BETWEEN #{start} and #{end}
 	</select>
 	<select id="totGanttCnt" resultType="int" parameterType="ganttsch">
@@ -125,6 +124,11 @@
 		AND e.ID = p.OWNER
 		AND g.id = #{id}
 	</select>
+	<select id="prjMemList" resultType="prjowner" parameterType="int">
+		SELECT DISTINCT OWNER 
+		FROM GANTT
+		WHERE PRJNO = #{prjno}
+	</select>
 	<select id="ganttDetail" parameterType="gantt" resultType="gantt">
 		SELECT g1.*,to_char(to_date(g1.START_DATE,'yyyy-mm-dd') + g1.duration,'yyyy-mm-dd') AS end_date,
 		g2.text AS parentText from gantt g1 LEFT join gantt g2 ON g1.PARENT =g2.ID where g1.prjno=#{prjno} AND g1.id=#{id}
@@ -133,15 +137,6 @@
 		SELECT g.*, to_char(to_date(g.START_DATE,'yyyy-mm-dd') + g.duration,'yyyy-mm-dd') AS end_date
 		FROM GANTT g
 		WHERE id = #{id}
-	</select>
-	<!-- 멤버추가 -->
-	<select id="prjMemList" parameterType="workmem" resultType="pmList">
-		SELECT distinct d.dname,e.job, m.part, e.ename, e.id
-		FROM dept d, emp e, projectmember m
-		WHERE m.PRJNO = #{prjno}
-		AND m.owner=e.id
-		AND e.deptid=d.deptid
-		AND m.OWNER NOT IN (#{id1}, #{id2})
 	</select>
 	<!-- 결재 -->
 	<update id="reqApprove" parameterType="string">
@@ -188,7 +183,7 @@
 	<select id="getApprvList" resultType="gantt" parameterType="ganttsch">
 		SELECT *
 		FROM (SELECT rownum cnt, g.* 
-			FROM gantt g, project p 
+			FROM (SELECT * FROM gantt ORDER BY START_date desc) g, project p  
 			WHERE g.PRJNO =p.PRJNO
 			AND p.prjno=#{prjno}
 			<if test='isApprv!=null and isApprv.equals("n")'>
@@ -201,7 +196,7 @@
 			AND g.text like '%'||#{text}||'%'
 			)
 		WHERE cnt BETWEEN #{start} and #{end}
-		ORDER BY START_date
+		ORDER BY START_date desc
 	</select>
 	<select id="totApprvCnt" resultType="int" parameterType="ganttsch">
 		SELECT count(*) 

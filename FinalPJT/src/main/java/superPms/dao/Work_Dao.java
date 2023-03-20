@@ -4,12 +4,11 @@ import java.util.List;
 
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
+import superPms.vo.PrjOwner;
 import superPms.vo.Project;
-import superPms.vo.ProjectMemberList;
 import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
-import superPms.vo.WorkMember;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
@@ -37,10 +36,9 @@ public interface Work_Dao {
 	public Gantt ganttDetailExp(String no);
 	public List<WorkFile> getFileList(String no);
 	public WorkFile fileInfo(int fno);
+	public List<PrjOwner> prjMemList(int prjno);
 	// 진행률 수정
 	public void progress(Gantt upt);
-	// 멤버추가
-	public List<ProjectMemberList> prjMemList(WorkMember sch);
 	// 결재
 	public void reqApprove(String no);
 	public void rejApprove(String no);

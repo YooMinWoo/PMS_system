@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Alert_Service;
 import superPms.service.Gantt_Service;
+import superPms.service.Project_Service;
 import superPms.service.Work_Service;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
@@ -26,9 +27,9 @@ import superPms.vo.WorkSch;
 public class Work_Controller {
 	@Autowired(required=false)
 	private Work_Service service;
-	@Autowired
+	@Autowired(required = false)
 	private Gantt_Service gantt_service;
-	@Autowired
+	@Autowired(required = false)
 	private Alert_Service alert_service;
 	@Value("${user.upload}")
 	private String upload;
@@ -77,22 +78,24 @@ public class Work_Controller {
 		return "redirect:/workGanttList.do?prjno="+prjno;
 	}
 	
-	
-	
 	// 수정
-	// http://localhost:7080/FinalPJT/workInsFrm.do
-	@RequestMapping("/workUpt.do")
-	public String workUpt(@RequestParam("no") String no, @ModelAttribute("upt") Gantt upt, HttpSession session, Model d) {
+	@GetMapping("/workUptFrm.do")
+	public String workUptFrm(@RequestParam("no") String no, HttpSession session, Model d) {
 		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
 		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
 		d.addAttribute("projectInfo",service.projectInfo(service.ganttDetailExp(no).getPrjno()));
 		d.addAttribute("ganttDetail",service.ganttDetailExp(no));
-		d.addAttribute("msg","수정완료");
-		return "WEB-INF\\jongeunView\\workGanttUpt.jsp";
+		return "WEB-INF\\jongeunView\\workGanttUptFrm.jsp";
 	}
-	
-	
-	
+	@PostMapping("/workUpt.do")
+	public String workUpt(@ModelAttribute("upt") Gantt upt, HttpSession session, Model d) {
+		SuperEmpDept mem = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(mem.getId()));
+		gantt_service.uptProgress(upt);
+		d.addAttribute("msg","수정완료");
+		return "redirect:/workGanttDetail.do?no="+upt.getId();
+	}
+
 	// 답글
 	@PostMapping("/workRepIns.do")
 	public String workRepIns(WorkRep ins, Model d, HttpSession session) {

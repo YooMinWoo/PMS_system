@@ -24,6 +24,7 @@
       	<typeAlias alias="workrep" type="superPms.vo.WorkRep"/>
       	<typeAlias alias="ganttsch" type="superPms.vo.GanttSch"/>
       	<typeAlias alias="workmem" type="superPms.vo.WorkMember"/>
+      	<typeAlias alias="prjowner" type="superPms.vo.PrjOwner"/>
       	<!-- /종은 -->
       	
       	<typeAlias alias="risk" type="superPms.vo.Risk"/>

@@ -12,12 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import superPms.dao.Work_Dao;
 import superPms.vo.Gantt;
 import superPms.vo.GanttSch;
+import superPms.vo.PrjOwner;
 import superPms.vo.Project;
-import superPms.vo.ProjectMemberList;
 import superPms.vo.SuperEmpDept;
 import superPms.vo.Work;
 import superPms.vo.WorkFile;
-import superPms.vo.WorkMember;
 import superPms.vo.WorkRep;
 import superPms.vo.WorkSch;
 
@@ -157,13 +156,12 @@ public class Work_Service {
 	public Gantt ganttDetailExp(String no) {
 		return dao.ganttDetailExp(no);
 	};
+	public List<PrjOwner> prjMemList(int prjno){
+		return dao.prjMemList(prjno);
+	}
 	// 진행률 수정
 	public void progress(Gantt upt) {
 		dao.progress(upt);
-	}
-	// 멤버추가
-	public List<ProjectMemberList> prjMemList(WorkMember sch){
-		return dao.prjMemList(sch);
 	}
 	// 결재
 	public void reqApprove(String no) {

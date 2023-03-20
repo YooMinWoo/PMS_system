@@ -77,7 +77,11 @@ textarea:read-only{
 			location.href="${path}/apprvList.do?prjno="+$("[name=prjno]").val();
 		})
 		$("#upt").click(function(){
-			location.href="${path}/workUpt.do?no="+$("[name=ganttid]").val();	
+			if(('${sessmem.id}' == '${projectInfo.tlid}')||('${sessmem.id}' == '${personInfo.id}')){
+				location.href="${path}/workUptFrm.do?no="+$("[name=ganttid]").val();
+			}else{
+				alert("권한이 없습니다. 해당 프로젝트 pm 또는 담당자만 가능합니다.")
+			}	
 		})
 		$("#del").click(function(){
 			if('${sessmem.id}' == '${projectInfo.tlid}'){
@@ -252,9 +256,13 @@ textarea:read-only{
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li> 
+				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
+				  <c:if test="${ganttDetail.state==0}"> 
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
-				    <li><a class="dropdown-item" id="del">삭제</a></li>     
+				  </c:if>
+				  <c:if test="${ganttDetail.apprv==0}">    
+				    <li><a class="dropdown-item" id="del">삭제</a></li>
+				  </c:if> 
 				  </ul>
             	</div> 
            </div>
@@ -384,12 +392,17 @@ textarea:read-only{
               	<div class="repList2">
                 <textarea class="form-control" name="cont" id="repContent"
                    	rows="3" style="height:100px;"></textarea>
+                </div>
                 <div class="mb-3">
-                 <label for="formFile" class="custom-file-label">파일첨부</label>
+                 <label for="formFile" class="form-label">파일첨부</label>
                  <input type="file" name="report" class="form-control" id="formFile" />
                 </div>
-                   <button type="button" class="btn btn-secondary" id="regRep">등록</button>
-                </div>
+                <div class="row mt-3">
+	          		<div class="col-lg-6 col-sm12 text-lg-start text-sm-start"></div>
+            		 <div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
+	         	 		<button type="button" class="btn btn-secondary" id="regRep">등록</button>
+	        		</div>
+	        		</div>
                 </form>
               </div>
               <hr>
