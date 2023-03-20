@@ -77,7 +77,7 @@ textarea:read-only{
 			location.href="${path}/apprvList.do?prjno="+$("[name=prjno]").val();
 		})
 		$("#upt").click(function(){
-			location.href="${path}/workUptFrm.do?no="+$("[name=ganttid]").val();	
+			location.href="${path}/workUpt.do?no="+$("[name=ganttid]").val();	
 		})
 		$("#del").click(function(){
 			if('${sessmem.id}' == '${projectInfo.tlid}'){
@@ -110,12 +110,6 @@ textarea:read-only{
 				}
 				$("#frm02").submit();
 			}
-		})
-	  	$("#uptProcess").click(function(){
-	  		if(confirm("진행률을 저장하시겠습니까?")){
-	  			$("[name=progress]").val($("[name=progress]").val()/100);
-	  			$("#frmModal").submit();
-	  		}
 		})
 		// 결재 요청
 		$("#req").click(function(){
@@ -183,6 +177,19 @@ textarea:read-only{
 		    	}
 		    })
 	}
+	// 진행률 수정
+	function press(e){
+	    if(e.keyCode == 13){ 
+	    	uptProcess();
+	    }
+	}
+	function uptProcess(){
+		if(confirm("진행률을 저장하시겠습니까?")){
+			$("[name=progress]").val($("[name=progress]").val()/100);
+  			$("#frmModal").submit();
+  		}
+	}
+	
 </script>
 </head>
 
@@ -245,10 +252,8 @@ textarea:read-only{
             			<i class="bi bi-three-dots"></i>
             		</button>
             		<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
-				    <!-- 
+				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li> 
 				    <li><a class="dropdown-item" id="upt">수정</a></li>
-				    -->
 				    <li><a class="dropdown-item" id="del">삭제</a></li>     
 				  </ul>
             	</div> 
@@ -355,13 +360,14 @@ textarea:read-only{
               <div class="modal-body">
               <form action="${path}/progress.do" method="post" id="frmModal">
               	<input type="text" class="form-control" name="progress"
-                  value="<fmt:formatNumber value='${ganttDetail.progress*100}' pattern="0"/>" >
+                  value="<fmt:formatNumber value='${ganttDetail.progress*100}' pattern="0"/>" 
+                  onkeypress="press(event)">
                 <input type="hidden" name="id" value="${ganttDetail.id}">     
               </form>
               </div>        
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-                <button id="uptProcess" type="button" class="btn btn-primary">저장</button>
+                <button id="uptProcess" type="button" class="btn btn-primary" onclick="uptProcess()">저장</button>
               </div>
             </div>
           </div>

@@ -24,7 +24,9 @@ public class Chart_Controller {
 	@GetMapping("/PMSMain.do")
 	public String PMSMain(HttpSession session, Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
+		if(sObj!=null) {
+			d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
+		}
 		return "WEB-INF\\wonjuView\\pmsMain.jsp";
 	}
 	@GetMapping("/chartShow.do")

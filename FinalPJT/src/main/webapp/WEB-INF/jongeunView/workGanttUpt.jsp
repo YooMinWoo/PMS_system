@@ -212,46 +212,6 @@ textarea:read-only{
            
            <div class="card mb-4 pb-3">
             <div class="row mt-3">
-            	<div class="col-lg-6 col-sm12 text-lg-start text-sm-start">
-             		<button type="button" class="btn" id="toList">
-             			<i class="bi bi-list-ul" title="업무리스트로 이동"></i>
-             		</button>
-             		<c:if test="${sessmem.id eq projectInfo.tlid}">
-             		<button type="button" class="btn" id="toApprv">
-             			<i class="bi bi-pencil-square" title="결재함으로 이동"></i>
-             		</button>
-             		</c:if>
-             	</div>
-             	<div class="col-lg-6 col-sm12 text-lg-end text-sm-end">
-             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
-             		<button class="btn btn-primary" id="req">결재 요청</button>
-             	</c:if>
-             	<c:if test="${ganttDetail.state==1}"> 
-             		<c:choose>
-	             		<c:when test="${ganttDetail.apprv==1}">
-		             		<span>결재완료</span>
-	             		</c:when>
-	             		<c:when test="${sessmem.id eq projectInfo.tlid}">
-	             			<button class="btn btn-primary" id="rej">결재 승인</button>
-	             			<button class="btn btn-danger" id="apprv">결재 반려</button>
-	             		</c:when>
-		             	<c:otherwise>
-		             		<span>결재진행중...</span>
-		             	</c:otherwise> 	
-	             	</c:choose>
-             	</c:if>
-            		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
-            			aria-expanded="false">
-            			<i class="bi bi-three-dots"></i>
-            		</button>
-            		<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" id="callendarBtn">캘린더 추가</a></li>
-				    <!-- 
-				    <li><a class="dropdown-item" id="upt">수정</a></li>
-				    -->
-				    <li><a class="dropdown-item" id="del">삭제</a></li>     
-				  </ul>
-            	</div> 
            </div>
 
            <div class="demo-inline-spacing mt-1">
@@ -303,17 +263,7 @@ textarea:read-only{
                   <label class="form-label">진행률</label>
                   <div class="input-group mb-3">
                   <input type="text" class="form-control" name="prog"
-                  value="<fmt:formatNumber value='${ganttDetail.progress }' type='percent'/>"
-                  disabled readonly>
-                  <c:if test="${ganttDetail.state==0}">
-                  <c:if test="${sessmem.id eq personInfo.id || sessmem.id eq projectInfo.tlid}">
-                  <div class="input-group-prepend">
-						<button class="btn btn-outline-secondary" type="button" id="" value="" data-bs-toggle="modal" data-bs-target="#inviteModal">
-							수정
-    					</button>
-   					</div>
-   				</c:if> 
-   				</c:if>    
+                  value="<fmt:formatNumber value='${ganttDetail.progress }' type='percent'/>">
                	  </div>
                	  </div>
                 </div>
@@ -324,99 +274,13 @@ textarea:read-only{
                     id="basic-default-cont"
                     class="form-control"
                     style="height: 300px;"
-                    disabled readonly
                   >${ganttDetail.description}</textarea>
                 </div>
-                <!-- 
-                <div class="mb-3">
-                 <label>첨부파일</label>
-                 <input id="downFile"  value="${work.fno}" type="text" class="form-control" placeholder="첨부 입력" required>
-                </div>
-                <div class="mb-3">
-                 <label for="formFile" class="form-label">${empty work.fname?'첨부 파일을 선택하세요':'수정시 선택'}</label>
-                 <input type="file" name="report" class="custom-file-input" id="formFile" />
-                </div>
-                <script type="text/javascript">
-					  $(".custom-file-input").on("change",function(){
-				        	$(this).next(".custom-file-label").text($(this).val())
-				        })  
-				  </script>
-				-->	
               </form>
           </div>
-      <!-- 진행률 수정 -->
-		<div class="modal fade" id="inviteModal" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="modalScrollableTitle">진행률 수정</h5>
-                 <span>% 빼고 숫자만 입력해 주세요</span>
-              </div>
-              <div class="modal-body">
-              <form action="${path}/progress.do" method="post" id="frmModal">
-              	<input type="text" class="form-control" name="progress"
-                  value="<fmt:formatNumber value='${ganttDetail.progress*100}' pattern="0"/>" >
-                <input type="hidden" name="id" value="${ganttDetail.id}">     
-              </form>
-              </div>        
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
-                <button id="uptProcess" type="button" class="btn btn-primary">저장</button>
-              </div>
-            </div>
-          </div>
-        </div>
-	<!-- /진행률 수정-->
-          <!-- 답글 입력부분 -->
-          <hr>
-          <c:if test="${ganttDetail.state!=1}">
-          	<div class="card-body">
-          		<form id="frm02" method="post" action="${path}/workRepIns.do" enctype="multipart/form-data">
-               		<input type="hidden" name="id" value="${sessmem.id}">
-               		<input type="hidden" name="workno" value="${ganttDetail.id}">
-              	<label for="repContent" class="form-label">답글 작성</label>
-              	<div class="repList2">
-                <textarea class="form-control" name="cont" id="repContent"
-                   	rows="3" style="height:100px;"></textarea>
-                <div class="mb-3">
-                 <label for="formFile" class="custom-file-label">파일첨부</label>
-                 <input type="file" name="report" class="form-control" id="formFile" />
-                </div>
-                   <button type="button" class="btn btn-secondary" id="regRep">등록</button>
-                </div>
-                </form>
-              </div>
-              <hr>
-          </c:if>
-            <!-- 답글 출력부분 -->
-          	<div class="card-body">
-          	 <c:forEach var="rep" items="${workrep}" varStatus="status">	
-              <div class="repList">
-              	<input type="hidden" name="no" value="${rep.no }">
-              	<input type="hidden" name="writer" value="${rep.id }">
-                <label class="form-label">${rep.ename } (${rep.regdte })</label>
-                <c:if test="${ganttDetail.state!=1}">
-                <button type="button" class="btn" id="delRep"
-                	onclick="delRep(${rep.no},${rep.workno},'${rep.id}')">
-                	<i class="bi bi-x"></i></button>     
-                </c:if>
-                <textarea id="reps" class="form-control" 
-                	rows="3" style="height:80px;" disabled readonly>${rep.cont}
-                </textarea>
-                <c:if test="${fileInfo[status.index].fname != null}">
-                 <div class="input-group mb-3">
-    				<div class="input-group-prepend">
-    					<button class="btn btn-outline-secondary" type="button" id="downFile" value="${fileInfo[status.index].fno}">
-    						<i class="bi bi-download"></i>
-    					</button>
-    				</div>
-    				<input type="text" class="form-control" value="${fileInfo[status.index].fname}" aria-describedby="basic-addon1" disabled readonly>
-  				</div>  
-                </c:if>
-              </div>
-              <br>
-             </c:forEach>
-          </div>
+
+
+
           <div class="tab-content px-0 mt-0">
 
           </div>
