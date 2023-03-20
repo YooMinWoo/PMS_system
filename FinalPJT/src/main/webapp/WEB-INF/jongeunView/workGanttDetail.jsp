@@ -244,7 +244,6 @@ textarea:read-only{
 		             	</c:otherwise> 	
 	             	</c:choose>
              	</c:if>
-             	<c:if test="${ganttDetail.state==0 && sessmem.id eq personInfo.id}">
             		<button type="button" id="more" class="btn"	data-bs-toggle="dropdown"
             			aria-expanded="false">
             			<i class="bi bi-three-dots"></i>
@@ -257,7 +256,6 @@ textarea:read-only{
 				    <li><a class="dropdown-item" id="del">삭제</a></li>
 				     -->
 				  </ul>
-				  </c:if>
             	</div> 
            </div>
             <!-- 멤버 초대  모달창 -->
