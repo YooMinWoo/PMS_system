@@ -50,10 +50,10 @@ public class Risk_Controller {
 	}
 	// 페이징처리
 	@RequestMapping("/project_pagingRisk.do")
-	public String pagingRisk(@ModelAttribute("sch") RiskSch sch,
+	public String pagingRisk(@ModelAttribute("sch2") RiskSch sch2,
 			@RequestParam(value="prjno", required = false) Integer prjno ,Model d) {
 		d.addAttribute("projectInfo",service3.projectInfo(prjno)); 
-		d.addAttribute("list", service.pagingRisk(sch));
+		d.addAttribute("list", service.pagingRisk(sch2));
 		
 		return "WEB-INF\\jungwooView\\project_risk.jsp";
 	}
@@ -79,13 +79,14 @@ public class Risk_Controller {
 	}
 	@RequestMapping("/project_riskForm.do")		// 리스크 등록폼 페이지
 	public String insertForm(@RequestParam(value="lang", defaultValue = "ko")String lang,
-			HttpServletRequest request, HttpServletResponse response){
+			HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("prjno")Integer prjno){
 		System.out.println("선택한 언어: "+lang);
 		localeResolver.setLocale(request, response, new Locale(lang));
 		return "WEB-INF\\jungwooView\\project_riskForm.jsp";
 	}
 	@RequestMapping("/project_insertRisk.do")		// 리스크 등록
-	public String insertRisk(Risk ins, @RequestParam("prjno")Integer prjno){
+	public String insertRisk(Risk ins, @RequestParam("prjno")Integer prjno, Model d){
 		service.insertRisk(ins);
 		return "redirect:project_pagingRisk.do?prjno="+prjno;
 	}	

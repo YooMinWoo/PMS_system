@@ -59,7 +59,8 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		$("#insertBtn").click(function(){			
+		$("#insertBtn").click(function(){		
+			console.log("11"+"${projectInfo.subject}")
 			if(confirm("등록하시겠습니까?")){
 				if($("#riskname").val()=="" || $("#risklevel").val()=="" ||
 						$("#riskpriority").val()==""){
@@ -117,12 +118,10 @@
 		  		<option value="en"><spring:message code="en"/></option>
 		  	</select>
            <div class="card mb-4 pb-3">
-           <jsp:include page="/projectTop.jsp"></jsp:include>
-			<hr class="mx-0">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
 				        <h4 class="text-primary"><spring:message code="riskregistration"/></h4>
-				        <form method="get" class="validation-form" novalidate> 
+				        <form method="post" class="validation-form" novalidate> 
 				        <input type="hidden" name="lang" value=""/>
 				          <div class="mb-3">
 				            <label for="riskname"><spring:message code="riskname"/></label>
@@ -167,7 +166,7 @@
 					            </select>
 				            </div>
 				          </div>    
-  				          <input type="hidden" id="prjno"  name="prjno" value="${param.prjno}">
+  				          
 							<input type="hidden" id="id"  name="id" value="${emp.id}">
 				          <div class="mb-4"></div>
 				          <button id="insertBtn" class="btn btn-warning btn-lg btn-block" type="button"><spring:message code="regist"/></button>

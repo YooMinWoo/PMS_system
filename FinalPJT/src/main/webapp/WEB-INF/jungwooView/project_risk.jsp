@@ -154,7 +154,7 @@ tr{text-align:left;}
 						</div>
                           <div class="input-group">
 							    <form id="frm01" class="d-flex"  method="post"> 			
-								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
+								    <input type="hidden" name="curPage" value="${sch2.curPage}"/>
 								    <input type="text" class="form-control rounded" placeholder="Search" 
 							  aria-label="Search" aria-describedby="search-addon" name="schKeyword"
 							  value="${param.schKeyword }" />
@@ -193,16 +193,16 @@ tr{text-align:left;}
                                 </table>
 								<ul class="pagination  justify-content-end"> 
 									<li class="page-item"><a class="page-link" 
-										href="javascript:goPage(${sch.startBlock-1});">Previous</a></li>
+										href="javascript:goPage(${sch2.startBlock-1});">Previous</a></li>
 								
-									<c:forEach var="cnt" begin="${sch.startBlock}" 
-											end="${sch.endBlock}">
-								  		<li class="page-item ${sch.curPage==cnt?'active':''}">
+									<c:forEach var="cnt" begin="${sch2.startBlock}" 
+											end="${sch2.endBlock}">
+								  		<li class="page-item ${sch2.curPage==cnt?'active':''}">
 								  		<a class="page-link" 
 								  			href="javascript:goPage(${cnt});">${cnt}</a></li>
 								  	</c:forEach>
 								  	<li class="page-item"><a class="page-link" 
-								  			href="javascript:goPage(${sch.endBlock+1});">Next</a></li>
+								  			href="javascript:goPage(${sch2.endBlock+1});">Next</a></li>
 								</ul>
                                     <script>
                               		function goDetail(riskno){
