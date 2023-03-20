@@ -213,7 +213,7 @@ public class Mail_Service {
 		for(int i=0; i<mailnoArray.length; i++) {
 			dao.delReceiveMail(mailnoArray[i]);
 			dao.uptfileRState(mailnoArray[i]);
-		
+		  
 			if(dao.getFname(mailnoArray[i])!=null) {
 				if(dao.getFileState(mailnoArray[i]).getSstate()==1&&dao.getFileState(mailnoArray[i]).getRstate()==1) {
 					fname = dao.getFname(mailnoArray[i]);
