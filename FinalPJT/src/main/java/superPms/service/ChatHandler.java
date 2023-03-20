@@ -26,8 +26,6 @@ public class ChatHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// 클라이언트에서 접속할 때, 추가 등록
 		users.put(session.getId(),session);
-		System.out.println("[핸들러메서드:접속]"+session.getId()
-		+"님 접속합니다. 현재 서버에 접속자 수:"+users.size());
 	}
 
 	// 메시지 전송시(client에 의해 전달되어 온 메시지 다른 클라이언트에 전송처리)
@@ -36,32 +34,17 @@ public class ChatHandler extends TextWebSocketHandler {
 		// 받은 메시지
 		String msg = (String)message.getPayload();
 		String []msgArry = msg.split(":");
-		/* 홍길동:연결 접속했습니다.
-		/* 홍길동:안녕하세요
-		// 연결을 종료하였습니다.
-		// 연결 접속했습니다.
-		 * 
+		/*
 		 * 서버의 접속아이디와 클라이언트에서 입력한 접속자를 쌍으로 map에서 저장
 		 * */
 		if( msgArry[1].equals("연결 접속했습니다.") ) {
 			ids.put(session.getId(), msgArry[0]);
-		} 
-		/*
-		if( msgArry[1].equals("연결을 종료하였습니다.") ) {
-			ids.remove(session.getId());
-		}		
-		*/
-		System.out.println("#[핸들러메서드:메시지]"+msg);
-		//System.out.println("#[핸들러메서드:접속자]"+memStr);
+		}
 		// 전달할 클라이언트에게 전달.
-		System.out.println("\t 메시지 전달 대상자:");
 		for(WebSocketSession ws:users.values()) {
 			
 			ws.sendMessage(message);
-
-			System.out.print(ws.getId()+", ");
 		}
-		System.out.println();
 	}
 	// 종료시
 	@Override
@@ -74,12 +57,9 @@ public class ChatHandler extends TextWebSocketHandler {
 		
 		for(WebSocketSession ws:users.values()) {
 			ws.sendMessage(message);
-			System.out.print(ws.getId()+", ");
 		}		
 		
 		ids.remove(session.getId());
-		
-		System.out.println("#[핸들러메서드:접속종료]"+session.getId());
 	}
 	// 예외 처리
 	@Override

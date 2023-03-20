@@ -74,9 +74,6 @@
 	var members=[];
 	$(document).ready(function(){
 		$("#menu-item-chatting").addClass('active open');
-		<%-- 
-		
-		--%>
 		// 화면 로딩시, ajax로 접속된 아이디 출력..
 		conUsers()
 		$("#id").focus()
@@ -107,8 +104,7 @@
 				sendMsg()			
 			}
 		})	
-	
-		// 5. 종료 버튼    10:05~
+		// 5. 종료 버튼
 		$("#exitBtn").click(function(){
 			console.log("종료")
 			if($("#id").val()!="")
@@ -128,16 +124,11 @@
 	function cKId(){
 		console.log(members)
 		var idVal = $("#id").val()
-		
-		
 		if($("#id").val()==""){
 			alert("아이디를 입력하셔야 접속가능합니다.")
 		}else{
-			console.log(members)
-			console.log("접속자들")
 			var isNotValid=false;
 			$(members).each(function(idx, mem){
-				console.log(idVal+":"+mem)
 				if(idVal==mem){
 					isNotValid=true;
 				}
@@ -150,7 +141,6 @@
 				$("#msg").removeAttr("readOnly")
 				$("#msg").focus()
 			}
-			
 		}		
 		
 	}
@@ -165,7 +155,6 @@
 		// 이벤트 핸들러 메서드 선언
 		// 1. 접속될 때.. 서버상 afterConnectionEstablished() 메서드와 연동
 		wsocket.onopen=function(evt){
-			console.log(evt)
 			// 메시지 전송 메서드 호출 서버상 handleMessage() 메서드 연동
 			wsocket.send($("#id").val()+
 					":연결 접속했습니다.")
@@ -278,10 +267,6 @@
             <!-- Content -->
 			
             <div class="container-xxl flex-grow-1 container-p-y">
- 
-           
-           
-	           
 		           	<h4 class="fw-bold py-3 mb-4">채팅</h4>
 		           <div class="card">
 	           			<div class="container">
