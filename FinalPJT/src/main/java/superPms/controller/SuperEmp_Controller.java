@@ -70,7 +70,9 @@ public class SuperEmp_Controller {
 		return "redirect:/getEmpListPage.do";
 	}
 	@GetMapping("/authSetting.do")
-	public String getAuthSetting(@RequestParam("id") String id, Model d) {
+	public String getAuthSetting(@RequestParam("id") String id, Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("authSet", service.getAuthSetting(id));
 		return "WEB-INF\\eunbeenView\\authSetting.jsp";
 	}
@@ -84,7 +86,9 @@ public class SuperEmp_Controller {
 		return service.getAuthCom();
 	}
 	@RequestMapping("/updateEmp.do")
-	public String uptEmp(SuperEmpDept upt, Model d) {
+	public String uptEmp(SuperEmpDept upt, Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		service.uptEmp(upt);
 		// 수정된 이후에 데이터를 로딩 처리
 		d.addAttribute("authSet", service.getAuthSetting(upt.getId()));
@@ -107,7 +111,7 @@ public class SuperEmp_Controller {
 			d.addAttribute("msg", "로그인 성공");
 			// DB에 데이터가 있을 때, 세션 설정
 			session.setAttribute("emp", service.login(e));
-			return "WEB-INF\\wonjuView\\pmsMain.jsp";
+			return "redirect:/PMSMain.do";
 		}
 	}
 	
@@ -120,7 +124,9 @@ public class SuperEmp_Controller {
 //		return "forward:/PMSLogin.do";
 //	}
 	@RequestMapping("/userGetEmpList.do")
-	public String userGetEmpList(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d) {
+	public String userGetEmpList(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("elist", service.getEmpListPage(sch));
 		return "WEB-INF\\eunbeenView\\userOrganization.jsp";
 	}
