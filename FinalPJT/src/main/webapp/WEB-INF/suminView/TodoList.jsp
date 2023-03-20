@@ -184,6 +184,11 @@
 		})
 		
 		$("#mUptBtn").click(function(){
+			if($("[name=todo]").val()==""){
+				alert("할 일을 입력하세요")
+				$("[name=todo]").focus()
+				return
+			}
 			todoAjax("uptTodo.do")
 		})
 			

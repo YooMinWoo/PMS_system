@@ -4,6 +4,7 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <fmt:requestEncoding value="utf-8"/>     
 <!DOCTYPE html>
@@ -66,6 +67,8 @@
 			}
     	  location.reload()
       })
+      
+      console.log(${alertList})
    });
    
    function alertState(no){
@@ -76,6 +79,8 @@
 	   location.href="${path}/alertDelete.do?no="+no
 	   location.reload()   
    }
+   
+   
 </script>
 </head>
 
@@ -119,10 +124,13 @@
                      
                     <li>
                      <div class="card-body" >
-                     <c:if test="${alertList[0].cnt==0 }">
-                     	<span style="display: flex; justify-content: center; width: 330px;">알림 없음</span>
-                     </c:if>
+                     
+                      <c:if test="${empty alertList}">
+                      
+                     		<span style="display: flex; justify-content: center; width: 330px;">알림 없음</span>
+                        </c:if>
                         <c:forEach var="alert" items="${alertList }"> 
+                       
                        <div class="bs-toast toast fade show bg-${alert.style }" 
                        role="alert" aria-live="assertive" aria-atomic="true" style="margin-top:30px; margin-left:17x;">
                            <div class="toast-header">

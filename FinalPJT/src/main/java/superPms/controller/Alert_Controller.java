@@ -1,5 +1,8 @@
 package superPms.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import superPms.service.Alert_Service;
+import superPms.vo.Alert;
 import superPms.vo.SuperEmpDept;
 
 @Controller
@@ -23,8 +27,9 @@ public class Alert_Controller {
    @GetMapping("/alert.do")  
    public String alertList(Model d,HttpSession session) {
       SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
-      d.addAttribute("alertList", service.alertList(sObj.getId()));
-    
+     
+    	  d.addAttribute("alertList", service.alertList(sObj.getId()));
+     
       return "WEB-INF\\suminView\\alert.jsp";
    }
    

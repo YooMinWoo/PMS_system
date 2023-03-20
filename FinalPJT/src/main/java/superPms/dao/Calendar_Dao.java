@@ -16,9 +16,7 @@ public interface Calendar_Dao {
 	
 	public void delCalendar(int id);
 	
-	public List<Alert> alertList(String id);
-	public int alertCount(String id);
-	public void alertState(int no);
+	
 	
 	public List<Project> getProSch(String id);
 	

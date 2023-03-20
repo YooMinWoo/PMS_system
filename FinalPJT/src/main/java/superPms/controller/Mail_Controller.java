@@ -43,9 +43,11 @@ public class Mail_Controller {
 	  
 	
 	@RequestMapping("/sendMail.do")
-	public String sendMail(Mail ins,Model d) {
+	public String sendMail(Mail ins,Model d,HttpSession session) {
 		service.insSender(ins);
 		service.insReceiver(ins);
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("msg", "메일 전송이 완료되었습니다.");
 		
 		return "WEB-INF\\suminView\\completeMail.jsp";
@@ -56,6 +58,7 @@ public class Mail_Controller {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		sch.setSender(sObj.getId());
 		d.addAttribute("mySendMail", service.mySendMail(sch));
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\suminView\\mySendMail.jsp";
 	}
 	@RequestMapping("/sendSch.do")
@@ -63,18 +66,22 @@ public class Mail_Controller {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
 		sch.setSender(sObj.getId());
 		d.addAttribute("mySendMail", service.mySendMail(sch));
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\suminView\\mySendMail.jsp";
 	}
 	// 전달,답장 메일 보내기
 	@RequestMapping("/reMail.do")
-	public String reMail(Mail ins,MailFile f,Model d) {
+	public String reMail(Mail ins,MailFile f,Model d,HttpSession session) {
 		service.reMail(ins,f);
 		d.addAttribute("msg", "메일 전송이 완료되었습니다.");
-		
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		return "WEB-INF\\suminView\\completeMail.jsp";
 	}
 	@RequestMapping("/sendDetail.do")
-	public String sendDetail(@RequestParam("mailno")int mailno,Model d) {
+	public String sendDetail(@RequestParam("mailno")int mailno,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("sendDetail", service.sendDetail(mailno));
 		return "WEB-INF\\suminView\\sendDetail.jsp";
 	}
@@ -89,13 +96,16 @@ public class Mail_Controller {
 	@RequestMapping("/myReceiveMail.do")
 	public String myReceiveMail(HttpSession session,Model d,@ModelAttribute("sch") MailSch sch) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		sch.setReceiver(sObj.getId());
 		d.addAttribute("myReceiveMail", service.myReceiveMail(sch));
 		return "WEB-INF\\suminView\\myReceiveMail.jsp";
 	}
 	
 	@RequestMapping("/receiveDetail.do")
-	public String receiveDetail(@RequestParam("mailno")int mailno,Model d) {
+	public String receiveDetail(@RequestParam("mailno")int mailno,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		service.uptSendStateDetail(mailno);
 		service.uptReceiveStateDetail(mailno);
 		d.addAttribute("receiveDetail", service.receiveDetail(mailno));
@@ -104,12 +114,14 @@ public class Mail_Controller {
 	
 	@RequestMapping("/delSendMail.do")
 	public String delSendMail(@RequestParam("mailno")String mailno) {
+
 		service.delSendMail(mailno);
 		return "redirect:/mySendMail.do";
 	}
 	
 	@RequestMapping("/delReceiveMail.do")
 	public String delReceiveMail(@RequestParam("mailno")String  mailno) {
+		
 		service.delReceiveMail(mailno);
 		return "redirect:/myReceiveMail.do";
 	}
@@ -121,20 +133,26 @@ public class Mail_Controller {
 	}
 	
 	@RequestMapping("/reSendMail.do")
-	public String reSendMail(@RequestParam("mailno")int mailno,Model d) {
+	public String reSendMail(@RequestParam("mailno")int mailno,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("reMail", service.sendDetail(mailno));
 		d.addAttribute("fname", service.getMailFile(mailno));
 		return "WEB-INF\\suminView\\reSendMail.jsp";
 	}
 	
 	@RequestMapping("/replyMail.do")
-	public String replyMail(@RequestParam("mailno")int mailno,Model d) {
+	public String replyMail(@RequestParam("mailno")int mailno,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("reMail", service.receiveDetail(mailno));
 		return "WEB-INF\\suminView\\replyMail.jsp";
 	}
 	
 	@RequestMapping("/receiverChkAjax.do")
-	public String receiverChkAjax(@RequestParam("receiver")String receiver,Model d) {
+	public String receiverChkAjax(@RequestParam("receiver")String receiver,Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		if(service.receiverChk(receiver)!=null) {
 			d.addAttribute("msg", "수신자 확인이 완료되었습니다.");
 			d.addAttribute("result", "0");

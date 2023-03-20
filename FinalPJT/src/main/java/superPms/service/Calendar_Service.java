@@ -31,15 +31,8 @@ public class Calendar_Service {
 		dao.delCalendar(id);
 	}
 	
-	public List<Alert> alertList(String id){
-		return dao.alertList(id);
-	}
-	public int alertCount(String id) {
-		return dao.alertCount(id);
-	}
-	public void alertState(int no) {
-		dao.alertState(no);
-	}
+	
+	
 	public List<Project> getProSch(String id){
 		return dao.getProSch(id);
 	}

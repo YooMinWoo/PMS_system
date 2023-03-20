@@ -1,5 +1,6 @@
 package superPms.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,9 @@ public class Alert_Service {
 	private Alert_Dao dao;
 	
 	public List<Alert> alertList(String id){
-		return dao.alertList(id);
+			return dao.alertList(id);
 	}
-	public int alertCount(String id) {
-		return dao.alertCount(id);
-	}
+	
 	public void alertState(int no) {
 		dao.alertState(no);
 	}
