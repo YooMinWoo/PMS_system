@@ -19,7 +19,7 @@
 		SELECT count(no) alertCount FROM alert WHERE id=#{id} AND state='0'
 	</select>
 	
-	<update id="alertState" parameterType="int">
+	<update id="alertState" parameterType="string">
 		UPDATE alert SET state='1' WHERE no=#{no}
 	</update>
 	
