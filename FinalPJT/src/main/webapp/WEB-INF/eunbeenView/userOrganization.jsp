@@ -136,6 +136,7 @@
                   </table>
                 </div>
                  <div style="display:flex; justify-content:center;" class="demo-inline-spacing">
+              <c:if test="${sch.startBlock>0 }">
               <nav aria-label="Page navigation">
                  <ul class="pagination pagination-lg">
                     <li class="page-item prev">
@@ -156,6 +157,7 @@
                        </li>
                     </ul>
                  </nav>
+                 </c:if>
                </div>
               </div><br>
            

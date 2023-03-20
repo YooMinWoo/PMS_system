@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import superPms.service.Alert_Service;
 import superPms.service.SuperEmp_Service;
 import superPms.vo.DeptCode;
 import superPms.vo.PassMail;
@@ -23,6 +24,8 @@ import superPms.vo.SuperEmpDeptSch;
 public class SuperEmp_Controller {
 	@Autowired(required=false)
 	private SuperEmp_Service service;
+	@Autowired
+	private Alert_Service alert_service;
 	
 	// http://localhost:5080/FinalPJT/getEmpList.do
 	@RequestMapping("/getEmpList.do")
@@ -31,7 +34,9 @@ public class SuperEmp_Controller {
 		return "WEB-INF\\eunbeenView\\empManage.jsp";
 	}
 	@RequestMapping("/getEmpListPage.do")
-	public String getEmpListPage(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d) {
+	public String getEmpListPage(@ModelAttribute("sch") SuperEmpDeptSch sch, Model d,HttpSession session) {
+		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
+		d.addAttribute("alertList", alert_service.alertList(sObj.getId()));
 		d.addAttribute("elist", service.getEmpListPage(sch));
 		return "WEB-INF\\eunbeenView\\empManage.jsp";
 	}
