@@ -73,7 +73,6 @@
 		    dataType:"json",
 		    success : function(data){
 		    	if(data.idCheck != null){
-					alert("비밀번호가 전송되었습니다.");
 					$("#frm01").submit();
 		        }else if(data.idCheck == null){
 		            alert("없는 이메일 계정입니다.");
