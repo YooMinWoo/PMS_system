@@ -21,7 +21,10 @@
 	padding-left: 3rem !important;
 	padding-right: 3rem !important;
 }
-td{text-align:left;}
+td{
+	text-align:left;
+	cursor: pointer;
+}
 tr{text-align:left;}
 .risk-header{
 	display: flex;
@@ -174,7 +177,7 @@ tr{text-align:left;}
                                     </thead>
                                     <tbody>
                                     	<c:forEach var="risk" items="${list}">
-                                    		<tr ondblclick="goDetail(${risk.riskno})">
+                                    		<tr ondblclick="goDetail(${risk.riskno})" title="자세히보려면 더블클릭하세요">
                                     			<td>${risk.riskname}</td>
                                     			<td><input type="button" class="risklevel" value="${risk.risklevel}"></td>
                                     			<td>

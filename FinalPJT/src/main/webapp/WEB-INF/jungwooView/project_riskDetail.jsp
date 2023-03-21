@@ -107,10 +107,14 @@
 			$("[name=riskpriority]").attr('readonly',true)
 			$("[name=riskmoniter]").attr('readonly',true)
 			$("[name=riskstate]").attr('readonly',true)
+			$("#uptBtn2").css("display", "none")
+			$("#delBtn").css("display", "none")
 			if($("[name=riskmoniter]").val()==ename){
 				$("[name=risklevel]").attr('readonly',false)
 				$("[name=riskpriority]").attr('readonly',false)
 				$("[name=riskstate]").attr('readonly',false)
+				$("#uptBtn2").css("display", "block")
+				$("#delBtn").css("display", "block")
 			}
 		}
 		$("#riskmoniter").click(function(){
@@ -306,10 +310,12 @@
 				        	<input id="applyBtn" type="button" class="btn btn-primary" value="등록">
 				        </div>
 				        <c:if test="${not empty strategy }">
-				        <div style="display:flex; justify-content: space-between;">
-				        		<input type="button" id="risk_strategy" value="${strategy.risk_strategy }" class="btn btn-outline-primary">
-				        		
-				        	</div>
+				        <div style="display:flex; 
+				        justify-content: space-between;">
+				        		<input type="button" id="risk_strategy" 
+				        		value="${strategy.risk_strategy }" 
+				        		class="btn btn-outline-primary">
+				        </div>
 				        </c:if>
 
 				        	
@@ -360,7 +366,9 @@
 		location.href = "${path}/strategyForm.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}
 	})
 	$("#risk_strategy").click(function(){
-		location.href="${path}/pagingCare.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}+"&strategyno="+${strategy.strategyno}
+		var strategyno = "${strategy.strategyno}";
+		if(strategyno!=0)
+		location.href="${path}/pagingCare.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}+"&strategyno=${strategy.strategyno}"
 	})
     </script>
   </body>

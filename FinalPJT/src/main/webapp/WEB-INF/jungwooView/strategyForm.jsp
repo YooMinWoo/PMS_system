@@ -65,14 +65,6 @@
 			location.href="${path}/project_riskDetail.do?riskno="+${param.riskno}+"&prjno="+${param.prjno}	
 		});
 		
-		$("#selLan").val("${param.lang}")
-		$("#selLan").change(function(){
-			if($(this).val()!=""){
-				$("[name=lang]").val($(this).val())
-				console.log($("[name=lang]").val($(this).val()))
-				$("form").submit();
-			}
-		});		
 	});
 </script>
 </head>
@@ -105,11 +97,14 @@
 				        <h4 class="text-primary">대응전략 등록</h4>
 				        
 				        <form method="get" class="validation-form" novalidate> 
-						  <input type="hidden" class="form-control  ckValid" id="riskno" name="riskno" value="${param.riskno }">
-						  <input type="hidden" class="form-control  ckValid" id="prjno" name="prjno" value="${param.prjno }">
+						  <input type="hidden" class="form-control  ckValid" 
+						  id="riskno" name="riskno" value="${param.riskno }">
+						  <input type="hidden" class="form-control  ckValid" 
+						  id="prjno" name="prjno" value="${param.prjno }">
 				          <div class="row">      
 					          <div class="col-md-6 mb-3">
-					            <input class="form-check-input form-control ckValid" type="radio" value="AVOIDANCE" name="risk_strategy" id="AVOIDANCE" >
+					            <input class="form-check-input form-control ckValid" 
+					            type="radio" value="AVOIDANCE" name="risk_strategy" id="AVOIDANCE" >
 								  <label class="form-check-label" for="AVOIDANCE">
 								    AVOIDANCE
 								  </label>

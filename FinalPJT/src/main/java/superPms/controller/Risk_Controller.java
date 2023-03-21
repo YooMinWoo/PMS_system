@@ -108,37 +108,37 @@ public class Risk_Controller {
 		return "redirect://project_riskDetail.do?riskno="+ins.getRiskno()+"&prjno="+prjno;
 	}
 	@RequestMapping("/strategyForm.do")		// 대응전략 등록폼 페이지
-	public String insertStgForm(){
+	public String insertStgForm(Model d,@RequestParam("prjno")int prjno){
+		d.addAttribute("projectInfo",service3.projectInfo(prjno));
 		return "WEB-INF\\jungwooView\\strategyForm.jsp";
 	}
 	@RequestMapping("/insertStrategy.do")		// 대응전략 등록
 	public String insertStrategy(Strategy ins,Risk upt,
 			@RequestParam(value="prjno", required = false) Integer prjno){
 		if (ins.getRisk_strategy()!="") {
-			System.out.println("111111확인좀해주라 @#@@@@@@@@@@@@@@@@#@#@#@@##@##@#@");
 			service.insertStrategy(ins);
-			System.out.println("222222확인좀해주라 @#@@@@@@@@@@@@@@@@#@#@#@@##@##@#@");
 			service.updateRisk2(upt);
 		}else {
 			service.insertStrategy(ins);
 		}
-		return "redirect://project_riskDetail.do?riskno="+ins.getRiskno()+"&prjno="+prjno;
+		return "redirect://project_riskDetail.do?riskno="
+		+ins.getRiskno()+"&prjno="+prjno;
 	}
 	@RequestMapping("/pagingCare.do")
 	public String pagingCare(@ModelAttribute("sch") StrategycareSch sch, Model d
-			,@RequestParam("riskno")int riskno) {
+			,@RequestParam("riskno")int riskno, @RequestParam("prjno")int prjno) {
 		service.getStrategy(riskno);
 		d.addAttribute("care", service.pagingCare(sch));
 		d.addAttribute("strategy",service.getStrategy(riskno));
-		System.out.println("333555555555334444444400"+riskno);
+		
 		return "WEB-INF\\jungwooView\\strategyDetail.jsp";
 	}
 	@PostMapping("/insertCare.do")				// 대응전략 후처리 등록
-	public String insertCare(Strategycare ins, @RequestParam("prjno")int prjno,
-			@RequestParam("riskno")int riskno, @RequestParam("strategyno")int strategyno) {
-		System.out.println("33355555555533"+riskno);
+	public String insertCare(Strategycare ins,
+			@RequestParam("prjno")int prjno,
+			@RequestParam("riskno")int riskno,
+			@RequestParam("strategyno")int strategyno) {
 		service.insertCare(ins);
-		
 		return "redirect://pagingCare.do?riskno="+riskno+"&prjno="+prjno+"&strategyno="+strategyno;
 	}
 }

@@ -239,6 +239,7 @@ update risk
 			riskstate = '처리중'
 	   where riskno = 53;
 SELECT * FROM STRATEGYCARE s ;
+SELECT * FROM SOLUTION s2 ;
 SELECT * FROM (
 			SELECT rownum cnt, C.* FROM (
 			SELECT careno, strategyno, care_content,e.ENAME,
@@ -250,4 +251,8 @@ SELECT * FROM (
 			) C
 			)
 		WHERE cnt BETWEEN 1 AND 5;
+SELECT * FROM emp ;
+SELECT * FROM SOLUTION s ;
+SELECT * FROM STRATEGY s ;
 SELECT * FROM STRATEGYCARE s ;
+SELECT * FROM emp;

@@ -22,7 +22,9 @@ public interface Risk_Dao {
 	public void deleteRisk(Risk del);
 	
 	public Strategy getStrategy(int strategyno);
+	
 	public void insertStrategy(Strategy ins);
+	
 	public List<Strategy> pagingCare(StrategycareSch sch);
 	public int totCntCare(StrategycareSch sch);
 	public void insertCare(Strategycare ins);
