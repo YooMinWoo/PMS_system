@@ -34,7 +34,6 @@ public class Calendar_Controller {
 		return "WEB-INF\\suminView\\calendar.jsp";
 	}
 	
-	//	http://localhost:7080/FinalPJT/calListAjax.do
 	@RequestMapping("/calListAjax.do")
 	public String calListAjax(HttpSession session,Model d) {
 		SuperEmpDept sObj = (SuperEmpDept)session.getAttribute("emp");
