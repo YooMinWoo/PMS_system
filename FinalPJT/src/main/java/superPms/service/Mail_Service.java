@@ -67,7 +67,7 @@ public class Mail_Service {
         // 3. 한페이지에 보일 데이터 갯수
         //   - 초기화면 현재 페이지 번호 0 ==> default설정
         if(sch.getPageSize()==0) {
-           sch.setPageSize(10);
+           sch.setPageSize(5);
         }
         // 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
         //    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지
@@ -85,7 +85,7 @@ public class Mail_Service {
         sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
         // 6. 블럭처리
         //    1) 블럭 크기 지정
-        sch.setBlockSize(5);
+        sch.setBlockSize(3);
         //    2) 블럭 번호 지정 : 현재페이지번호/블럭의 크기 올림 처리
         int blocknum = (int)Math.ceil(sch.getCurPage()/
                  (double)sch.getBlockSize());
@@ -130,7 +130,7 @@ public class Mail_Service {
         // 3. 한페이지에 보일 데이터 갯수
         //   - 초기화면 현재 페이지 번호 0 ==> default설정
         if(sch.getPageSize()==0) {
-           sch.setPageSize(10);
+           sch.setPageSize(5);
         }
         // 4. 총페이지 수.(전체데이터/한페이지에 보일 데이터 건수)
         //    한번에 보일 데이터 건수 5건일 때, 총건수11 ==> 3페이지
@@ -148,7 +148,7 @@ public class Mail_Service {
         sch.setStart((sch.getCurPage()-1)*sch.getPageSize()+1);
         // 6. 블럭처리
         //    1) 블럭 크기 지정
-        sch.setBlockSize(5);
+        sch.setBlockSize(3);
         //    2) 블럭 번호 지정 : 현재페이지번호/블럭의 크기 올림 처리
         int blocknum = (int)Math.ceil(sch.getCurPage()/
                  (double)sch.getBlockSize());
