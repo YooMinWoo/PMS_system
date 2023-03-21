@@ -105,8 +105,8 @@ select:disabled{
 		$("#deptid").val("${noticeDetail.deptid}").prop("selected", true);
 		$("#menu-item-notice").addClass('active open');
 		$(".offBtn").hide()
-		var authTF = ${emp.id == noticeDetail.writer}
-		if(!authTF){ // 작성자가 아니라면
+		var authTF = ${emp.auth == 0}
+		if(!authTF){ // 관리자가 아니라면
 			$("#frm01 input").attr("readonly","readonly")
 			$("#frm01 textarea").attr("readonly","readonly")
 			$("#frm01 select").attr("disabled","disabled")
@@ -332,7 +332,7 @@ select:disabled{
                         </script>
                         
                         <div class="btns">
-                        	<c:if test="${emp.id == noticeDetail.writer }">
+                        	<c:if test="${emp.auth == 0 }">
 	                        	<button type="button" class="btn btn-primary" id="uptBtn">수정</button>
 	                        	<button type="button" class="btn btn-danger" id="delBtn">삭제</button>
 	                        	<button type="button" class="btn btn-primary" id="fileUptBtn">파일 수정</button>

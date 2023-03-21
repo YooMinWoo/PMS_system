@@ -139,15 +139,17 @@ public class Notice_Service {
 	}
 	
 	public void delNotice(int[] nos) {
+		String fno;
 		for(int no : nos) {
 			NoticeRepSch sch = new NoticeRepSch();
 			sch.setnoticeno(no);
-			if(dao.noticeDetail(sch).getFno()!=null) {
-				Notice nt = dao.schNoticeFile(dao.noticeDetail(sch).getFno());
+			fno = dao.noticeDetail(sch).getFno();
+			System.out.println(fno);
+			Notice nt = dao.schNoticeFile(fno);
+			if(nt.getFname() != null) {
 				deleteFile(nt);
-				dao.delNoticeFile(dao.noticeDetail(sch).getFno());
 			}
-			
+			dao.delNoticeFile(fno);
 			dao.delNotice(no);
 			dao.delNoticeRep(no);
 		}
