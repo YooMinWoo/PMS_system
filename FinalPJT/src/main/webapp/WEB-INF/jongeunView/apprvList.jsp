@@ -159,7 +159,6 @@ td{text-align:center;}
 			        <th>담당자</th>
 			        <th>시작일자</th>
 			        <th>종료일자</th>
-			        <th>진행률</th>
 			      </tr>
 			    </thead>
 			    <tbody class="table-border-bottom-0">
@@ -179,8 +178,7 @@ td{text-align:center;}
 				%>	
 				<!-- 변경한 날짜형 데이터를 원하는 패턴으로 format 하여 출력 -->
 				<fmt:formatDate value="<%=date%>" pattern="yyyy-MM-dd" />
-		        </td>
-		        <td><fmt:formatNumber value="${g.progress }" type="percent"></fmt:formatNumber></td>
+		        </td>    
 		        </tr>
 		        </c:forEach>
 		      </tbody>
