@@ -84,7 +84,8 @@
 		
 
 		if($("#risk_strategy").val()=="AVOIDANCE"){
-			$("#strategy_description").text("심각한 위험의 경우 발생가능성을 원천적으로 제거하는 전 략 ex) 프로젝트 중단, 사업 취소, 일정 연장, 자산매각, 설계변경 등 다른 대안을 선택하여 해당 위험이 실현되지 않도록 하는 것")
+			$("#strategy_description").text
+			("심각한 위험의 경우 발생가능성을 원천적으로 제거하는 전략 ex) 프로젝트 중단, 사업 취소, 일정 연장, 자산매각, 설계변경 등 다른 대안을 선택하여 해당 위험이 실현되지 않도록 하는 것")
 		}
 		if($("#risk_strategy").val()=="TRANSFERENCE"){
 			$("#strategy_description").text("위험조치에 대한 책임을 제3자에게 전가(Transference) 위험조치에 대한 책임을 넘기는 대신에 이에 상응하는 비 용 지불 ex) 보험가입, 워런티")
@@ -136,8 +137,6 @@
  
            
            <div class="card mb-4 pb-3">
-           <%-- <jsp:include page="/projectTop.jsp"></jsp:include> --%>
-			<hr class="mx-0">
            		<div class="card-body">
            			<div class="input-form col-md-12 mx-auto">
 				        <h4 class="text-primary">대응전략</h4>
@@ -145,11 +144,12 @@
 				            <div class="table-responsive">
 				            <input type="button" id="risk_strategy" value="${strategy.risk_strategy }" class="btn btn-outline-primary">
 				            <br/>
-				            <span class="text-success">설명</span><span id="strategy_description"></span>
+				            <br/>
+				            <span class="text-success">설명</span><br/>
+				            <span id="strategy_description"></span>
 				            <form id="form1" class="d-flex"  method="post"> 			
 								    <input type="hidden" name="curPage" value="${sch.curPage}"/>
 								</form> 
-
 				              <c:forEach var="care" items="${care}">
 				              	<input type="hidden" value="${care.strategyno}">
    				                <div class="sol-content-header">
@@ -181,6 +181,7 @@
 							</div>
 				          </div>  
  				          <div class="mb-3">
+ 				          <br/>
 				          	<form method="post" id="form2" class="validation-form" novalidate>
 				            	<label for="solution_content">의견</label>
 				            	<input type="hidden" name="id" value="${emp.id }">

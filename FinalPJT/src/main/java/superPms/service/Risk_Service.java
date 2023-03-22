@@ -137,7 +137,6 @@ public class Risk_Service {
 		return dao.pagingCare(sch);
 	}
 	public void insertCare(Strategycare ins) {
-		dao.insertCare(ins);
-		
+		dao.insertCare(ins);	
 	}
 }

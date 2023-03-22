@@ -203,10 +203,7 @@
    		$("#allDay").val(""+event.allDay)      
    		$("[name=urllink]").val(event.extendedProps.urllink)
    	}
-   	function alertState(no){
-		location.href="${path}/alertState01.do?no="+no
-		location.reload()
-	}
+   	
    	
    	
 </script>

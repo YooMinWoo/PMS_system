@@ -154,7 +154,7 @@ public class Mail_Service {
                  (double)sch.getBlockSize());
         //    3) 마지막 블럭
         int endBlock = blocknum*sch.getBlockSize();
-        if(endBlock>sch.getPageCount()) {
+        if(endBlock>sch.getPageCount()) { 
            endBlock = sch.getPageCount();
         }
         sch.setEndBlock(endBlock);
