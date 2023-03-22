@@ -137,7 +137,8 @@ td{text-align:center;}
           <form class="d-flex" id="allFrm" action="${path}/apprvList.do" method="post">
 	          <div class="input-group">
 	            <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-	            <input type="text" name="text" value="${asch.text}" class="form-control" placeholder="업무명을 입력하세요">
+	            <input type="text" name="text" value="${asch.text}" class="form-control" 
+	            placeholder="업무명을 입력하세요">
 	          </div>
 	          <input type="hidden" name="curPage" value="${asch.curPage}"/>
 	          <input type="hidden" name="isApprv" value="${asch.isApprv}">
