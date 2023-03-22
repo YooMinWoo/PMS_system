@@ -32,6 +32,6 @@
 	</update>
 	
 	<select id="todoSchList" parameterType="todolist" resultType="todolist">
-		select * from todolist where todo LIKE '%'||#{todo}||'%' and id=#{id}
+		select * from todolist where todo LIKE '%'||#{todo}||'%' and id=#{id} ORDER BY REGDTE desc
 	</select>
 </mapper>
