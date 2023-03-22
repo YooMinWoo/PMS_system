@@ -113,8 +113,8 @@
 				$("[name=risklevel]").attr('readonly',false)
 				$("[name=riskpriority]").attr('readonly',false)
 				$("[name=riskstate]").attr('readonly',false)
-				$("#uptBtn2").css("display", "block")
-				$("#delBtn").css("display", "block")
+				$("#uptBtn2").css("display", "flex")
+				$("#delBtn").css("display", "flex")
 			}
 		}
 		$("#riskmoniter").click(function(){
